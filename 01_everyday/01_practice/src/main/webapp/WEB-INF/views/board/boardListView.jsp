@@ -65,39 +65,41 @@
 			<td colspan="6">
 				<!-- [이전] -->
 				<c:if test="${ pi.currentPage <= 1 }">
-					[이전] &nbsp; <!-- 1페이지에서만 나오는 기호 설정. 마찬가지로 마지막페이지에서 나오는 기호도 따로 지정해줘야함 -->
+					[이전]
 				</c:if>
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="blist.bo">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
-					<a href="${ before }">[이전]</a>
+					<a href="${ before }">[이전]</a> &nbsp;
 				</c:if>
+			
+				
 				
 				<!-- 페이지 번호 -->
 				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					<c:if test="${ p eq pi.currentPage }">
+					<c:if test="${ p == pi.currentPage }">
 						<font color="red" size="4"><b>[${ p }]</b></font>
 					</c:if>
-					<c:if test="${ p ne pi.currentPage }">
+					
+					<c:if test="${ p != pi.currentPage }">
 						<c:url var="pagination" value="blist.bo">
 							<c:param name="page" value="${ p }"/>
 						</c:url>
-						<a href="${ pagination }">${ p }</a> &nbsp;
+						<a href="${ pagination }">[${ p }]</a> &nbsp;
 					</c:if>
 				</c:forEach>
 				
 				<!-- [다음] -->
-				<c:if test="${ pi.currentPage >= pi.maxPage }">
-					[다음]		<!-- 마지막 페이지에서만 나오는 기호 설정. 마찬가지로 첫페이지에서 나오는 기호도 따로 지정해줘야함 -->
+				<c:if test="${ pi.currentPage >= maxPage }">
+					[다음]
 				</c:if>
-				<c:if test="${ pi.currentPage < pi.maxPage }">
+				<c:if test="${ pi.currentPage <= maxPage }">
 					<c:url var="after" value="blist.bo">
 						<c:param name="page" value="${ pi.currentPage + 1 }"/>
-					</c:url>
-					<a href="${ after }">[다음]</a>
+					</c:url>	
+					<a href="${after }">[다음]</a>
 				</c:if>
-				
 			</td>
 		</tr>
 	</table>
