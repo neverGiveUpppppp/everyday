@@ -64,42 +64,43 @@
 		<tr align="center" height="20" id="buttonTab">
 			<td colspan="6">
 				<!-- [이전] -->
-				<c:if test="${ pi.currentPage <= 1 }">
-					[이전]
+				<c:if test="${pi.currentPage <= 1 }">
+					[이전] &nbsp;
 				</c:if>
+				
 				<c:if test="${ pi.currentPage > 1 }">
 					<c:url var="before" value="blist.bo">
 						<c:param name="page" value="${ pi.currentPage - 1 }"/>
 					</c:url>
 					<a href="${ before }">[이전]</a> &nbsp;
 				</c:if>
-			
-				
 				
 				<!-- 페이지 번호 -->
-				<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					<c:if test="${ p == pi.currentPage }">
-						<font color="red" size="4"><b>[${ p }]</b></font>
+				<c:forEach var="pn" begin="${pi.startPage }" end="${ pi.endPage }">
+					<c:if test="${ pn eq pi.currentPage }">
+						<font color="red" size="4"><b>[${ pn }]</b></font>
 					</c:if>
 					
-					<c:if test="${ p != pi.currentPage }">
-						<c:url var="pagination" value="blist.bo">
-							<c:param name="page" value="${ p }"/>
+					<c:if test="${ pn ne pi.currentPage }">
+						<c:url var="paging" value="blist.bo">
+							<c:param name="page" value="${ pn }"></c:param>
 						</c:url>
-						<a href="${ pagination }">[${ p }]</a> &nbsp;
+						<a href="${ paging }">${ pn }</a>&nbsp;
 					</c:if>
 				</c:forEach>
 				
+				
 				<!-- [다음] -->
-				<c:if test="${ pi.currentPage >= maxPage }">
+				<c:if test="${ pi.currentPage >= pi.maxPage }">
 					[다음]
 				</c:if>
-				<c:if test="${ pi.currentPage <= maxPage }">
+				<c:if test="${ pi.currentPage < pi.maxPage }">
 					<c:url var="after" value="blist.bo">
-						<c:param name="page" value="${ pi.currentPage + 1 }"/>
-					</c:url>	
-					<a href="${after }">[다음]</a>
+						<c:param name="page" value="${ pi.currentPage + 1 }"></c:param>
+					</c:url>
+					<a href="${ after }">[다음]</a>
 				</c:if>
+				
 			</td>
 		</tr>
 	</table>
