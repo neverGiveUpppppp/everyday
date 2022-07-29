@@ -50,13 +50,34 @@
 					${ board.boardCreateDate }
 				</td>
 			</tr>
-
-				<!-- 작성자
-				작성날짜
-				내용
-				첨부파일 -->
+			<tr>
+				<th>내용</th>
+				<% pageContext.setAttribute("newLineChar","\r\n"); %>
+				<td>
+					${ fn:replace(board.boardContent, newLineChar, "<br>") }
+					<input type="hidden" value="${ board.boardContent }" name="boardContent">
+				</td>
+			</tr>
+			
+			<c:if test="${ !empty board.originalFileName }">
+				<tr>
+					<th>첨부파일</th>
+					<td>
+						<a href="${pageContext.servletContext.contextPath }/resources/buploadFiles/${board.renameFileName}" download="${ board.originalFileName }">${ board.originalFileName }</a>
+						<input type="hidden" name="originalFileName" value="${board.originalFileName }">
+						<input type="hidden" name="renameFileName" value="${board.renameFileName }">
+					</td>		
+				</tr>
+			</c:if>
+			
+			
 		</table>
 	</form>
+	
+	<p align="center">
+		<button onclick="location.href='home.do'">시작 페이지 이동</button>
+		<button onclick="location.href='${ blist }'">목록 보기로 이동</button>
+	</p>
 
 
 
