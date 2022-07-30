@@ -47,7 +47,6 @@ public class C_Control {
 		}else {
 			for(int i=1; i < 10; i++) {
 				System.out.println(num1+" x "+i+" = "+num1*i);
-//				System.out.printf(num1+);
 			}
 		}
 	}
