@@ -20,12 +20,12 @@ public class Run {
 //		c.for_06();
 //		c.while_06();
 //		c.for_07();
-		c.while_07();
+//		c.while_07();
 //		c.while_01();
 //		c.while_02();
 
 		D_array arr = new D_array();
-//		arr.arrayPractice();
+		arr.arrayPractice();
 // 		arr.shallowCopy();
 		
 		E_OOP oop = new E_OOP();

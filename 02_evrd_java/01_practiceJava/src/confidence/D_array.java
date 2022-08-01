@@ -150,12 +150,60 @@ System.out.println("===practice 3rd===");
 		System.out.println(Arrays.toString(dArr3)); // null
 
 		
+System.out.println("===practice 4th===");		
+		
+		
 /******************************practice 4th ************************************/		
+		
+		
+		
 		// 배열 선언 
 		// 배열 할당
 		// 배열 초기화 : 인덱스,중괄호,for문
 		// 배열 삭제 : null
 		// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+		
+		
+		// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+		byte[] bArr;
+		
+		// 배열 할당 : heap 영역에 공간 생성
+		byte[] bArr1 = new byte[3];
+		byte[] bArr2 = new byte[5];
+		double[] dArr10 = new double[5];
+		
+		// 배열 초기화 : 인덱스,중괄호,for문
+		// 방법1 : 인덱스
+		bArr1[0] = 1;
+		bArr1[1] = 2;
+		bArr1[2] = 3;
+		bArr2[0] = 10; // bArr2는 10칸 중 한칸만 채움 나머지는 어떻게될까?
+		dArr10[0] = 10;
+		System.out.println(Arrays.toString(bArr2));
+		System.out.println(Arrays.toString(dArr10));
+		
+		// 방법2 : 중괄호
+		byte[] bArr3 = {1,2,3};
+		// 방법3 : for문
+		for(int i=0; i<bArr1.length;i++) {
+			System.out.print(bArr1[i]+ " "); // 1 2 3
+		}
+		System.out.println();
+		
+		
+		// 배열 삭제 : null1
+		bArr2 = null;
+		
+		// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+		// 방법1 for문
+		for(int i=0; i < bArr1.length; i++) {
+			System.out.print(bArr1[i]+" ");
+		}
+		// 방법 2 Arrays.toString
+		System.out.println(Arrays.toString(bArr2));
+		System.out.println(bArr1.toString());
+//		System.out.println(bArr2.toString());
+		
 		
 		
 		
