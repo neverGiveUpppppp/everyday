@@ -204,8 +204,35 @@ System.out.println("===practice 4th===");
 		System.out.println(bArr1.toString());
 //		System.out.println(bArr2.toString());
 		
+
+System.out.println("===practice 5th===");		
 		
+/******************************practice 5th ************************************/		
 		
+		// 배열 선언
+		int[] nArr;
+		
+		// 배열 할당
+		int[] nArr1 = new int[3];
+		
+		// 배열 초기화
+		// 방법1 : 인덱스
+		nArr1[0] = 1;
+		nArr1[1] = 2;
+		
+		// 방법2 : 중괄호
+		int[] nArr3 = {1,2,3};
+		
+		// 방법3 : for문
+		for(int i=0; i < 3; i++) {
+			
+			nArr3[i] = i +1;
+			System.out.print(nArr3[i]+" ");
+			
+		}
+		
+		nArr3 = null;
+		System.out.println(Arrays.toString(nArr3));
 		
 		
 	}
