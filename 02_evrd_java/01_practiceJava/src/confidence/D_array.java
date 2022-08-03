@@ -5,42 +5,42 @@ import java.util.Arrays;
 public class D_array {
 	
 	public void arrayPractice() {
-		// ¹è¿­ ¼±¾ð : Stack ¿µ¿ª¿¡ °ø°£ »ý¼º(º¯¼öÀÇ ¼±¾ð : stack¿¡ °ø°£ Â÷Áö)
-		// ¹è¿­ ÇÒ´ç : heap ¿µ¿ª¿¡ °ø°£ »ý¼º
-		// ¹è¿­ ÃÊ±âÈ­ : ÀÎµ¦½º,Áß°ýÈ£,for¹®
-		// ¹è¿­ »èÁ¦ : null
-		// ¹è¿­ °ª Ãâ·ÂÇÏ´Â ¹æ¹ý 2°¡Áö : for¹®, Arrays.toString()
-		// ¹è¿­ º¹»ç : shallow copy & deep copy
+		// ë°°ì—´ ì„ ì–¸ : Stack ì˜ì—­ì— ê³µê°„ ìƒì„±(ë³€ìˆ˜ì˜ ì„ ì–¸ : stackì— ê³µê°„ ì°¨ì§€)
+		// ë°°ì—´ í• ë‹¹ : heap ì˜ì—­ì— ê³µê°„ ìƒì„±
+		// ë°°ì—´ ì´ˆê¸°í™” : ì¸ë±ìŠ¤,ì¤‘ê´„í˜¸,forë¬¸
+		// ë°°ì—´ ì‚­ì œ : null
+		// ë°°ì—´ ê°’ ì¶œë ¥í•˜ëŠ” ë°©ë²• 2ê°€ì§€ : forë¬¸, Arrays.toString()
+		// ë°°ì—´ ë³µì‚¬ : shallow copy & deep copy
 		//
-		// 		¹è¿­ Å©±â º¯°æ ºÒ°¡(»èÁ¦ÇÏ°í »õ·Î ¸¸µé±â¿¡ ÁÖ¼Ò°ªÀÌ º¯°æµÊ)
-		//		¹è¿­ ¾È °ªÀÌ ÃÖ´ë±æÀÌº¸´Ù ÂªÀ¸¸é °ª¸¸Å­¸¸ Ãâ·ÂµÇ¼­ ³ª¿È(¿©ºÐ°ø°£¿¡ ´Ù¸¥°ªx)
-		//		dArr[3] = 3;	// 3.0À¸·Î Ãâ·Â -> ÀÚµ¿Çüº¯È¯(int to double) 
-		// 		ÃÊ±âÈ­ for¹® ¹æ¹ýÀº int¸¸ °¡´ÉÇÏ³ª, ½Ç¼ö·Î Çüº¯È¯ °¡´ÉÇÑ int¸é for¹® °¡´É -> intÀÎ i°¡ ½Ç¼ö·Î º¯È¯ °¡´ÉÇÑ ¼öÀÌ±â¿¡ 
-		// 		nullÀÎ ¹è¿­°ª È®ÀÎ ½Ã, for¹®¹æ¹ýÀº ³ÎÆ÷ÀÎÆ®ÀÍ¼Á¼Ç ¾²¹Ç·Î Arrays.toString() »ç¿ëÇØ¾ßÇÔ
+		// 		ë°°ì—´ í¬ê¸° ë³€ê²½ ë¶ˆê°€(ì‚­ì œí•˜ê³  ìƒˆë¡œ ë§Œë“¤ê¸°ì— ì£¼ì†Œê°’ì´ ë³€ê²½ë¨)
+		//		ë°°ì—´ ì•ˆ ê°’ì´ ìµœëŒ€ê¸¸ì´ë³´ë‹¤ ì§§ìœ¼ë©´ ê°’ë§Œí¼ë§Œ ì¶œë ¥ë˜ì„œ ë‚˜ì˜´(ì—¬ë¶„ê³µê°„ì— ë‹¤ë¥¸ê°’x)
+		//		dArr[3] = 3;	// 3.0ìœ¼ë¡œ ì¶œë ¥ -> ìžë™í˜•ë³€í™˜(int to double) 
+		// 		ì´ˆê¸°í™” forë¬¸ ë°©ë²•ì€ intë§Œ ê°€ëŠ¥í•˜ë‚˜, ì‹¤ìˆ˜ë¡œ í˜•ë³€í™˜ ê°€ëŠ¥í•œ intë©´ forë¬¸ ê°€ëŠ¥ -> intì¸ iê°€ ì‹¤ìˆ˜ë¡œ ë³€í™˜ ê°€ëŠ¥í•œ ìˆ˜ì´ê¸°ì— 
+		// 		nullì¸ ë°°ì—´ê°’ í™•ì¸ ì‹œ, forë¬¸ë°©ë²•ì€ ë„í¬ì¸íŠ¸ìµì…‰ì…˜ ì“°ë¯€ë¡œ Arrays.toString() ì‚¬ìš©í•´ì•¼í•¨
 		
 		
-		//¹è¿­ ¼±¾ð
-		String[] arr; // Stack ¿µ¿ª¿¡ °ø°£ »ý¼º
+		//ë°°ì—´ ì„ ì–¸
+		String[] arr; // Stack ì˜ì—­ì— ê³µê°„ ìƒì„±
 		
-		//¹è¿­ ÇÒ´ç
+		//ë°°ì—´ í• ë‹¹
 		String[] sArr1 = new String[3];
 		String sArr2[] = new String[3];
 		
-		// ¹è¿­ ÃÊ±âÈ­
-		// ¹æ¹ý1 : ÀÎµ¦½º
+		// ë°°ì—´ ì´ˆê¸°í™”
+		// ë°©ë²•1 : ì¸ë±ìŠ¤
 		sArr1[0] = "a";
 		sArr1[1] = "b";
 		sArr1[2] = "c";
 		
-		// ¹æ¹ý2 : Áß°ýÈ£ {} ÀÌ¿ë
-		// ¼±¾ð°ú µ¿½Ã¿¡ ÃÊ±âÈ­
-//		sArr2 = {"a","b","c"}; // error : Áß°ýÈ£ Å¸ÀÔÀº ÀÚ·áÇüºÎÅÍ Ç®·Î Àû¾îÁÖ´Â ÇüÅÂ¿¡¸¸ °¡´É
+		// ë°©ë²•2 : ì¤‘ê´„í˜¸ {} ì´ìš©
+		// ì„ ì–¸ê³¼ ë™ì‹œì— ì´ˆê¸°í™”
+//		sArr2 = {"a","b","c"}; // error : ì¤‘ê´„í˜¸ íƒ€ìž…ì€ ìžë£Œí˜•ë¶€í„° í’€ë¡œ ì ì–´ì£¼ëŠ” í˜•íƒœì—ë§Œ ê°€ëŠ¥
 		String[] sArr3 = {"a","b","c"};
 		
-		// ¹æ¹ý3 : for¹®
-		// ¹è¿­ÀÌ intÅ¸ÀÔÀÎ °æ¿ì¸¸ »ç¿ë°¡´É
-		// 		double·Î Çüº¯È¯ °¡´ÉÇÑ int¸é for¹® °¡´ÉÇÒ±î?  
-		// 		°¡´É. intÀÎ i°¡ ½Ç¼ö·Î º¯È¯ °¡´ÉÇÑ ¼öÀÌ±â¿¡
+		// ë°©ë²•3 : forë¬¸
+		// ë°°ì—´ì´ intíƒ€ìž…ì¸ ê²½ìš°ë§Œ ì‚¬ìš©ê°€ëŠ¥
+		// 		doubleë¡œ í˜•ë³€í™˜ ê°€ëŠ¥í•œ intë©´ forë¬¸ ê°€ëŠ¥í• ê¹Œ?  
+		// 		ê°€ëŠ¥. intì¸ iê°€ ì‹¤ìˆ˜ë¡œ ë³€í™˜ ê°€ëŠ¥í•œ ìˆ˜ì´ê¸°ì—
 		int[] intArr = new int[5];
 		for(int i=0; i < intArr.length;i++) {
 			intArr[i] = i + 1;
@@ -49,15 +49,15 @@ public class D_array {
 			System.out.print(intArr[i]+" "); 	// 1 2 3 4 5
 		}
 		
-		// ¹è¿­ »èÁ¦
+		// ë°°ì—´ ì‚­ì œ
 		intArr = null;
 		System.out.println(Arrays.toString(intArr)); // null
 
-		// ¹è¿­ °ª Ãâ·ÂÇÏ´Â ¹æ¹ý
-		//  1)for¹®
+		// ë°°ì—´ ê°’ ì¶œë ¥í•˜ëŠ” ë°©ë²•
+		//  1)forë¬¸
 		//  2)Arrays.toString()
 		
-		// 1)for¹®
+		// 1)forë¬¸
 //		int[] baseArr = {1,2,3,4,5};
 //		for(int i=0; i<baseArr.length;i++) {
 //			System.out.print(baseArr[i] + " "); // 1 2 3 4 5
@@ -68,29 +68,29 @@ public class D_array {
 		
 /******************************practice 2nd ************************************/
 		
-		// ¹è¿­ ¼±¾ð
+		// ë°°ì—´ ì„ ì–¸
 		char[] cArr;
 		
-		// ¹è¿­ ÇÒ´ç
+		// ë°°ì—´ í• ë‹¹
 		char[] cArr1 = new char[3];
 		char[] cArr2 = new char[3];
 		
-		// ¹è¿­ ÃÊ±âÈ­(Ãß°¡)
-		// ¹æ¹ý1 : ÀÎµ¦½º
+		// ë°°ì—´ ì´ˆê¸°í™”(ì¶”ê°€)
+		// ë°©ë²•1 : ì¸ë±ìŠ¤
 		cArr1[0] = 'a';
 		cArr1[1] = 'b';
 		cArr1[2] = 'c';
 //		cArr1[3] = 'd';
 //		System.out.println(Arrays.toString(cArr1));
-		// ¹æ¹ý2 : Áß°ýÈ£
+		// ë°©ë²•2 : ì¤‘ê´„í˜¸
 		char[] cArr11 = {'a','b','c'};
-		char[] cArr22 = {'¤¡','¤¤','´Ù'};
+		char[] cArr22 = {'ã„±','ã„´','ë‹¤'};
 		char[] cArr3 = {'a','b','c'};
-		// ¹æ¹ý3 : for¹®
-		// int¹è¿­¸¸ »ç¿ë°¡´É
+		// ë°©ë²•3 : forë¬¸
+		// intë°°ì—´ë§Œ ì‚¬ìš©ê°€ëŠ¥
 //		char[] cArr4 = new char[4];
 //		for(int i=0; i < cArr4.length; i++) {
-//			cArr4[i] = i + 1; // int¹è¿­¸¸ »ç¿ë°¡´ÉÇÏ±â¿¡ error : Type mismatch: cannot convert from int to char
+//			cArr4[i] = i + 1; // intë°°ì—´ë§Œ ì‚¬ìš©ê°€ëŠ¥í•˜ê¸°ì— error : Type mismatch: cannot convert from int to char
 //			System.out.print(cArr4[i] + " ");
 //		}
 		
@@ -101,7 +101,7 @@ public class D_array {
 		}
 		System.out.println(Arrays.toString(cArr4)); // [1, 2, 3, 4]
 		
-		// ¹è¿­ »èÁ¦
+		// ë°°ì—´ ì‚­ì œ
 		cArr4 = null; 
 		System.out.println(Arrays.toString(cArr4));
 		System.out.println(Arrays.toString(cArr3));
@@ -113,29 +113,29 @@ System.out.println("===practice 3rd===");
 
 
 /******************************practice 3rd ************************************/
-		// ¹è¿­ ¼±¾ð
+		// ë°°ì—´ ì„ ì–¸
 		float[] fArr;
-		float[] floatArr;	// Stack ¿µ¿ª¿¡ °ø°£ »ý¼º
+		float[] floatArr;	// Stack ì˜ì—­ì— ê³µê°„ ìƒì„±
 	
-		// ¹è¿­ ÇÒ´ç
+		// ë°°ì—´ í• ë‹¹
 		float[] fArr1 = new float[5];
 		double[] dArr = new double[5];
 		
-		// ¹è¿­ ÃÊ±âÈ­
-		// ¹æ¹ý 1 : ÀÎµ¦½º
+		// ë°°ì—´ ì´ˆê¸°í™”
+		// ë°©ë²• 1 : ì¸ë±ìŠ¤
 		dArr[0] = 0.1;
 		dArr[1] = 0.2;
 		dArr[2] = 3.0;
-		dArr[3] = 3;	// 3.0À¸·Î Ãâ·Â -> ÀÚµ¿Çüº¯È¯
+		dArr[3] = 3;	// 3.0ìœ¼ë¡œ ì¶œë ¥ -> ìžë™í˜•ë³€í™˜
 		System.out.println(Arrays.toString(dArr));
 		
-		// ¹æ¹ý2 : Áß°ýÈ£
+		// ë°©ë²•2 : ì¤‘ê´„í˜¸
 		double[] dArr2 = {0.1,0.2,0.3};
-		System.out.println(Arrays.toString(dArr2)); // [0.1, 0.2, 0.3] -> ¹è¿­ ¾È °ªÀÌ ÃÖ´ë±æÀÌº¸´Ù ÂªÀ¸¸é °ª¸¸Å­¸¸ Ãâ·ÂµÇ¼­ ³ª¿È(¿©ºÐ°ø°£¿¡ ´Ù¸¥°ªx)
-		// ¹æ¹ý3 : for¹®
+		System.out.println(Arrays.toString(dArr2)); // [0.1, 0.2, 0.3] -> ë°°ì—´ ì•ˆ ê°’ì´ ìµœëŒ€ê¸¸ì´ë³´ë‹¤ ì§§ìœ¼ë©´ ê°’ë§Œí¼ë§Œ ì¶œë ¥ë˜ì„œ ë‚˜ì˜´(ì—¬ë¶„ê³µê°„ì— ë‹¤ë¥¸ê°’x)
+		// ë°©ë²•3 : forë¬¸
 		double[] dArr3 = new double[3];
-		// double·Î Çüº¯È¯ °¡´ÉÇÑ int¸é for¹® °¡´ÉÇÒ±î?  
-		// °¡´É. intÀÎ i°¡ ½Ç¼ö·Î º¯È¯ °¡´ÉÇÑ ¼öÀÌ±â¿¡
+		// doubleë¡œ í˜•ë³€í™˜ ê°€ëŠ¥í•œ intë©´ forë¬¸ ê°€ëŠ¥í• ê¹Œ?  
+		// ê°€ëŠ¥. intì¸ iê°€ ì‹¤ìˆ˜ë¡œ ë³€í™˜ ê°€ëŠ¥í•œ ìˆ˜ì´ê¸°ì—
 		for(int i=0; i < dArr3.length; i++) {
 			dArr3[i] = i + 1;
 			System.out.print(dArr3[i]+" "); // 1.0 2.0 3.0 
@@ -145,7 +145,7 @@ System.out.println("===practice 3rd===");
 		
 		dArr3 = null;
 //		for(int i = 0; i < dArr3.length; i++) {
-//			System.out.println(dArr3); // nullÀÎ ¹è¿­°ª È®ÀÎ ½Ã, for¹®¹æ¹ýÀº ³ÎÆ÷ÀÎÆ®ÀÍ¼Á¼Ç ¾²¹Ç·Î Arrays.toString() »ç¿ëÇØ¾ßÇÔ
+//			System.out.println(dArr3); // nullì¸ ë°°ì—´ê°’ í™•ì¸ ì‹œ, forë¬¸ë°©ë²•ì€ ë„í¬ì¸íŠ¸ìµì…‰ì…˜ ì“°ë¯€ë¡œ Arrays.toString() ì‚¬ìš©í•´ì•¼í•¨
 //		}
 		System.out.println(Arrays.toString(dArr3)); // null
 
@@ -157,49 +157,49 @@ System.out.println("===practice 4th===");
 		
 		
 		
-		// ¹è¿­ ¼±¾ð 
-		// ¹è¿­ ÇÒ´ç
-		// ¹è¿­ ÃÊ±âÈ­ : ÀÎµ¦½º,Áß°ýÈ£,for¹®
-		// ¹è¿­ »èÁ¦ : null
-		// ¹è¿­ °ª Ãâ·ÂÇÏ´Â ¹æ¹ý 2°¡Áö : for¹®, Arrays.toString()
+		// ë°°ì—´ ì„ ì–¸ 
+		// ë°°ì—´ í• ë‹¹
+		// ë°°ì—´ ì´ˆê¸°í™” : ì¸ë±ìŠ¤,ì¤‘ê´„í˜¸,forë¬¸
+		// ë°°ì—´ ì‚­ì œ : null
+		// ë°°ì—´ ê°’ ì¶œë ¥í•˜ëŠ” ë°©ë²• 2ê°€ì§€ : forë¬¸, Arrays.toString()
 		
 		
-		// ¹è¿­ ¼±¾ð : Stack ¿µ¿ª¿¡ °ø°£ »ý¼º(º¯¼öÀÇ ¼±¾ð : stack¿¡ °ø°£ Â÷Áö)
+		// ë°°ì—´ ì„ ì–¸ : Stack ì˜ì—­ì— ê³µê°„ ìƒì„±(ë³€ìˆ˜ì˜ ì„ ì–¸ : stackì— ê³µê°„ ì°¨ì§€)
 		byte[] bArr;
 		
-		// ¹è¿­ ÇÒ´ç : heap ¿µ¿ª¿¡ °ø°£ »ý¼º
+		// ë°°ì—´ í• ë‹¹ : heap ì˜ì—­ì— ê³µê°„ ìƒì„±
 		byte[] bArr1 = new byte[3];
 		byte[] bArr2 = new byte[5];
 		double[] dArr10 = new double[5];
 		
-		// ¹è¿­ ÃÊ±âÈ­ : ÀÎµ¦½º,Áß°ýÈ£,for¹®
-		// ¹æ¹ý1 : ÀÎµ¦½º
+		// ë°°ì—´ ì´ˆê¸°í™” : ì¸ë±ìŠ¤,ì¤‘ê´„í˜¸,forë¬¸
+		// ë°©ë²•1 : ì¸ë±ìŠ¤
 		bArr1[0] = 1;
 		bArr1[1] = 2;
 		bArr1[2] = 3;
-		bArr2[0] = 10; // bArr2´Â 10Ä­ Áß ÇÑÄ­¸¸ Ã¤¿ò ³ª¸ÓÁö´Â ¾î¶»°ÔµÉ±î?
+		bArr2[0] = 10; // bArr2ëŠ” 10ì¹¸ ì¤‘ í•œì¹¸ë§Œ ì±„ì›€ ë‚˜ë¨¸ì§€ëŠ” ì–´ë–»ê²Œë ê¹Œ?
 		dArr10[0] = 10;
 		System.out.println(Arrays.toString(bArr2));
 		System.out.println(Arrays.toString(dArr10));
 		
-		// ¹æ¹ý2 : Áß°ýÈ£
+		// ë°©ë²•2 : ì¤‘ê´„í˜¸
 		byte[] bArr3 = {1,2,3};
-		// ¹æ¹ý3 : for¹®
+		// ë°©ë²•3 : forë¬¸
 		for(int i=0; i<bArr1.length;i++) {
 			System.out.print(bArr1[i]+ " "); // 1 2 3
 		}
 		System.out.println();
 		
 		
-		// ¹è¿­ »èÁ¦ : null1
+		// ë°°ì—´ ì‚­ì œ : null1
 		bArr2 = null;
 		
-		// ¹è¿­ °ª Ãâ·ÂÇÏ´Â ¹æ¹ý 2°¡Áö : for¹®, Arrays.toString()
-		// ¹æ¹ý1 for¹®
+		// ë°°ì—´ ê°’ ì¶œë ¥í•˜ëŠ” ë°©ë²• 2ê°€ì§€ : forë¬¸, Arrays.toString()
+		// ë°©ë²•1 forë¬¸
 		for(int i=0; i < bArr1.length; i++) {
 			System.out.print(bArr1[i]+" ");
 		}
-		// ¹æ¹ý 2 Arrays.toString
+		// ë°©ë²• 2 Arrays.toString
 		System.out.println(Arrays.toString(bArr2));
 		System.out.println(bArr1.toString());
 //		System.out.println(bArr2.toString());
@@ -209,21 +209,21 @@ System.out.println("===practice 5th===");
 		
 /******************************practice 5th ************************************/		
 		
-		// ¹è¿­ ¼±¾ð
+		// ë°°ì—´ ì„ ì–¸
 		int[] nArr;
 		
-		// ¹è¿­ ÇÒ´ç
+		// ë°°ì—´ í• ë‹¹
 		int[] nArr1 = new int[3];
 		
-		// ¹è¿­ ÃÊ±âÈ­
-		// ¹æ¹ý1 : ÀÎµ¦½º
+		// ë°°ì—´ ì´ˆê¸°í™”
+		// ë°©ë²•1 : ì¸ë±ìŠ¤
 		nArr1[0] = 1;
 		nArr1[1] = 2;
 		
-		// ¹æ¹ý2 : Áß°ýÈ£
+		// ë°©ë²•2 : ì¤‘ê´„í˜¸
 		int[] nArr3 = {1,2,3};
 		
-		// ¹æ¹ý3 : for¹®
+		// ë°©ë²•3 : forë¬¸
 		for(int i=0; i < 3; i++) {
 			
 			nArr3[i] = i +1;
@@ -249,7 +249,7 @@ System.out.println("===practice 5th===");
 		System.out.println(baseArr); // [I@677327b6
 		System.out.println(copyArr); // [I@677327b6
 		
-		// ¿øº» ¹è¿­°ª º¯°æ ÈÄ ÁÖ¼Ò°ª È®ÀÎÇØº¸±â
+		// ì›ë³¸ ë°°ì—´ê°’ ë³€ê²½ í›„ ì£¼ì†Œê°’ í™•ì¸í•´ë³´ê¸°
 		baseArr[4] = 10;
 		for(int i=0; i<baseArr.length;i++) {
 			System.out.print(baseArr[i] + " "); // 1 2 3 4 10

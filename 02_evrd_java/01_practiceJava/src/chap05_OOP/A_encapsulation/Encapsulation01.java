@@ -3,38 +3,38 @@ package chap05_OOP.A_encapsulation;
 public class Encapsulation01 {
 
 	
-	private String ClientName = "±èÃ¶¼ö";
+	private String ClientName = "ê¹€ì² ìˆ˜";
 	private String phone = "010-1234-5678";
 	private String pwd = "abcd";
 	private int bankCode = 1500;
 	private int balance = 0;
 	
 	
-	// ÀÔ±İ ¸Ş¼Òµå
+	// ì…ê¸ˆ ë©”ì†Œë“œ
 	public void deposit(int money) {
 		
 		if(money > 0) {
 			balance += money;
-			System.out.println(ClientName+"´ÔÀÇ °èÁÂ¿¡¼­ "+money+"¿øÀÌ ÀÔ±İµÇ¾ú½À´Ï´Ù");
+			System.out.println(ClientName+"ë‹˜ì˜ ê³„ì¢Œì—ì„œ "+money+"ì›ì´ ì…ê¸ˆë˜ì—ˆìŠµë‹ˆë‹¤");
 		}else {
-			System.out.println("±İ¾×À» Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù");
+			System.out.println("ê¸ˆì•¡ì„ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤");
 		}
 	}
 	
-	// Ãâ±İ ¸Ş¼Òµå
+	// ì¶œê¸ˆ ë©”ì†Œë“œ
 	public void withdraw(int money) {
 		if(money <= balance) {
 			balance -= money;
-			System.out.println(ClientName+"´ÔÀÇ °èÁÂ¿¡¼­ "+money+"¿øÀÌ Ãâ±İµÇ¾ú½À´Ï´Ù");
+			System.out.println(ClientName+"ë‹˜ì˜ ê³„ì¢Œì—ì„œ "+money+"ì›ì´ ì¶œê¸ˆë˜ì—ˆìŠµë‹ˆë‹¤");
 		}else {
-			System.out.println("ÀÜ¾×º¸´Ù ÃÊ°úµÈ ±İ¾×À» ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+			System.out.println("ì”ì•¡ë³´ë‹¤ ì´ˆê³¼ëœ ê¸ˆì•¡ì„ ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		}
 		
 	}
 	
-	// ÀÜ¾× Á¶È¸ ¸Ş¼Òµå
+	// ì”ì•¡ ì¡°íšŒ ë©”ì†Œë“œ
 	public void checkBalance() {
-		System.out.println(balance+"¿øÀÌ ³²¾ÆÀÖ½À´Ï´Ù.");
+		System.out.println(balance+"ì›ì´ ë‚¨ì•„ìˆìŠµë‹ˆë‹¤.");
 	}
 	
 }

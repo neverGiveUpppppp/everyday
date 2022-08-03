@@ -3,36 +3,36 @@ package chap05_OOP.A_encapsulation;
 public class Encapsulation02 {
 
 	
-	String ClientName = "ÃÖ¿µ¼ö";
+	String ClientName = "ìµœì˜ìˆ˜";
 	int balance = 0;
 	
 	
 	
-	// ÀÔ±İ ±â´É
+	// ì…ê¸ˆ ê¸°ëŠ¥
 	public void deposit(int transfer) {
 		if(transfer > 0) {
 			balance += transfer;
-			System.out.println(ClientName+"´ÔÀÇ °èÁÂ¿¡ "+transfer+"¿øÀÌ ÀÔ±İµÇ¾ú½À´Ï´Ù.");
+			System.out.println(ClientName+"ë‹˜ì˜ ê³„ì¢Œì— "+transfer+"ì›ì´ ì…ê¸ˆë˜ì—ˆìŠµë‹ˆë‹¤.");
 		}else {
-			System.out.println("ÀÔ±İ ±İ¾×À» Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù.");
+			System.out.println("ì…ê¸ˆ ê¸ˆì•¡ì„ ì˜ëª» ì…ë ¥í•˜ì…¨ìŠµë‹ˆë‹¤.");
 		}
 	}
 
 	
-	// Ãâ±İ ±â´É
+	// ì¶œê¸ˆ ê¸°ëŠ¥
 	public void withdraw(int transfer) {
 		if(transfer <= balance) {
 			balance -= transfer;
-			System.out.println(ClientName+"´ÔÀÇ °èÁÂ¿¡¼­ "+transfer+"¿øÀÌ Ãâ±İ µË´Ï´Ù.");
+			System.out.println(ClientName+"ë‹˜ì˜ ê³„ì¢Œì—ì„œ "+transfer+"ì›ì´ ì¶œê¸ˆ ë©ë‹ˆë‹¤.");
 		}else {
-			System.out.println("ÀÜ¾×ÀÌ ºÎÁ·ÇÕ´Ï´Ù");
+			System.out.println("ì”ì•¡ì´ ë¶€ì¡±í•©ë‹ˆë‹¤");
 		}
 	}
 
 	
-	// ÀÜ¾× Á¶È¸ ±â´É
+	// ì”ì•¡ ì¡°íšŒ ê¸°ëŠ¥
 	public void checkBalance() {
-		System.out.println(balance+"¿øÀÌ ³²¾ÆÀÖ½À´Ï´Ù");
+		System.out.println(balance+"ì›ì´ ë‚¨ì•„ìˆìŠµë‹ˆë‹¤");
 	}
 	
 	

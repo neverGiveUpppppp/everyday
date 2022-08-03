@@ -20,84 +20,159 @@
 
 	<c:import url="../common/menubar.jsp"/>
 	
-	<h1 align="center">${board.boradId }번 글의 상세보기</h1>
-	<form action="bupview.bo" method="post">
+	<h1 align="center">${board.boardId }번 글의 상세보기</h1>
+	
+	
+	<form action="" method="post">
 		<table>
 			<tr>
 				<th>번호</th>
 				<td>
-					${ board.boardId }
-					<input type="hidden" value="${ board.boardId }" name="boardId">
-					<input type="hidden" value="${ page }" name="page">
+					<input type="hidden" name="boardId" value="${ board.boardId }">
+					<input type="hidden" name="page" value="${ page }">
 				</td>
 			</tr>
+			
+			<tr>
 				<th>제목</th>
 				<td>
-					${board.boardTitle}
-					<input type="hidden" value="${ board.boardTitle }" name="boardTitle">
-				</td>			
+					${ board.boardTitle }
+					<input type="hidden" name="boardTitle" value="${ board.boardTitle }">
+				</td>
+			</tr>
+			
 			<tr>
 				<th>작성자</th>
 				<td>
 					${ board.nickName }
-					<input type="hidden" value="${ board.nickName }" name="nickName">
+					<input type="hidden" name="nickName" value="${ board.nickName }">
 				</td>
-			</tr>
+			</tr>		
 			<tr>
 				<th>작성날짜</th>
 				<td>
-					${ board.boardCreateDate }
-					<input type="hidden" value="${ board.boardCreateDate }" name="boardCreateDate">
+					${ board.board CreateDate }
 				</td>
-			</tr>
+			</tr>		
 			<tr>
 				<th>내용</th>
 				<% pageContext.setAttribute("newLineChar", "\r\n"); %>
 				<td>
-					${ fn:replace(board.boardContent, newLineChar, "<br>") }
+					${fn:replace(board.boardContent, newLineChar, "<br>" }
 					<input type="hidden" value="${ board.boardContent }" name="boardContent">
 				</td>
-			</tr>
+				
+			</tr>	
 			
-			<c:if test="${ !empty originalFileName }">
+			<c:if test="${board.originalFileName != null }">	
 				<tr>
 					<th>첨부파일</th>
 					<td>
-						<a href="${pageContext.servletContext.contextPath }/resoures/buploadFiles/${board.renameFileName}" download="${board.originalFileName }">${board.originalFileName}</a>
-						<input type="hidden" value="${ board.originalFileName }" name="originalFileName">
-						<input type="hidden" value="${ board.renameFileName }" name="board.renameFileName">
+						<a href="${pageContext.servletContext.contextPath }/resources/buploadFiles/${board.renameFileName}" download="${board.originalFileName }"> ${board.originalFileName }</a>
+						<input type="hidden" name="renameFileName" value="${ board.renameFileName }">
+						<input type="hidden" name="originalFileName" vlaue="${ board.originalFileName }">
 					</td>
 				</tr>
 			</c:if>
 			
-			<c:url var="bdelete" value="bdelete.bo">	<!-- c:url 변수선언함. 그리고 아래 button태그에서 끌어다 씀 -->
-				 <c:param name="bId" value="${ board.boardId }"/>	<!-- 삭제버튼에 필요한 게시판번호 데이터보내기 -->
-				 <c:param name="renameFileName" value="${ board.renameFileName }"/>
+			<!-- url변수선언 -->
+			<c:url var="bdelete" value="bdelete.bo">
+				<c:param name="bId" value="${ board.boardId }"/>
+				<c:param name="renameFileName" value="${ board.renameFileName }"/>
 			</c:url>
-			<c:url var="blist" value="blist.bo">  <!-- 게시판목록으로 가는 url설정 -->
-				<c:param name="page" value="${ page }"/> <!-- 보던 게시판으로 돌아가기 위해 page번호 필요 for pagination -->
-			</c:url>	
+			<c:url var="blist" value="blist.bo">
+				<c:param name="page" value="${ page }"/>
+			</c:url>
 			
-			<c:if test="${ loginUser.id eq board.boardWriter }">
+			<!-- 로그인한 유저가 작성자라면, 수정삭제버튼 보이기 --> 
+			<c:if test="${ loginUser.id eq ${ board.boardWriter }">
 				<tr>
 					<td colspan="2" align="center">
-						<button type="button" onclick="location.href=">수정하기</button>
-						<button type="button" onclick="location.href='${bdelete}'">삭제하기</button>
-					</td>
+						<button type="button" onclick="locaiont.href='${ bupdate }'">수정하기</button>
+						<button type="button" onclick="location.href='${ bdelete }'">삭제하기</button>
+					</td>	
 				</tr>
 			</c:if>
+			
 			
 		</table>
 	</form>
 	
-	
-	
 	<p align="center">
-		<button onclick="location.href='home.do'">시작 페이지 이동</button>
-		<button onclick="location.href='${ blist }'">목록 보기로 이동</button>
+		<button onclick="location.href='home.do'">시작화면으로</button>
+		<button onclick="location.href='${blist}'">게시판 목록 보기</button>
 	</p>
-
-
+	<br>
+	<br>
+	
+	
+	<table class="replyTable">
+		<tr>
+			<td><textarea cols="55" rows="3" id="replyContent"></textarea></td>
+			<td><button id="rSubmit">등록하기</button></td>
+		</tr>
+	</table>	
+	<table class="replyTable" id="rtb">
+		<thead>
+			<tr>
+				<td colspan="2"><b id="rCount"></b></td>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+	
+	<script>
+		
+		// 댓글 등록 : jQuery ajax
+		$('#rSumit').click(funtion(){
+			var rContent = ${'#replyContent'}.val();
+			var refBId = ${board.boardId };
+			
+			$.ajax({
+				url:'addreplybo',
+				data:{replyContent:rContent, boardId:reBId },
+				success:function(data){
+					console.log(data);
+					if(data == 'success'){
+						$('#replyContent').val(' ');
+					}
+				},
+				error{
+					console.log(data);
+				}
+			});
+		});
+		
+	
+		// 등록한 댓글 읽어오기
+		function getReplyList() {
+				
+			$.ajax({
+				url:'rList.bo',
+				data:{bId,${board.boardId}},
+				success:function(data){
+					console.log(data);
+					
+				},
+				error:function(data){
+					console.log(data);
+				}
+			
+			
+			})
+				
+				
+				
+			
+		}
+	
+	
+	</script>
+	
+	
 
 </body>
 </html>
+
