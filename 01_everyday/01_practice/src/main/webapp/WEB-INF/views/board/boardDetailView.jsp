@@ -115,71 +115,86 @@
 	
 	<script>
 		// 댓글등록
-		${'#rSubmit'}.on('click'.function(){
+		$('rSubmit').on('click',function(){
 			var rContent = $('#replyContent').val();
-			var refBId = ${board.boardId};
+			var refBId = $(board.boardId);
 			
 			$.ajax({
-				url:'addreply.bo',
+				url:'addReply.bo',
 				data:{replyContent:rContent, boardId:refBId},
-				success:function(data){
+				success:function(){
 					console.log(data);
-					
-					if(data == success){
+					if(data == 'success'){
 						$('#replyContent').val(' ');
 					}
 				},
-				error:function(data){
+				error:function(){
 					console.log(data);
 				}
 			});
 		});
 		
+		
 		// 등록한 댓글 읽어오기
-		function getReplyList() {
+		function getReplyList(){
 			$.ajax({
-				url: 'rList.bo',
-				data: {bId:${board.boardId}},
-				success: function(data) {
+				url:'rList.bo',
+				data:{bId:${board.boardId}},
+				success:function(data){
 					console.log(data);
 					
 					// 계속 이어붙기 때문에 공백 넣어줘야함
 					$tableBody = $('#rtb tbody');
 					$tableBody.html('');
 					
+					// 변수선언
 					var $tr;
 					var $writer;
 					var $content;
-					var $date;
-					$('#rCount').text('댓글(' + data.length + ')');
+					var $data;
+					$('#rCount').text('댓글('+ data.length + ')');
 					
-					if(data.length > 0) {
-						for (var i in data) {
-							$tr = $('<tr>');
-							$writer = $('<td>').css('width', '100px').text(data[i].nickName);
+					if(data.length > 0){
+						for(var i in data){
+							$tr = $('<td>');
+							$writer = $('<td>').css('width','100px').text(data[i].nickName);
 							$content = $('<td>').text(data[i].replyContent);
-							$date = $('<td width="100px">').text(data[i].replyCreateDate);
-						
+							$data = $('<td width="100px">').text(data[i].replyCreateDate);
+							
 							$tr.append($writer);
 							$tr.append($content);
 							$tr.append($date);
 							$tableBody.append($tr);
+							
 						}
 					}else{
-						$tr = $('<tr>');
-						$content = $('<td colspan="3">').text('등록된 댓글이 없습니다.');  /* attr해서 집어넣는 것도 가능 */
-					
+						$tr = $('<td>');
+						$content = $('<td colspan="3">').text('등록된 댓글이 없습니다.');
+						
 						$tr.append($content);
 						$tableBody.append($tr);
+						
 					}
+					
 				},
-				error: function(data) {
+				error:function(data){
 					console.log(data);
 				}
+				
+				
 			});
+			
 		}
 		
-	
+		// 다른 사람이 쓴 댓글도 볼 수 있게 5초마다 읽어오도록
+		$(function(){
+			getReplyList();
+			
+			setInterval(function(){
+				getReplyList();
+			}, 5000);
+		});
+		
 	
 	</script>
 	
