@@ -234,11 +234,74 @@ System.out.println("===practice 5th===");
 		nArr3 = null;
 		System.out.println(Arrays.toString(nArr3));
 		
+
+System.out.println("===practice 6th===");
+
+/******************************practice 6th ************************************/		
+	
+		// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+		// 배열 할당 : heap 영역에 공간 생성
+		// 배열 초기화 : 인덱스,중괄호,for문
+		// 배열 삭제 : null
+		// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+
+		//배열 선언
+		float[] fArr00;
+		
+		// 배열 할당
+		float[] fArr10 = new float[3];
+		float fArr20[] = new float[3];
+		
+		// 배열 초기화
+		// 1)인덱스
+		fArr10[0] = 1;
+//		fArr10[1] = 2.0; // cannot convert double to float -> 해결 : 접미사 f 붙여야함 또는 강제형변환
+		fArr10[1] = (float)2.0; // 강제형변환
+		fArr10[1] = 2.0f;		// 접미사 f 추가
+		fArr10[2] = 3;
+
+		
+		// 2)중괄호
+		// 선언과 동시에 초기화
+		float[] fArr30 = {1.0f,2.0f,3};
+		
+		// 3)for문
+		float[] fArr40 = new float[5];
+		for(int i=0; i < fArr40.length; i++) {
+			fArr40[i] = i + 1;
+			System.out.print(fArr40[i] + ' ');	// 33.034.035.036.037.0 
+			// 싱글 쿼테이션으로 하면 33.0 34.0 이런식으로 나오는데 아스키코드 영향인가? 
+			// 아스키코드표 찾아보니까 33 34쪽에 SOH STX이런게 있는데 뭔지 모르니 일단 스킵
+		}
+		System.out.println();
+		System.out.println(Arrays.toString(fArr40)); // [1.0, 2.0, 3.0, 4.0, 5.0]
+		
+		
+		// 배열 삭제
+		System.out.println(Arrays.toString(fArr10)); // [1.0, 2.0, 3.0]
+		fArr10 = null;
+		System.out.println(Arrays.toString(fArr10)); // null
+		
+		
+		
+System.out.println("===practice 7th===");
+
+/******************************practice 7th ************************************/		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	}
 
-	
-	
+
+
+/********************************************************************************/
 	
 	
 	public void shallowCopy() {
