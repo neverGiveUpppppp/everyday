@@ -7,6 +7,9 @@ import chap06_objectArray.model.vo.Person;
 public class PersonController {
 	
 	public void objectArray01() {
+		// 객체 배열 안의 주소값이 아닌 객체 속성값을 찍으려면 vo클래스의 toString()를 사용해야한다
+		// 		ex) System.out.println(pArr[i].personInfo());
+		
 		
 		// 배열 선언 & 초기화
 		Person[] pArr = new Person[5];
@@ -29,8 +32,6 @@ public class PersonController {
 		Person[] pArr = {new Person("힘내",46,'남',161,63),
 						 new Person("아자아자",32,'남',272,46.1),
 						 new Person("으랴차차",35,'남',171.1,69)};
-						 
-		
 	}
 	
 	

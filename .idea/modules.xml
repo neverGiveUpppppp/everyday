@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../workspace_01_kh/6_FrameWork_MyBatis_workspace/1_MyBatis/1_MyBatis.iml" filepath="$PROJECT_DIR$/../workspace_01_kh/6_FrameWork_MyBatis_workspace/1_MyBatis/1_MyBatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../workspace_01_kh/6_FrameWork_MyBatis_workspace/6_FrameWork_MyBatis_workspace.iml" filepath="$PROJECT_DIR$/../workspace_01_kh/6_FrameWork_MyBatis_workspace/6_FrameWork_MyBatis_workspace.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../workspace_01_kh/6_FrameWork_MyBatis_workspace/Servers/Servers.iml" filepath="$PROJECT_DIR$/../workspace_01_kh/6_FrameWork_MyBatis_workspace/Servers/Servers.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/workspace_00_evrd.iml" filepath="$PROJECT_DIR$/.idea/workspace_00_evrd.iml" />
     </modules>
   </component>
