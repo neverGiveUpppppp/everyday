@@ -8,7 +8,7 @@ public class Person02 {
 	private double height;
 	private double weight;
 	
-	Person02(){}
+	public Person02(){}
 	
 	public Person02(String name, int age) {
 		this.name= name;

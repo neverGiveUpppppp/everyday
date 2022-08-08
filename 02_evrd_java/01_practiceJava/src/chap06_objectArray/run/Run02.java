@@ -8,7 +8,7 @@ public class Run02 {
 
 		
 		Person02Controller pc = new Person02Controller();
-		pc.objectArr01();
+		pc.objectArr02();
 		
 		
 		

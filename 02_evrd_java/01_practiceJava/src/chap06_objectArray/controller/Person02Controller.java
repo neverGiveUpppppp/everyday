@@ -3,6 +3,7 @@ package chap06_objectArray.controller;
 import java.util.Arrays;
 
 import chap06_objectArray.model.vo.Person;
+import chap06_objectArray.model.vo.Person02;
 
 public class Person02Controller {
 	
@@ -11,21 +12,35 @@ public class Person02Controller {
 		// 예제
 		// 출처 :http://daplus.net/java-java%EB%A1%9C-%EA%B0%9D%EC%B2%B4-%EB%B0%B0%EC%97%B4-%EB%A7%8C%EB%93%A4%EA%B8%B0/
 		
+		
+		// 1.선언 및 인스턴스화
+		// 2.객체 초기화
+		// 		방법1 : index
+		// 		방법2 : for문
+		// 3.방금 만든 객체에서 기존 메소드 호출 가능해짐
+		// 			   arr[i].toString()
+		// 		방법1 : arr[i].getter
+		// int x = arr[1].getNumber();
+		// 		방법2 : arr[i].setter
+		// arr[1].setNumber(x);
+		
 		// 1.선언 및 인스턴스화
 		A[ ] arr = new A[4];
 		
 		// 2.객체 초기화
-		// 방법1
+		// 방법1 : index
 		arr[0] = new A();
 		arr[1] = new A();
 		arr[2] = new A();
 		arr[3] = new A();
 		
-		// 방법2
+		// 방법2 : for문
 		for( int i=0; i<4; i++ ) {
 			  arr[i] = new A();
 		}
-		// 방금 만든 객체에서 기존 메소드 호출 가능해짐
+		// 3.방금 만든 객체에서 기존 메소드 호출 가능해짐
+		// arr[i].toString()
+		
 		// 방법1
 		int x = arr[1].getNumber();
 		// 방법2
@@ -119,12 +134,145 @@ public class Person02Controller {
 		
 		
 		
-System.out.println("Object Array practice 2nd");		
+System.out.println("=====Object Array practice 2nd=====");		
 
 	}
 /******************************** Object Array practice 2nd ***************************************/	
 	
 	public void objectArr02() {
+		
+		// 객체배열
+		//
+		// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+		// 배열 할당 : heap 영역에 공간 생성
+		// 배열 초기화 : 인덱스,중괄호,for문
+		// 배열 삭제 : null
+		// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+		
+		// 배열 선언
+		Person[] oArr;
+		
+		// 배열 선언 & 할당
+		Person[] obArr = new Person[3];
+		
+		// 배열 초기화
+		// 	방법1 : index
+		obArr[0] = new Person("킴",20,'M',173,69);		// 중괄호가 아닌 소괄호
+		obArr[1] = new Person("choi", 22, 'M', 165,45);
+		obArr[2] = new Person("yu",32,'M',173.2,72.3);
+		
+		// 	방법2 : 중괄호
+		Person02[] obArrr000 = {new Person02(),
+								new Person02(),
+								new Person02()
+								};
+		
+		
+		// 	방법3 : for문
+		Person02[] obArrr = new Person02[5];
+		for(int i=0; i < obArrr.length; i++) {
+			obArrr[i] = new Person02("a",1,'M',1,1);
+			System.out.println(obArrr[i].personInfo()); // 객체값 출력
+		}
+		// 이중포문으로 객체 안 숫자 증가시켜보기
+		for(int i=0; i < obArrr.length;i+=2) {
+			int j=1;
+			for(; j < obArrr.length; j++) {
+				obArrr[i] = new Person02("a",j,'M',j+10,j+20);
+				System.out.println(obArrr[i].personInfo());
+			}
+		}
+		
+		// 객체 배열 : 출력
+		// 
+		for(int i=0; i < obArrr.length; i++) {
+			obArrr[i] = new Person02();
+			System.out.println(obArrr[i] + " ");		// 주소값 출력
+			System.out.println(obArrr[i].personInfo()); // 객체값 출력
+		}
+		
+		System.out.println("====null====");
+		System.out.println(Arrays.toString(obArrr)); // [chap06_objectArray.model.vo.Person02@6d06d69c, chap06_objectArray.model.vo.Person02@7852e922, chap06_objectArray.model.vo.Person02@4e25154f, chap06_objectArray.model.vo.Person02@70dea4e, chap06_objectArray.model.vo.Person02@5c647e05]
+		System.out.println(obArrr[0].personInfo());  // null, 0,  0.0, 0.0
+		obArrr = null;
+		System.out.println(Arrays.toString(obArrr)); // null
+		
+		Person02[] objArr001;
+		Person02[] objArr002 = new Person02[5];
+		objArr002[0] = new Person02("a", 1,'M',171,66.2);
+		objArr002[1] = new Person02();
+		objArr002[2] = new Person02();
+//		objArr002[2] = new Person02(Person02.getName()); // Person02클래스의 게터에서 값을 끌어올 수 있을까 해서 해봄 
+		// 스태틱 요구함 Cannot make a static reference to the non-static method getName() from the type Person02
+		Person02[] objArr004 = {new Person02(),
+								new Person02("철희", 32, 'M', 171,56),
+								new Person02("영희", 32, 'W', 161,46)
+								};
+
+		Person02[] objArr003 = new Person02[5];
+		for(int i=0; i < objArr003.length; i++) {
+			objArr003[i] = new Person02(); 
+			System.out.println(objArr003[i].personInfo());
+		}
+		
+
+		
+		
+		
+System.out.println("=====Object Array practice 3rd=====");	
+
+/******************************** Object Array practice 3rd ***************************************/	
+
+		//객체배열
+		//
+		// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+		// 배열 할당 : heap 영역에 공간 생성
+		// 배열 초기화 : 인덱스,중괄호,for문
+		// 배열 삭제 : null
+		// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+		
+		// 객체배열 선언
+		Person02[] oArr000;
+		// 객체배열 할당
+		Person02[] oArr001 = new Person02[3];
+		Person02[] oArr003 = new Person02[3];
+		
+		// 초기화
+		// 	방법1 : index
+		oArr001[0] = new Person02("박",25,'M',161,65);
+		oArr001[1] = new Person02("강",22,'F',161,45);
+		oArr001[2] = new Person02("최",22,'F',161,45);
+		
+		// 	방법2 : 중괄호
+		// 객체배열 선언,할당과 동시에 초기화
+		Person02[] oArr002 = {new Person02("김",29,'M',171,62),
+				new Person02("이",28,'M',192,83),
+				new Person02("최",25,'M',185,81)
+		};
+		
+		//  방법3 : for문
+		for(int i=0; i < oArr003.length; i++) {
+			oArr003[i] = new Person02("a",i+20,'M',i+170,i+60);
+			System.out.println(Arrays.toString(oArr003));
+		}
+		
+//		System.out.println(Arrays.toString(oArr003[1])); // error : toString // The method toString(long[]) in the type Arrays is not applicable for the arguments (Person02)
+		System.out.println(oArr003[1].personInfo());
+		
+		for(int i=0; i < oArr003.length;i++) {
+			System.out.println(oArr003[i]); // chap06_objectArray.model.vo.Person02@33909752
+		}
+	
+		oArr003 = null;
+		System.out.println(Arrays.toString(oArr003)); // null
+
+		System.out.println(oArr001[0].personInfo()); 
+		
+		for(int i=0; i < oArr001.length; i++) {
+			System.out.println(oArr001[i].personInfo()); 
+		}
+		
+		
 		
 	}
 	
