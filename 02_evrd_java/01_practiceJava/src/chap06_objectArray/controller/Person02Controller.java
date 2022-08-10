@@ -274,6 +274,66 @@ System.out.println("=====Object Array practice 3rd=====");
 		
 		
 		
+System.out.println("=====Object Array practice 4th=====");	
+
+/******************************** Object Array practice 4th ***************************************/	
+
+		//객체배열
+		//
+		// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+		// 배열 할당 : heap 영역에 공간 생성
+		// 배열 초기화 : 인덱스,중괄호,for문
+		// 배열 삭제 : null
+		// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+		
+		// 객체배열 선언
+		Person[] objArr010;
+
+		// 객체배열 선언&할당
+		Person[] objArr011 = new Person[2];
+		Person[] objArr013 = new Person[3];
+		
+		// 객체배열 초기화
+		// 		방법1 : 인덱스
+		objArr011[0] = new Person("김기기",22,'M',171,66);
+		objArr011[1] = new Person("최치치",22,'M',171,67);
+				
+		
+		// 		방법2 : 중괄화
+		Person objArr012[] = {new Person("박비비",23,'M',182,67),
+							  new Person("최치치",22,'M',171,67),
+							  new Person("김기기",22,'M',171,66)
+							};
+		// 		방법3 : for문
+		for(int i=0; i < objArr013.length; i++) {
+			objArr013[i] = new Person("김기기",22,'M',171,66);
+			System.out.println("for문 초기화 = "+objArr013[i].personInfo());
+		}
+			
+			
+			
+		// 객체배열  삭제
+		objArr013 = null;
+		
+		// 객체 배열 내 값 출력
+		// 방법1 : for문
+		// 방법2 : Arrays.toString
+		System.out.println(Arrays.toString(objArr013));
+		// 인덱스+toString(vo class)
+		
+		System.out.println(objArr012[0].personInfo());
+	
+		
+		
+		
+System.out.println("=====Object Array practice 5th=====");	
+
+/******************************** Object Array practice 5th ***************************************/	
+
+
+
+
+
 	}
 	
 	
