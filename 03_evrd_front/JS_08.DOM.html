@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prac - DOM</title>
+
+<style>
+    .area{border:1px solid black; min-height:100px}
+    table{text-align: center;}
+    th{border: 1px solid black; width:100px;}
+</style>
+
+</head>
+<body>
+    
+    <h1>DOM(Document Object Model)</h1>
+    <h2>Node객체</h2>
+    <p>
+        노드 : 태그를 객체화 시켜 보는 것
+        노드 = 객체 = 태그
+    </p>
+
+    <h3>텍스트 노드가 있는 노드 생성</h3>
+    <button onclick="test1();">DOM - test1-1</button>
+    <div id="area1" class="area"></div>
+    <script>
+        function test1(){
+            // h3요소 노드를 만듦
+            var title = document.createElement('h3');
+
+            // 안녕 텍스트노드로 만들어진 데이터 생성함
+            var textNode = document.createTextNode('hi');
+
+            // 노드(요소)를 요소의 마지막 자식으로 추가
+            title.appendChild(textNode);
+            console.log(title)  // <h3>hi</h3>
+
+            // div태그에 엘리먼트 넣기
+            document.getElementById('area1').appendChild(title);
+        }
+    </script>
+
+    <button onclick="test1again();">DOM - test1-2</button>
+    <div id="area1-1" class="area"></div>
+    <script>
+        function test1again(){
+            // h3요소 노드를 만듦
+            var makeNode = document.createElement('h4');
+            console.log(makeNode);  // <h4>bye</h4>
+
+            // 안녕 텍스트노드로 만들어진 데이터 생성함
+            var textNode = document.createTextNode('bye');
+            console.log(textNode);  // bye
+
+            // 노드(요소)를 요소의 마지막 자식으로 추가
+            makeNode.appendChild(textNode);
+            console.log(makeNode)   // <h4>bye</h4>
+
+            // div태그에 엘리먼트 넣기
+            document.getElementById('area1-1').append(makeNode);
+            
+        }
+    </script>
+
+
+</body>
+</html>
