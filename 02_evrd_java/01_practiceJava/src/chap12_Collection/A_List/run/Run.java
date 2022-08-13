@@ -6,7 +6,10 @@ public class Run {
 	public static void main(String[] args) {
 
 		ListController lc = new ListController();
-		lc.method01();
+//		lc.method01();
+		lc.method02();
+		
+		
 		
 	}
 
