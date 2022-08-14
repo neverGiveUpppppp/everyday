@@ -7,7 +7,8 @@ public class Run {
 
 		ListController lc = new ListController();
 //		lc.method01();
-		lc.method02();
+//		lc.method02();
+		lc.method03(); // equals(), hashCode() 오버라이딩 실험
 		
 		
 		

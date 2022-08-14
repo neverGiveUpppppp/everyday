@@ -70,15 +70,15 @@ public class Student {
       return true;
    }
    
-   @Override
-   public int hashCode() {
-      final int PRIME = 31;
-      int result = 1;
-      
-      result = PRIME * result + (name == null ? 0 : name.hashCode());
-      result = PRIME * result + score;
-      
-      return result;
-   }
+//   @Override
+//   public int hashCode() {
+//      final int PRIME = 31;
+//      int result = 1;
+//      
+//      result = PRIME * result + (name == null ? 0 : name.hashCode());
+//      result = PRIME * result + score;
+//      
+//      return result;
+//   }
 }
 
