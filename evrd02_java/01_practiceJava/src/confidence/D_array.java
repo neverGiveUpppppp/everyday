@@ -288,6 +288,73 @@ System.out.println("===practice 7th===");
 
 /******************************practice 7th ************************************/		
 		
+
+// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+// 배열 할당 : heap 영역에 공간 생성
+// 배열 초기화 : 인덱스,중괄호,for문
+// 배열 삭제 : null
+// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+
+//
+// 		배열 크기 변경 불가(삭제하고 새로 만들기에 주소값이 변경됨)
+//		배열 안 값이 최대길이보다 짧으면 값만큼만 출력되서 나옴(여분공간에 다른값x)
+//		dArr[3] = 3;	// 3.0으로 출력 -> 자동형변환(int to double) 
+// 		초기화 for문 방법은 int만 가능하나, 실수로 형변환 가능한 int면 for문 가능 -> int인 i가 실수로 변환 가능한 수이기에 
+// 		null인 배열값 확인 시, for문방법은 널포인트익셉션 쓰므로 Arrays.toString() 사용해야함
+
+
+
+		
+		
+		// 배열 선언
+		String[] arr020;
+		
+		// 배열 선언 & 할당
+		String arr021[] = new String[2];
+		String[] arr022 = new String[3];
+		
+		// 배열 초기화
+		// 	방법1 : 인덱스
+		arr021[0] = "1";
+		arr021[1] = "둘";
+//		arr021[2] = "셋"; // 길이 초과  java.lang.ArrayIndexOutOfBoundsException: 2
+		System.out.println(Arrays.toString(arr021));	// [1, 둘]
+		
+		// 	방법2 : 중괄호
+		// 선언과 동시에 할당
+		String[] arr023 = {"a","b"};
+		System.out.println(Arrays.toString(arr023));	// [a, b]
+		
+		
+		// 	방법3 : for문
+		long[] arr025 = {1,2,3};	
+		for(int i=0; i < arr025.length; i++) {
+			arr025[i] += 1; 
+			System.out.println(arr025[i]); // 2,3,4
+//			System.out.println(Arrays.toString(arr025[i])); //long타입은 Arrays.toString이 안됨 
+		}
+		
+		
+		
+		// 배열 삭제
+		arr025 = null;
+		System.out.println(Arrays.toString(arr025)); // null
+		
+		// 배열 출력
+		// 	방법1 : for문
+		// 	방법2 : Arrays.toString()
+		
+		
+		
+		
+		
+		
+System.out.println("===practice 8th===");
+
+/******************************practice 8th ************************************/		
+		
+
+		
 		
 		
 		
@@ -300,6 +367,11 @@ System.out.println("===practice 7th===");
 	}
 
 
+	
+	
+	
+	
+	
 
 /********************************************************************************/
 	
