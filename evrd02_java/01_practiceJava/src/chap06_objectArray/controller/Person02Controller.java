@@ -56,8 +56,11 @@ public class Person02Controller {
 		// 배열 할당 : heap 영역에 공간 생성
 		// 배열 초기화 : 인덱스,중괄호,for문
 		// 배열 삭제 : null
-		// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
-		
+		// 배열 길이 확인 : 변수명.length
+		// 객체배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+		//		객체배열에서는 배열과 달리 Arrays.toString() 사용불가
+		//		이때, 변수.toString()해도 에러뜨는데 인덱스변호를 지정해줘야한다.
+		//			ex) ojbArr[1].toString()
 		
 		
 		
@@ -330,7 +333,83 @@ System.out.println("=====Object Array practice 5th=====");
 
 /******************************** Object Array practice 5th ***************************************/	
 
+// 객체배열
+//
+// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+// 배열 할당 : heap 영역에 공간 생성
+// 배열 초기화 : 인덱스,중괄호,for문
+// 배열 삭제 : null
+// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
 
+	
+	// 배열 선언
+	Person02[] pArr01;
+	
+
+	// 배열 할당
+	Person02[] pArr02 = new Person02[2];
+	Person02 pArr03[] = new Person02[2];
+
+
+	// 배열 초기화
+	//	방법1 : 인덱스
+	pArr02[0] = new Person02("a",22,'M',171,66);
+	pArr02[1] = new Person02("b",23,'M',185,69);
+	
+	// 	방법2 : 중괄호
+	// 선언과 동시에 할당
+	Person02[] pArr04 = {new Person02("김",25,'M',177,66),
+						 new Person02("이",53,'M',177,66),
+						 new Person02("박",32,'M',188,86)
+						};	
+	
+	// 	방법3 : for문
+	for(int i=0; i < pArr03.length; i++) {
+		pArr03[i] = new Person02("for",20+i,'M',170+i,70+i);
+		System.out.println(pArr03[i]); // chap06_objectArray.model.vo.Person02@42a57993, @75b84c92
+//		System.out.println(Arrays.toString(pArr03[i])); // Arrays.toString()은 객체배열에 사용불가
+		System.out.println(pArr03[i].personInfo()); // for, 20, M, 170.0, 70.0 //  for, 21, M, 171.0, 71.0
+	}	// 객체배열 값 추출은 vo class에서 toString() 역할하는 메소드 사용해야함
+
+	
+	
+	// 배열 삭제
+	// 배열 출력
+	pArr03 = null;
+	System.out.println(pArr03); // null
+//	System.out.println(pArr02.personInfo());    // 변수 전체를 찍으면 에러발생
+	System.out.println(pArr02[0].personInfo()); // 인덱스 번호 지정해서 찍어야함
+	
+	
+
+	
+	
+
+
+
+
+
+
+
+
+System.out.println("=====Object Array practice 6th=====");	
+
+/******************************** Object Array practice 6th ***************************************/	
+
+
+// 객체배열
+//
+// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+// 배열 할당 : heap 영역에 공간 생성
+// 배열 초기화 : 인덱스,중괄호,for문
+// 배열 삭제 : null
+// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+
+
+
+
+// array, Object Array, Collection 모두 다
+// 블로그 1일1코딩 깨달은거 적은거랑 연습코드에 주석 달은거 내용 한곳에 모아서 데이터 축적하는거 정리하기!!
 
 
 

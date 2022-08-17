@@ -10,6 +10,7 @@ public class D_array {
 		// 배열 초기화 : 인덱스,중괄호,for문
 		// 배열 삭제 : null
 		// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+		// 배열 길이 확인 : 변수명.length
 		// 배열 복사 : shallow copy & deep copy
 		//
 		// 		배열 크기 변경 불가(삭제하고 새로 만들기에 주소값이 변경됨)
@@ -352,8 +353,8 @@ System.out.println("===practice 7th===");
 System.out.println("===practice 8th===");
 
 /******************************practice 8th ************************************/		
-		
-
+		// 다음 연습 내용 char나 byte, long
+		// long타입은 Arrays.toString()에 에러나면서 작동 안하는 것 발견
 		
 		
 		
