@@ -373,6 +373,7 @@ public class ListController {
 		aList2.addAll(aList);
 		System.out.println("aList2 = "+aList2); // aList2 = [아이유(100점), 손예진(100점)]
 		
+		
 		// addAll(int index, Collection c) : boolean
 		// toString() 오버라이딩 주석 후
 		aList2.addAll(1,aList);			// 1번 인덱스부터 새데이터를 넣겠다
@@ -388,6 +389,8 @@ public class ListController {
 			aList.add(new Student("if로추가한add",100));
 			System.out.println("aList added : "+aList); // aList added : [아이유(100점), 손예진(100점), if로추가한add(100점)]
 		}
+		
+		
 		
 		// 장점2. 추가/삭제/정렬 기능처리 간단
 		
