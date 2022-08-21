@@ -616,12 +616,161 @@ public class ListController {
 		// toString(), equals(), hashCode() 3개 코드 직접 써보기
 		
 		
+
+		// vo클래스에 있는 오버라이딩된 toString(), equals(), hashCoding() 
+		// 전부 주석처리
 		
+		ArrayList<Student> list1 = new ArrayList<>(2);
+		ArrayList<Student> list2 = new ArrayList<Student>(2);
+		ArrayList<Student> list3 = new ArrayList<>(1);
+		
+		// add(E e):boolean
+		// add(int index, E element) 
+		// Object의 toString()를 오버라이딩 때문에 주소값이 아닌 객체값이 바로나옴
+		list1.add(new Student("zero",100));
+		list1.add(0,new Student("0",0));
+		
+		list2.add(new Student("ㄱ",100));
+		list2.add(1,new Student("ㄴ",100));
+		
+		System.out.println(list1); // [zero(0점), a(100점)]
+		System.out.println(list2); // [ㄱ(100점), ㄴ(100점)]
+		
+		// addAll(Collection<? extends E> c) : boolean
+//		list3.addAll(list1).addAll(list2); 메소드 체이닝 작동x
+		list3.addAll(list1);
+		list3.addAll(list2);
+		System.out.println(list3); // [0(0점), zero(100점), ㄱ(100점), ㄴ(100점)]
+		
+		
+		// addAll(int index, Collection c) : boolean
+		list3.addAll(1,list1);
+		System.out.println(list3); // [0(0점), 0(0점), zero(100점), zero(100점), ㄱ(100점), ㄴ(100점)]
+		System.out.println(list3.addAll(4, list2)); // true
+		System.out.println(list3); // [0(0점), 0(0점), zero(100점), zero(100점), ㄱ(100점), ㄴ(100점), ㄱ(100점), ㄴ(100점)]
+		
+		
+		// 장점1. 크기 제약 x
+		// 장점2. 추가/삭제/정렬 기능처리 간단
+		
+		// .size() : 인덱스 길이 반환
+		System.out.println(list3.size()); // 8
+		if(list3.size() >= 5) {
+			System.out.println("아메리카노 1잔 주문"); // 아메리카노 1잔 주문
+		}
+		
+		
+		
+		// 삭제
+		// remove(int index):E
+//		// remove()의 return은 삭제한 값을 돌려준다
+//		list.remove(7);
+		list3.remove(7);	// 끝에 ㄴ 지우기
+		System.out.println(list3); // [0(0점), 0(0점), zero(100점), zero(100점), ㄱ(100점), ㄴ(100점), ㄱ(100점)]
+		System.out.println(list3.remove(6)); // ㄱ(100점) <- 지운 값 반환
+		
+		
+		// 삭제
+		// remove(Object o):boolean
+		// 같은 데이터라면 앞에 있는거부터 삭제
+		// equals()가 오버라이딩이 안되어 있어서 값 비교가 아니라 주소값 비교라 삭제 못한 것.
+		System.out.println(list3); // [0(0점), 0(0점), zero(100점), zero(100점), ㄱ(100점), ㄴ(100점)]
+		System.out.println(list3.remove(new Student("ㄴ",100))); // false
+		// VO class equals() 적용 후, true
+		System.out.println(list3); // [0(0점), 0(0점), zero(100점), zero(100점), ㄱ(100점)]
+		
+		
+		// 지네릭 추가 : <String> 
+		// toString() 오버라이딩 삭제 -> 삭제해도 String Class자체에서 가능해서 값 출력이 됨
+		// equals랑 hashCode가 잘 오버라이딩이 되어있기 때문에 삭제 가능
+		ArrayList<String> sList = new ArrayList<>(1);
+		
+		sList.add(new String("a"));
+		sList.add(new String("b"));
+		sList.add(new String("c")); // 초기 지정길어 넘어서 길이 자동추가
+		System.out.println(sList);  // [a, b, c]
+
+		
+		
+		// set(int index, E e) : 바꾸기 전 값 반환
+		// 해당 인덱스 번호에 값  교체
+		// equals(),hashCode() 필요x
+		sList.set(2, new String("cc"));
+		System.out.println(sList);	// [a, b, cc]
+		list2.set(1, new Student("ㄷ",100));
+		System.out.println(list2);	// [ㄱ(100점), ㄷ(100점)]
+		
+		
+		//get(int index):E
+		// 인덱스번호의 엘리먼트 값을 가져온다
+		System.out.println(list2.get(1)); // ㄷ(100점)
+		System.out.println(sList.get(2)); // cc	
+		
+		
+		// contains(Object) : boolean
+		// indexObject : int 
+		// equals() 삭제
+		System.out.println(sList.contains("cc"));	// true
+		System.out.println(list2.contains(new Student("ㄱ",100))); // false
+		// String Class라서 cc는 true가 나왔고, list2는 값 비교가 안되고 객체참조의 디폴트인 주소값 비교라서 false가 나옴
+		// equals()가 있고 다시 찍어보면 true
+		
+		
+		// 지네릭<String>과 일반 참조객체<Student>의 오버라이딩 비교
+		//  equals메소드와 해쉬코드가 오버라이딩 되지 않으면 주소값이 달라 없는걸로 나옴. 현재는 오버라이딩된 상태
+		
+		
+		// clear():void
+		list2.clear();
+		System.out.println(list2); // []
+		
+		// isEmpty():boolean
+		System.out.println(list2.isEmpty());	// true
 		
 		
 	}	
 	
 	
+/******************************** collection 7th practice ***************************************/	
+	public void method07() {
+		// 연습할 거 포인트 
+		// 각 메소드가 toString(), equals()와 hashCode() 이 셋 중 어떤거에 영향 받나 비교
+		
+		// 	오버라이딩 해제하면서 toString(), equals()와 hashCode() 비교
+		// 	반환 타입(boolean,int등)에 따라 if,for,while문 조건식에 뭔가 응용해보기
+		// 		반환 받은 객체로는 뭘 해볼 수 있을까? ==나 equals() 사용해서 해당 str 값이 있으면 if문 써봐도 될 듯
+		// 	toString(), equals(), hashCode() 3개 코드 직접 써보기
+		
+		
+
+		// vo클래스에 있는 오버라이딩된 toString(), equals(), hashCoding() 
+		// 전부 주석처리
+		
+		
+		
+	}
+	
+	
+	
+	
+/******************************** collection 8th practice ***************************************/	
+	public void method08() {
+		// 연습할 거 포인트 
+		// 각 메소드가 toString(), equals()와 hashCode() 이 셋 중 어떤거에 영향 받나 비교
+		
+		// 	오버라이딩 해제하면서 toString(), equals()와 hashCode() 비교
+		// 	반환 타입(boolean,int등)에 따라 if,for,while문 조건식에 뭔가 응용해보기
+		// 		반환 받은 객체로는 뭘 해볼 수 있을까? ==나 equals() 사용해서 해당 str 값이 있으면 if문 써봐도 될 듯
+		// 	toString(), equals(), hashCode() 3개 코드 직접 써보기
+		
+		
+		
+		// vo클래스에 있는 오버라이딩된 toString(), equals(), hashCoding() 
+		// 전부 주석처리
+		
+		
+		
+	}
 	
 	
 	
@@ -631,32 +780,25 @@ public class ListController {
 	
 	
 	// add(E e):boolean
+	// add(int index, E element) 
 	// Object의 toString()를 오버라이딩 때문에 주소값이 아닌 객체값이 바로나옴
 	
-	// add(int index, E element) 
 
 	// addAll(Collection<? extends E> c) : boolean
-	
 	// addAll(int index, Collection c) : boolean
+	// .size() : 인덱스 길이 반환
 	// toString() 오버라이딩 주석 후
-
 
 	
 	// 장점1. 크기 제약 x
-	// .size() : 인덱스 길이 반환
-	
-	
 	// 장점2. 추가/삭제/정렬 기능처리 간단
-	
 	
 	
 	// 삭제
 	// remove(int index):E
 //	// remove()의 return은 삭제한 값을 돌려준다
-//	list.remove(7);
 	
 	
-	// 삭제
 	// remove(Object o):boolean
 	// 같은 데이터라면 앞에 있는거부터 삭제
 	// equals()가 오버라이딩이 안되어 있어서 값 비교가 아니라 주소값 비교라 삭제 못한 것.
