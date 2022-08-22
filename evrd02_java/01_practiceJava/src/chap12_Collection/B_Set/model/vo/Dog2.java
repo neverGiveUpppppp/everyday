@@ -37,7 +37,6 @@ public class Dog2 {
 	}
 	
 	
-	
 	// equals()
 	public boolean equals(Object obj) {
 		
@@ -51,7 +50,6 @@ public class Dog2 {
 		if(this == obj) {
 			return true;
 		}	
-		
 		if(obj == null) {
 			return false;
 		}
@@ -64,8 +62,6 @@ public class Dog2 {
 		if(getClass() != obj.getClass()) {
 			return false;
 		}
-		
-		
 		
 		// 내용비교
 		// 	1번 멤버변수 name 비교
@@ -97,8 +93,6 @@ public class Dog2 {
 		return result;
 		
 	}
-	
-	
 	
 }
 
