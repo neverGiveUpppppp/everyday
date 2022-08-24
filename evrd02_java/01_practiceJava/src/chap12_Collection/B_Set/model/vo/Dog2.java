@@ -36,15 +36,12 @@ public class Dog2 {
 		return name + " "+weight+"kg";
 	}
 	
-	
 	// equals()
 	public boolean equals(Object obj) {
 		
 		// 이퀄즈의 비교 내용 2가지
 		// 1.클래스 비교
 		// 2.내용 비교
-		// 주소값 비교
-		
 		
 		// 1.클래스비교
 		if(this == obj) {
@@ -53,11 +50,6 @@ public class Dog2 {
 		if(obj == null) {
 			return false;
 		}
-//		if(obj == null) {
-//			return false;
-//		}else{				// if else문이 있으면 아래 if문에서 에러발생
-//			return true;
-//		}
 		
 		if(getClass() != obj.getClass()) {
 			return false;
