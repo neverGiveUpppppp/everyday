@@ -142,10 +142,87 @@
 		
 		
 	<script>
-	
-	
+		// 댓글 등록 : jQuery ajax
+		$('#rSubmit').click(function(){
+			var rContent = $('#replyContent').val();
+			var refBId = ${board.boardId};
+			
+			$.ajax({
+				url:'addReply.bo',
+				data:{replyContent:rContent, refBoardId:refId},
+				success:function(data){
+					if(data == 'success'){
+						console.log(data);
+						$('#replyContent').val(' ');
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+				
+			});
+		});	
+			
+			
+		// 등록한 댓글 읽어오기
+		function getReplyList(){
+			$.ajax({
+				url:'rList.bo',
+				data:{bId:${board.boardId}},
+				success:function(data){
+					console.log(data);
+					
+						$tableBody = $('#rtb tbody');
+					$tableBody.html('');
+					
+					// 변수선언
+					var $tr;
+					var $writer;
+					var $content;
+					var $date;
+					$('#rCount').text('댓글('+data.length+')'); // 댓글(1) 알려주는 출력문구
+					
+					if(data.length > 0){
+						for(var i in data){
+							$tr = $('<tr>'); 	// 위에서 선언한 변수 var $tr;에서 다시 가져다 쓰므로 var 빠지고 $tr만
+							$writer = $('<td>').css('width','100px').text(data[i].nickName);
+							$content = $('<td>').text(data[i].replyContent);
+							$date =  $('<td width="100px">').text(data[i].replyCreateDate);
+							
+							$tr.append($writer);
+							$tr.append($content);
+							$tr.append($date);
+							$tableBody($tr);
+						}
+					}else{
+						$tr = $('<tr>');
+						$content = $('<td colspan="3">').text('등록된 댓글이 없습니다.');
+						
+						$tr.append($content);
+						$tableBody.append($tr);
+					}
+				},
+				error:function(data){
+					console.log(data);
+				}
+			});
+		}
+		
+
+		// 다른 사람이 쓴 댓글도 볼 수 있게 5초마다 읽어오도록
+		$(function(){
+			getReplyList();
+			
+			setInterval(function(){
+				getReplyList();
+			}, 5000);
+		})
+		
+		
 	</script>
 	
 
 </body>
 </html>
+
+
