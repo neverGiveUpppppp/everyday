@@ -34,36 +34,37 @@ public class Dog {
     }
 
     // equals()
-//    public boolean equals(Object obj){
-//
-//        // 1.클래스 비교
-//        if(this == obj){
-//            return true;
-//        }
-//        if(obj == null){
-//            return false;
-//        }
-//
-//        if(getClass() != obj.getClass()){
-//            return false;
-//        }
-//
-//
-//        // 2.내용 비교
-//        Dog other = (Dog)obj; // (Dog) 다운캐스팅
-//        if(name == null){
-//            if(other.name != null){
-//                return false;
-//            }
-//        }else if(!name.equals(other.name)){
-//            return false;
-//        }
-//
-//        if(weight != other.weight){
-//            return false;
-//        }
-//        return true;
-//    }
+    public boolean equals(Object obj){
+
+        // 1.클래스 비교
+        if(this == obj){
+            return true;
+        }
+        if(obj == null){
+            return false;
+        }
+
+        if(getClass() != obj.getClass()){
+            return false;
+        }
+
+
+        // 2.내용 비교
+        Dog other = (Dog)obj; // (Dog) 다운캐스팅
+        if(name == null){
+            if(other.name != null){
+                return false;
+            }
+        }else if(!name.equals(other.name)){
+            return false;
+        }
+
+        if(weight != other.weight){
+            return false;
+        }
+        return true;
+    }
+
 
 
     @Override
