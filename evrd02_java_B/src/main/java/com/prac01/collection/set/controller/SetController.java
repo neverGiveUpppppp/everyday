@@ -74,7 +74,7 @@ https://tychejin.tistory.com/326
 
     public void method01() {
         HashSet set0 = new HashSet();
-        HashSet<Dog> set1 = new HashSet<>(); // 뒤 제네릭 생략 → 타입추론 : 뒤 생략가능하다는 의미
+        HashSet<Dog> set1 = new H ashSet<>(); // 뒤 제네릭 생략 → 타입추론 : 뒤 생략가능하다는 의미
 
 //        Set set = new Set();
 
