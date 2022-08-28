@@ -6,6 +6,7 @@ public class Run {
     public static void main(String[] args) {
 
         SetController sc = new SetController();
-        sc.method01();
+//        sc.method01();
+        sc.method02();
     }
 }
