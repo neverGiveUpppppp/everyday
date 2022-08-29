@@ -743,8 +743,97 @@ public class ListController {
 		
 		
 
-		// vo클래스에 있는 오버라이딩된 toString(), equals(), hashCoding() 
-		// 전부 주석처리
+
+		// add(E e):boolean
+		// add(int index, E element) 
+		// Object의 toString()를 오버라이딩 때문에 주소값이 아닌 객체값이 바로나옴
+		ArrayList<Student> al = new ArrayList<>();
+		al.add(new Student("a",100));
+		al.add(new Student("b",100));
+		System.out.println(al);
+		
+		al.add(0, new Student("0",0));
+		al.add(1,new Student("delimeter",000));
+		System.out.println(al); // [0(0점), delimeter(0점), a(100점), b(100점)]
+		if(al.add(new Student("c",100))) {
+			System.out.println(al+" : c 출력성공"); // [0(0점), delimeter(0점), a(100점), b(100점), c(100점)] : c 출력성공
+		}
+		
+
+		// addAll(Collection<? extends E> c) : boolean
+		// addAll(int index, Collection c) : boolean
+		// .size() : 인덱스 길이 반환
+		// toString() 오버라이딩 주석 후
+		ArrayList<Student> al2 = new ArrayList<>();
+		al2.addAll(al);
+		System.out.println(al2); // [0(0점), delimeter(0점), a(100점), b(100점), c(100점)]
+		System.out.println(al2.size()); // 5
+		System.out.println(al.hashCode());	// 346539999 <- 주소값 같음
+		System.out.println(al2.hashCode()); // 346539999 <- shallow copy
+		// addAll로 객체를 통째로 넣어서 같게 만들면, shallow copy
+		
+		// 삭제
+		// remove(int index):E
+//		// remove()의 return은 삭제한 값을 돌려준다
+		
+		System.out.println(al.remove(4)); // c(100점)
+		al.remove(0);
+		System.out.println(al); // [delimeter(0점), a(100점), b(100점)]
+		
+		
+		// remove(Object o):boolean
+		// 같은 데이터라면 앞에 있는거부터 삭제
+		// equals()가 오버라이딩이 안되어 있어서 값 비교가 아니라 주소값 비교라 삭제 못한 것.
+		al.remove(al);
+		System.out.println(al.hashCode());
+		
+		
+		// 지네릭 추가 : <String> 
+		// toString() 오버라이딩 삭제 -> 삭제해도 String Class자체에서 가능해서 값 출력이 됨
+		// equals랑 hashCode가 잘 오버라이딩이 되어있기 때문에 삭제 가능
+		ArrayList<String> alStr = new ArrayList<>();
+		alStr.add("추가1");
+		alStr.add("추가2");
+		System.out.println(alStr); // [추가1, 추가2]
+		
+		
+		// set(int index, E e) : 바꾸기 전 값 반환
+		// 해당 인덱스 번호에 값  교체
+		// equals(),hashCode() 필요x
+		alStr.set(1, "추가의 추가");
+		System.out.println(alStr); // [추가1, 추가의 추가]
+		System.out.println(alStr.set(1, "추가의 추가를 바꾸기")); // 추가의 추가
+		System.out.println(alStr); // [추가1, 추가의 추가를 바꾸기]
+		
+		
+		//get(int index):E
+		// 인덱스번호의 엘리먼트 값을 가져온다
+		
+		// ArrayList의 전체길이에서 마지막 값 빼오기
+		System.out.println(alStr.get(alStr.size()-1)); // 추가의 추가를 바꾸기
+		
+		
+		// contains(Object) : boolean
+		// indexObject : int 
+		System.out.println(al.contains(new Student("a",100))); // false
+		// equals() on
+		System.out.println(al.contains(new Student("a",100))); // true
+		// equals() off
+		System.out.println(alStr.contains("추가1")); // true
+		// 		-> String class는 자동 오버라이딩이 되어 있어서 equals()가 필요없음
+		
+		System.out.println(al.indexOf(new Student("b",100))); // -1
+		// equals() on
+		System.out.println(al.indexOf(new Student("b",100))); // 2
+		
+		
+		// clear():void
+		al2.clear();
+		System.out.println(al2); // []
+		// isEmpty():boolean
+		System.out.println(al2.isEmpty());  // true
+		System.out.println(al.isEmpty());	// false
+
 		
 		
 		
@@ -823,6 +912,7 @@ public class ListController {
 	
 	// contains(Object) : boolean
 	// indexObject : int 
+	// 		- equals()가 필요한 메소드들
 	
 	
 	// 지네릭<String>과 일반 참조객체<Student>의 오버라이딩 비교
@@ -833,7 +923,17 @@ public class ListController {
 	
 	// isEmpty():boolean
 
-
+	
+	
+	
+	// addAll로 객체를 통째로 넣어서 같게 만들면, shallow copy
+//	System.out.println(al.hashCode());	// 346539999 <- 주소값 같음
+//	System.out.println(al2.hashCode()); // 346539999 <- shallow copy
+	// ArrayList의 전체길이에서 마지막 값 빼오기
+//	System.out.println(alStr.get(alStr.size()-1)); // 추가의 추가를 바꾸기
+	
+	
+	
 	
 }
 
