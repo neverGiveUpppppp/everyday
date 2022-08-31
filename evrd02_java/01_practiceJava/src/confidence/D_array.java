@@ -18,6 +18,9 @@ public class D_array {
 		//		dArr[3] = 3;	// 3.0으로 출력 -> 자동형변환(int to double) 
 		// 		초기화 for문 방법은 int만 가능하나, 실수로 형변환 가능한 int면 for문 가능 -> int인 i가 실수로 변환 가능한 수이기에 
 		// 		null인 배열값 확인 시, for문방법은 널포인트익셉션 쓰므로 Arrays.toString() 사용해야함
+		//		출력 방법1 for문 : 대괄호 없이 일반으로 출력됨
+		//		출력 방법2 Arrays.toString()은 배열 형태로 반환 : []
+		
 		
 		
 		//배열 선언
@@ -357,10 +360,63 @@ System.out.println("===practice 8th===");
 		// long타입은 Arrays.toString()에 에러나면서 작동 안하는 것 발견
 		
 		
+//배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+//배열 할당 : heap 영역에 공간 생성
+//배열 초기화 : 인덱스,중괄호,for문
+//배열 삭제 : null
+//배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+
+//
+//		배열 크기 변경 불가(삭제하고 새로 만들기에 주소값이 변경됨)
+//		배열 안 값이 최대길이보다 짧으면 값만큼만 출력되서 나옴(여분공간에 다른값x)
+//		dArr[3] = 3;	// 3.0으로 출력 -> 자동형변환(int to double) 
+//		초기화 for문 방법은 int만 가능하나, 실수로 형변환 가능한 int면 for문 가능 -> int인 i가 실수로 변환 가능한 수이기에 
+//		null인 배열값 확인 시, for문방법은 널포인트익셉션 쓰므로 Arrays.toString() 사용해야함
+
 		
 		
+
+		// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+		double[] dNum;
+		float fNum[];
+		
+		// 배열 할당 : heap 영역에 공간 생성
+		double[] dNum2 = new double[2];
+		float fNum2[] = new float[3];
 		
 		
+		// 배열 초기화 : 인덱스,중괄호,for문
+		// 방법1 : 인덱스
+		fNum2[0] = 1;
+		fNum2[1] = 1.5f;
+		fNum2[2] = (float)1.8; // 1.8 == 1.8d // 강제형변환
+		System.out.println(fNum2);	// [F@14ae5a5
+		System.out.println(Arrays.toString(fNum2)); // [1.0, 1.5, 1.8]
+		
+		
+		// 방법2 : 중괄호
+		// 선언과 동기에 초기화
+		String[] sArr01 = {"a","b","c"};
+		char[] cArr01 = {'a','b','c'};
+		
+		// 방법3 : for문
+		for(int i=0; i < dNum2.length; i++) {
+			dNum2[i] += i;
+			System.out.println(dNum2[i]); // 0.0 1.0
+		}
+		
+		// 배열 삭제 : null
+		dNum2 = null;
+		System.out.println(dNum2);					// null
+		System.out.println(Arrays.toString(dNum2));	// null
+		
+		// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+		// 방법1 for문
+		// 방법2 Arrays.toString
+		for(int i=0; i < fNum2.length; i++) {
+			System.out.print(fNum2[i]+" "); // 1.0 1.5 1.8 
+		}
+		System.out.println(Arrays.toString(fNum2)); // [1.0, 1.5, 1.8]
 		
 		
 		
@@ -369,7 +425,20 @@ System.out.println("===practice 8th===");
 
 
 	
+	// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
 	
+	// 배열 할당 : heap 영역에 공간 생성
+	
+	// 배열 초기화 : 인덱스,중괄호,for문
+	// 방법1 : 인덱스
+	// 방법2 : 중괄호
+	// 방법3 : for문
+	
+	// 배열 삭제 : null
+	
+	// 배열 값 출력하는 방법 2가지 : for문, Arrays.toString()
+	// 방법1 for문
+	// 방법2 Arrays.toString
 	
 	
 	

@@ -302,7 +302,7 @@ System.out.println("=====Object Array practice 4th=====");
 		objArr011[1] = new Person("최치치",22,'M',171,67);
 				
 		
-		// 		방법2 : 중괄화
+		// 		방법2 : 중괄호
 		Person objArr012[] = {new Person("박비비",23,'M',182,67),
 							  new Person("최치치",22,'M',171,67),
 							  new Person("김기기",22,'M',171,66)
@@ -413,8 +413,33 @@ System.out.println("=====Object Array practice 6th=====");
 
 
 
+
+System.out.println("=====Object Array practice 7th=====");	
+
+/******************************** Object Array practice 7th ***************************************/	
+
+
+
+
+
+
 	}
 	
+
+	// 객체배열
+	//
+	// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+	// 배열 할당 : heap 영역에 공간 생성
+	// 배열 초기화 : 인덱스,중괄호,for문
+	// 배열 삭제 : null
+	// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+
+
+
+
+	// array, Object Array, Collection 모두 다
+	// 블로그 1일1코딩 깨달은거 적은거랑 연습코드에 주석 달은거 내용 한곳에 모아서 데이터 축적하는거 정리하기!!
+
 	
 	
 }
