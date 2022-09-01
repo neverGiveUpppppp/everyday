@@ -405,11 +405,43 @@ System.out.println("=====Object Array practice 6th=====");
 // 배열 삭제 : null
 // 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
 
+	//배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+	Person02[] person00;
+	//배열 할당 : heap 영역에 공간 생성
+	Person02[] person01 = new Person02[2];
+	Person02 person02[] = new Person02[2];
 
-
-
-// array, Object Array, Collection 모두 다
-// 블로그 1일1코딩 깨달은거 적은거랑 연습코드에 주석 달은거 내용 한곳에 모아서 데이터 축적하는거 정리하기!!
+	//배열 초기화 : 인덱스,중괄호,for문
+	//	방법1 : 인덱스
+	person01[0] = new Person02("a",22,'M',70,171);
+	person01[1] = new Person02("b",22,'M',70,171);
+	System.out.println(person01[0].personInfo()); // a, 22, M, 70.0, 171.0
+	
+	//	방법2 : 중괄호
+	Person02[] objArr030 = {new Person02("a",22,'M',69,181),
+							new Person02("b",22,'M',69,181),
+							new Person02("a",22,'M',69,181)
+							};
+	//	방법3 : for문
+	for(int i=0; i < person02.length; i++) {
+		person02[i] = new Person02("for",20+i,'M',170+i,70+i);
+		// for, 20, M, 170.0, 70.0
+		// for, 21, M, 171.0, 71.0
+	}
+	
+	
+	//배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+	for(int i=0; i<person01.length; i++) {
+		System.out.println(person01[i]); // chap06_objectArray.model.vo.Person02@232204a1
+										// chap06_objectArray.model.vo.Person02@4aa298b7
+		System.out.println(person01[i].personInfo()); // a, 22, M, 70.0, 171.0
+													  // b, 22, M, 70.0, 171.0
+	}
+	
+	//배열 삭제 : null
+	person01 = null;
+	System.out.println(person01); // null
+	
 
 
 
@@ -431,6 +463,9 @@ System.out.println("=====Object Array practice 7th=====");
 	// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
 	// 배열 할당 : heap 영역에 공간 생성
 	// 배열 초기화 : 인덱스,중괄호,for문
+	//	방법1 : 인덱스
+	//	방법2 : 중괄호
+	//	방법3 : for문
 	// 배열 삭제 : null
 	// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
 
