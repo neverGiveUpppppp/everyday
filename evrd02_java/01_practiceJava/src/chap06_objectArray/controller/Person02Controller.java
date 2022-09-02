@@ -452,12 +452,73 @@ System.out.println("=====Object Array practice 7th=====");
 
 
 
+// 객체배열
+//
+// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
+	Person[] objArr040;
+	
+// 배열 할당 : heap 영역에 공간 생성
+	Person[] objArr041 = new Person[2];
+	Person[] objArr042 = new Person[2];
+	
+// 배열 초기화 : 인덱스,중괄호,for문
+//	방법1 : 인덱스
+	objArr041[0] = new Person("a",22,'m',11,111);
+	objArr041[1] = new Person("b",22,'m',11,111);
+	System.out.println(objArr041); // [Lchap06_objectArray.model.vo.Person;@4aa298b7
+	System.out.println(objArr041[0].personInfo()); // a, 22, m, 11.0, 111.0
+	System.out.println(objArr041[1].personInfo()); // b, 22, m, 11.0, 111.0
+	
+//	방법2 : 중괄호
+// 	선언과 동시에 초기화
+	Person[] objArr043 = {new Person("c",22,'m',11,111),
+						  new Person("d",22,'m',11,111)
+						};
+	System.out.println(objArr043[0].personInfo()); // c, 22, m, 11.0, 111.0
+	System.out.println(objArr043[1].personInfo()); // d, 22, m, 11.0, 111.0
+	
+	
+//	방법3 : for문
+	for(int i=0; i < objArr042.length; i++) {
+		objArr042[i] = new Person("e",30+i,'M',100,100+i);
+		System.out.println(objArr042[i].personInfo());
+		// e, 30, M, 100.0, 100.0
+		// e, 31, M, 100.0, 101.0
+	}
+	
+	
+// 배열 삭제 : null
+// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
+	objArr042 = null;
+	System.out.println(objArr042); // null
+		
+	Person[] test000 = new Person[3];
+	for(int i=0; i < test000.length; i++) {
+		test000[i] = new Person("ㄱ",20-i,'ㅡ',100,100-i);
+		System.out.println(test000[i].personInfo());
+//		ㄱ, 20, ㅡ, 100.0, 100.0
+//		ㄱ, 19, ㅡ, 100.0, 99.0
+//		ㄱ, 18, ㅡ, 100.0, 98.0
+	}
+
+
+
+
+
+
+
+
+System.out.println("=====Object Array practice 8th=====");	
+	
+/******************************** Object Array practice 8th ***************************************/	
+
+
+
 
 
 
 	}
 	
-
 	// 객체배열
 	//
 	// 배열 선언 : Stack 영역에 공간 생성(변수의 선언 : stack에 공간 차지)
@@ -468,7 +529,9 @@ System.out.println("=====Object Array practice 7th=====");
 	//	방법3 : for문
 	// 배열 삭제 : null
 	// 배열 값 출력하는 방법 2가지 : for문 + vo클래스 toString메소드
-
+	
+	// 배열 선언&할당
+	// 객체배열타입(클래스) 변수명 = new 객체배열클래스명[배열길이];
 
 
 
