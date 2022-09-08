@@ -152,6 +152,13 @@ public class Step1{
         int night = 0;
         int pawn = 0;
 
+        int king0 = 1;
+        int queen0 = 1;
+        int rook0 = 2;
+        int bishop0 = 2;
+        int night0 = 2;
+        int pawn0 = 8;
+
         Scanner sc = new Scanner(System.in);
         king = sc.nextInt();
         queen = sc.nextInt();
@@ -160,17 +167,30 @@ public class Step1{
         night = sc.nextInt();
         pawn = sc.nextInt();
 
-//        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//        StringTokenizer st = new StringTokenizer(br.readLine() , " ");
+
+
+// 배열로 처리해보기
+
+// 최종정답
+//import java.io.BufferedReader;
+//import java.io.IOException;
+//import java.io.InputStreamReader;
+//        public class Main {
+//            public static void main(String[] args) throws IOException {
 //
-//        int [] arr = {1,1,2,2,2,8};
-//        String answer = "";
-//        int U;
-//        for(int i = 0; i < 6; i++) {
-//            U = Integer.parseInt(st.nextToken());
-//            answer += Math.abs(arr[i] - U)+" ";
-//        }
-//        System.out.println(answer);
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+                StringTokenizer st = new StringTokenizer(br.readLine() , " ");
+
+                int [] arr = {1,1,2,2,2,8};
+                String answer = "";
+                int U;
+                for(int i = 0; i < 6; i++) {
+                    U = Integer.parseInt(st.nextToken());
+                    answer += arr[i] - U+" ";
+                }
+                System.out.println(answer);
+            }
+        }
 
 
 

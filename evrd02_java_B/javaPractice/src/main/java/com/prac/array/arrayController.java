@@ -73,6 +73,64 @@ public class arrayController {
 
 
 
+        //ch5-21~23 2차원 배열 예제
+        // 학생별 평균,총점
+        int[][] score01 = {
+                         {100,100,100}
+                        ,{20,20,20}
+                        ,{30,30,30}
+                        ,{40,40,40}
+                        ,{50,50,50}
+                        };
+
+        // 과목별 총점
+        int korTotal = 0, engTotal = 0, mathTotal = 0;
+        System.out.println("번호 국어 영어 수학 총점 평균");
+        System.out.println("=============================");
+
+        for(int i=0; i < score01.length;i++){
+            int sum = 0;        // 각 개인 총점
+            float avg = 0.0f;   // 각 개인 평균
+
+            korTotal += score01[i][0];
+            engTotal += score01[i][1];
+            mathTotal += score01[i][2];
+            System.out.printf("%3d", i+1); // 3d는 왼쪽으로 세칸 공간차지 // 번호 1~5 출력
+
+            for(int jj=0;jj < score01[i].length;jj++) {
+                sum += score01[i][jj];
+                System.out.printf("%5d", score01[i][jj]);
+            }
+
+            avg = sum/(float)score01[i].length;  // 평균계산
+            System.out.printf("%5d %5.1f%n", sum, avg);
+
+        System.out.println("=============================");
+        System.out.printf("총점:%3d %4d %4d%n", korTotal, engTotal, mathTotal);
+/*  
+    출력 결과
+
+            번호 국어 영어 수학 총점 평균
+            =============================================
+            1  100  100  100  300 100.0
+            =============================
+            총점:100  100  100
+            2   20   20   20   60  20.0
+            =============================
+            총점:120  120  120
+            3   30   30   30   90  30.0
+            =============================
+            총점:150  150  150
+            4   40   40   40  120  40.0
+            =============================
+            총점:190  190  190
+            5   50   50   50  150  50.0
+            =============================
+            총점:240  240  240
+
+*/
+            
+        }
 
 
     }
