@@ -7,7 +7,7 @@ public class arrayController {
     public static void main(String[] args) {
 
 
-        //
+        // 최대값, 최소값 구하기
         int[] score =  { 79, 88, 91, 33, 100, 55, 95};
 
         int max = score[0];
@@ -34,6 +34,7 @@ public class arrayController {
             ball[i] = i+1;
         System.out.println(Arrays.toString(ball));
 
+        // 값 저장 임시변수 생성
         int temp = 0; // 두 값을 바꾸는데 사용할 임시변수
         int j = 0;    // 임의의 값을 얻어서 저장할 변수
 

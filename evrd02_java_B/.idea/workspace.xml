@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step1/Step1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step1/Step1.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/prac/array/arrayController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/prac/array/arrayController.class" afterDir="false" />
@@ -53,7 +52,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Application.arrayController">
+  <component name="RunManager" selected="Application.arrayControllerPrac">
     <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.prac.collection.set.run.Run" />
       <module name="evrd02_java_B" />
@@ -80,12 +79,27 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="arrayControllerPrac" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.prac.array.arrayControllerPrac" />
+      <module name="evrd02_java_B" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.prac.array.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
       <item itemvalue="Application.arrayController" />
       <item itemvalue="Application.Run" />
+      <item itemvalue="Application.arrayControllerPrac" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.arrayControllerPrac" />
         <item itemvalue="Application.arrayController" />
         <item itemvalue="Application.Run" />
       </list>
@@ -123,5 +137,10 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/evrd02_java_B$arrayControllerPrac.ic" NAME="arrayControllerPrac Coverage Results" MODIFIED="1662800978120" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.prac.array.*</FILTER>
+    </SUITE>
   </component>
 </project>
