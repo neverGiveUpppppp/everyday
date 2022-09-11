@@ -3,6 +3,7 @@ package com.prac.collection.set.controller;
 import com.prac.collection.set.model.vo.Dog;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.TreeSet;
 
@@ -14,6 +15,11 @@ public class SetPractice {
     // 순서x 중복저장x
     // key로 저장
     // key에 null 저장불가능
+    //      인덱스가 없음. 
+    //      set,map 인덱스x
+    //      list    인덱스o
+    //          즉, 인덱스 관련 메소드도 x   ex)remove(int index),get(int index):E, setint index, E e):E
+    //              인덱스번호로 해당 엘리먼트 지우는 메소드는 list에만 있음
 
     // HashSet
     //  Set 핵심 메소드
@@ -44,6 +50,9 @@ public class SetPractice {
     /*
 
     인텔리제이 단축키 익히기
+
+Ctrl + Shift + 방향키 : 코드 라인 이동
+
 
 Ctrl + Q : 도큐먼트를 조회
 Ctrl + P : 메서드의 파라미터 정보를 조회
@@ -253,7 +262,65 @@ https://tychejin.tistory.com/326
 
     public void method03(){
 
+        HashSet<Dog> hSet = new HashSet<Dog>();
+        hSet.add(new Dog("풍이",10));
+        hSet.add(new Dog("해피",10));
+        hSet.add(new Dog("해피",10));
+        System.out.println(hSet); // [풍이(10.0kg), 해피(10.0kg)]
+// equals(),hashCode() 주석처리 하면, 중복 저장o
+        System.out.println(hSet); // [해피(10.0kg), 해피(10.0kg), 풍이(10.0kg)]
 
+        // HashSet
+        HashSet<Dog> hSet = new HashSet<Dog>();
+        hSet.add(new Dog("풍이",10));
+        hSet.add(new Dog("해피",10));
+        hSet.add(new Dog("해피",10));
+        System.out.println(hSet); // [풍이(10.0kg), 해피(10.0kg)]
+// equals(),hashCode() 주석처리 하면, 중복 저장o
+        System.out.println(hSet); // [해피(10.0kg), 해피(10.0kg), 풍이(10.0kg)]
+
+
+        System.out.println(hSet.contains(new Dog("풍이",10))); // true
+// contains는 equals(), hashCode() 둘 다 필요
+
+        boolean isTrue = false; // flag variable 플래그 변수
+        isTrue = hSet.contains(new Dog("해피",10));
+        System.out.println(isTrue); // false
+
+        hSet.remove(new Dog("해피",10));
+        System.out.println(hSet); // [풍이(10.0kg)]
+        System.out.println(hSet.size()); // 1
+// 변수에 넣어서 재사용성 늘리기
+        int num = hSet.size();
+        System.out.println(num); // 1
+        isTrue=hSet.equals(new Dog("해피",10));
+        System.out.println(isTrue); // false
+        isTrue = hSet.equals(new Dog("풍이",10));
+        System.out.println(isTrue); // false
+
+        System.out.println(hSet.equals(new Dog("풍이",10)));
+// 순서x 중복x HashSet, add하면 어디에 추가될까?
+// 맨 앞에 추가됨
+
+// set 중복 저장안되는데 중복 저장 되는 이유 : equals() 오버라이딩 안되어있어서
+        HashSet<String> hSetStr = new HashSet<>();
+        hSetStr.add("리트리버");
+        hSetStr.add("리트리버");
+        hSetStr.add("진돗개");
+
+        System.out.println(hSetStr);    // [리트리버, 진돗개]
+        System.out.println(hSetStr.equals("강하게")); // false
+        System.out.println(hSetStr); // [리트리버, 진돗개]
+        System.out.println(hSetStr.equals("강하게")); // false
+
+// 해당 메소드마다 ctrl+click으로 내부 로직이 뭘로 구성되어있는지 체크해보자
+// HashSet 같은 경우 HashMap으로 구성되어있는 걸 알 수 있었다
+// equals() 같은 경우에는 object 비교 후 instanceof로 Set인지 비교하기도 했음
+
+    }
+
+
+    public void method04(){
         // 공용 메소드들
         // add(E e):boolean
         // contains(Object o) : boolean
@@ -268,86 +335,158 @@ https://tychejin.tistory.com/326
         HashSet<Dog> hSet = new HashSet<Dog>();
         hSet.add(new Dog("풍이",10));
         hSet.add(new Dog("해피",10));
-        System.out.println(hSet);
+        System.out.println(hSet);   // [풍이(10.0kg), 해피(10.0kg)]
 
 
         // 순서x 중복x HashSet, add하면 어디에 추가될까?
-        // 맨 앞에 추가됨
+        // 위치는 랜덤
+        hSet.add(new Dog("뚱이",10));
+        System.out.println(hSet); // 마지막 추가 : [풍이(10.0kg), 해피(10.0kg), 뚱이(10.0kg)]
+        hSet.add(new Dog("호야",10));
+        System.out.println(hSet); // 중간 추가 : [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg)]
 
         // set 중복 저장안되는데 중복 저장 되는 이유 : equals() 오버라이딩 안되어있어서
-
+        hSet.add(new Dog("뚱이",10));
+        System.out.println(hSet);              // [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg)]
+        // equals() 오버라이딩 주석처리하면 중복 가능 : [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg), 뚱이(10.0kg)]
 
         // LinkedHashSet
         // 순서가 유지o 중복저장x 안되는 컬렉션
+        LinkedHashSet<Dog> linkedHashSet = new LinkedHashSet<>();
+        linkedHashSet.addAll(hSet);
+        System.out.println("linkedHashSet : " +linkedHashSet); // [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg)]
 
-        // 중복 저장이 안된 이유?
-        // Dog클래스에 equals()를 오버라이딩 해줬기 때문에 내용비교가 가능하게 되었고
-        // 이 때문에 같은 객체로 인지되었기 때문
+        // LinkedHashSet 순서가 있으니까 add로 추가하면 어디서부터 추가될까?
+        // 뒤부터 추가
+        linkedHashSet.add(new Dog("도리",10));
+        linkedHashSet.add(new Dog("아리",10));
+        System.out.println(linkedHashSet); // [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg), 도리(10.0kg), 아리(10.0kg)]
+
+        // contains()
+        // 값 비교 메소드 필요
+        System.out.println(linkedHashSet.contains(new Dog("풍이",10))); // true
+        // 오버라이딩 메소드 주석처리하면 false
+
+        // size() : int
+        linkedHashSet.size();
+        System.out.println(linkedHashSet.size()); // 6
 
 
+        // remove(Object o) : boolean
+        // removeAll(Collection<?> c ) : boolean
+        // Collection<?> c는 해당 컬렉션 변수 통째로 넣는 걸 의미 : ex)HashSet의 변수명 hSet
+        linkedHashSet.remove(new Dog("아리",10));
+        System.out.println(linkedHashSet);
+        linkedHashSet.removeAll(linkedHashSet); // [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg), 도리(10.0kg)]
+        System.out.println(linkedHashSet); // []
+
+        // isEmpty() : boolean
+        linkedHashSet.isEmpty();
+        System.out.println(linkedHashSet.isEmpty()); // true
+
+        // equals(Object o) : boolean
+        System.out.println(hSet); // [풍이(10.0kg), 해피(10.0kg), 호야(10.0kg), 뚱이(10.0kg)]
+        hSet.equals(new Dog("풍이",10));
+        System.out.println(hSet.equals(new Dog("풍이",10))); // false
 
 
-        // HashSet<String>
-        // equals() 오버라이딩 필요x
-        // equals() 메소드 주석처리함
+        // clear() : void
+        hSet.clear();
+        System.out.println(hSet); // []
+
+        // 공용 메소드들
+        // add(E e):boolean
+        // contains(Object o) : boolean
+        // iterator() : Iterator<E>
+        // remove(Object o) : boolean
+        // size() : int
+        // equals(Object o) : boolean
+        // isEmpty() : boolean
+        // clear() : void
 
 
         // TreeSet
         // 정렬을 해주는 Set
+        TreeSet<Dog> treeSet = new TreeSet<>();
 
-
-
-        // equals() 주석 처리후에는 중복가능해짐
-        // equals() 주석 풀고 난 후에는 중복x
-
-
-
-        // addAll
-        // HashSet<String>은 객체도 받음
-        //      <-> ArrayList<String>은 에러났었음
-        // 순서 없어서 가운데에도 추가되고 앞에 추가되기도 하고...
-
-
-        // add(E e):boolean
-        //     // addAll(Collection<? extends E> c) : boolean
-
-
-        // .size() : 인덱스 길이 반환
+        System.out.println(treeSet); // []
+        treeSet.add(new Dog("멍뭉이",10));
+        System.out.println(treeSet); // [멍뭉이(10.0kg)]
+        treeSet.clone();
+        System.out.println(treeSet); // [멍뭉이(10.0kg)]
 
         // remove(int index):E
         // remove()의 return은 삭제한 값을 돌려준다
+        // set은 인덱스가 없으므로 위의 인덱스 번호로 지우는 것은 불가능. 따로 해당 메소드는 set과 map에는 없음
+//        System.out.println(treeSet.remove(1)); Exception in thread "main" java.lang.ClassCastException
+
 
         // remove(Object o):boolean
         // 같은 데이터라면 앞에 있는거부터 삭제
         // equals()가 오버라이딩이 안되어 있어서 값 비교가 아니라 주소값 비교라 삭제 못한 것.
+        System.out.println(treeSet.remove(new Dog("멍뭉이",10))); //  true
+        System.out.println(treeSet); // []
+
+        treeSet.add(new Dog("멍뭉이",15));
+        System.out.println(treeSet);
+
 
         // Iterator<E>	iterator()
+        Iterator<Dog> it = treeSet.iterator();
+        System.out.println(it); // java.util.TreeMap$KeyIterator@1b6d3586
+
+        System.out.println(it.equals(new Dog("멍뭉이",15))); // false
+        // 왜 false일까...?
+        while(it.hasNext()){
+            Dog d = it.next();
+            System.out.println("iterator : "+it); // iterator : java.util.TreeMap$KeyIterator@1b6d3586
+//            System.out.println(it.next());  // Exception in thread "main" java.util.NoSuchElementException
+            System.out.println("Dog d : "+d); // Dog d : 멍뭉이(15.0kg)
+        }
 
 
-        // removeAll(Collection<?> c) : boolean
-        // Removes from this set all of its elements that are contained in the specified collection (optional operation).
+//        인텔리제이가 자동생성 해준 이터레이터 코드
+//        Iterator<Dog> iterator = new Iterator<Dog>() {
+//            @Override
+//            public boolean hasNext() {
+//                return false;
+//            }
+//
+//            @Override
+//            public Dog next() {
+//                return null;
+//            }
+//        };
 
-        // equals(Object o) :  boolean
-        //Compares the specified object with this set for equality.
 
-        // set(int index, E e) : 바꾸기 전 값 반환
-        // 해당 인덱스 번호에 값  교체
-        // equals(),hashCode() 필요x
-
-        //get(int index):E
-        // 인덱스번호의 엘리먼트 값을 가져온다
+        // hSet.set();
+        // linkedHashSet.set();
+        // treeSet.set();
+        // 위의 셋 다 set(),get()가 없음 -> 인덱스 번호로 replace해주기 때문
+        //      set(int index, E e) : 바꾸기 전 값 반환
+        //      해당 인덱스 번호에 값  교체
+        //      get(int index):E
+        //      인덱스번호의 엘리먼트 값을 가져온다
 
         // contains(Object) : boolean
-        // indexObject : int
-
+        System.out.println(treeSet.contains(new Dog("멍뭉이",15))); // true
 
         // clear():void
+        treeSet.clear();
+        System.out.println(treeSet); // []
+
         // isEmpty():boolean
+        System.out.println(treeSet.isEmpty()); // true
 
 
     }
 
 
+    public void method05(){
+
+
+
+    }
 
     // 공용 메소드들
     // add(E e):boolean
@@ -363,13 +502,17 @@ https://tychejin.tistory.com/326
     // HashSet
 
     // 순서x 중복x HashSet, add하면 어디에 추가될까?
-    // 맨 앞에 추가됨
+    // 위치 랜덤
 
     // set 중복 저장안되는데 중복 저장 되는 이유 : equals() 오버라이딩 안되어있어서
 
 
     // LinkedHashSet
     // 순서가 유지o 중복저장x 안되는 컬렉션
+
+    // LinkedHashSet 순서가 있으니까 add로 추가하면 어디서부터 추가될까?
+    // 뒤부터 추가
+
 
     // 중복 저장이 안된 이유?
     // Dog클래스에 equals()를 오버라이딩 해줬기 때문에 내용비교가 가능하게 되었고
@@ -407,10 +550,27 @@ https://tychejin.tistory.com/326
 
     // remove(int index):E
     // remove()의 return은 삭제한 값을 돌려준다
+    // set은 인덱스가 없으므로 위의 인덱스 번호로 지우는 것은 불가능. 따로 해당 메소드는 set과 map에는 없음
+
+
 
     // remove(Object o):boolean
     // 같은 데이터라면 앞에 있는거부터 삭제
     // equals()가 오버라이딩이 안되어 있어서 값 비교가 아니라 주소값 비교라 삭제 못한 것.
+
+    // list에 있는 element에 하나씩 접근하고 싶을 때 for문 이용 가능. 인덱스가 존재했기 때문
+//		for(int i=0, i<list.size();i++) {
+//			list.get(i);
+//		}
+    // set에는 인덱스 존재x -> list와 같은 방법으로 하나씩 element에 접근 불가능.
+    // 인덱스가 없기 때문에 for문 같은 것도 불가능하며 Iterator를 사용해야함
+    // set에서는 Iterator 사용
+
+    // Iterator<E>
+    // Iterator : 내가 컬렉션에 저장된 element에 접근 가능케 하는 역할
+    // iterator(): iterator<E>
+    // set안에 접근 가능한 엘리먼트를 반환
+    // Returns an iterator over the elements in this set.
 
     // Iterator<E>	iterator()
 
@@ -421,15 +581,16 @@ https://tychejin.tistory.com/326
     // equals(Object o) :  boolean
     //Compares the specified object with this set for equality.
 
-    // set(int index, E e) : 바꾸기 전 값 반환
-    // 해당 인덱스 번호에 값  교체
-    // equals(),hashCode() 필요x
-
-    //get(int index):E
-    // 인덱스번호의 엘리먼트 값을 가져온다
+    // hSet.set();
+    // linkedHashSet.set();
+    // treeSet.set();
+    // 위의 셋 다 set(),get()가 없음 -> 인덱스 번호로 replace해주기 때문
+    //      set(int index, E e) : 바꾸기 전 값 반환
+    //      해당 인덱스 번호에 값 교체
+    //      get(int index):E
+    //      인덱스번호의 엘리먼트 값을 가져온다
 
     // contains(Object) : boolean
-    // indexObject : int
 
 
     // clear():void

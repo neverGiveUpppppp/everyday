@@ -15,13 +15,17 @@ public class arrayController {
 
         for(int i=1; i < score.length;i++){
             if(score[i] > max){
-                max = score[i];
+                max = score[i]; // 기존 max보다 더 큰 값이 있으면 max변수에 넣어서 최대값을 찾는 방식
             }else if(score[i] < min){
-                min = score[i];
+                min = score[i]; // 기존 min보다 더 작은 값이 있으면 min변수에 넣어서 최소값을 찾는 방식
             }
         }
         System.out.println("최대값"+max);
         System.out.println("최대값"+min);
+        // 로직은 배열 안에 첫번째 값을 넣고 for문으로 전체 값을 읽는데
+        // 값을 하나씩 비교해서 더 큰 값이 있으면 max변수에 넣고 아니면 다음꺼 비교하고 하는 식으로 최대값, 최소값을 찾는 식
+
+
 
 
         // ch5-10,11 배열의 활용
@@ -46,12 +50,22 @@ public class arrayController {
             ball[i] = ball[j];
             ball[j] = temp;
             System.out.println(Arrays.toString(ball));
+            // a=b
+            // b=c
+            // c=a
+            // 파이썬 할 때 배웠던 그 알고리즘 방식 적용해서 숫자 바꿔치기함
+            // 여기까지 이미 랜덤 셔틀은 끝. 여기서 보여줄 앞 6자리만 뽑아서 보여주면 됨
         }
 
         // 배열 ball의 앞에서 부터 6개의 요소를 출력한다.
         for(int i=0; i < 6; i++)
             System.out.printf("ball[%d]=%d%n", i, ball[i]);
-
+        //            lotto[0]=33
+        //            lotto[1]=19
+        //            lotto[2]=13
+        //            lotto[3]=36
+        //            lotto[4]=8
+        //            lotto[5]=21
 
 
 

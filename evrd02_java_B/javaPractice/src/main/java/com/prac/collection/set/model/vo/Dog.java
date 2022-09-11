@@ -42,6 +42,8 @@ public class Dog implements Comparable{ // java.lang.(Interface) Comparable
 
     // 사용자 정의 클래스를 오버라이딩 해서 값 자체를 비교하기 위한 코드
     // (String과 Integer는 오버라이딩이 이미 되어있음)
+
+
     @Override
     public boolean equals(Object obj) {
         // 내 주소값과 obj의 값이 같다면?
@@ -86,6 +88,9 @@ public class Dog implements Comparable{ // java.lang.(Interface) Comparable
         // 이퀄즈를 했으면 hashcode도 같이 오버라이딩 해야함
 
     }
+
+
+
     @Override
     public int hashCode() {
         final int PRIME = 31; // 컴퓨터가 이해하기 좋은 숫자가 31이라함
