@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="" />
+    <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayControllerPrac.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayControllerPrac.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -128,7 +132,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/run/Run.java</url>
-          <line>4</line>
+          <line>5</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

@@ -122,6 +122,7 @@ public class arrayController {
 
         System.out.println("=============================");
         System.out.printf("총점:%3d %4d %4d%n", korTotal, engTotal, mathTotal);
+
 /*  
     출력 결과
 
@@ -144,6 +145,9 @@ public class arrayController {
             총점:240  240  240
 
 */
+
+
+
             
         }
 

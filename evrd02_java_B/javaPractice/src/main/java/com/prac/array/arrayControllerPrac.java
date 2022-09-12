@@ -128,6 +128,7 @@ public class arrayControllerPrac {
 //            lotto[3]=36
 //            lotto[4]=8
 //            lotto[5]=21
+
         }
 
 
@@ -142,6 +143,7 @@ public class arrayControllerPrac {
     // 최대값, 최소값 구하기
 
 
+    // 가위바위보 하기
 
 
     // 로또번호 6개 만들기
