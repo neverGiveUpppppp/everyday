@@ -132,9 +132,33 @@ public class arrayControllerPrac {
         }
 
 
+        // 최대값, 최소값 구하기
+        int[] arr00 = {1,23,5,7,68,34,5};
+        int maxNum = arr00[0];
+        int minNum = arr00[0];
+
+        for(int i=0; i < arr00.length; i++){
+            if(maxNum < arr00[i]){
+                maxNum = arr00[i];
+            }else if(minNum > arr00[i]){
+                minNum = arr00[i];
+            }
+        }
+        System.out.println(maxNum);
+        System.out.println(minNum);
 
 
 
+
+        // 가위바위보 하기
+        String[] RPS = { "rock", "paper", "scissors"};
+        int ranNum = 0;
+        for(int i=1; i <= 3;i++){
+            ranNum = (int)(Math.random()*3);
+            System.out.printf("%s"+" ",RPS[ranNum]);
+        }
+        System.out.println();
+        System.out.println(ranNum);
 
 
     }
@@ -142,8 +166,6 @@ public class arrayControllerPrac {
 
     // 최대값, 최소값 구하기
 
-
-    // 가위바위보 하기
 
 
     // 로또번호 6개 만들기
@@ -156,6 +178,11 @@ public class arrayControllerPrac {
     // 0번째 부터 5번째 요소까지 모두 6개만 바꾼다.
 
     // 배열 ball의 앞에서 부터 6개의 요소를 출력한다.
+
+
+
+
+    // 가위바위보 하기
 
 
 

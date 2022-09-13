@@ -178,54 +178,100 @@ public class Step1{
 //        public class Main {
 //            public static void main(String[] args) throws IOException {
 //
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-                StringTokenizer st = new StringTokenizer(br.readLine() , " ");
-
-                int [] arr = {1,1,2,2,2,8};
-                String answer = "";
-                int U;
-                for(int i = 0; i < 6; i++) {
-                    U = Integer.parseInt(st.nextToken());
-                    answer += arr[i] - U+" ";
-                }
-                System.out.println(answer);
-            }
-        }
+//                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//                StringTokenizer st = new StringTokenizer(br.readLine() , " ");
+//
+//                int [] arr = {1,1,2,2,2,8};
+//                String answer = "";
+//                int U;
+//                for(int i = 0; i < 6; i++) {
+//                    U = Integer.parseInt(st.nextToken());
+//                    answer += arr[i] - U+" ";
+//                }
+//                System.out.println(answer);
+//            }
+//        }
 
 
 
 
     }
 
-    // Step1-11 3003번 : 킹, 퀸, 룩, 비숍, 나이트, 폰
+    // Step1-11 10430번 : 나머지
     public void method09(){
 
 
 
     }
 
-    // Step1-12 3003번 : 킹, 퀸, 룩, 비숍, 나이트, 폰
+    // Step1-12 2588 : 곱셈
     public void method10(){
 
+        // brain storming
+        // 472
+        // 385 에서 먼저 일의 자리부터 5x2를 해야하므로 472를 인덱스번호로 지정하고
+        //          인덱스2번을 하면 2와 5를 찍어올 수 있으므로 a[2]*b[2] 이런식이면 가능할 듯?
+        //          두 수를 곱해서 10이 넘어가는건 두번째 자리수에 +1,+2 이런식으로 해 볼 수 있을 듯함
+        //          -> 인덱스 사용할려면 배열이나 list 사용해야함
+        //              숫자 입력받을 때 한번에 주어진다면 split이나 StringTokenizer로 나눠서 하나씩 넣어주면 될 듯
+        // split()은 해당 문자열을 나눠서 array로 반환
+
+        // 입력 값 저장 변수
+//        int a=0;
+//        int b=0;
+//
+//        Scanner sc = new Scanner(System.in);
+//        a = sc.nextInt();
+//        b = sc.nextInt();
+//
+//        // 계산되서 출력할 변수
+//        int num1 = 0;
+//        int num2 = 0;
+//        int num3 = 0;
+//        int num4 = 0;
+
+        Scanner sc = new Scanner(System.in);
+
+        int[] arr = {};
+        String a = null;
+        String b = null;
+        int[] a2 = {};
+        int[] b2 = {};
+
+        a = sc.nextLine();
+        b = sc.nextLine();
+        System.out.println(Arrays.toString(a.split(" "))); // String클래스 split은 배열로 반환
+        // 472가 입력됐을 때, 다 붙어서 나오기 때문에 구분자를 사용할 게 없다...
+
+
+        // 문자열 하나씩 여러하도록 chatAt() 써보자 : chatAt() + for()
+        // http://mwultong.blogspot.com/2007/05/java-1-string-one-char-at-time.html
+
+//        int[] a2 = {Integer.parseInt(a)};
+
+
+
+
+//        arr[i] = a.split(" ");
 
 
     }
 
-    // Step1-13 3003번 : 킹, 퀸, 룩, 비숍, 나이트, 폰
+    // Step1-13 10171번 : 고양이
     public void method11(){
 
 
 
     }
 
-    // Step1-14 3003번 : 킹, 퀸, 룩, 비숍, 나이트, 폰
+    // Step1-14 10172번 : 개
     public void method12(){
 
 
 
     }
 
-    // Step1-15 3003번 : 킹, 퀸, 룩, 비숍, 나이트, 폰
+    // Step1-15 25083번 : 새싹
     public void method13(){
 
 

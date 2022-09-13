@@ -271,7 +271,7 @@ https://tychejin.tistory.com/326
         System.out.println(hSet); // [해피(10.0kg), 해피(10.0kg), 풍이(10.0kg)]
 
         // HashSet
-        HashSet<Dog> hSet = new HashSet<Dog>();
+//        HashSet<Dog> hSet = new HashSet<Dog>();
         hSet.add(new Dog("풍이",10));
         hSet.add(new Dog("해피",10));
         hSet.add(new Dog("해피",10));
