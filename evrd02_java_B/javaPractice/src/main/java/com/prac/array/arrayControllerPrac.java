@@ -161,6 +161,40 @@ public class arrayControllerPrac {
         System.out.println(ranNum);
 
 
+
+
+        // 로또번호 6개 만들기
+        // 45개의 정수값을 저장하기 위한 배열 생성.
+        // 배열의 각 요소에 1~45의 값을 저장한다.
+        int[] lNum = new int[45];
+
+        for(int i=0; i < lNum.length; i++){
+            lNum[i] = i+1;
+        }
+        System.out.print(Arrays.toString(lNum)); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
+
+
+        // 값 저장 임시변수 생성
+        int tempNum = 0;
+        int randomNum = 0;
+
+        for(int i=0; i<=5;i++) {
+            randomNum = (int) (Math.random() * 45);
+            tempNum = lNum[i];
+            lNum[i] = lNum[randomNum];
+            lNum[randomNum] = tempNum;
+        }
+        System.out.println();
+        System.out.println(Arrays.toString(lNum));
+
+
+        // 배열의 i번째 요소와 임의의 요소에 저장된 값을 서로 바꿔서 값을 섞는다.
+        // 0번째 부터 5번째 요소까지 모두 6개만 바꾼다.
+
+        // 배열 ball의 앞에서 부터 6개의 요소를 출력한다.
+
+
+
     }
 
 
