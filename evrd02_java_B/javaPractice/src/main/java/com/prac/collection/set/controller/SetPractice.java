@@ -483,6 +483,98 @@ https://tychejin.tistory.com/326
 
 
     public void method05(){
+        // 공용 메소드들
+        // add(E e):boolean
+        // contains(Object o) : boolean
+        // iterator() : Iterator<E>
+        // remove(Object o) : boolean
+        // size() : int
+        // equals(Object o) : boolean
+        // isEmpty() : boolean
+        // clear() : void
+
+
+        // HashSet
+
+        HashSet<Dog> hSet = new HashSet<>();
+
+        // 순서x 중복x HashSet, add하면 어디에 추가될까?
+        // 위치 랜덤
+        hSet.add(new Dog("ㄱ",10));
+        hSet.add(new Dog("ㄴ",10));
+        hSet.add(new Dog("ㄷ",10));
+        hSet.add(new Dog("ㄷ",10));
+
+        System.out.println(hSet); // [ㄷ(10.0kg), ㄴ(10.0kg), ㄱ(10.0kg)]
+        // 순서x 중복x -> 추가시 랜덤
+
+        // set 중복 저장안되는데 중복 저장 되는 이유 : equals() 오버라이딩 안되어있어서
+        System.out.println(hSet); // [ㄷ(10.0kg), ㄷ(10.0kg), ㄴ(10.0kg), ㄱ(10.0kg)]
+
+        System.out.println(hSet.size()); // 3
+        System.out.println(hSet.contains(new Dog("ㄱ",10))); // true
+        hSet.remove(new Dog("ㄷ",10));
+        System.out.println(hSet); // [ㄴ(10.0kg), ㄱ(10.0kg)]
+        System.out.println(hSet.remove(new Dog("ㄴ",10))); // true
+        System.out.println(hSet);   // [ㄱ(10.0kg)]
+        System.out.println(hSet.equals(new Dog("ㄱ",10))); // false
+
+        hSet.removeAll(hSet);
+        System.out.println(hSet); // []
+        hSet.add(new Dog("ㄱ",10));
+        hSet.clear();
+        System.out.println(hSet);   // []
+        System.out.println(hSet.isEmpty()); // true
+
+
+
+        // LinkedHashSet
+        // 순서가 유지o 중복저장x 안되는 컬렉션
+        LinkedHashSet<Dog> lhSet = new LinkedHashSet<Dog>();
+        lhSet.add(new Dog("a",10));
+        lhSet.add(new Dog("b",10));
+        lhSet.add(new Dog("c",10));
+
+        lhSet.iterator();
+        System.out.println(lhSet.iterator()); // java.util.LinkedHashMap$LinkedKeyIterator@1b6d3586
+
+
+
+        // LinkedHashSet 순서가 있으니까 add로 추가하면 어디서부터 추가될까?
+        // 뒤부터 추가
+        lhSet.add(new Dog("d",10));
+        System.out.println(lhSet);  // [a(10.0kg), b(10.0kg), c(10.0kg), d(10.0kg)]
+
+        // 중복 저장이 안된 이유?
+        // Dog클래스에 equals()를 오버라이딩 해줬기 때문에 내용비교가 가능하게 되었고
+        // 이 때문에 같은 객체로 인지되었기 때문
+
+        // Iterator<E>
+        // Iterator : 내가 컬렉션에 저장된 element에 접근 가능케 하는 역할
+        // iterator(): iterator<E>
+        // set안에 접근 가능한 엘리먼트를 반환
+        // Returns an iterator over the elements in this set.
+
+        Iterator<Dog> it = lhSet.iterator();
+        while(it.hasNext()){
+            System.out.print(it.next()+" "); // a(10.0kg) b(10.0kg) c(10.0kg) d(10.0kg)
+        }
+
+        hSet.add(new Dog("a",10));
+        System.out.println(hSet); // a(10.0kg)
+
+        Iterator<Dog> it2 = hSet.iterator();
+        while(it2.hasNext()){
+            System.out.println(it2.next());
+        }
+
+
+    }
+
+
+
+
+    public void method06(){
 
 
 
@@ -518,7 +610,13 @@ https://tychejin.tistory.com/326
     // Dog클래스에 equals()를 오버라이딩 해줬기 때문에 내용비교가 가능하게 되었고
     // 이 때문에 같은 객체로 인지되었기 때문
 
+    // Iterator<E>
+    // Iterator : 내가 컬렉션에 저장된 element에 접근 가능케 하는 역할
+    // iterator(): iterator<E>
+    // set안에 접근 가능한 엘리먼트를 반환
+    // Returns an iterator over the elements in this set.
 
+    // Iterator<E>	iterator()
 
 
     // HashSet<String>

@@ -5,85 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/libraries/KotlinJavaRuntime.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/libraries/groovy_4_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/codeTest.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-ant-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-ant-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-astbuilder-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-astbuilder-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-cli-commons-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-cli-commons-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-cli-picocli-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-cli-picocli-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-console-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-console-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-contracts-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-contracts-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-datetime-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-datetime-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-dateutil-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-dateutil-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-docgenerator-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-docgenerator-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-ginq-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-ginq-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-groovydoc-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-groovydoc-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-groovysh-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-groovysh-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-jmx-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-jmx-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-json-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-json-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-jsr223-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-jsr223-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-macro-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-macro-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-macro-library-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-macro-library-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-nio-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-nio-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-servlet-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-servlet-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-sql-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-sql-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-swing-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-swing-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-templates-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-templates-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-test-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-test-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-test-junit5-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-test-junit5-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-testng-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-testng-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-toml-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-toml-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-typecheckers-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-typecheckers-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-xml-4.0.2-sources.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/lib/groovy-xml-4.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/out/production/codeTest/com/baekjoon/step1/Step1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/out/production/codeTest/com/baekjoon/step1/practice/practice.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/out/production/codeTest/com/baekjoon/step1/run/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/out/production/codeTest/com/baekjoon/step2/controller/controller.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/out/production/codeTest/com/baekjoon/step2/run/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step1/Step1.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step1/practice/practice.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step1/run/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step2/controller/controller.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../codeTest/src/com/baekjoon/step2/run/Main.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayControllerPrac.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayControllerPrac.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/prac/array/arrayControllerPrac.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/prac/array/arrayControllerPrac.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/controller/SetPractice.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/controller/SetPractice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/run/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/run/Run.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +60,7 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Application.arrayControllerPrac">
+  <component name="RunManager" selected="Application.Run">
     <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.prac.collection.set.run.Run" />
       <module name="evrd02_java_B" />
@@ -183,9 +107,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Run" />
         <item itemvalue="Application.arrayControllerPrac" />
         <item itemvalue="Application.arrayController" />
-        <item itemvalue="Application.Run" />
       </list>
     </recent_temporary>
   </component>
