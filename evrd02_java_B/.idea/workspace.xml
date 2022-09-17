@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/controller/SetPractice.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/controller/SetPractice.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/run/Run.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/collection/set/run/Run.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/array/arrayController.class" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/array/arrayController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/array/arrayControllerPrac.class" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/array/arrayControllerPrac.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/collection/set/controller/SetPractice.class" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/collection/set/controller/SetPractice.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/collection/set/run/Run.class" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/target/classes/com/prac/collection/set/run/Run.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,16 +55,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
+  }
+}]]></component>
   <component name="RunManager" selected="Application.Run">
     <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.prac.collection.set.run.Run" />

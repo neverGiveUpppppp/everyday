@@ -2,10 +2,7 @@ package com.prac.collection.set.controller;
 
 import com.prac.collection.set.model.vo.Dog;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.TreeSet;
+import java.util.*;
 
 public class SetPractice {
 
@@ -569,6 +566,8 @@ https://tychejin.tistory.com/326
         }
 
 
+
+
     }
 
 
@@ -576,9 +575,49 @@ https://tychejin.tistory.com/326
 
     public void method06(){
 
+        LinkedHashSet<Dog> linkedHashSet = new LinkedHashSet<>();
+        linkedHashSet.add(new Dog("ㄱ",10));
+        linkedHashSet.add(new Dog("ㄴ",10));
+        System.out.println(linkedHashSet); // [ㄱ(10.0kg), ㄴ(10.0kg)]
+
+
+        // ListIterator<E>
+        // Iterator인터페이스의 확장된 인터페이스로, 이터레이터와 달리 컬렉션 요소를 앞뒤 방향으로 탐색가능 및 컬렉션 요소 추가,제거,수정 가능
+        ArrayList<Dog> al = new ArrayList<>();
+        al.add(new Dog("aa",10));
+        al.add(new Dog("bb",10));
+
+        ListIterator<Dog> listIterator = al.listIterator();
+        listIterator.add(new Dog("bb",10));
+        System.out.println(listIterator); // java.util.ArrayList$ListItr@1b6d3586 -> 주소값이 나오므로 Arrays.toString 한번 찍어보자
+//        System.out.println(Arrays.toString(listIterator)); // 배열이 아니라 에러뜸
+        // iterator는 while문 써서 접근했어야했다...
+        while(listIterator.hasNext()){
+            System.out.println(listIterator.next()); // aa(10.0kg) bb(10.0kg)
+        }
+        while(listIterator.next()){ // next()에 boolean타입이 들어와야하는데 Dog가 들어와서 에러발생
+            System.out.println(listIterator);
+        }
+
+
+        // Exception in thread "main" java.lang.ClassCastException:
+        // java.util.LinkedHashMap$LinkedKeyIterator cannot be cast to java.util.ListIterator
+        //      ArrayList의 값을 가져왔어야하는건데 LinkedHashSet의 값을 가져와버림
+
+    }
+
+    public void method07(){
+
 
 
     }
+
+    public void method08(){
+
+
+
+    }
+
 
     // 공용 메소드들
     // add(E e):boolean
