@@ -16,8 +16,8 @@ public class Run {
 //        sp.method03();
 //        sp.method04();
 //        sp.method05();
-        sp.method06();
-//        sp.method07();
+//        sp.method06();
+        sp.method07();
 //        sp.method08();
 //        sp.method09();
 //        sp.method10();

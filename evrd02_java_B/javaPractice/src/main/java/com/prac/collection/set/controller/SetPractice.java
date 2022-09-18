@@ -581,8 +581,8 @@ https://tychejin.tistory.com/326
         System.out.println(linkedHashSet); // [ㄱ(10.0kg), ㄴ(10.0kg)]
 
 
-        // ListIterator<E>
-        // Iterator인터페이스의 확장된 인터페이스로, 이터레이터와 달리 컬렉션 요소를 앞뒤 방향으로 탐색가능 및 컬렉션 요소 추가,제거,수정 가능
+//         ListIterator<E>
+//         Iterator인터페이스의 확장된 인터페이스로, 이터레이터와 달리 컬렉션 요소를 앞뒤 방향으로 탐색가능 및 컬렉션 요소 추가,제거,수정 가능
         ArrayList<Dog> al = new ArrayList<>();
         al.add(new Dog("aa",10));
         al.add(new Dog("bb",10));
@@ -595,9 +595,9 @@ https://tychejin.tistory.com/326
         while(listIterator.hasNext()){
             System.out.println(listIterator.next()); // aa(10.0kg) bb(10.0kg)
         }
-        while(listIterator.next()){ // next()에 boolean타입이 들어와야하는데 Dog가 들어와서 에러발생
-            System.out.println(listIterator);
-        }
+//        while(listIterator.next()){ // next()에 boolean타입이 들어와야하는데 Dog가 들어와서 에러발생
+//            System.out.println(listIterator);
+//        }
 
 
         // Exception in thread "main" java.lang.ClassCastException:
@@ -607,6 +607,43 @@ https://tychejin.tistory.com/326
     }
 
     public void method07(){
+        LinkedHashSet<Dog> lhSet = new LinkedHashSet<>();
+        lhSet.add(new Dog("a",10));
+        lhSet.add(new Dog("b",10));
+        System.out.println(lhSet); // [a(10.0kg), b(10.0kg)]
+
+        ArrayList<Dog> al = new ArrayList<>(lhSet);
+        System.out.println(al); // [a(10.0kg), b(10.0kg)]
+
+        al.get(1);
+        System.out.println(al.get(0)); // a(10.0kg)
+        System.out.println(al.get(1)); // b(10.0kg)
+        al.add(new Dog("c",10));
+
+
+        // for문을 이용한 엘리먼트 추출
+        for(int i=0; i < al.size();i++){
+            System.out.println(al.get(i)); // a(10.0kg) b(10.0kg)
+        }
+
+        for(Dog a : al){
+            System.out.println("for each = "+al);
+            // 결과화면
+            // for each = [a(10.0kg), b(10.0kg), c(10.0kg)]
+            // for each = [a(10.0kg), b(10.0kg), c(10.0kg)]
+            // for each = [a(10.0kg), b(10.0kg), c(10.0kg)]
+        }
+        for(Dog a : al){
+            System.out.println(a);
+            // 결과화면
+            // a(10.0kg) b(10.0kg) c(10.0kg)
+        }
+        for(Dog b : lhSet){
+            System.out.println("for each = "+lhSet);
+            // 결과화면
+            // for each = [a(10.0kg), b(10.0kg)]
+            // for each = [a(10.0kg), b(10.0kg)]
+        }
 
 
 

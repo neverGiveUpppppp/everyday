@@ -175,7 +175,7 @@ public class SetController {
         while(li.hasPrevious()) { // hasPrevious() : hasNext의 반대. 이전 값을 가져오기
             System.out.println("li.hasPrevious() : "+li.previous()); // previous() : next()의 반대. 이전 값이 있으면 값을 가져오는 것.
         } // 반대방향으로 한칸씩 가서 처음으로 도달
-        // 양방향으로 하려면 ListIterator를 써야하는ㄱ건가요?
+        // 양방향으로 하려면 ListIterator를 써야하는 건가요?
         // yes
 
 
