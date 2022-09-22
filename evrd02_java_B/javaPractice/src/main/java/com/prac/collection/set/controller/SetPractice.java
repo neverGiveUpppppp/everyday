@@ -656,6 +656,13 @@ https://tychejin.tistory.com/326
     }
 
 
+    public void method09(){
+
+
+
+    }
+
+
     // 공용 메소드들
     // add(E e):boolean
     // contains(Object o) : boolean

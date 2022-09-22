@@ -195,11 +195,51 @@ public class arrayControllerPrac {
 
 
 
+
+        // 최대값, 최소값 구하기
+        int max02=0;
+        int min02=10;
+        int[] number = new int[10];
+
+        for(int i=0; i < number.length;i++){
+            number[i] = i+1;
+        }
+        System.out.println(Arrays.toString(number)); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+        for(int i=0; i<number.length;i++){
+            if(max02 < number[i]){
+                max02 = number[i];
+            }
+            if(min02 > number[i]){
+                min02 = number[i];
+            }
+        }
+
+        System.out.println(max02); // 10
+        System.out.println(min02); // 1
+
+
+
+
+        // 가위바위보
+        String[] rps2 = {"가위","바위","보"};
+        int hand = 0;
+        for(int i=0; i<3; i++){
+            hand = (int)(Math.random() * 3);
+            System.out.println(rps2[hand]);
+        }
+        
+
+
+
+
+
+
+
     }
 
 
     // 최대값, 최소값 구하기
-
 
 
     // 로또번호 6개 만들기
@@ -217,6 +257,7 @@ public class arrayControllerPrac {
 
 
     // 가위바위보 하기
+
 
 
 
