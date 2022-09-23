@@ -228,7 +228,7 @@ public class arrayControllerPrac {
             hand = (int)(Math.random() * 3);
             System.out.println(rps2[hand]);
         }
-        
+
 
 
 
