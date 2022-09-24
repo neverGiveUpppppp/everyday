@@ -10,8 +10,8 @@ public class Run {
 //        lc.listController02();
 
         ListPractice lp = new ListPractice();
-        lp.method01();
-//        lp.method02();
+//        lp.method01();
+        lp.method02();
 //        lp.method03();
 //        lp.method04();
 //        lp.method05();

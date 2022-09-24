@@ -2,8 +2,10 @@ package com.prac.collection.list.controller;
 
 import com.prac.collection.list.model.vo.Student;
 import com.prac.collection.list.model.vo.pModelVo05;
+import com.prac.collection.set.model.vo.Dog;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class ListController {
 
@@ -103,6 +105,13 @@ public class ListController {
 
 
     public void doList() {
+
+
+
+
+
+
+
 //		List list1 = new ArrayList();
         // 부모                            자식               // 인터페이스,추상클래스는 참조변수로는 가능하기에 부모타입 자식객체 가능
         // 참조변수? 참조변수로는 사용 가능하다?
@@ -295,6 +304,27 @@ public class ListController {
         list.clear();
         System.out.println("list "+list);
         System.out.println(list.isEmpty());
+
+
+
+
+        // ListIterator<E>
+        // Iterator인터페이스의 확장된 인터페이스로, 이터레이터와 달리 컬렉션 요소를 앞뒤 방향으로 탐색가능 및 컬렉션 요소 추가,제거,수정 가능
+        System.out.println("===== ListIterator =====");
+
+        ListIterator<Student> li = list.listIterator();
+
+        while(li.hasNext()) { // hasNext()여기서 이미 한번 끝에 도달
+            System.out.println("li.hasNext() : "+li.next());
+        }
+        while(li.hasNext()) { // hasNext() 두번째 돌리면 처음부터 다시 가는게 아니라 이미 끝에 있기에 의미없음
+            System.out.println(li.next());
+        }
+        while(li.hasPrevious()) { // hasPrevious() : hasNext의 반대. 이전 값을 가져오기
+            System.out.println("li.hasPrevious() : "+li.previous()); // previous() : next()의 반대. 이전 값이 있으면 값을 가져오는 것.
+        } // 반대방향으로 한칸씩 가서 처음으로 도달
+        // 양방향으로 하려면 ListIterator를 써야하는 건가요?
+        // yes
 
 
 

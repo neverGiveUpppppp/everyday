@@ -5,6 +5,7 @@ import com.prac.collection.list.model.vo.pModelVo05;
 
 import javax.xml.stream.events.StartDocument;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class ListPractice {
 
@@ -96,8 +97,99 @@ public class ListPractice {
 
     }
     public void method02(){
+        ArrayList<Student> al = new ArrayList<>(5);
+
+        System.out.println(al.size()); // 0
+
+        for(int i=0; i< 5; i++ ){
+           al.add(new Student("a",i));
+        }
+        System.out.println(al); // [a(0점), a(1점), a(2점), a(3점), a(4점)]
+        System.out.println();
+
+        for(Student a : al){
+            System.out.println(al);
+            // 변수 al 전체를 al의 길이만큼 반복
+//            [a(0점), a(1점), a(2점), a(3점), a(4점)]
+//            [a(0점), a(1점), a(2점), a(3점), a(4점)]
+//            [a(0점), a(1점), a(2점), a(3점), a(4점)]
+//            [a(0점), a(1점), a(2점), a(3점), a(4점)]
+//            [a(0점), a(1점), a(2점), a(3점), a(4점)]
+        }
+        for(Student a : al){
+            // 변수 al의 요소 하나씩 순서대로 al길이만큼 반복
+            System.out.println(a);
+//            a(0점)
+//            a(1점)
+//            a(2점)
+//            a(3점)
+//            a(4점)
+        }
+
+        // ListIterator
+        // iterator()
+        ListIterator<Student> li = al.listIterator();
+        System.out.println(li); // java.util.ArrayList$ListItr@1b6d3586
+
+
+        // ListIterator요소 꺼내는 방법 : while + hasNext()
+        while(li.hasNext()){
+            System.out.print(li.next()+" "); // a(0점) a(1점) a(2점) a(3점) a(4점)
+        }
+        // hasNext() 두번째 돌리면 처음부터 다시 가는게 아니라 이미 끝에 있기에 의미없음
+        while(li.hasNext()){
+            System.out.print(li.next()+" "); // 출력x
+        }
+        System.out.println();
+        while(li.hasPrevious()){
+            System.out.print(li.previous()+" "); // a(4점) a(3점) a(2점) a(1점) a(0점)
+        }
+        System.out.println();
+        // hasPrevious()로 앞으로 돌렸기에 기준점이 앞으로 와있어 hasNext() 다시 작동
+        while(li.hasNext()){
+            System.out.print(li.next()+" "); // a(0점) a(1점) a(2점) a(3점) a(4점) 
+        }
+        System.out.println();
+        System.out.println();
+
+//        al.add(new Student("a",5));
+//        al.add(new Student("a",6));
+
+        // 해당 변수의 1번 인덱스부터 받아오기
+        ListIterator<Student> li2 = al.listIterator(1);
+        li2.add(new Student("a",5));
+        li2.add(new Student("a",6));
+
+        while(li2.hasNext()){
+            System.out.print(li2.next()+" "); // a(1점) a(2점) a(3점) a(4점)
+        }
+
+
+//        // 컬렉션 원소 삭제 : iterator() + remove()
+//        다시 해볼 것 : https://park0729.tistory.com/4
+//        Student del = null;
+//        while(li2.hasNext()){
+//            System.out.print(li2.next()+" "); // (1점) a(2점) a(3점) a(4점) a(5점) a(6점)
+//
+//            del = new Student("a",1);
+//
+////            if(del.equals(new Student("a",1))){
+////                li2.remove();
+////            }
+//            if(del == new Student("a",1)){
+//                li2.remove();
+//            }
+//        }
+//        System.out.println(del);
+
+
+
 
     }
+
+    // ListIterator
+    // iterator()
+    // 컬렉션 원소 삭제 : iterator() + remove()
 
 
     // 1-1. // add(E e):boolean
