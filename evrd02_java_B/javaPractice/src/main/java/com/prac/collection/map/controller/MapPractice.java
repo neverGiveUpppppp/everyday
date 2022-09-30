@@ -157,6 +157,82 @@ public class MapPractice {
     }
     public void method02() {
 
+
+        // Properties prop = new Properties();
+        // key와 value를 String으로 제한시켜놓은 Map구조의 컬렉션
+        Properties prob = new Properties();
+        prob.setProperty("ㄱ","1");
+        prob.setProperty("ㄴ","2");
+        System.out.println(prob.getProperty("ㄱ","1")); // 1 : getProperty 밸류값1을 반환
+
+        System.out.println(prob.get("ㄱ")); // 1 : get()은 키값으로 밸류값 가져옴
+        System.out.println(prob.contains("ㄱ")); // false
+
+
+        // 1.HashMap
+        // put(K key, V value):V
+        // 반환타입 : value
+        HashMap hMap = new HashMap();
+        hMap.put("ㄱ",1);
+        hMap.put("ㄱㄱ","1");
+        System.out.println(hMap); // {ㄱ=1, ㄱㄱ=1}
+        System.out.println(hMap.put("ㄴ",2)); // null
+        System.out.println(hMap); // {ㄱ=1, ㄴ=2, ㄱㄱ=1}
+
+
+        // 2.containsKey(Object key)
+        // 키나 값이 들어가 있는지를 확인하는 메소드
+        // containsKey(Object key):boolean
+        // containsValue(Object value):boolean
+        hMap.containsKey("ㄴ");
+        System.out.println(hMap.containsKey("ㄴ")); // true
+
+
+        // 3.get()
+        // get(Object key) : v
+        // key값에 맞는 'value값 반환'
+        System.out.println(hMap.get("ㄴ")); // 2 : ㄴ키에 밸류인 2가 반환된 것
+
+
+        // 4-1.remove(Object key):V
+        // 4-2.remove(Object key, Object value):default boolean
+        System.out.println(hMap); // {ㄱ=1, ㄴ=2, ㄱㄱ=1}
+        System.out.println(hMap.remove("ㄴ"));  // 2 : 지운 키의 밸류값 반환
+        System.out.println(hMap.remove("ㄱㄱ","1")); // true
+
+
+        // 5.keySet() & entrySet()
+        // keySet()
+        // keySet():Set<K>
+        // 맵에 있는 key들을 set에 담아 반환
+        System.out.println("keySet() : "+hMap.keySet()); // [ㄱ]
+        // set의 []를 빼고 값을 뽑고 싶다면?
+
+
+        // size():int
+        System.out.println(hMap.size()); // 1
+
+
+        // TreeMap
+        // 정렬 가능
+        // putAll()
+        // putAll(Map<? extends K,? extends V> m):void
+        // 다른 맵의 값을 추가
+        TreeMap<String, Snack> treeMap = new TreeMap<>(hMap);
+        treeMap.put("ㄴㄴ",new Snack("맛1",100));
+        treeMap.put("ㄷㄷ",new Snack("맛2",200));
+        System.out.println(treeMap);
+        // {ㄱ=1, ㄴㄴ=Snack{flavor='맛1', price=100}, ㄷㄷ=Snack{flavor='맛2', price=200}}
+
+        // remove(Object key):V
+        // remove(Object key, Object value):boolean
+        System.out.println(treeMap.remove("ㄱ")); // 1
+        System.out.println(treeMap.remove("ㄷㄷ",new Snack("맛2",200))); // true
+
+        // replace(K key, V oldValue, V newValue):boolean
+        treeMap.replace("ㄴㄴ",new Snack("맛1",100),new Snack("맛11",1000));
+        System.out.println(treeMap); // {ㄴㄴ=Snack{flavor='맛11', price=1000}}
+
     }
 
     public void method03() {
