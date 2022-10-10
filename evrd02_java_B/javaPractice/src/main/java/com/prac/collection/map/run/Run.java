@@ -11,8 +11,8 @@ public class Run {
 
         MapPractice mp = new MapPractice();
 //        mp.method01();
-        mp.method02();
-//        mp.method03();
+//        mp.method02();
+        mp.method03();
 //        mp.method04();
 //        mp.method05();
 //        mp.method06();

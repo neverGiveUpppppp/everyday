@@ -237,6 +237,142 @@ public class MapPractice {
 
     public void method03() {
 
+
+        // Properties prop = new Properties();
+        // key와 value를 String으로 제한시켜놓은 Map구조의 컬렉션
+
+        Properties pro = new Properties();
+        pro.setProperty("a","aa");
+        pro.setProperty("b","bb"); // setProperty는 str만 받음
+        pro.put("c","cc");         // put은 object를 받음
+
+        System.out.println("pro : "+pro); // {b=bb, a=aa, c=cc} : map은 순서x
+
+        pro.getProperty("a"); // getProperty는 String만 취급
+        pro.get("b"); // get은 object를 받음
+        System.out.println(pro.getProperty("a")); // aa
+        System.out.println(pro.get("b"));   // bb -> 해당 key의 value값 출력됨
+        pro.remove("c");
+        System.out.println(pro); // {b=bb, a=aa}
+
+
+        // 1.HashMap
+        // put(K key, V value):V
+        // 반환타입 : value
+        HashMap<String,Snack> hmap = new HashMap<>();
+        hmap.put("A", new Snack("짠맛",100)); // list add랑 다르게 put으로 추가
+        hmap.put("B",new Snack("단맛",100));
+        System.out.println(hmap); // {A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='단맛', price=100}}
+        // Map은{key=value}으로 출력됨
+        // 구분자로 나눠서 뭔가 해볼 수 있을 듯?
+
+        // 2.containsKey(Object key)
+        // 키나 값이 들어가 있는지를 확인하는 메소드
+        // containsKey(Object key):boolean
+        // containsValue(Object value):boolean
+        hmap.containsKey("A");
+        System.out.println(hmap.containsKey("A")); /// true
+        System.out.println(hmap.containsValue(new Snack("단맛",100)));
+
+
+        // 3.get()
+        // get(Object key) : v
+        // key값에 맞는 'value값 반환'
+        hmap.get("B");
+        System.out.println(hmap.get("A")); // Snack{flavor='짠맛', price=100}
+
+        // 4-1.remove(Object key):V
+        // 4-2.remove(Object key, Object value):default boolean
+        System.out.println(hmap.remove("B")); // Snack{flavor='단맛', price=100}
+        System.out.println(hmap); // {A=Snack{flavor='짠맛', price=100}} 남은 값
+
+        // 5.keySet() & entrySet()
+        // keySet()
+        // keySet():Set<K>
+        // 맵에 있는 key들을 set에 담아 반환
+
+        // 방법1
+        hmap.keySet();
+        System.out.println(hmap.keySet()); // [A]
+
+        // 방법2
+        // set의 [] 없이 안에 값만 뽑고 싶다면 방법2 사용
+        // Set객체 생성하여 map의 keySet()를 넣어주고 이를 다시 Iterator에 넣어서
+        // while + hasNext()로 읽어들인다.
+        // set이기 때문에 찍으면 기본적으로 key값이 나옴
+        // value값을 읽어오고 싶다면 원본 데이터인 map에서 get()를 통해 끌어오면된다
+        Set<String> set = hmap.keySet();
+        Iterator<String> it = set.iterator();
+        while(it.hasNext()){
+            String str = it.next();
+            System.out.println("String : "+str+" // hmap.get(a) : "+hmap.get(str));
+            // a : A // hmap.get(a) : Snack{flavor='짠맛', price=100}
+        }
+
+
+
+        // entrySet()
+        // entrySet():Set<Map.Entry<K,V>>
+        // map에 있는 entry들을 set 담에 반환(키와 값의 쌍을 set에 담아 반환)
+        // entry 의미 : 키와 값을 묶은 것(키와 값의 쌍)
+
+        // 방법1
+//        System.out.println(hmap.entrySet());//[사과류=아오리[200원], 참외류=참외[300원]]
+        hmap.entrySet();
+        System.out.println(hmap.entrySet()); // [A=Snack{flavor='짠맛', price=100}]
+
+        hmap.put("B",new Snack("단맛",100));
+        System.out.println(hmap.entrySet());
+        // [A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='단맛', price=100}]
+
+
+        // 방법2
+        // set의 [] 없이 안에 값만 뽑고 싶다면 방법2 사용
+        Set<Map.Entry<String,Snack>> setEnt = hmap.entrySet();
+        Iterator<Map.Entry<String,Snack>> iter = setEnt.iterator();
+        while(iter.hasNext()){
+            Map.Entry<String,Snack> ent = iter.next();
+            System.out.println(ent); // A=Snack{flavor='짠맛', price=100} B=Snack{flavor='단맛', price=100}
+            System.out.println(ent.getValue()); // Snack{flavor='짠맛', price=100} Snack{flavor='단맛', price=100}
+        }
+
+        // size():int
+        hmap.size();
+        System.out.println(hmap.size()); // 2
+
+
+        // TreeMap
+        // 정렬 가능
+        // putAll()
+        // putAll(Map<? extends K,? extends V> m):void
+        // 다른 맵의 값을 추가
+
+        TreeMap<String,Snack> tmap = new TreeMap<>(hmap);
+        System.out.println(tmap); // {A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='단맛', price=100}}
+        tmap.put("C",new Snack("신맛",100));
+        tmap.put("D",new Snack("쓴맛",100));
+        System.out.println(tmap);
+        // {A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='단맛', price=100}, C=Snack{flavor='신맛', price=100}, D=Snack{flavor='쓴맛', price=100}}
+        // A,B,C,D 정렬되서 나옴
+
+        // remove(Object key):V
+        // remove(Object key, Object value):boolean
+        System.out.println(tmap.remove("D")); // Snack{flavor='쓴맛', price=100}
+        System.out.println(tmap.remove("C",new Snack("신맛",100))); // true
+        System.out.println(tmap); // {A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='단맛', price=100}}
+
+        // replace(K key, V oldValue, V newValue):boolean
+        tmap.replace("B",new Snack("단맛",100),new Snack("뉴",10));
+        System.out.println(tmap);
+        // {A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='뉴', price=10}}
+        // b의 밸류값인 snack의 맛과 가격이 변경됨
+        tmap.replace("B",new Snack("뉴뉴",10000));
+        System.out.println(tmap);
+        // {A=Snack{flavor='짠맛', price=100}, B=Snack{flavor='뉴뉴', price=10000}}
+
+
+
+
     }
 
     public void method04() {
@@ -265,7 +401,8 @@ public class MapPractice {
     // put(K key, V value):V
     // 반환타입 : value
 
-    // 2.containsKey(Object key)
+    // 2-1.containsKey(Object key)
+    // 2-2.containsValue(Object value)
     // 키나 값이 들어가 있는지를 확인하는 메소드
     // containsKey(Object key):boolean
     // containsValue(Object value):boolean
