@@ -1,0 +1,38 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>게시물 목록</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+		<h2>게시물 목록</h2>
+		<table class="table table-striped table-hover">
+		<thead>
+		<tr>
+			<th>번호</th>
+			<th>종류</th>
+			<th>제목</th>
+			<th>등록일자</th>
+		</tr>
+		</thead>
+		<tbody>
+			<tr th:each="board : ${boardList}" >
+				<td th:text="${board.boardSeq}">1</td>
+				<td th:text="${board.boardType}">공지사항</td>
+				<td>
+					<a th:href="@{/board/{boardSeq}(boardSeq=${board.boardSeq})}" th:text="${board.title}">
+						안녕하세요.
+					</a> <!-- 상세화면  링크를 th:href를 활용해서  url을 바인딩한 것 -->
+				</td>
+				<td th:text="${board.regDate}">2011-10-15</td>
+			</tr>
+		</tbody>
+		</table>
+		<a href="/board/form" class="btn btn-primary">등록</a>
+	</div>
+</body>
+</html>
+

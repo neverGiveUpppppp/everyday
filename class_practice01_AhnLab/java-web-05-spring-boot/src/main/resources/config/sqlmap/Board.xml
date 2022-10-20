@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap>
+
+ 	<!-- 결과 맵 -->
+	<resultMap id="selectBoardListResultMap" class="example.dao.Board">
+		<result column="BOARD_SEQ" property="boardSeq" />
+		<result column="BOARD_TYPE" property="boardType" />
+		<result column="TITLE" property="title" />
+		<result column="REG_DATE" property="regDate" />
+	</resultMap>
+	
+ 	<!-- 상세 조회 결과 맵 -->
+	<resultMap id="selectBoardResultMap" class="example.dao.Board">
+		<result column="BOARD_SEQ" property="boardSeq" />
+		<result column="BOARD_TYPE" property="boardType" />
+		<result column="TITLE" property="title" />
+		<result column="CONTENTS" property="contents" />
+		<result column="REG_DATE" property="regDate" />
+	</resultMap>	
+ 
+	<!-- 게시물 목록 쿼리 -->
+	<select id="selectBoardList" resultMap="selectBoardListResultMap">
+		SELECT BOARD_SEQ, BOARD_TYPE, TITLE, REG_DATE 
+		FROM T_BOARD
+		ORDER BY REG_DATE DESC
+	</select>
+	
+	<!-- 게시물 목록 쿼리 -->
+	<select id="selectBoard" parameterClass="int" resultMap="selectBoardResultMap">
+		SELECT BOARD_SEQ, BOARD_TYPE, TITLE, CONTENTS, REG_DATE 
+		FROM T_BOARD
+		WHERE BOARD_SEQ = #boardSeq#
+	</select>	
+	
+	<!-- 게시물 등록 쿼리 -->
+	<insert id="insertBoard" parameterClass="example.dao.Board">
+		INSERT INTO T_BOARD
+		(
+			BOARD_TYPE,
+			TITLE,
+			CONTENTS,
+			REG_DATE		
+		)
+		VALUES
+		(
+			#boardType#,
+			#title#,
+			#contents#,
+			NOW()	
+		)
+	</insert>
+	
+	<!-- 게시물 삭제 쿼리 -->
+	<delete id="deleteBoard" parameterClass="int">
+		DELETE FROM T_BOARD
+		WHERE BOARD_SEQ = #boardSeq#
+	</delete>
+	
+</sqlMap>

@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	
+	<script th:inline="javascript">
+	var message = [[${message}]];
+//	alert('페이지를 찾을 수 없습니다.') // 원하는 에러메세지로 세팅하면 됨
+	alert(message) // var message에서 받는 데이터값을 alert에 넣어서 출력
+	history.back();
+	</script>
+	
+	
+	
+</body>
+</html>

@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+	
+	<script th:inline="javascript">
+	var message = [[${exception.message}]]; // 익셉션은 모델앤뷰에 넣은 키. 기존 500에러서는 메세지에 오브젝트가 아닌 키로 각각 주는거라 하나의 어트뷰트 조건이 되는건데 이거는 다른게 익셉션.으로 접근해야 .. 
+	alert('error.html'+message) // var message에서 받는 데이터값을 alert에 넣어서 출력
+	history.back();
+	</script>
+	
+<!-- 	<div class="container">
+		<h2>400 Not Found</h2>
+		<ul>
+			<li th:text="/timestamp: ${timestamp}/"></li>
+			<li th:text="/path: ${path}/"></li>
+			<li th:text="/status: ${status}/"></li>
+			<li th:text="/message: ${message}/"></li>
+			<li th:text="/error: ${error}/"></li>
+			<li th:text="/exception: ${exception}/"></li>
+			<li th:text="/errors: ${errors}/"></li>
+			<li th:text="/trace: ${trace}/"></li>
+		</ul>
+	</div> -->
+	
+</body>
+</html>
