@@ -38,6 +38,15 @@ public class BoardController {
 	 * @param model
 	 * @return
 	 */
+	
+//	@GetMapping("/list")
+//	public void String list(Model model) {
+//		logger.debug("boardList...");
+//		model.addAttribute("boardList",boardService.selectBoardList());
+//		return "/board/list";
+//	} 
+	
+	// 위코드에서 아래 코드로, list 접근 방식 변경
 	@GetMapping
 	public String list(Model model) {
 		logger.debug("boardList...");
@@ -54,8 +63,8 @@ public class BoardController {
 	 */
 	
 	@GetMapping("/{boardSeq}")
-//	public String form(Model model, @PathVariable(name = "boardSeq") int boardSeq) { // 스프링에서 requried를 true로 기본값으로 준다고함
-	public String form(Model model, @PathVariable int boardSeq) { // 스프링에서 requried를 true로 기본값으로 준다고함
+//	public String detail(Model model, @PathVariable(name = "boardSeq") int boardSeq) { // 스프링에서 requried를 true로 기본값으로 준다고함
+	public String detail(Model model, @PathVariable int boardSeq) { // 스프링에서 requried를 true로 기본값으로 준다고함
 		// 게시물 조회
 		Board board = boardService.selectBoard(boardSeq);
 		Assert.notNull(board, "게시글 정보 없습니다");
@@ -130,8 +139,6 @@ public class BoardController {
 //		boardDao.insertBoard(board);
 //		return "board/form";
 		
-		
-		
 		// 유효성 체크
 		Assert.hasLength(board.getUserName(),"회원 이름을 입력해주세요.");
 		Assert.hasLength(board.getTitle(), "제목을 입력해주세요.");
@@ -157,6 +164,12 @@ public class BoardController {
 	}
 	
 	
+	/**
+	 * 게시글 삭제 처리
+	 * @param model
+	 * @param boardSeq
+	 * @return
+	 */
 	@PostMapping("/delete")
 //	public HttpEntity<Boolean> delete(@RequestParam(required = true) int boardSeq){ // 여기 required도 디폴트가 true라 생략가능
 	public HttpEntity<Boolean> delete(@RequestParam int boardSeq){ // 여기 required도 디폴트가 true라 생략가능

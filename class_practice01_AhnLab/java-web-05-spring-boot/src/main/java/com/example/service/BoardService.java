@@ -10,7 +10,7 @@ import com.example.mapper.BoardMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@RequiredArgsConstructor 
 public class BoardService {
 	
 //	@Autowired 제거하고 @RequiredArgsConstructor 추가

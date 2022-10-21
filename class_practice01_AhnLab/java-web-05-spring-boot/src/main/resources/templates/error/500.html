@@ -5,12 +5,13 @@
 <body>
 	
 	<script th:inline="javascript">
-	var message = [[${message}]];
-//	alert('페이지를 찾을 수 없습니다.') // 원하는 에러메세지로 세팅하면 됨
-	alert(message) // var message에서 받는 데이터값을 alert에 넣어서 출력
-	history.back();
+		var message = [[${message}]];
+		alert(message);
+		// alert('페이지를 찾을 수 없습니다'); 이렇게도 가능
+		history.back();
 	</script>
 	
+
 	
 	
 </body>
