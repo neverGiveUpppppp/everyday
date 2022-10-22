@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.controller.form.BoardSaveForm;
 import com.example.domain.Board;
+// import com.example.domain.Board; validation 추가로 vo클래스 Board를 위의BoardSaveForm으로 변경
 import com.example.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -120,8 +123,10 @@ public class BoardController {
 	 * @return
 	 */
 	
+	// validation 추가로 vo클래스 (Board board)를 (BoardSaveForm form)으로 변경
 	@PostMapping("/save")
-	public String save(Board board) {
+//	public String save(Board board) {
+	public String save(@Validated BoardSaveForm form) {
 //		Board board = new Board();
 //		board.setBoardType(boardType);
 //		board.setTitle(title);
@@ -139,24 +144,27 @@ public class BoardController {
 //		boardDao.insertBoard(board);
 //		return "board/form";
 		
+//		// 유효성 체크
+//		Assert.hasLength(board.getUserName(),"회원 이름을 입력해주세요.");
+//		Assert.hasLength(board.getTitle(), "제목을 입력해주세요.");
+//		Assert.hasLength(board.getBoardType(), "종류를 입력해주세요.");
+//		Assert.hasLength(board.getContents(), "내용을 입력해주세요.");
+//		Board selectBoard = null;
+		
 		// 유효성 체크
-		Assert.hasLength(board.getUserName(),"회원 이름을 입력해주세요.");
-		Assert.hasLength(board.getTitle(), "제목을 입력해주세요.");
-		Assert.hasLength(board.getBoardType(), "종류를 입력해주세요.");
-		Assert.hasLength(board.getContents(), "내용을 입력해주세요.");
 		Board selectBoard = null;
 		
 		// 등록이 아닌 수정화면에서 요청인 경우
-		if(board.getBoardSeq() > 0) {
+		if(form.getBoardSeq() > 0) {
 			// 기존에 등록된 데이터인지 조회
-			selectBoard = boardService.selectBoard(board.getBoardSeq());
+			selectBoard = boardService.selectBoard(form.getBoardSeq());
 		}
 		// 수정인 경우 업데이트
 		if(selectBoard != null) {
-			boardService.updateBoard(board);
+			boardService.updateBoard(form);
 		}else {
 			//게시물 등록 처리
-			boardService.insertBoard(board);
+			boardService.insertBoard(form);
 		}
 		
 		// 목록 화면으로 이동(URL 리다이렉트)

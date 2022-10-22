@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.controller.form.BoardSaveForm;
 import com.example.domain.Board;
 import com.example.mapper.BoardMapper;
 
@@ -24,12 +25,12 @@ public class BoardService {
 		return boardMapper.selectBoard(boardSeq);
 	}
 
-	public void insertBoard(Board board) {
-		boardMapper.insertBoard(board);
+	public void insertBoard(BoardSaveForm form) {
+		boardMapper.insertBoard(form);
 	}
 
-	public void updateBoard(Board board) {
-		boardMapper.updateBoard(board);
+	public void updateBoard(BoardSaveForm form) {
+		boardMapper.updateBoard(form);
 	}
 
 	public void deleteBoard(int boardSeq) {
