@@ -377,6 +377,88 @@ public class MapPractice {
 
     public void method04() {
 
+
+        // Properties prop = new Properties();
+        // key와 value를 String으로 제한시켜놓은 Map구조의 컬렉션
+        Properties pr = new Properties();
+        pr.setProperty("채소","토마토");
+        pr.setProperty("채소","브로콜리");
+        System.out.println(pr); // {채소=브로콜리}
+
+        pr.setProperty("과일","귤");
+        System.out.println(pr); // {과일=귤, 채소=브로콜리}
+        pr.setProperty("과일","사과");
+        System.out.println(pr); // {과일=사과, 채소=브로콜리}
+
+
+
+        // 1.HashMap
+        // put(K key, V value):V
+        // 반환타입 : value
+        HashMap<Snack,String> map = new HashMap<>();
+        map.put(new Snack("신맛",100),"sour");
+        map.put(new Snack("짠맛",100),"salty");
+        System.out.println(map); // {Snack{flavor='짠맛', price=100}=salty, Snack{flavor='신맛', price=100}=sour}
+
+        // 2-1.containsKey(Object key)
+        // 2-2.containsValue(Object value)
+        // 키나 값이 들어가 있는지를 확인하는 메소드
+        // containsKey(Object key):boolean
+        // containsValue(Object value):boolean
+
+
+        // 3.get()
+        // get(Object key) : v
+        // key값에 맞는 'value값 반환'
+
+        // 4-1.remove(Object key):V
+        // 4-2.remove(Object key, Object value):default boolean
+
+
+        // 5.keySet() & entrySet()
+        // keySet()
+        // keySet():Set<K>
+        // 맵에 있는 key들을 set에 담아 반환
+
+        // 방법1
+//        System.out.println(hmap.keySet()); // [사과류, 참외류]
+
+        // 방법2
+        // set의 [] 없이 안에 값만 뽑고 싶다면 방법2 사용
+        // Set객체 생성하여 map의 keySet()를 넣어주고 이를 다시 Iterator에 넣어서
+        // while + hasNext()로 읽어들인다.
+        // set이기 때문에 찍으면 기본적으로 key값이 나옴
+        // value값을 읽어오고 싶다면 원본 데이터인 map에서 get()를 통해 끌어오면된다
+
+        // entrySet()
+        // entrySet():Set<Map.Entry<K,V>>
+        // map에 있는 entry들을 set 담에 반환(키와 값의 쌍을 set에 담아 반환)
+        // entry 의미 : 키와 값을 묶은 것(키와 값의 쌍)
+
+        // 방법1
+//        System.out.println(hmap.entrySet());//[사과류=아오리[200원], 참외류=참외[300원]]
+
+        // 방법2
+        // set의 [] 없이 안에 값만 뽑고 싶다면 방법2 사용
+
+
+        // size():int
+
+
+
+        // TreeMap
+        // 정렬 가능
+        // putAll()
+        // putAll(Map<? extends K,? extends V> m):void
+        // 다른 맵의 값을 추가
+
+        // remove(Object key):V
+        // remove(Object key, Object value):boolean
+
+        // replace(K key, V oldValue, V newValue):boolean
+
+
+
     }
 
     public void method05() {

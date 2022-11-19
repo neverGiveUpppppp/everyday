@@ -24,6 +24,10 @@ public class MemberService {
 		return memberMapper.selectMemberAccountCount(account) > 0;
 	}
 
+	/**
+	 * 회원 계정 등록
+	 * @param form
+	 */
 	public void insertMember(MemberSaveForm form) {
 		memberMapper.insertMember(form);
 	}

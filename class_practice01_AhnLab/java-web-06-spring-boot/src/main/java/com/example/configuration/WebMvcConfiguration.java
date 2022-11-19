@@ -24,12 +24,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 		return messageSource;
 	}
 	
-	@Override
-	public Validator getValidator() {
-		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
-		bean.setValidationMessageSource(messageSource());
-		return bean;
-	}
+//	@Override
+//	public Validator getValidator() {
+//		LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
+//		bean.setValidationMessageSource(messageSource());
+//		return bean;
+//	}
 	
 	
 	

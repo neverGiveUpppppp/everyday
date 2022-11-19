@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayControllerPrac.java" beforeDir="false" afterPath="$PROJECT_DIR$/javaPractice/src/main/java/com/prac/array/arrayControllerPrac.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/configuration/WebMvcConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/configuration/WebMvcConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/mapper/MemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/mapper/MemberMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/service/MemberService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/templates/member/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/templates/member/form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
