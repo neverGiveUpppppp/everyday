@@ -398,6 +398,7 @@ public class MapPractice {
         HashMap<Snack,String> map = new HashMap<>();
         map.put(new Snack("신맛",100),"sour");
         map.put(new Snack("짠맛",100),"salty");
+        map.put(new Snack("단맛",100),"sweet");
         System.out.println(map); // {Snack{flavor='짠맛', price=100}=salty, Snack{flavor='신맛', price=100}=sour}
 
         // 2-1.containsKey(Object key)
@@ -405,14 +406,21 @@ public class MapPractice {
         // 키나 값이 들어가 있는지를 확인하는 메소드
         // containsKey(Object key):boolean
         // containsValue(Object value):boolean
-
+        System.out.println(map.containsKey(new Snack("신맛",100))); // true
 
         // 3.get()
-        // get(Object key) : v
+        // get(Object key) : v
         // key값에 맞는 'value값 반환'
+        System.out.println(map.get(new Snack("짠맛",100))); // salty
+        System.out.println(map.get(new Snack("신맛",100))); // sour
+
 
         // 4-1.remove(Object key):V
         // 4-2.remove(Object key, Object value):default boolean
+        System.out.println(map.remove(new Snack("짠맛",100))); // salty
+        System.out.println(map); // {Snack{flavor='단맛', price=100}=sweet, Snack{flavor='신맛', price=100}=sour}
+        map.remove(new Snack("신맛",100),"sour");
+        System.out.println(map); // {Snack{flavor='단맛', price=100}=sweet}
 
 
         // 5.keySet() & entrySet()
