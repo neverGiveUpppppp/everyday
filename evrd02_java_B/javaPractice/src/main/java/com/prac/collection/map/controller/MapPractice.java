@@ -427,9 +427,9 @@ public class MapPractice {
         // keySet()
         // keySet():Set<K>
         // 맵에 있는 key들을 set에 담아 반환
-
         // 방법1
-//        System.out.println(hmap.keySet()); // [사과류, 참외류]
+        map.keySet();
+        System.out.println("keySet : "+map.keySet()); // keySet : [Snack{flavor='단맛', price=100}]
 
         // 방법2
         // set의 [] 없이 안에 값만 뽑고 싶다면 방법2 사용
@@ -437,6 +437,12 @@ public class MapPractice {
         // while + hasNext()로 읽어들인다.
         // set이기 때문에 찍으면 기본적으로 key값이 나옴
         // value값을 읽어오고 싶다면 원본 데이터인 map에서 get()를 통해 끌어오면된다
+        Set<Snack> set = map.keySet();
+        Iterator iter = set.iterator();
+        while(iter.hasNext()){
+            String key = (String)iter.next();
+            System.out.println("ketSet값만뽑기 : "+map.get(key));
+        }
 
         // entrySet()
         // entrySet():Set<Map.Entry<K,V>>
