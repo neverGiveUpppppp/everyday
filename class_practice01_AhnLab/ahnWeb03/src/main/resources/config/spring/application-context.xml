@@ -1,0 +1,41 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans-2.0xsd"
+>
+
+	<!-- 프로퍼티 -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:/config/properties/database.properties"></property>
+		<property name="fileEncoding" value="UTF-8"></property>
+	</bean>
+
+
+	<!-- dataSource bean 설정 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driverClassName}"></property>
+		<property name="url" value="${database.url"></property>
+		<property name="username" value="{$database.username"></property>
+		<property name="password" value="${database.password"></property>
+	</bean>
+	
+	
+	<!-- ibatis -->
+	<bean>
+	
+	</bean>
+	
+	
+	<!-- 게시판 Service -->
+	<bean>
+	
+	</bean>
+	
+	
+	<!-- 게시판 Dao -->
+	<bean>
+	
+	</bean>
+
+
+</beans>
