@@ -1,17 +1,17 @@
-package com.prac.MVC.jdbc.view;
+package com.prac.MVC.jdbc.a.view;
 
-import com.prac.MVC.jdbc.controller.EmployeeController;
+import com.prac.MVC.jdbc.a.controller.EmployeeController;
 
 import java.util.Scanner;
 
 public class Menu {
 
-    public void mainMenu() {
+    private Scanner sc = new Scanner(System.in);
+    public void mainMenu(){
 
-        Scanner sc = new Scanner(System.in);
         EmployeeController ec = new EmployeeController();
 
-        int command = 0;
+        int user = 0;
         do{
             System.out.println("====================");
             System.out.println("[Main Menu]");
@@ -24,19 +24,22 @@ public class Menu {
             System.out.println("====================");
             System.out.print("메뉴 선택 : ");
 
-            command = Integer.parseInt(sc.nextLine());
+            user = Integer.parseInt(sc.nextLine());
 
-            switch (command){
-                case 1: ec.selectAll();
-                case 2: ec.selectEmp();
-                case 3: ec.insertEmp();
-                case 4: ec.updateEmp();
-                case 5: ec.deleteEmp();
-                case 0: ec.endProgramm();
+            switch(user){
+                case 1: ec.selectAll(); break;
+//                case 2: ec.selectEmployee(); break;
+//                case 3: ec.insertEmployee(); break;
+//                case 4: ec.updateEmplyee(); break;
+//                case 5: ec.deleteEmployee(); break;
+                case 0: System.out.println("프로그램 종료"); break;
+                default: System.out.println("잘못 입력");
             }
 
-        }while(command != 0);
+        }while(user != 0);
+
 
     }
+
 
 }

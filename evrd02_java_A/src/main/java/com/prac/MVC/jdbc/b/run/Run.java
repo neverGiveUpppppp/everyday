@@ -1,6 +1,6 @@
-package com.prac.MVC.jdbc.run;
+package com.prac.MVC.jdbc.b.run;
 
-import com.prac.MVC.jdbc.view.Menu;
+import com.prac.MVC.jdbc.b.view.Menu;
 
 public class Run {
     public static void main(String[] args) {

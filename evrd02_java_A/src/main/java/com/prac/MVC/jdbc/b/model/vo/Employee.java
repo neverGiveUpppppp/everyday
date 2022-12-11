@@ -1,4 +1,4 @@
-package com.prac.MVC.jdbc.model.vo;
+package com.prac.MVC.jdbc.b.model.vo;
 
 import java.sql.Date;
 
@@ -54,16 +54,8 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "empNo=" + empNo +
-                ", empName='" + empName + '\'' +
-                ", job='" + job + '\'' +
-                ", mgr=" + mgr + '\'' +
-                ", hireDate=" + hireDate + '\'' +
-                ", sal=" + sal + '\'' +
-                ", comm=" + comm + '\'' +
-                ", deptNo=" + deptNo + '\'' +
-                '}';
+        return empNo + " / " + empName + " / " + job + " / " + mgr + " / " + hireDate +  " / " + sal +
+                " / "  + comm +  " / "  + deptNo;
     }
 
 
