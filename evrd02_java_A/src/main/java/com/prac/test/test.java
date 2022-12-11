@@ -16,7 +16,7 @@ public class test {
         // 2. null & isEmpty() 체크
         if(testNull.isEmpty()){
             System.out.println("2 : "+testNull);
-        }   // NullPointerException
+        }   // NullPointerException : 널포인트예외가 발생하기 때문 주석 처리하고 run해야함
 
         // 3. 공백값 & null 체크
         if(testEmpty == null){
