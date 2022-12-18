@@ -153,9 +153,48 @@ public class EmpDao {
     }
 
 
+    public int deleteEmp(int empNum) {
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SCOTT","qrwe");
+
+            String query = "DELETE FROM EMP WHERE EMPNO = ? ";
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1,empNum);
+            result = pstmt.executeUpdate();
+
+            if(result > 0){
+                conn.commit();
+            }else{
+                conn.rollback();
+            }
+
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                conn.close();
+                pstmt.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 
 
-
+//    public int updateEmp(int empNum) {
+//
+//
+//    }
 
 
 
@@ -164,3 +203,6 @@ public class EmpDao {
 
 
 }
+
+
+

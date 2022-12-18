@@ -18,9 +18,9 @@ public class EmpController {
         ArrayList<Employee> aList = empDao.selectAll();
 
         if(aList == null){
-            System.out.println("프로그램 오류 발생");
+            menu.msg("프로그램 오류 발생");
         }else if(aList.isEmpty()){
-            System.out.println("사원이 없습니다");
+            menu.msg("해당 사원이 없습니다");
         }else{
             menu.selectAll(aList);
         }
@@ -31,11 +31,11 @@ public class EmpController {
      * 메뉴2.사원 1명 사번 조회
      */
     public void selectEmpOne() {
-        int empNo = menu.selectEmpOneNum();
+        int empNo = menu.empNum();
         Employee emp = empDao.selectEmpOne(empNo);
 
         if(emp == null){
-            menu.displayError("프로그램 에러발생");
+            menu.msgError("조회 중 프로그램 에러발생");
         }else {
             menu.selectEmpOne(emp);
         }
@@ -48,13 +48,44 @@ public class EmpController {
         int result = empDao.insertEmp(empInfo);
 
         if(result > 0 ){
-            menu.insertEmp(result);
+            menu.msg(result+"명이 추가 되었습니다");
         }else{
-            menu.displayError("프로그램 에러 발생. 문의하세요");
+            menu.msgError("추가 중 프로그램 에러 발생. 문의하세요");
         }
 
 
     }
+
+
+    public void deleteEmp() {
+        int empNum = menu.empNum();
+        String answer = menu.deleteEmp();
+
+        if(answer.toUpperCase().equals("Y")){
+            int result = empDao.deleteEmp(empNum);
+            if(result > 0){
+                menu.msg(empNum+"번의 사원 정보가 삭제되었습니다");
+            }else{
+                menu.msgError("삭제 중 에러가 발생했습니다");
+            }
+
+        }else if(answer.toUpperCase().equals("N")){
+            menu.msg("삭제를 취소합니다");
+        }else{
+            menu.msgError("문자를 잘못 입력하셨습니다.");
+        }
+
+
+
+    }
+
+//    public void updateEmp() {
+//        int empNum = menu.empNum();
+//        int result = empDao.updateEmp(empNum);
+//
+//
+//
+//    }
 
 
 
