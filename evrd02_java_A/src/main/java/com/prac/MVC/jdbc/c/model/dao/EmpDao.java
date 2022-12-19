@@ -18,7 +18,7 @@ public class EmpDao {
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver"); // DB 드라이버 설정
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","SCOTT","qrwe"); // DB 연결 드라이버 설정
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","c##SCOTT","qrwe"); // DB 연결 드라이버 설정
 
             String query =  "SELECT * FROM EMP"; // 쿼리문 작성
             stmt = conn.createStatement();
@@ -190,11 +190,56 @@ public class EmpDao {
         return result;
     }
 
+    public int updateEmp(Employee emp) {
 
-//    public int updateEmp(int empNum) {
-//
-//
-//    }
+        Employee em = null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SCOTT","qrwe");
+
+            String query = "";
+            // 위치홀더랑 pstmt 다시 하기
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, em.getEmpNo());
+            pstmt.setString(2, em.getEmpName());
+            pstmt.setString(3, em.getJob());
+            pstmt.setInt(4, em.getMgr());
+            pstmt.setInt(5, em.getSal());
+            pstmt.setInt(6, em.getComm());
+            pstmt.setInt(7, em.getDeptNo());
+
+
+            result = pstmt.executeUpdate();
+
+            if(result > 0){
+                conn.commit();
+            }else{
+                conn.rollback();
+            }
+
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try {
+                pstmt.close();
+                conn.close();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        return result;
+    }
+
+
+
 
 
 

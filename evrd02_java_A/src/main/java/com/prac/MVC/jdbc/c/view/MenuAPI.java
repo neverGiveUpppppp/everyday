@@ -38,9 +38,9 @@ public class MenuAPI {
                 case 3:
                     ec.insertEmp();
                     break;
-//                case 4:
-//                    ec.updateEmp();
-//                    break;
+                case 4:
+                    ec.updateEmp();
+                    break;
                 case 5:
                     ec.deleteEmp();
                     break;
@@ -133,8 +133,26 @@ public class MenuAPI {
     }
 
 
+    public Employee updateEmp() {
+        System.out.println("수정할 사원 데이터를 입력해주세요.");
+        System.out.print("사번 : ");
+        int empNo = Integer.parseInt(sc.nextLine());
+        System.out.print("이름 : ");
+        String eName = sc.nextLine();
+        System.out.print("job : ");
+        String job = sc.nextLine();
+        System.out.print("매니저번호 : ");
+        int mgr = Integer.parseInt(sc.nextLine());
+        System.out.print("샐러리 : ");
+        int sal = Integer.parseInt(sc.nextLine());
+        System.out.print("커미션 : ");
+        int comm = Integer.parseInt(sc.nextLine());
+        System.out.print("부서 : ");
+        int deptNo = Integer.parseInt(sc.nextLine());
 
-
+        Employee emp = new Employee(empNo, eName, job, mgr, sal, comm, deptNo);
+        return emp;
+    }
 }
 
 

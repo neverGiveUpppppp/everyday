@@ -79,13 +79,21 @@ public class EmpController {
 
     }
 
-//    public void updateEmp() {
-//        int empNum = menu.empNum();
-//        int result = empDao.updateEmp(empNum);
-//
-//
-//
-//    }
+    public void updateEmp() {
+        Employee emp = menu.updateEmp();
+        int result = empDao.updateEmp(emp);
+        
+        // 사번 받아서 진행하는 코드 방식 구현해보기
+
+        if(result > 0){
+            menu.msg("사원 정보 수정 완료");
+        }else{
+            menu.msgError("수정 중 에러 발생");
+        }
+
+
+
+    }
 
 
 
