@@ -40,9 +40,9 @@ public class Employee {
         this.deptNo = deptNo;
     }
 
-    public Employee(int empNo, String job, int sal, int comm) {
+    public Employee(String job, int sal, int comm, int empNo) {
 	    this(job,sal,comm);
-        this.comm = comm;
+        this.empNo = empNo;
     }
 
     public Employee(String job, int sal, int comm) {
@@ -51,7 +51,24 @@ public class Employee {
         this.comm = comm;
     }
 
+    public Employee(String empName, String job, int mgr, int sal, int comm, int deptNo) {
+        this.empName = empName;
+        this.job = job;
+        this.mgr = mgr;
+        this.sal = sal;
+        this.comm = comm;
+        this.deptNo = deptNo;
+    }
 
+    public Employee( String empName, String job, int mgr, int sal, int comm, int deptNo, int empNo) {
+        this.empName = empName;
+        this.job = job;
+        this.mgr = mgr;
+        this.sal = sal;
+        this.comm = comm;
+        this.deptNo = deptNo;
+        this.empNo = empNo;
+    }
 
 
     @Override

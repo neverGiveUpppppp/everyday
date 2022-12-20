@@ -80,7 +80,9 @@ public class EmpController {
     }
 
     public void updateEmp() {
+        int empNum = menu.empNum();
         Employee emp = menu.updateEmp();
+        emp.setEmpNo(empNum);
         int result = empDao.updateEmp(emp);
         
         // 사번 받아서 진행하는 코드 방식 구현해보기
@@ -91,11 +93,7 @@ public class EmpController {
             menu.msgError("수정 중 에러 발생");
         }
 
-
-
     }
-
-
 
 
 

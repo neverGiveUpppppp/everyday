@@ -135,10 +135,8 @@ public class MenuAPI {
 
     public Employee updateEmp() {
         System.out.println("수정할 사원 데이터를 입력해주세요.");
-        System.out.print("사번 : ");
-        int empNo = Integer.parseInt(sc.nextLine());
         System.out.print("이름 : ");
-        String eName = sc.nextLine();
+        String empName = sc.nextLine();
         System.out.print("job : ");
         String job = sc.nextLine();
         System.out.print("매니저번호 : ");
@@ -150,9 +148,17 @@ public class MenuAPI {
         System.out.print("부서 : ");
         int deptNo = Integer.parseInt(sc.nextLine());
 
-        Employee emp = new Employee(empNo, eName, job, mgr, sal, comm, deptNo);
+        Employee emp = new Employee(empName, job, mgr, sal, comm, deptNo);
         return emp;
     }
+
+
+
+
+
+
+
+
 }
 
 

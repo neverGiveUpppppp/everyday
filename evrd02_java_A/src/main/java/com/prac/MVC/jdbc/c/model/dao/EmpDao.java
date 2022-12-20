@@ -18,7 +18,7 @@ public class EmpDao {
 
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver"); // DB 드라이버 설정
-            conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","c##SCOTT","qrwe"); // DB 연결 드라이버 설정
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","SCOTT","qrwe"); // DB 연결 드라이버 설정
 
             String query =  "SELECT * FROM EMP"; // 쿼리문 작성
             stmt = conn.createStatement();
@@ -192,7 +192,6 @@ public class EmpDao {
 
     public int updateEmp(Employee emp) {
 
-        Employee em = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         int result = 0;
@@ -201,18 +200,16 @@ public class EmpDao {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SCOTT","qrwe");
 
-            String query = "";
-            // 위치홀더랑 pstmt 다시 하기
+            String query = "UPDATE EMP SET ENAME = ?, JOB = ?, MGR = ?, SAL = ?, COMM = ?, DEPTNO = ? WHERE EMPNO = ?";
 
             pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, em.getEmpNo());
-            pstmt.setString(2, em.getEmpName());
-            pstmt.setString(3, em.getJob());
-            pstmt.setInt(4, em.getMgr());
-            pstmt.setInt(5, em.getSal());
-            pstmt.setInt(6, em.getComm());
-            pstmt.setInt(7, em.getDeptNo());
-
+            pstmt.setString(1, emp.getEmpName());
+            pstmt.setString(2, emp.getJob());
+            pstmt.setInt(3, emp.getMgr());
+            pstmt.setInt(4, emp.getSal());
+            pstmt.setInt(5, emp.getComm());
+            pstmt.setInt(6, emp.getDeptNo());
+            pstmt.setInt(7, emp.getEmpNo());
 
             result = pstmt.executeUpdate();
 
@@ -230,16 +227,13 @@ public class EmpDao {
             try {
                 pstmt.close();
                 conn.close();
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
 
         return result;
     }
-
-
-
 
 
 
