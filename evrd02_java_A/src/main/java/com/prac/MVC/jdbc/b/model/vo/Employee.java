@@ -70,6 +70,16 @@ public class Employee {
         this.empNo = empNo;
     }
 
+    public Employee(String empName, String job, int mgr, Date hireDate, int sal, int comm, int deptNo) {
+        this.empName = empName;
+        this.job = job;
+        this.mgr = mgr;
+        this.hireDate = hireDate;
+        this.sal = sal;
+        this.comm = comm;
+        this.deptNo = deptNo;
+    }
+
 
     @Override
     public String toString() {
