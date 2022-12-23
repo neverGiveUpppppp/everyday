@@ -36,7 +36,9 @@ public class WorkerView {
                 case 3:
                     wc.workerInsert();
                     break;
-
+                case 4:
+                    wc.workerUpdate();
+                    break;
                 default:
                     System.out.println("잘못 입력하셨습니다");
 

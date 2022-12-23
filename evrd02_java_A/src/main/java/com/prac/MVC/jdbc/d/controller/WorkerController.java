@@ -68,4 +68,15 @@ public class WorkerController {
 
 
 
+    public void workerUpdate(){
+        int empNo = wv.empNo();
+        Employee em = wd.workerUpdate(empNo);
+
+
+
+    }
+
+
+
+
 }

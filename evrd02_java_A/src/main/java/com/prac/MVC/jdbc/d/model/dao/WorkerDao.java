@@ -195,5 +195,42 @@ public class WorkerDao {
 
 
 
+    public Employee workerUpdate(int empNo){
+
+        Employee em = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        try{
+
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","SCOTT","qrwe");
+
+            String query = "";
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1,"ENAME");
+            pstmt.setString(2,"JOB");
+            pstmt.executeUpdate();
+
+
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try {
+                pstmt.close();
+                con.close(); 	// 규칙 : 가장 나중에 발생한 것부터 닫아준다
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+
 
 }
