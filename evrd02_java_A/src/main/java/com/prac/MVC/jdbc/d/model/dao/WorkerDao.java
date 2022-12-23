@@ -203,11 +203,10 @@ public class WorkerDao {
         int result = 0;
 
         try{
-
             Class.forName("oracle.jdbc.driver.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","SCOTT","qrwe");
 
-            String query = "";
+            String query = "UPDATE EMP SET ";
 
             pstmt = con.prepareStatement(query);
             pstmt.setString(1,"ENAME");
@@ -228,7 +227,7 @@ public class WorkerDao {
             }
         }
 
-
+        return em;
     }
 
 

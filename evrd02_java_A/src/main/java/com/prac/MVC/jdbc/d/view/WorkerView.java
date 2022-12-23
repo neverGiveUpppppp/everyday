@@ -49,19 +49,39 @@ public class WorkerView {
     }
 
 
-        public void msg(String str){
-            System.out.println(str);
-        }
-        public void msgError(String str) {
-            System.out.println(str);
-        }
+    public void msg(String str){
+        System.out.println(str);
+    }
+    public void msgError(String str) {
+        System.out.println(str);
+    }
 
 
-        public int empNo(){
-            System.out.print("조회할 사원 번호 : ");
-            int empNo = Integer.parseInt(sc.nextLine());
-            return empNo;
-        }
+    public int empNo(){
+        System.out.print("조회할 사원 번호 : ");
+        int empNo = Integer.parseInt(sc.nextLine());
+        return empNo;
+    }
+
+    public Employee workerInfoReceive(){
+//        System.out.print("사번 : ");
+//        int empNo = Integer.parseInt(sc.nextLine());
+        System.out.print("이름 : ");
+        String eName = sc.nextLine();
+        System.out.print("포지션 : ");
+        String job = sc.nextLine();
+        int mgr = Integer.parseInt(sc.nextLine());
+        System.out.print("샐러리 : ");
+        int sal = Integer.parseInt(sc.nextLine());
+        System.out.print("커미션 : ");
+        int comm = Integer.parseInt(sc.nextLine());
+        System.out.print("부서번호 : ");
+        int depNo = Integer.parseInt(sc.nextLine());
+
+        // Employee em = new Employee(empNo,eName,job,mgr,sal,comm,depNo);
+        Employee em = new Employee(eName,job,mgr,sal,comm,depNo);
+        return em;
+    }
 
 
 
@@ -84,24 +104,10 @@ public class WorkerView {
         System.out.println(e);
     }
 
-    public Employee workerInsert(){
-//        System.out.print("사번 : ");
-//        int empNo = Integer.parseInt(sc.nextLine());
-        System.out.print("이름 : ");
-        String eName = sc.nextLine();
-        System.out.print("포지션 : ");
-        String job = sc.nextLine();
-        int mgr = Integer.parseInt(sc.nextLine());
-        System.out.print("샐러리 : ");
-        int sal = Integer.parseInt(sc.nextLine());
-        System.out.print("커미션 : ");
-        int comm = Integer.parseInt(sc.nextLine());
-        System.out.print("부서번호 : ");
-        int depNo = Integer.parseInt(sc.nextLine());
 
-        // Employee em = new Employee(empNo,eName,job,mgr,sal,comm,depNo);
-        Employee em = new Employee(eName,job,mgr,sal,comm,depNo);
-        return em;
+
+    public void workerUpdate(Employee em){
+        System.out.println(em);
     }
 
 

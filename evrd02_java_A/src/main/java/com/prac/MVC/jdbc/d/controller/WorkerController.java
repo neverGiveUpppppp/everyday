@@ -55,7 +55,7 @@ public class WorkerController {
 
 
     public void workerInsert(){
-        Employee em = wv.workerInsert();
+        Employee em = wv.workerInfoReceive();
         int result = wd.workerInsert(em);
 
         if(result > 0){
@@ -71,6 +71,12 @@ public class WorkerController {
     public void workerUpdate(){
         int empNo = wv.empNo();
         Employee em = wd.workerUpdate(empNo);
+
+        if(em != null){
+            wv.workerUpdate(em);
+        }else{
+            wv.msgError("사원 정보 수정 중 에러 발생");
+        }
 
 
 
