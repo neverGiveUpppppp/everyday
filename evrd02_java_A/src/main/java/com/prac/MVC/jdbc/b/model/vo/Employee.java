@@ -80,6 +80,16 @@ public class Employee {
         this.deptNo = deptNo;
     }
 
+    public Employee(String empName, String job, int mgr, Date hireDate, int sal, int comm, int deptNo, int empNo) {
+        this.empName = empName;
+        this.job = job;
+        this.mgr = mgr;
+        this.hireDate = hireDate;
+        this.sal = sal;
+        this.comm = comm;
+        this.deptNo = deptNo;
+        this.empNo = empNo;
+    }
 
     @Override
     public String toString() {

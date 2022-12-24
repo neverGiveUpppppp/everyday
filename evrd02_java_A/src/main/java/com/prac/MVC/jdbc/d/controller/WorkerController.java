@@ -70,10 +70,13 @@ public class WorkerController {
 
     public void workerUpdate(){
         int empNo = wv.empNo();
-        Employee em = wd.workerUpdate(empNo);
+        Employee em = wv.workerInfoReceive();
+        em.setEmpNo(empNo);
+        int result = wd.workerUpdate(em);
 
-        if(em != null){
-            wv.workerUpdate(em);
+        if(result > 0){
+            wv.workerUpdate(empNo);
+            wv.msgNo(empNo,"번의 사원 정보가 수정 되었습니다");
         }else{
             wv.msgError("사원 정보 수정 중 에러 발생");
         }

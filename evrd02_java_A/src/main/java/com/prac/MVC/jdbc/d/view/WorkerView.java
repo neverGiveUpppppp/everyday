@@ -52,6 +52,9 @@ public class WorkerView {
     public void msg(String str){
         System.out.println(str);
     }
+    public void msgNo(int empNo, String str){
+        System.out.println(empNo+str);
+    }
     public void msgError(String str) {
         System.out.println(str);
     }
@@ -106,8 +109,10 @@ public class WorkerView {
 
 
 
-    public void workerUpdate(Employee em){
-        System.out.println(em);
+    public void workerUpdate(int empNo){
+
+
+        System.out.println(empNo+"번의 사원 정보가 수정 되었습니다");
     }
 
 

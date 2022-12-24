@@ -195,9 +195,8 @@ public class WorkerDao {
 
 
 
-    public Employee workerUpdate(int empNo){
+    public int workerUpdate(Employee em){
 
-        Employee em = null;
         Connection con = null;
         PreparedStatement pstmt = null;
         int result = 0;
@@ -206,13 +205,17 @@ public class WorkerDao {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","SCOTT","qrwe");
 
-            String query = "UPDATE EMP SET ";
+            String query = "UPDATE EMP SET ENAME=?, JOB=?,MGR=?,SAL=?,COMM=?,DEPTNO=? WHERE EMPNO=?";
 
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1,"ENAME");
-            pstmt.setString(2,"JOB");
-            pstmt.executeUpdate();
-
+            pstmt.setString(1,em.getEmpName());
+            pstmt.setString(2,em.getJob());
+            pstmt.setInt(3,em.getMgr());
+            pstmt.setInt(4,em.getSal());
+            pstmt.setInt(5,em.getComm());
+            pstmt.setInt(6, em.getDeptNo());
+            pstmt.setInt(7,em.getEmpNo());
+            result = pstmt.executeUpdate();
 
         }catch(ClassNotFoundException e){
             e.printStackTrace();
@@ -227,7 +230,7 @@ public class WorkerDao {
             }
         }
 
-        return em;
+        return result;
     }
 
 
