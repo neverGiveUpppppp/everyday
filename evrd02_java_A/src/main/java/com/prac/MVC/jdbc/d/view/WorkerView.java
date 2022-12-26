@@ -39,6 +39,13 @@ public class WorkerView {
                 case 4:
                     wc.workerUpdate();
                     break;
+                case 5:
+                    wc.workerDelete();
+                    break;  // break 안하면 다음 case문으로 넘어감
+                            // ex: case5돌리고 0으로 다시 내려감
+                case 0:
+                    wc.endApp();
+                    break;
                 default:
                     System.out.println("잘못 입력하셨습니다");
 
@@ -61,7 +68,7 @@ public class WorkerView {
 
 
     public int empNo(){
-        System.out.print("조회할 사원 번호 : ");
+        System.out.print("사원 번호 : ");
         int empNo = Integer.parseInt(sc.nextLine());
         return empNo;
     }
@@ -110,8 +117,6 @@ public class WorkerView {
 
 
     public void workerUpdate(int empNo){
-
-
         System.out.println(empNo+"번의 사원 정보가 수정 되었습니다");
     }
 

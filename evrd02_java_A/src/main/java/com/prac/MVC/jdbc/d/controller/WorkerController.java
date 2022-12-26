@@ -4,6 +4,7 @@ import com.prac.MVC.jdbc.b.model.vo.Employee;
 import com.prac.MVC.jdbc.d.model.dao.WorkerDao;
 import com.prac.MVC.jdbc.d.view.WorkerView;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
 public class WorkerController {
@@ -80,12 +81,22 @@ public class WorkerController {
         }else{
             wv.msgError("사원 정보 수정 중 에러 발생");
         }
-
-
-
     }
 
 
+    public void workerDelete(){
+        int empNo = wv.empNo();
+        int result = wd.workerDelete(empNo);
+
+        if(result > 0){
+            wv.msg(empNo+"번의 사원 정보 삭제 완료");
+        }else{
+            wv.msgError("삭제 실패. 에러 발생");
+        }
+    }
 
 
+    public void endApp() {
+        wv.msg("프로그램 종료");
+    }
 }

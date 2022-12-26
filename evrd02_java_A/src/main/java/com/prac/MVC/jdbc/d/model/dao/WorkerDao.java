@@ -235,4 +235,36 @@ public class WorkerDao {
 
 
 
+    public int workerDelete(int empNo){
+
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SCOTT","qrwe");
+
+            String query = "DELETE EMP WHERE EMPNO = ?";
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1,empNo);
+            result = pstmt.executeUpdate();
+
+
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            try{
+                pstmt.close();
+                con.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
 }
