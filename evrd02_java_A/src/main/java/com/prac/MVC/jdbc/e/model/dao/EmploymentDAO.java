@@ -57,4 +57,54 @@ public class EmploymentDAO {
 
 
 
+
+    public Employee empSelect(int empNo){
+
+        Employee em = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rst = null;
+
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","SCOTT","qrwe");
+
+            String query = "SELECT * FROM EMP WHERE EMPNO = ?";
+
+            pstmt = con.prepareStatement(query);
+            pstmt.setInt(1,empNo);
+            rst = pstmt.executeQuery();
+
+            if(rst.next()){
+                String eName = rst.getString("ENAME");
+                String job = rst.getString("JOB");
+                int mgr = rst.getInt("MGR");
+                Date hireDate = rst.getDate("HIREDATE");
+                int sal = rst.getInt("SAL");
+                int comm = rst.getInt("COMM");
+                int deptNo = rst.getInt("DEPTNO");
+
+                em = new Employee(empNo,eName,job,mgr,hireDate,sal,comm,deptNo);
+            }
+
+
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+
+
+        return em;
+    }
+
+
+
+
+
+
+
 }
+
+

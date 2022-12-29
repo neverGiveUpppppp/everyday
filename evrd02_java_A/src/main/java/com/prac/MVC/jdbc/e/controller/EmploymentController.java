@@ -19,12 +19,21 @@ public class EmploymentController {
         }else{
             empView.msgError("전체 조회 중 에러 발생");
         }
-
-
     }
 
 
 
+    public void empSelect(){
+        int empNo = empView.empNo();
+        Employee em = empDao.empSelect(empNo);
+
+        if(em != null){
+            empView.empSelect(em);
+        }else{
+            empView.msgError("사원 조회 중 에러 발생");
+        }
+
+    }
 
 
 

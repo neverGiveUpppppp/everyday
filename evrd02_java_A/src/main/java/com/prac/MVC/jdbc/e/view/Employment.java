@@ -30,6 +30,7 @@ public class Employment {
 
             switch(menu){
                 case 1: empCon.empSelectAll(); break;
+                case 2: empCon.empSelect(); break;
                 default:
                     System.out.println("메뉴 번호를 잘못 입력했습니다.");
             }
@@ -48,12 +49,26 @@ public class Employment {
         System.out.println(str);
     }
 
+    public int empNo(){
+        System.out.print("사원 번호 입력 : ");
+        int empNo = Integer.parseInt(sc.nextLine());
+        return empNo;
+    }
+
+
+
 
     public void empSelectAll(ArrayList<Employee> al){
         for(int i = 0; i < al.size(); i++){
             System.out.println(al.get(i));
         }
     }
+
+
+    public void empSelect(Employee em){
+        System.out.println(em);
+    }
+
 
 
 
