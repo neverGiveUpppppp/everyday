@@ -1,6 +1,6 @@
-package com.prac.MVC.jdbcTemplate.view;
+package com.prac.MVC.jdbcTemplate.a.view;
 
-import com.prac.MVC.jdbcTemplate.controller.MemberController;
+import com.prac.MVC.jdbcTemplate.a.controller.MemberController;
 
 import java.util.Scanner;
 

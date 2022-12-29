@@ -31,13 +31,11 @@ public class Employment {
             switch(menu){
                 case 1: empCon.empSelectAll(); break;
                 case 2: empCon.empSelect(); break;
+                case 3: empCon.empInsert(); break;
                 default:
                     System.out.println("메뉴 번호를 잘못 입력했습니다.");
             }
-
         }while(menu != 0);
-
-
     }
 
 
@@ -70,6 +68,24 @@ public class Employment {
     }
 
 
+    public Employee empInsert(){
+        System.out.print("사원 이름 : ");
+        String eName = sc.nextLine();
+        System.out.print("사원 job : ");
+        String job = sc.nextLine();
+        System.out.print("사원 매니저번호 : ");
+        int mgr = Integer.parseInt(sc.nextLine());
+        System.out.print("사원 샐러리 : ");
+        int sal = Integer.parseInt(sc.nextLine());
+        System.out.print("사원 커미션 : ");
+        int comm = Integer.parseInt(sc.nextLine());
+        System.out.print("사원 부서 : ");
+        int deptNo = Integer.parseInt(sc.nextLine());
+
+        Employee em = new Employee(eName,job,mgr,sal,comm,deptNo);
+
+        return em;
+    }
 
 
 

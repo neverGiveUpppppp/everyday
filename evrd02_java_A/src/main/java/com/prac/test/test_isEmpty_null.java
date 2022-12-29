@@ -1,6 +1,6 @@
 package com.prac.test;
 
-public class test {
+public class test_isEmpty_null {
     public static void main(String[] args) {
 
 

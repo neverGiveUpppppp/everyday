@@ -92,16 +92,57 @@ public class EmploymentDAO {
             e.printStackTrace();
         }catch(SQLException e){
             e.printStackTrace();
+        }finally{
+            try{
+                rst.close();
+                pstmt.close();
+                con.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
         }
-
-
-
         return em;
     }
 
 
 
 
+    public int empInsert(Employee em){
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        int result = 0;
+
+        try{
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SCOTT","qrwe");
+
+            String query = "INSERT INTO EMP VALUES(SEQ_SCOTT1.NEXTVAL, ?, ?, ? , SYSDATE, ?, ?, ?)";
+
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,em.getEmpName());
+            pstmt.setString(2,em.getJob());
+            pstmt.setInt(3,em.getMgr());
+            pstmt.setInt(4,em.getSal());
+            pstmt.setInt(5,em.getComm());
+            pstmt.setInt(6,em.getDeptNo());
+
+            result = pstmt.executeUpdate();
+
+
+        }catch(ClassNotFoundException e){
+            e.printStackTrace();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            try{
+                pstmt.close();
+                conn.close();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 
 
 

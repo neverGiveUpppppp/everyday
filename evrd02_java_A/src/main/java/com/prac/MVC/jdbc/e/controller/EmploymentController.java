@@ -37,5 +37,18 @@ public class EmploymentController {
 
 
 
+    public void empInsert(){
+        Employee em = empView.empInsert();
+        int result = empDao.empInsert(em);
+        
+        if(result > 0){
+            empView.msg(em.getEmpName()+" 사원 추가 완료");
+        }else{
+            empView.msgError("사원 추가 중 에러 발생");
+        }
+
+
+    }
+
 
 }
