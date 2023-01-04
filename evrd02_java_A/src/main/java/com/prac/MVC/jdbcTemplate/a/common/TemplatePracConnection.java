@@ -3,9 +3,7 @@ package com.prac.MVC.jdbcTemplate.a.common;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class TemplatePracConnection {
@@ -78,15 +76,16 @@ public class TemplatePracConnection {
     public static Connection getConnection4(){
         if(con != null){
 
-            try{
+            try {
                 Properties prop = new Properties();
                 prop.load(new FileReader("datebase.properties"));
 
-                Class.forName(prop.get("driver");
+                Class.forName(prop.getProperty("driver"));
                 con = DriverManager.getConnection(prop.getProperty("url"),
-                                                    prop.getProperty("username"),
-                                                    prop.getProperty("password"));
-
+                        prop.getProperty("username"),
+                        prop.getProperty("password"));
+            }catch(ClassNotFoundException e){
+                e.printStackTrace();
             }catch(FileNotFoundException e){
                 e.printStackTrace();
             }catch(IOException e){
@@ -123,7 +122,7 @@ public class TemplatePracConnection {
 
                 Class.forName(p.getProperty("driver"));
                 con = DriverManager.getConnection(p.getProperty("url"),
-                                                p.getProperty("account)," +
+                                                p.getProperty("account"),
                                                 p.getProperty("pw"));
 
             }catch(Exception e){
@@ -199,18 +198,88 @@ public class TemplatePracConnection {
 
 
     public static void commit(Connection con){
-        if(con != null){
-            try{
+        try{
+            if(con != null && !con.isClosed()){
                 con.commit();
-            }catch(SQLException e){
-                e.printStackTrace();
             }
+        }catch(SQLException e){
+            e.printStackTrace();
         }
     }
     public static void rollback(Connection con){
         try{
-            if(con != null){
+            if(con != null && !con.isClosed()){
                 con.rollback();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void close(Connection con){
+        try{
+            if(con != null){
+                con.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void stmt(Statement stmt){
+        try{
+            if(stmt != null && !stmt.isClosed()){
+                stmt.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void close2(Connection con){
+        try{
+            if(con != null && !con.isClosed()){
+                con.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void close3(Connection conn) {
+        try {
+            if(conn != null && !conn.isClosed()) { // conn.isClosed()은 SQLException 필요함
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void close4(Connection con){
+        try{
+            if(con != null && !con.isClosed()){
+                con.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void close5(Statement stmt){
+        try{
+            if(stmt != null && !stmt.isClosed()){
+                con.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void close(ResultSet rset){
+        try{
+            if(rset != null && !rset.isClosed()){
+                rset.close();
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -220,6 +289,6 @@ public class TemplatePracConnection {
 
 
 
-
-
 }
+
+

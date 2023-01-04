@@ -3,9 +3,7 @@ package com.prac.MVC.jdbcTemplate.a.common;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class Template {
@@ -22,7 +20,7 @@ public class Template {
     public static Connection con = null;
 
     public static Connection getConnectionInner(){
-        if(con != null){
+        if(con == null){
             try{
                 Class.forName("oracle.jdbc.driver.OracleDriver");
                 con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JSPServlet","qrwe");
@@ -38,10 +36,10 @@ public class Template {
 
     public static Connection getConnectionOuter(){
 
-        if(con != null){
+        if(con == null){
             try{
                 Properties prop = new Properties();
-                prop.load(new FileReader("database.properties"));
+                prop.load(new FileReader("./database.properties"));
 
                 Class.forName("driver");
                 con = DriverManager.getConnection(prop.getProperty("url"),
@@ -63,27 +61,53 @@ public class Template {
     }
 
 
-    public static void commit(Connection con){
+    public static void commit(Connection conn) {
         try {
-            if(con != null && !con.isClosed()) {
-                con.commit();
+            if(conn != null && !conn.isClosed()) {
+                conn.commit();
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-    public static void rollback(Connection con) {
+    public static void rollback(Connection conn) {
+        try {
+            if(conn != null && !conn.isClosed()) {
+                conn.rollback();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void close(Connection con){
         try{
             if(con != null && !con.isClosed()){
-                con.rollback();
+                con.close();
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
     }
-
-
-
+    public static void close(ResultSet resultSet){
+        try{
+            if(resultSet != null && !resultSet.isClosed()){
+                resultSet.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void close(Statement stmt){
+        try{
+            if(stmt != null && !stmt.isClosed()){
+                stmt.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 
 
 }

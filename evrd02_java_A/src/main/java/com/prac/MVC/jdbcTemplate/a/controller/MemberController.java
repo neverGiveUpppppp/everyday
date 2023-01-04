@@ -1,15 +1,28 @@
 package com.prac.MVC.jdbcTemplate.a.controller;
 
 import com.prac.MVC.jdbcTemplate.a.model.dao.MemberDao;
+import com.prac.MVC.jdbcTemplate.a.service.MemberService;
+import com.prac.MVC.jdbcTemplate.a.view.MemberMenu;
+import com.prac.MVC.jdbcTemplate.a.model.vo.MemberJSPTable;
+
+import java.util.ArrayList;
 
 public class MemberController {
 
+    MemberMenu mm = new MemberMenu();
+    MemberService ms = new MemberService();
     MemberDao md = new MemberDao();
 
-    public void memberInsert(){
-//        ArrayList<Member> aList = md.memberInsert();
+    public int memberInsert(){
+        MemberJSPTable member = mm.memberInsert();
+        int result = ms.memberInsert(member);
 
-
+        if(result > 0){
+            mm.displaySuccess(result+"명의 사원 추가");
+        }else{
+            mm.displayError("데이터 추가 실패");
+        }
+        return result;
     }
 
 }
