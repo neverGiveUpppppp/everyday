@@ -1,9 +1,11 @@
 package com.prac.MVC.jdbcTemplate.a.model.dao;
 
 import com.prac.MVC.jdbcTemplate.a.model.vo.MemberJSPTable;
-import static com.prac.MVC.jdbcTemplate.a.common.Template.close;
+import static com.prac.MVC.jdbcTemplate.a.common.Template.*;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +15,18 @@ import java.util.Properties;
 
 public class MemberDao {
 
-    Properties prp = null;
+    Properties prop = null;
+    public MemberDao(){
+        prop = new Properties();
+        try{
+            String filePath = "src/main/java/com/prac/MVC/jdbcTemplate/a/resources/memberMapper.properties";
+            prop.load(new FileReader(filePath));
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
     public int memberInsert(MemberJSPTable member, Connection con){
 
