@@ -1,7 +1,7 @@
 package com.prac.MVC.jdbcTemplate.a.controller;
 
 import com.prac.MVC.jdbcTemplate.a.model.dao.MemberDao;
-import main.java.com.prac.MVC.jdbcTemplate.a.model.service.MemberService;
+import com.prac.MVC.jdbcTemplate.a.model.service.MemberService;
 import com.prac.MVC.jdbcTemplate.a.view.MemberMenu;
 import com.prac.MVC.jdbcTemplate.a.model.vo.MemberJSPTable;
 

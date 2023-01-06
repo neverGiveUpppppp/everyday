@@ -1,5 +1,6 @@
 package main.java.com.prac.MVC.jdbcTemplate.a.common;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -109,6 +110,57 @@ public class TemplatePrac2 {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+
+
+    public static Connection getConnection(){
+        if(con == null) {
+            try {
+                Properties p = new Properties();
+                p.load(new FileReader("D:\\development\\practice\\workspace_00_evrd\\evrd02_java_A\\src\\main\\java\\com\\prac\\MVC\\jdbcTemplate\\a\\resources\\database.properties"
+                                    ));
+
+                Class.forName(p.getProperty("driver"));
+                con = DriverManager.getConnection(p.getProperty("url"),
+                                                    p.getProperty("username"),
+                                                    p.getProperty("password")
+                                                    );
+
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch(IOException e){
+                e.printStackTrace();
+            }catch(ClassNotFoundException e){
+                e.printStackTrace();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return con;
+    }
+
+    public static Connection connectionProp(){
+        if(con == null) {
+            try {
+                Properties p = new Properties();
+                p.load(new FileReader("database.properties"
+                                    ));
+                Class.forName(p.getProperty("driver"));
+                con = DriverManager.getConnection(p.getProperty("url"),
+                                                    p.getProperty("username"),
+                                                    p.getProperty("password")
+                                                );
+            }catch(FileNotFoundException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            }catch(ClassNotFoundException e){
+                e.printStackTrace();
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return con;
     }
 
 

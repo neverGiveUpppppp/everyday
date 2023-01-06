@@ -10,7 +10,9 @@
 
 # build/ 디렉토리에 있는 모든 파일 무시
 .git/
+.idea/
 .metadata/
+/.idea/
 /.metadata/
 */.metadata/
 .*/.metadata/

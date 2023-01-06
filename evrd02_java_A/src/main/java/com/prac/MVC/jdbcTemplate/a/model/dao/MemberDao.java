@@ -1,7 +1,7 @@
 package com.prac.MVC.jdbcTemplate.a.model.dao;
 
 import com.prac.MVC.jdbcTemplate.a.model.vo.MemberJSPTable;
-import static com.prac.MVC.jdbcTemplate.a.common.Template.*;
+import static com.prac.MVC.jdbcTemplate.a.common.Template.close;
 
 import java.io.File;
 import java.io.FileNotFoundException;

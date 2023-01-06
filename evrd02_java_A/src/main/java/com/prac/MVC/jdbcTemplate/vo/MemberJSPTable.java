@@ -156,6 +156,9 @@ public class MemberJSPTable {
 		return userId+" / "+userPwd+" / "+userName+" / "+nickname+" / "+phone+" / "+email+" / "+address+" / "+interest+" / "+enrollDate+" / "+
 				modifyDate+" / "+status;
 	}
+
+
+
 }
 
 
