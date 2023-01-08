@@ -1,7 +1,9 @@
 package com.prac.MVC.jdbcTemplate.c.view;
 
 import com.prac.MVC.jdbcTemplate.c.controller.MemberController;
+import com.prac.MVC.jdbcTemplate.c.model.vo.MemberVO;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MemberDisplay {
@@ -29,6 +31,20 @@ public class MemberDisplay {
 
         }while(num != 0);
     }
+
+
+    public ArrayList<MemberVO> selectMemAll(ArrayList<MemberVO> memList){
+        for(int i=0; i < memList.size();i++){
+            System.out.println(memList.get(i));
+        }
+        return memList;
+    }
+
+
+
+
+
+
 
 
 

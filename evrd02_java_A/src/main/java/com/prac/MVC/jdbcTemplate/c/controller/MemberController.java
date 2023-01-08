@@ -11,10 +11,11 @@ public class MemberController{
     MemberDisplay mv = new MemberDisplay();
     MemberService mc = new MemberService();
 
-    public ArrayList<MemberVO> selectMemAll(){
+    public void selectMemAll(){
         ArrayList<MemberVO> memList = mc.selectMemAll();
-
-        return memList;
+        if(memList != null){
+            mv.selectMemAll(memList);
+        }
     }
 
 }

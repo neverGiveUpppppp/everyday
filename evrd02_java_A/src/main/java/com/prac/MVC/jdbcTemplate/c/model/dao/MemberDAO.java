@@ -41,6 +41,7 @@ public class MemberDAO{
             stmt = conn.createStatement();
             rset = stmt.executeQuery(query);
 
+            memList = new ArrayList<>();
             while(rset.next()){
                 String userId = rset.getString("USER_ID");
                 String userPwd = rset.getString("USER_PWD");
