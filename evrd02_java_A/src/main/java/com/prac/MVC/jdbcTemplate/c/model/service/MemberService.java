@@ -25,6 +25,27 @@ public class MemberService {
     }
 
 
+    public ArrayList<MemberVO> selectMemId(String userId){
+        Connection conn = getConnection();
+        ArrayList<MemberVO> memList = md.selectMemId(conn, userId);
 
+        if(memList != null){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return memList;
+    }
+    public ArrayList<MemberVO> selectMemNick(String nickname){
+        Connection conn = getConnection();
+        ArrayList<MemberVO> memList = md.selectMemNick(conn, nickname);
+
+        if(memList != null){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return memList;
+    }
 
 }

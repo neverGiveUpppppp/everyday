@@ -6,12 +6,11 @@ import com.prac.MVC.jdbcTemplate.c.model.vo.MemberVO;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
+
+import static com.prac.MVC.jdbcTemplate.c.common.JdbcTemplate.conn;
 
 public class MemberDAO{
 
@@ -55,12 +54,78 @@ public class MemberDAO{
                 MemberVO member = new MemberVO(userId,userPwd,userName,nickname,phone,email,address,interset);
                 memList.add(member);
             }
-
         }catch(SQLException e){
             e.printStackTrace();
         }
         return memList;
     }
+
+
+
+        public ArrayList<MemberVO> selectMemId(Connection conn, String userId){
+
+            ArrayList<MemberVO> memList = null;
+            PreparedStatement pstmt = null;
+            ResultSet rset = null;
+
+            String query = prop.getProperty("selectMemId");
+
+            try{
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1,userId);
+                rset = pstmt.executeQuery();
+
+                memList = new ArrayList<>();
+                if(rset.next()){
+                    String userPwd = rset.getString("USER_PWD");
+                    String userName = rset.getString("USER_NAME");
+                    String nickname = rset.getString("NICKNAME");
+                    String phone = rset.getString("PHONE");
+                    String email = rset.getString("EMAIL");
+                    String address = rset.getString("ADDRESS");
+                    String interest = rset.getString("INTEREST");
+
+                    MemberVO member = new MemberVO(userId,userPwd,userName,nickname,phone,email,address,interest);
+                    memList.add(member);
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return memList;
+        }
+        public ArrayList<MemberVO> selectMemNick(Connection conn, String nickname){
+            ArrayList<MemberVO> memList = null;
+            PreparedStatement pstmt = null;
+            ResultSet rset = null;
+
+            try{
+                String query = prop.getProperty("selectMemNick");
+
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1,nickname);
+                rset = pstmt.executeQuery();
+
+                memList = new ArrayList<>();
+                while(rset.next()){
+                    String userId = rset.getString("USER_ID");
+                    String userPwd = rset.getString("USER_PWD");
+                    String userName = rset.getString("USER_NAME");
+                    String phone = rset.getString("PHONE");
+                    String email = rset.getString("EMAIL");
+                    String address = rset.getString("ADDRESS");
+                    String interest = rset.getString("INTEREST");
+
+                    MemberVO member = new MemberVO(userId,userPwd,userName,nickname,phone,email,address,interest);
+                    memList.add(member);
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return memList;
+        }
+
+
+
 
 
 

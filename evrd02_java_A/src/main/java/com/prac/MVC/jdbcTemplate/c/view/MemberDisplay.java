@@ -25,12 +25,22 @@ public class MemberDisplay {
 
             switch(num){
                 case 1: memCon.selectMemAll(); break;
+                case 2: memCon.selectSpecific(); break;
+                case 0:
+                    System.out.println("프로그램 종료");
                 default :
                     System.out.println("잘못 입력하셨습니다. 메뉴를 다시 선택해주세요.");
             }
 
         }while(num != 0);
     }
+
+
+
+    public void msgError(String str){
+        System.out.println(str);
+    }
+
 
 
     public ArrayList<MemberVO> selectMemAll(ArrayList<MemberVO> memList){
@@ -41,9 +51,36 @@ public class MemberDisplay {
     }
 
 
-
-
-
+    public int selectSpecific(){
+        
+        int selection = 0;
+        while(true) {
+            System.out.println("1.아이디로 회원조회");
+            System.out.println("2.닉네임으로 회원조회");
+            System.out.println("0.메인 메뉴로 돌아가기");
+            System.out.print("번호 선택 : ");
+            selection = Integer.parseInt(sc.nextLine());
+            
+            switch(selection){
+                case 1: case 2: case 3: return selection;
+                default:
+                    System.out.println("잘못 입력 됐습니다. 재입력해주세요");
+            }
+        }
+    }
+    public String MemUserId(){
+        System.out.print("회원 ID : ");
+        String userId = sc.nextLine();
+        return userId;
+    }
+    public String MemNickname(){
+        System.out.print("회원 닉네임 : ");
+        String nickname = sc.nextLine();
+        return nickname;
+    }
+    public void selectSpecificView(ArrayList<MemberVO> memList){
+        System.out.println(memList);
+    }
 
 
 
