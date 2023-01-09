@@ -42,11 +42,21 @@ public class MemberController{
         }else{
             mv.msgError("에러 발생. 문의요망");
         }
-
-
     }
 
 
+
+    public void insertMember(){
+        MemberVO memVo = mv.insertMember();
+        int result = ms.insertMember(memVo);
+
+        if(result > 0){
+            mv.msg("새 회원 정보 추가");
+        }else{
+            mv.msgError("새 회원 정보 추가 실패");
+        }
+
+    }
 
 
 

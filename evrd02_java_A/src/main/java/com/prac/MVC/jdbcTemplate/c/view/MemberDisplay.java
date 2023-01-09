@@ -24,8 +24,9 @@ public class MemberDisplay {
             num = Integer.parseInt(sc.nextLine());
 
             switch(num){
-                case 1: memCon.selectMemAll(); break;
+                case 1: memCon.selectMemAll(); break; // 이슈 : enroll부터 status까지 null나옴
                 case 2: memCon.selectSpecific(); break;
+                case 3: memCon.insertMember(); break;
                 case 0:
                     System.out.println("프로그램 종료");
                 default :
@@ -36,7 +37,9 @@ public class MemberDisplay {
     }
 
 
-
+    public void msg(String str){
+        System.out.println(str);
+    }
     public void msgError(String str){
         System.out.println(str);
     }
@@ -80,6 +83,30 @@ public class MemberDisplay {
     }
     public void selectSpecificView(ArrayList<MemberVO> memList){
         System.out.println(memList);
+    }
+
+
+
+    public MemberVO insertMember(){
+        System.out.println(" --- 새 회원 정보 입력 --- ");
+        System.out.print("회원 아이디 : ");
+        String userId = sc.nextLine();
+        System.out.print("비밀번호 : ");
+        String userPwd = sc.nextLine();
+        System.out.print("이름 : ");
+        String userName = sc.nextLine();
+        System.out.print("닉네임 : ");
+        String nickname = sc.nextLine();
+        System.out.print("핸드폰 번호 : ");
+        String phone = sc.nextLine();
+        System.out.print("이메일 : ");
+        String email = sc.nextLine();
+        System.out.print("주소 : ");
+        String address = sc.nextLine();
+        System.out.print("관심분야 : ");
+        String interest = sc.nextLine();
+        MemberVO member = new MemberVO(userId, userPwd,userName,nickname,phone,email,address,interest);
+        return member;
     }
 
 

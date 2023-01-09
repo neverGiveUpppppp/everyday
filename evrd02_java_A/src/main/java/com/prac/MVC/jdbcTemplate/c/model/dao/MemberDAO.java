@@ -18,7 +18,7 @@ public class MemberDAO{
     public MemberDAO(){
         prop = new Properties();
         try {
-            prop.load(new FileReader("D:\\Dropbox\\Developer\\workspace_00_evrd\\evrd02_java_A\\src\\main\\java\\com\\prac\\MVC\\jdbcTemplate\\c\\common\\config\\memberMapper.properties"
+            prop.load(new FileReader("D:\\development\\practice\\workspace_00_evrd\\evrd02_java_A\\src\\main\\java\\com\\prac\\MVC\\jdbcTemplate\\c\\common\\config\\memberMapper.properties"
             ));
         }catch(FileNotFoundException e){
             e.printStackTrace();
@@ -126,6 +126,31 @@ public class MemberDAO{
 
 
 
+        public int insertMember(Connection conn, MemberVO memVo){
+
+            PreparedStatement pstmt = null;
+            int result = 0;
+
+            String query = prop.getProperty("insertMember");
+
+            try{
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1,memVo.getUserId());
+                pstmt.setString(2,memVo.getUserPwd());
+                pstmt.setString(3,memVo.getUserName());
+                pstmt.setString(4,memVo.getNickname());
+                pstmt.setString(5,memVo.getPhone());
+                pstmt.setString(6,memVo.getEmail());
+                pstmt.setString(7,memVo.getAddress());
+                pstmt.setString(8,memVo.getInterest());
+                result = pstmt.executeUpdate();
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+
+            return result;
+        }
 
 
 

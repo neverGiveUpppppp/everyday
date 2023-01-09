@@ -48,4 +48,18 @@ public class MemberService {
         return memList;
     }
 
+
+
+    public int insertMember(MemberVO memVo){
+        Connection conn = getConnection();
+        int result = md.insertMember(conn, memVo);
+
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+
 }

@@ -18,7 +18,7 @@ public class JdbcTemplate {
         if(conn == null){
             try {
                 Properties prop = new Properties();
-                prop.load(new FileReader("D:\\Dropbox\\Developer\\workspace_00_evrd\\evrd02_java_A\\src\\main\\java\\com\\prac\\MVC\\jdbcTemplate\\c\\common\\config\\memberDatabase.properties"
+                prop.load(new FileReader("D:\\development\\practice\\workspace_00_evrd\\evrd02_java_A\\src\\main\\java\\com\\prac\\MVC\\jdbcTemplate\\c\\common\\config\\memberDatabase.properties"
                 ));
                 // classpath 설정
                 // 클래스 리소스 리더(스프링)
