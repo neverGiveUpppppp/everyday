@@ -62,4 +62,30 @@ public class MemberService {
         return result;
     }
 
+
+    public int memIsExist(String userId){
+        Connection conn = getConnection();
+        int result = md.memIsExist(conn,userId);
+
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+    public int updateMember(int selection, String resultCondt, String userId){
+        Connection conn = getConnection();
+        int result = md.updateMember(conn, selection,resultCondt,userId);
+
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+
+
+
 }

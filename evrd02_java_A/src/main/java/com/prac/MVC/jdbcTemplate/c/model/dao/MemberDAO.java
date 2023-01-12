@@ -154,4 +154,43 @@ public class MemberDAO{
 
 
 
+
+        public int memIsExist(Connection conn, String userId){
+
+            PreparedStatement pstmt = null;
+            int result = 0;
+            String query = prop.getProperty("memIsExist");
+
+            try{
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1,userId);
+                result = pstmt.executeUpdate();
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+        return result;
+        }
+        public int updateMember(Connection conn, int selection, String resultCondt, String userId){
+            PreparedStatement pstmt = null;
+            int result = 0;
+            String query = prop.getProperty("updateMember"+selection);
+
+            try{
+                pstmt = conn.prepareStatement(query);
+                pstmt.setString(1,resultCondt);
+                pstmt.setString(2,userId);
+                result = pstmt.executeUpdate();
+
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            return  result;
+        }
+
+
+
+
+
+
 }

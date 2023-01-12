@@ -27,6 +27,7 @@ public class MemberDisplay {
                 case 1: memCon.selectMemAll(); break; // 이슈 : enroll부터 status까지 null나옴
                 case 2: memCon.selectSpecific(); break;
                 case 3: memCon.insertMember(); break;
+                case 4: memCon.updateMember(); break;
                 case 0:
                     System.out.println("프로그램 종료");
                 default :
@@ -71,12 +72,12 @@ public class MemberDisplay {
             }
         }
     }
-    public String MemUserId(){
+    public String memUserId(){
         System.out.print("회원 ID : ");
         String userId = sc.nextLine();
         return userId;
     }
-    public String MemNickname(){
+    public String memNickname(){
         System.out.print("회원 닉네임 : ");
         String nickname = sc.nextLine();
         return nickname;
@@ -110,6 +111,32 @@ public class MemberDisplay {
     }
 
 
+    public int updateMember(){
+        System.out.println("해당 회원을 확인하였습니다");
+        System.out.println("어느 데이터를 수정하시겠습니까?");
+
+        int selection = 0;
+        while(true) {
+            System.out.println("1. 비밀번호 변경");
+            System.out.println("2. 이메일 변경");
+            System.out.println("3. 전화번호 변경");
+            System.out.println("4. 주소 변경");
+            System.out.println("0. 메인 메뉴로 돌아가기");
+            System.out.print("번호 선택 : ");
+            selection = Integer.parseInt(sc.nextLine());
+
+            switch(selection){
+                case 1: case 2: case 3: case 4: case 0: return selection;
+                default:
+                    System.out.println("메뉴 번호를 잘못 입력하셨습니다. 재입력해주세요");
+            }
+        }
+    }
+    public String updateMemInfo(){
+        System.out.print("수정할 데이터 입력 :");
+        String resultCondt = sc.nextLine();
+        return resultCondt;
+    }
 
 
 }

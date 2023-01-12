@@ -25,11 +25,11 @@ public class MemberController{
         ArrayList<MemberVO> memList = null;
 
         switch(selection){
-            case 1: String userId = mv.MemUserId();
+            case 1: String userId = mv.memUserId();
                     memList = ms.selectMemId(userId);
                     break;
 
-            case 2: String nickname = mv.MemNickname();
+            case 2: String nickname = mv.memNickname();
                     memList = ms.selectMemNick(nickname);
                     break;
             case 0: return;
@@ -58,6 +58,27 @@ public class MemberController{
 
     }
 
+
+    public void updateMember(){
+        String userId = mv.memUserId();
+        int checkMem = ms.memIsExist(userId);
+
+        if(checkMem == 1) {
+            int selection = mv.updateMember();
+            if(selection == 0){
+                return; // 메뉴로 돌아가는 리턴
+            }
+            String resultCondt = mv.updateMemInfo();
+            int result = ms.updateMember(selection, resultCondt, userId);
+            
+            if(result > 0){
+                mv.msg("회원 정보 수정 완료");
+            }else{
+                mv.msgError("회원 정보 수정 실패. 문의 요망");
+            }
+        }
+
+    }
 
 
 }

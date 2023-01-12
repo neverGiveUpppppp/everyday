@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="293f9ec4-5431-47e1-8896-da2a784adda1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/configuration/WebMvcConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/configuration/WebMvcConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/mapper/MemberMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/mapper/MemberMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/java/com/example/service/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/application.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/templates/member/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/../class_practice01_AhnLab/java-web-06-spring-boot/src/main/resources/templates/member/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,10 +48,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
-  </component>
-  <component name="RunManager" selected="Application.arrayControllerPrac">
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/development/practice/workspace_00_evrd/evrd02_java_B/javaPractice",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2"
+  }
+}]]></component>
+  <component name="RunManager" selected="Application.toStringEx">
     <configuration name="Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.prac.collection.set.run.Run" />
       <module name="evrd02_java_B" />
@@ -95,13 +98,43 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="com.prac.array.run.Run" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.prac.array.run.Run" />
+      <module name="javaPractice" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.prac.array.run.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="toStringEx" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.prac.Class.toStringEx" />
+      <module name="javaPractice" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.prac.Class.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <list>
+      <item itemvalue="Application.com.prac.array.run.Run" />
+      <item itemvalue="Application.toStringEx" />
       <item itemvalue="Application.arrayController" />
       <item itemvalue="Application.Run" />
       <item itemvalue="Application.arrayControllerPrac" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.toStringEx" />
+        <item itemvalue="Application.com.prac.array.run.Run" />
         <item itemvalue="Application.arrayControllerPrac" />
         <item itemvalue="Application.Run" />
         <item itemvalue="Application.arrayController" />
