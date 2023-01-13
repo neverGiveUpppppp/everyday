@@ -4,6 +4,7 @@ import com.prac.MVC.jdbcTemplate.c.controller.MemberController;
 import com.prac.MVC.jdbcTemplate.c.model.vo.MemberVO;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class MemberDisplay {
@@ -28,6 +29,7 @@ public class MemberDisplay {
                 case 2: memCon.selectSpecific(); break;
                 case 3: memCon.insertMember(); break;
                 case 4: memCon.updateMember(); break;
+                case 5: memCon.deleteMember(); break;
                 case 0:
                     System.out.println("프로그램 종료");
                 default :
@@ -139,4 +141,15 @@ public class MemberDisplay {
     }
 
 
+    public char deleteMember(){
+
+        System.out.print("정말로 해당 회원을 삭제하시겠습니까?(Y/N) : ");
+        char ansYN = sc.nextLine().toUpperCase().charAt(0);
+        return ansYN;
+    }
+
+
+
+
 }
+

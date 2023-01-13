@@ -77,8 +77,29 @@ public class MemberController{
                 mv.msgError("회원 정보 수정 실패. 문의 요망");
             }
         }
+    }
+
+    public void deleteMember() {
+        String userId = mv.memUserId();
+        int checkId = ms.memIsExist(userId);
+
+        if(checkId > 0){
+            char ansYN = mv.deleteMember();
+            if(ansYN == 'Y') {
+                int result = ms.deleteMember(userId);
+                
+                if(result > 0){
+                    mv.msg("회원 삭제 완료");
+                }
+            }else{
+                return;
+            }
+        }else{
+            return;
+        }
 
     }
 
+    // package, domain 형식으로 재구성도 해보자
 
 }

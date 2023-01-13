@@ -87,5 +87,18 @@ public class MemberService {
     }
 
 
+    public int deleteMember(String userId){
+        Connection conn = getConnection();
+        int result = md.deleteMember(conn, userId);
+
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+
+
 
 }
