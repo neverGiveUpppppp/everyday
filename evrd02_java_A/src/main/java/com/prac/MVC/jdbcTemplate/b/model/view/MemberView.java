@@ -1,4 +1,4 @@
-package com.prac.MVC.jdbcTemplate.b.view;
+package com.prac.MVC.jdbcTemplate.b.model.view;
 
 import com.prac.MVC.jdbcTemplate.b.controller.MemberController;
 import com.prac.MVC.jdbcTemplate.b.model.vo.MemberVO;

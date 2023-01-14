@@ -2,9 +2,7 @@ package com.prac.MVC.jdbcTemplate.b.controller;
 
 import com.prac.MVC.jdbcTemplate.b.model.service.MemberService;
 import com.prac.MVC.jdbcTemplate.b.model.vo.MemberVO;
-import com.prac.MVC.jdbcTemplate.b.view.MemberView;
-
-import java.time.Year;
+import com.prac.MVC.jdbcTemplate.b.model.view.MemberView;
 
 public class MemberController {
 
