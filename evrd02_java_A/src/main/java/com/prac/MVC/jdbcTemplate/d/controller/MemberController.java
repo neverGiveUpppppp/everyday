@@ -23,4 +23,21 @@ public class MemberController {
 
 
 
+
+
+
+    public void exitApp(){
+        char YN = mView.exitApp();
+
+        if(YN == 'Y'){
+            mView.message("프로그램을 종료합니다");
+            mService.exitApp();
+            return ;
+        }else{
+            return ;
+        }
+
+    }
+
+
 }

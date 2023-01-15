@@ -65,7 +65,7 @@ public class TemplateMember {
     }
 
 
-    public void close(ResultSet resultSet){
+    public static void close(ResultSet resultSet){
         try{
             if(resultSet != null && resultSet.isClosed()){
                 resultSet.close();
@@ -74,7 +74,7 @@ public class TemplateMember {
             e.printStackTrace();
         }
     }
-    public void close(Statement stmt){
+    public static void close(Statement stmt){
         try{
             if(stmt != null && !stmt.isClosed()){
                 stmt.close();
@@ -83,7 +83,7 @@ public class TemplateMember {
             e.printStackTrace();
         }
     }
-    public void close(Connection conn){
+    public static void close(Connection conn){
         try{
             if(conn != null && !conn.isClosed()){
                 conn.close();

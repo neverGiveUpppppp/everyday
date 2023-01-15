@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import static com.prac.MVC.jdbcTemplate.b.common.TemplateMember.close;
+
 public class MemberDAO {
 
     private Properties prop = null;
@@ -48,6 +50,9 @@ public class MemberDAO {
 
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            close(pstmt);
+            close(con);
         }
         return result;
     }
@@ -80,6 +85,9 @@ public class MemberDAO {
 
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            close(pstmt);
+            close(con);
         }
         return result;
     }

@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import static com.prac.MVC.jdbcTemplate.c.common.JdbcTemplate.close;
 import static com.prac.MVC.jdbcTemplate.c.common.JdbcTemplate.conn;
 
 public class MemberDAO{
@@ -56,6 +57,10 @@ public class MemberDAO{
             }
         }catch(SQLException e){
             e.printStackTrace();
+        }finally {
+            close(stmt);
+            close(rset);
+            close(conn);
         }
         return memList;
     }
@@ -90,6 +95,10 @@ public class MemberDAO{
                 }
             }catch(SQLException e){
                 e.printStackTrace();
+            }finally {
+                close(pstmt);
+                close(rset);
+                close(conn);
             }
             return memList;
         }
@@ -120,6 +129,10 @@ public class MemberDAO{
                 }
             }catch(SQLException e){
                 e.printStackTrace();
+            }finally {
+                close(pstmt);
+                close(rset);
+                close(conn);
             }
             return memList;
         }
@@ -147,8 +160,9 @@ public class MemberDAO{
 
             }catch(SQLException e){
                 e.printStackTrace();
+            }finally {
+                close(conn);
             }
-
             return result;
         }
 
@@ -168,8 +182,11 @@ public class MemberDAO{
 
             }catch(SQLException e){
                 e.printStackTrace();
+            }finally {
+                close(pstmt);
+                close(conn);
             }
-        return result;
+            return result;
         }
         public int updateMember(Connection conn, int selection, String resultCondt, String userId){
             PreparedStatement pstmt = null;
@@ -184,6 +201,9 @@ public class MemberDAO{
 
             }catch(SQLException e){
                 e.printStackTrace();
+            }finally {
+                close(pstmt);
+                close(conn);
             }
             return  result;
         }
@@ -201,6 +221,9 @@ public class MemberDAO{
 
             }catch(SQLException e){
                 e.printStackTrace();
+            }finally {
+                close(pstmt);
+                close(conn);
             }
             return result;
         }

@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.close;
+
 public class MemberDAO {
 
     Properties properties = null;
@@ -53,6 +55,10 @@ public class MemberDAO {
             }
         }catch(Exception e){
             e.printStackTrace();
+        }finally {
+            close(stmt);
+            close(rs);
+            close(conn);
         }
         return list;
     }

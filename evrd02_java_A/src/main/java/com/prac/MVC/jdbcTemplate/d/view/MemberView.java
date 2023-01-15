@@ -19,12 +19,14 @@ public class MemberView {
             System.out.println("3.회원 추가");
             System.out.println("4.회원 정보 수정");
             System.out.println("5.회원 정보 삭제");
+            System.out.println("0.프로그램 종료");
             System.out.print("메뉴 번호 입력 : ");
             menuSelect = Integer.parseInt(sc.nextLine());
 
             switch (menuSelect){
                 case 1: mCon.getMemberAll(); break;
-                case 0: return ;
+                case 0: mCon.exitApp(); break;
+                // case 0: return ; 메인메소드로 가서 종료됨
                 default:
                     System.out.println("메뉴 번호가 잘못 입력되었습니다. 재입력 해주세요.");
             }
@@ -42,6 +44,17 @@ public class MemberView {
         for(int i=0; i < list.size(); i++){
             System.out.println(list.get(i));
         }
+    }
+
+
+
+
+
+
+    public char exitApp(){
+        System.out.println("정말 종료하시겠습니까?(Y/N)");
+        char YN = sc.nextLine().toUpperCase().charAt(0);
+        return YN;
     }
 
 }

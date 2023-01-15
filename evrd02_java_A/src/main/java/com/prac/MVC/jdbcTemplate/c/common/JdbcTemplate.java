@@ -3,9 +3,7 @@ package com.prac.MVC.jdbcTemplate.c.common;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 
 public class JdbcTemplate {
@@ -63,5 +61,33 @@ public class JdbcTemplate {
         return conn;
     }
 
+
+    public static void close(ResultSet resultSet){
+        try{
+            if(resultSet != null && !resultSet.isClosed()){
+                resultSet.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void close(Statement stmt){
+        try{
+            if(stmt != null && !stmt.isClosed()){
+                stmt.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void close(Connection conn){
+        try{
+            if(conn != null && !conn.isClosed()){
+                conn.close();
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
 
 }
