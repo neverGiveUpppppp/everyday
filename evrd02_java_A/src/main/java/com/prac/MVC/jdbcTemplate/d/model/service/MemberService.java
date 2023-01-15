@@ -30,7 +30,7 @@ public class MemberService {
 
 
     public void exitApp(){
-        Connection connection = TemplateMember.getConnect();
+        Connection connection = null;
         close(connection);
 
     }
