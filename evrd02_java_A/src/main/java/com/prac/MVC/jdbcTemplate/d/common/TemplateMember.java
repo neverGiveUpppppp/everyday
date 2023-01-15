@@ -45,7 +45,7 @@ public class TemplateMember {
 
 
 
-    public void commit(Connection conn){
+    public static void commit(Connection conn){
         try{
             if(conn != null && !conn.isClosed()) {
                 conn.commit();
@@ -54,7 +54,7 @@ public class TemplateMember {
             e.printStackTrace();
         }
     }
-    public void rollback(Connection conn) {
+    public static void rollback(Connection conn) {
         try{
             if(conn != null && !conn.isClosed()){
                 conn.rollback();
