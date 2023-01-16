@@ -30,11 +30,12 @@ public class MemberController {
         char YN = mView.exitApp();
 
         if(YN == 'Y'){
-            mView.message("프로그램을 종료합니다");
+            mView.message("프로그램을 종료합니다.");
             mService.exitApp();
-            return ;
+            return ; // return ;이 view의 mainMenu()로 돌려보냄
         }else{
-            return ;
+            mView.message("메인 메뉴로 돌아갑니다.");
+            mView.mainMenu();
         }
 
     }

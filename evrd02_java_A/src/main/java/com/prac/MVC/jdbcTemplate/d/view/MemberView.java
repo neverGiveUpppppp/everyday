@@ -25,6 +25,7 @@ public class MemberView {
 
             switch (menuSelect){
                 case 1: mCon.getMemberAll(); break;
+                case 0: mCon.exitApp(); return ; // return ;이 메인메소드로 돌려보냄
                 // case 0: return ; 메인메소드로 가서 종료됨
                 default:
                     System.out.println("메뉴 번호가 잘못 입력되었습니다. 재입력 해주세요.");
