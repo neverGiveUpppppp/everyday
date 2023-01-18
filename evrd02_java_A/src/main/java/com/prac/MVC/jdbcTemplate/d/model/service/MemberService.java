@@ -8,13 +8,16 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.close;
+import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.getConnect;
+import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.commit;
+import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.rollback;
 
 public class MemberService {
 
     MemberDAO mDAO = new MemberDAO();
 
     public ArrayList<MemberJSPTable> getMemberAll(){
-        Connection conn = TemplateMember.getConnect();
+        Connection conn = getConnect();
         ArrayList<MemberJSPTable> list = mDAO.getMemberAll(conn);
 
         if(list != null){
@@ -27,11 +30,33 @@ public class MemberService {
 
 
 
+    public MemberJSPTable getMemberId(String mId){
+        Connection con = getConnect();
+        MemberJSPTable member = mDAO.getMemberId(con,mId);
+
+        if(member != null){
+            commit(con);
+        }else{
+            rollback(con);
+        }
+        return member;
+    }
+    public MemberJSPTable getMemberNickname(String mNickname){
+        Connection con = getConnect();
+        MemberJSPTable member = mDAO.getMemberNickname(con, mNickname);
+        if(member != null){
+            commit(con);
+        }else{
+            rollback(con);
+        }
+        return member;
+    }
+
 
 
     public void exitApp(){
-        Connection connection = null;
-        close(connection);
+        Connection con = getConnect();
+        close(con);
 
     }
 
