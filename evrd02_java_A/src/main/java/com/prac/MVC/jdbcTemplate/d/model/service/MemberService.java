@@ -55,8 +55,9 @@ public class MemberService {
 
 
     public void exitApp(){
-        Connection con = getConnect();
-        close(con);
+//        Connection con = getConnect();
+//        close(con);
+        close(getConnect()); // 위의 쓸데 없는 코드 없애고 간소화
 
     }
 
