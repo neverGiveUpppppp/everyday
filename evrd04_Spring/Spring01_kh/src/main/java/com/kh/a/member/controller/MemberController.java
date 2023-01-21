@@ -1,5 +1,6 @@
 package com.kh.a.member.controller;
 
+<<<<<<< HEAD
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,14 @@ import com.kh.a.member.model.vo.MemberVO;
 
 
 @SessionAttributes("loginUser")
+=======
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+>>>>>>> 7bf68bdaecc81d379184651d61317c6beb83a5bf
 @Controller
 public class MemberController {
 	
@@ -102,4 +111,16 @@ public class MemberController {
 	
 	
 
+	
+	
+	@RequestMapping(value="login.me", method=RequestMethod.POST)
+	public void login(HttpServletRequest request) {
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+		
+		System.out.println("id1" + id);
+		System.out.println("pwd1" + pwd);
+	}
+	
+	
 }

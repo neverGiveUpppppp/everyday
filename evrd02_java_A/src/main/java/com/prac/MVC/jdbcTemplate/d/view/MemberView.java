@@ -25,8 +25,8 @@ public class MemberView {
 
             switch (menuSelect){
                 case 1: mCon.getMemberAll(); break;
-                case 0: mCon.exitApp(); return ; // return ;이 메인메소드로 돌려보냄
-                // case 0: return ; 메인메소드로 가서 종료됨
+                case 2: mCon.getMemberCondition(); break;
+                case 0: mCon.exitApp(); return ; // return ;이 메인메소드로 돌려보내서 앱 종료시킴
                 default:
                     System.out.println("메뉴 번호가 잘못 입력되었습니다. 재입력 해주세요.");
             }
@@ -46,6 +46,37 @@ public class MemberView {
         }
     }
 
+
+
+    public int getMemberCondition(){
+        while(true) {
+            System.out.println("어떤 조건으로 검색하시겠습니까?");
+            System.out.println("1.회원 아이디");
+            System.out.println("2.회원 닉네임");
+            System.out.println("3.회원 전화번호");
+            System.out.println("4.회원 주소");
+            System.out.print("메뉴 번호 : ");
+            int num = Integer.parseInt(sc.nextLine());
+
+            switch(num){
+                case 1: case 2: case 3: case 4: return num; default:
+                    System.out.println("메뉴 번호를 잘못 입력하셨습니다. 다시 입력해주세요.");
+            }
+        }
+    }
+    public void getMember(MemberJSPTable member){
+        System.out.println(member);
+    }
+    public String getMemberId(){
+        System.out.print("회원 아이디 : ");
+        String mId = sc.nextLine();
+        return mId;
+    }
+    public String getMemberNickname(){
+        System.out.print("회원 닉네임 : ");
+        String mNickname = sc.nextLine();
+        return mNickname;
+    }
 
 
 

@@ -5,9 +5,7 @@ import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -56,12 +54,83 @@ public class MemberDAO {
         }catch(Exception e){
             e.printStackTrace();
         }finally {
-            close(stmt);
             close(rs);
-            close(conn);
+            close(stmt);
         }
         return list;
     }
+
+
+
+
+    public MemberJSPTable getMemberId(Connection con, String mId ){
+
+        MemberJSPTable member = null;
+        PreparedStatement pstmt = null;
+        ResultSet rset = null;
+        String query = properties.getProperty("getMemberId");
+
+        try{
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1,mId);
+            rset = pstmt.executeQuery();
+
+            member = new MemberJSPTable();
+            if(rset.next()){
+                String userPwd = rset.getString("USER_PWD");
+                String userName = rset.getString("USER_NAME");
+                String nickname = rset.getString("NICKNAME");
+                String phone = rset.getString("PHONE");
+                String email = rset.getString("EMAIL");
+                String address = rset.getString("ADDRESS");
+                String interest = rset.getString("INTEREST");
+                Date enrollDate = rset.getDate("ENROLL_DATE");
+                member = new MemberJSPTable(mId,userPwd,userName,nickname,phone,email,address,interest,enrollDate);
+            }
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rset);
+            close(pstmt);
+        }
+        return member;
+    }
+
+
+    public MemberJSPTable getMemberNickname(Connection con, String mNickname){
+        MemberJSPTable member = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query = properties.getProperty("getMemberNickname");
+
+        try{
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1,mNickname);
+            rs = pstmt.executeQuery();
+
+            member = new MemberJSPTable();
+            if(rs.next()){
+                String userId = rs.getString("USER_ID");
+                String userPwd = rs.getString("USER_PWD");
+                String userName = rs.getString("USER_NAME");
+                String phone = rs.getString("PHONE");
+                String email = rs.getString("EMAIL");
+                String address = rs.getString("ADDRESS");
+                String interest = rs.getString("INTEREST");
+                Date enrollDate = rs.getDate("ENROLL_DATE");
+                member = new MemberJSPTable(userId,userPwd,userName,mNickname,phone,email,address,interest,enrollDate);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return member;
+    }
+
+
 
 
 }
