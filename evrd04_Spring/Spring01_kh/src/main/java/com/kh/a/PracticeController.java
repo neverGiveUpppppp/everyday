@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.a.member.model.vo.MemberVO;
+
 
 @Controller
 public class PracticeController {
@@ -106,6 +108,25 @@ public class PracticeController {
 		
 	}
 
+	
+	/** 4.@ModelAttribute
+	 * @param m
+	 */
+	@RequestMapping(value="BD_delete.do")
+	public void loginMA(@ModelAttribute MemberVO m) {
+	}
+
+	
+	/** 5.@ModelAttribute 생략
+	 * @param M 
+	 */
+	@RequestMapping(value="login.me", method=RequestMethod.POST)
+	public void loginMAEllipsis(MemberVO M) {
+		
+	}
+	
+	
+	
 	
 	
 	
