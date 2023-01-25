@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,13 @@ import com.kh.a.member.model.vo.MemberVO;
 public class PracticeController {
 
 
+	/*****************************파라미터 전송 받기 *****************************/
+	// 1. HttpServletRequest 방식 : JSP/Servlet 방식
+	// 2. @RequestParam방식
+	// 3. @RequestParam 생략방식
+	// 4. @ModelAttribute 방식
+	// 5. @ModelAttribute 생략방식
+	
 	
 	/** 1. HttpServletRequest 방식
 	 * @param request
@@ -113,21 +121,36 @@ public class PracticeController {
 	 * @param m
 	 */
 	@RequestMapping(value="BD_delete.do")
-	public void loginMA(@ModelAttribute MemberVO m) {
+	public void loginMA1(@ModelAttribute MemberVO m) {
 	}
-
+	@RequestMapping(value="BD_selectAllNoticeList.do")
+	public void loginMA2(@ModelAttribute MemberVO mem) {
+	}
+	@RequestMapping(value="BD_selectBbsList.do", method=RequestMethod.PUT)
+	public void loginMA3(@ModelAttribute String bbsVo, @ModelAttribute String bbsObj) {
+	}
+	
 	
 	/** 5.@ModelAttribute 생략
 	 * @param M 
 	 */
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
-	public void loginMAEllipsis(MemberVO M) {
-		
+	public void loginMAEllipsis1(MemberVO m) {
+		System.out.println(m);
 	}
 	
-	
-	
-	
+	@RequestMapping("BD_selectBbs.do")
+	public void loginMAEllipsis2(MemberVO mVo) {
+	}
+	@RequestMapping("BD_insertBbsForm.do")
+	public void loginMAEllipsis3(MemberVO member, String bbsConfig, String bbsConfigVo) {
+	}
+	@RequestMapping("BD_updateBbsForm.do")
+	public void loginMAEllipsis4(String dataVo, String paramMap, String paramMapp) {
+	}
+	@RequestMapping(value="BD_updateBbsForm.do", method=RequestMethod.POST)
+	public void loginMAEllipsis5(String dataVo, String paramMap2, String paramMapp2) {
+	}
 	
 	
 //	UserMenu.domnCode
