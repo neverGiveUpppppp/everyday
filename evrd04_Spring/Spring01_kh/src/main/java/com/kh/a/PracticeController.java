@@ -113,7 +113,6 @@ public class PracticeController {
 	}
 	@RequestMapping(value="UserMenu.domnCode", method=RequestMethod.PUT)
 	public void loginEllipsis4(String bbsConfig, String bbsCtgryList, List<String> BbsCtgryCacheVO) {
-		
 	}
 
 	
