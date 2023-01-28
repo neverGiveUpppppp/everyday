@@ -82,6 +82,8 @@ public class MemberView {
 
 
 
+
+
     public char exitApp(){
         System.out.print("정말 종료하시겠습니까?(Y/N) : ");
         char YN = sc.nextLine().toUpperCase().charAt(0);
