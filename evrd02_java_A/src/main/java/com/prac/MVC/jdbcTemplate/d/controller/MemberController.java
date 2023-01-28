@@ -40,13 +40,20 @@ public class MemberController {
                 mView.message("회원 닉네임으로 조회합니다.");
                 member = mService.getMemberNickname(mNickname);
                 break;
+            case 3:
+                String mPhone = mView.getMemberPhone();
+                mView.message("회원 전화번호로 조회합니다.");
+                member = mService.getMemberPhone(mPhone);
+                break;
+            case 4:
+                String mAdres = mView.getMemberAdres();
+                mView.message("회원 주소로 조회합니다"); // 띄어쓰기 때문에 주소 한글 안나오는 듯. 쿼리나 검색 어떻게 해야할까?
+                member = mService.getMemberAdres(mAdres);
+                break;
 
             // 이슈
             // 없는 회원 A로 검색하면 null값으로 vo에 채워지는데 조회가 되는 이상한 상황
-
-
         }
-
         if(member != null){
             mView.getMember(member);
         }else{

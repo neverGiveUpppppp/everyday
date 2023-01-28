@@ -2,6 +2,7 @@ package com.prac.MVC.jdbcTemplate.d.model.dao;
 
 import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
 
+import javax.xml.transform.Result;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -120,6 +121,69 @@ public class MemberDAO {
                 String interest = rs.getString("INTEREST");
                 Date enrollDate = rs.getDate("ENROLL_DATE");
                 member = new MemberJSPTable(userId,userPwd,userName,mNickname,phone,email,address,interest,enrollDate);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return member;
+    }
+    public MemberJSPTable getMemberPhone(Connection con, String mPhone){
+        MemberJSPTable member = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query = properties.getProperty("getMemberPhone");
+
+
+        try{
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1, mPhone);
+            rs = pstmt.executeQuery();
+
+            member = new MemberJSPTable();
+            if(rs.next()){
+                String userId = rs.getString("USER_ID");
+                String userPwd = rs.getString("USER_PWD");
+                String userName = rs.getString("USER_NAME");
+                String mNickname = rs.getString("NICKNAME");
+                String email = rs.getString("EMAIL");
+                String address = rs.getString("ADDRESS");
+                String interest = rs.getString("INTEREST");
+                Date enrollDate = rs.getDate("ENROLL_DATE");
+                member = new MemberJSPTable(userId,userPwd,userName,mNickname,mPhone,email,address,interest,enrollDate);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return member;
+    }
+    public MemberJSPTable getMemberAdres(Connection conn, String mAdres){
+        MemberJSPTable member = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query = properties.getProperty("getMemberAdres");
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,mAdres);
+            rs = pstmt.executeQuery();
+
+            member = new MemberJSPTable();
+            while(rs.next()){
+                String userId = rs.getString("USER_ID");
+                String userPwd = rs.getString("USER_PWD");
+                String userName = rs.getString("USER_NAME");
+                String mNickname = rs.getString("NICKNAME");
+                String phone = rs.getString("ADDRESS");
+                String email = rs.getString("EMAIL");
+                String interest = rs.getString("INTEREST");
+                Date enrollDate = rs.getDate("ENROLL_DATE");
+                member = new MemberJSPTable(userId,userPwd,userName,mNickname,phone,email,mAdres,interest,enrollDate);
             }
         }catch(SQLException e){
             e.printStackTrace();

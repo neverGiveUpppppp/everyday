@@ -51,6 +51,33 @@ public class MemberService {
         }
         return member;
     }
+    public MemberJSPTable getMemberPhone(String mPhone){
+        Connection con = getConnect();
+        MemberJSPTable member = mDAO.getMemberPhone(con, mPhone);
+
+        if(member != null){
+            commit(con);
+        }else{
+            rollback(con);
+        }
+        return member;
+    }
+    public MemberJSPTable getMemberAdres(String mAdres){
+        Connection conn = getConnect();
+        MemberJSPTable member = mDAO.getMemberAdres(conn, mAdres);
+
+        if(member != null){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return member;
+    }
+
+
+
+
+
 
 
 

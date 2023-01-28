@@ -77,6 +77,16 @@ public class MemberView {
         String mNickname = sc.nextLine();
         return mNickname;
     }
+    public String getMemberPhone(){
+        System.out.print("회원 전화번호 : ");
+        String mPhone = sc.nextLine();
+        return mPhone;
+    }
+    public String getMemberAdres(){
+        System.out.print("회원 주소 : ");
+        String mAdres = sc.nextLine();
+        return mAdres;
+    }
 
 
 
