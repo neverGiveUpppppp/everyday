@@ -73,11 +73,16 @@ public class MemberDAO {
 
         try{
             pstmt = con.prepareStatement(query);
-            pstmt.setString(1,mId);
+//            pstmt.setString(1, mId); // error
+            pstmt.setString(1, "%" + mId + "%");
+            // WHERE USER_ID LIKE %?%로 하면 에러남
+            // 위치홀더 값 삽입 시, 알아서 싱글쿼테이션을 채워서 쿼리를 보낸다
+            // query += "'%" + id + "%'";
             rset = pstmt.executeQuery();
 
             member = new MemberJSPTable();
             if(rset.next()){
+                String userId = rset.getString("USER_ID");
                 String userPwd = rset.getString("USER_PWD");
                 String userName = rset.getString("USER_NAME");
                 String nickname = rset.getString("NICKNAME");
@@ -86,7 +91,7 @@ public class MemberDAO {
                 String address = rset.getString("ADDRESS");
                 String interest = rset.getString("INTEREST");
                 Date enrollDate = rset.getDate("ENROLL_DATE");
-                member = new MemberJSPTable(mId,userPwd,userName,nickname,phone,email,address,interest,enrollDate);
+                member = new MemberJSPTable(userId,userPwd,userName,nickname,phone,email,address,interest,enrollDate);
             }
 
         }catch(SQLException e){
@@ -194,6 +199,30 @@ public class MemberDAO {
         return member;
     }
 
+
+
+    public int postMember(Connection con, MemberJSPTable memberVo){
+        PreparedStatement pstmt = null;
+        String query = properties.getProperty("postMember");
+        int postReslt = 0;
+        try{
+            pstmt = con.prepareStatement(query);
+            pstmt.setString(1,memberVo.getUserId());
+            pstmt.setString(2,memberVo.getUserPwd());
+            pstmt.setString(3,memberVo.getUserName());
+            pstmt.setString(4,memberVo.getNickname());
+            pstmt.setString(5,memberVo.getPhone());
+            pstmt.setString(6,memberVo.getEmail());
+            pstmt.setString(7,memberVo.getAddress());
+            pstmt.setString(8,memberVo.getInterest());
+            postReslt = pstmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            close(pstmt);
+        }
+        return postReslt;
+    }
 
 
 

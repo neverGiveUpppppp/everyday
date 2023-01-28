@@ -80,14 +80,18 @@ public class CommonTemplate {
         }
     }
     public static void close(Connection connection){
-        try{
-            if(connection != null && !connection.isClosed()){
+        try {
+            if (connection != null && !connection.isClosed()) {
                 connection.isClosed();
             }
-        throw new ExceptionChecked();
-        // 익셉션 클래스 써볼 수 있는 방법 없을까???
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
+// 익셉션 클래스 써볼 수 있는 방법 없을까???
+
+    // throw new ExceptionChecked();
     // Checked Exception & Unchecked Exception
     // 		Checked Exception : 예외처리가 필수
     // 		Unchecked Exception : 예외처리 선택

@@ -26,6 +26,7 @@ public class MemberView {
             switch (menuSelect){
                 case 1: mCon.getMemberAll(); break;
                 case 2: mCon.getMemberCondition(); break;
+                case 3: mCon.postMember(); break;
                 case 0: mCon.exitApp(); return ; // return ;이 메인메소드로 돌려보내서 앱 종료시킴
                 default:
                     System.out.println("메뉴 번호가 잘못 입력되었습니다. 재입력 해주세요.");
@@ -87,6 +88,32 @@ public class MemberView {
         String mAdres = sc.nextLine();
         return mAdres;
     }
+
+
+
+    public MemberJSPTable postMember(){
+        System.out.println("---회원 정보 입력---");
+        System.out.print("회원 아이디 : ");
+        String userId = sc.nextLine();
+        System.out.print("비밀번호 : ");
+        String userPwd = sc.nextLine();
+        System.out.print("이름 : ");
+        String userName = sc.nextLine();
+        System.out.print("닉네임 : ");
+        String nickname = sc.nextLine();
+        System.out.print("핸드폰 번호 : ");
+        String phone = sc.nextLine();
+        System.out.print("이메일 : ");
+        String email = sc.nextLine();
+        System.out.print("주소 : ");
+        String address = sc.nextLine();
+        System.out.print("관심분야 : ");
+        String interest = sc.nextLine();
+        MemberJSPTable memberVo = new MemberJSPTable(userId, userPwd,userName,nickname,phone,email,address,interest);
+        return memberVo;
+    }
+
+
 
 
 

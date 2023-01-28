@@ -76,6 +76,16 @@ public class MemberService {
 
 
 
+    public int postMember(MemberJSPTable memberVo){
+        Connection con = getConnect();
+        int postReslt = mDAO.postMember(con, memberVo);
+        if(postReslt > 0){
+            commit(con);
+        }else{
+            rollback(con);
+        }
+        return postReslt;
+    }
 
 
 

@@ -59,13 +59,28 @@ public class MemberController {
         }else{
             mView.message("회원정보 조회 실패. 문의 요망.");
         }
+    }
 
+
+    public void postMember(){
+        MemberJSPTable memberVo = mView.postMember();
+        int postReslt = mService.postMember(memberVo);
+
+        if(postReslt > 0){
+            mView.message("회원 정보 추가 완료");    
+        }else{
+            mView.message("회원 정보 추가 실패");
+        }
 
     }
 
 
+    // 개선점
+    // 회원 조회 시, 검색이니까 부분 단어 검색이 일치해도 나올 수 있도록 부분검색 가능하게
+    //  sql에서 like 쓰면 되지 않을까?
 
-
+    // 이슈
+    // 없는 회원 A로 검색하면 null값으로 vo에 채워지는데 조회가 되는 이상한 상황
 
     public void exitApp(){
         char YN = mView.exitApp();
