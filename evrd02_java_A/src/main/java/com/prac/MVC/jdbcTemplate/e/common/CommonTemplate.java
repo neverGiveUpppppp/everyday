@@ -85,7 +85,7 @@ public class CommonTemplate {
                 connection.isClosed();
             }
         throw new ExceptionChecked();
-        // 익셉션 클래스 써볼 수 있는 방법 없을까?
+        // 익셉션 클래스 써볼 수 있는 방법 없을까???
     }
 
     // Checked Exception & Unchecked Exception
