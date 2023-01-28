@@ -3,7 +3,9 @@ package com.kh.a;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -152,6 +154,57 @@ public class PracticeController {
 	}
 	
 	
+	
+	
+
+	/*****************************파라미터 전송 받기 *****************************/
+	// 1. HttpServletRequest 방식 : JSP/Servlet 방식
+	// 2. @RequestParam방식
+	// 3. @RequestParam 생략방식
+	// 4. @ModelAttribute 방식
+	// 5. @ModelAttribute 생략방식
+	
+	
+	// 1. HttpServletRequest 방식 : JSP/Servlet 방식
+	@RequestMapping(value="UserMenu.domnCode", method=RequestMethod.POST)
+	public void htpservReq1(HttpServletRequest req, HttpServletResponse res) {
+		String id = req.getParameter("id");
+		String pwd = req.getParameter("pwd");
+	}
+	@RequestMapping("bbsConfigVo.searchColumns")
+	public void htpservReq2(HttpServletRequest req) {
+		String id = req.getParameter("id");
+		String pwd = req.getParameter("pwd");
+	}
+	@RequestMapping("url")
+	public void htpServReq3(HttpServletRequest req, HttpServlet hs) {
+		String id = req.getParameter("id");
+		String pwd = req.getParameter("pwd");
+		hs.destroy();
+	}
+
+	// 2. @RequestParam방식
+	@RequestMapping(value="login.url")
+	public void rp1(@RequestParam(value="id") String id){
+		id.charAt(0);
+	}
+	@RequestMapping(value="url.login")
+	public void rp2(@RequestParam(value="id") String id, @RequestParam(value="pwd", defaultValue="p") String pwd) {
+	}
+	
+	// 3. @RequestParam 생략방식
+	@RequestMapping(value="url.logout")
+	public void rp3(String id, String pwd) {
+		
+	}
+	
+	// 4. @ModelAttribute 방식
+	
+	
+	// 5. @ModelAttribute 생략방식
+	
+	
+	
 //	UserMenu.domnCode
 //	bbsConfigVo.searchColumns
 //	bbsConfigVo.bbsCtgryList
@@ -164,8 +217,8 @@ public class PracticeController {
 //	reqstdocVo
 //	resveManageVo
 	
-	public class ParamMap<K, V> extends HashMap<K,V> {
-	}
+//	public class ParamMap<K, V> extends HashMap<K,V> {
+//	}
 	
 	
     
