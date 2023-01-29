@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,9 +23,9 @@ public class PracticeController {
 
 	/*****************************파라미터 전송 받기 *****************************/
 	// 1. HttpServletRequest 방식 : JSP/Servlet 방식
-	// 2. @RequestParam방식
+	// 2. @RequestParam방식 : 파라메터1:1매핑
 	// 3. @RequestParam 생략방식
-	// 4. @ModelAttribute 방식
+	// 4. @ModelAttribute 방식 : 객체매핑
 	// 5. @ModelAttribute 생략방식
 	
 	
@@ -159,9 +160,9 @@ public class PracticeController {
 
 	/*****************************파라미터 전송 받기 *****************************/
 	// 1. HttpServletRequest 방식 : JSP/Servlet 방식
-	// 2. @RequestParam방식
+	// 2. @RequestParam방식 : 파라메터 1:1매핑
 	// 3. @RequestParam 생략방식
-	// 4. @ModelAttribute 방식
+	// 4. @ModelAttribute 방식 : 객체 매핑
 	// 5. @ModelAttribute 생략방식
 	
 	
@@ -182,28 +183,87 @@ public class PracticeController {
 		String pwd = req.getParameter("pwd");
 		hs.destroy();
 	}
-
-	// 2. @RequestParam방식
+	@RequestMapping("url")
+	public void htpServReq4(HttpServletRequest req, HttpSession session) {
+		session.getAttribute("id");
+	}
+	@RequestMapping("url")
+	public void htpServReq5(HttpServletRequest request, HttpServletResponse res) {
+		
+	}
+	@RequestMapping(".do")
+	public void hsr(HttpServletRequest request, HttpSession session) {
+	}
+	
+	
+	
+	// 2. @RequestParam방식 : 파라미터 1:1매핑
 	@RequestMapping(value="login.url")
 	public void rp1(@RequestParam(value="id") String id){
 		id.charAt(0);
 	}
-	@RequestMapping(value="url.login")
-	public void rp2(@RequestParam(value="id") String id, @RequestParam(value="pwd", defaultValue="p") String pwd) {
+	@RequestMapping("url.bbsConfigVo.bbsCtgryList")
+	public void rp2(@RequestParam(value="id") String id, @RequestParam(value="pw") String pw) {
+		
 	}
+	@RequestMapping(value="url.login")
+	public void rp3(@RequestParam(value="id") String id, @RequestParam(value="pwd", defaultValue="p") String pwd) {
+	}
+	@RequestMapping(value="url.logout")
+	public void rp4(@RequestParam(value="id", defaultValue="user01", required=false) String id,
+					@RequestParam(value="pw", defaultValue="user01", required=true) String pwd) {
+	}
+	@RequestMapping("login.do")
+	public void rp5(@RequestParam(value="name", defaultValue="김철수", required=true) String name) {
+	}
+	@RequestMapping("login.do")
+	public void rp6(@RequestParam(value="page") int page, @RequestParam(value="goods", defaultValue="apple") String goods) {}
+	
 	
 	// 3. @RequestParam 생략방식
 	@RequestMapping(value="url.logout")
-	public void rp3(String id, String pwd) {
+	public void rpEllipsis1(String id, String pwd) {
 		
 	}
+	@RequestMapping(value="url.logout")
+	public void rpEllipsis2(String id, String pw) {
+	}
+	@RequestMapping(value="url.logout")
+	public void rpEllipsis3(String name, int page) {
+	}
+	@RequestMapping(value="url.logout")
+	public void rpEllipsis4(int pager, String title) {
+	}
+	@RequestMapping(value="urlWritein", method=RequestMethod.PUT)
+	public void rpEllipsis5(String title, String author) {}
+	@RequestMapping(value="buy.buy")
+	public void rpEllipsis6(String goods, int ea, String desc) {}
+	@RequestMapping(value="goods.goods", method=RequestMethod.DELETE)
+	public void rpEllipsis7(String goods, int ea) {}
 	
-	// 4. @ModelAttribute 방식
-	
+	// 4. @ModelAttribute 방식 : 객체 매핑
+	@RequestMapping(value="url", method=RequestMethod.GET)
+	public void ma1(@ModelAttribute MemberVO memVo){
+	}
+	@RequestMapping(value=".do", method=RequestMethod.POST)
+	public void ma2(@ModelAttribute String a, MemberVO m	) {
+	}
+	@RequestMapping(value=".do", method=RequestMethod.POST)
+	public void ma3(@ModelAttribute MemberVO m) {
+	}
+	@RequestMapping(value="apple.buy", method=RequestMethod.PATCH)
+	public void appleBuy(@ModelAttribute MemberVO mVo) {}
 	
 	// 5. @ModelAttribute 생략방식
-	
-	
+	@RequestMapping(value=".do", method=RequestMethod.POST)
+	public void maEllipsis1(MemberVO m) {
+	}
+	@RequestMapping(value=".do", method=RequestMethod.POST)
+	public void maEllipsis2(MemberVO m) {
+	}
+	@RequestMapping(value="watermelon.buy", method=RequestMethod.HEAD)
+	public void maEllipsis3(MemberVO m) {
+	}
 	
 //	UserMenu.domnCode
 //	bbsConfigVo.searchColumns
