@@ -50,6 +50,11 @@ public class PracticeController {
 		String id = httpSerReq.getParameter("id");
 		String pwd = httpSerReq.getParameter("pwd");
 	}
+	@RequestMapping(value="url.me",method=RequestMethod.GET)
+	public void login4(HttpServletRequest httpReq, HttpServletResponse res) {
+		String id = httpReq.getParameter("id");
+		res.setCharacterEncoding("UTF-8");
+	}
 	
 	/** 2.@RequestParam 방식
 	 * @param id
@@ -91,7 +96,10 @@ public class PracticeController {
 							@RequestParam(value="searchTy",required=false, defaultValue="searchDataVo.searchTy") String searchTy) {
 		
 	}
-	
+	@RequestMapping("INC_selectList.do")
+	public void requestParam4(@RequestParam(value="searchDadaVo", defaultValue="dataVo") String searchDataVo,
+						      @RequestParam(value="searchTy",required=true) String searchTy){
+	}
 	
 
 	
@@ -117,7 +125,10 @@ public class PracticeController {
 	@RequestMapping(value="UserMenu.domnCode", method=RequestMethod.PUT)
 	public void loginEllipsis4(String bbsConfig, String bbsCtgryList, List<String> BbsCtgryCacheVO) {
 	}
-
+	@RequestMapping("BD_selectList.do")
+	public void loginEllipsis5(String interest, String location, String hobby) {
+		
+	}
 	
 	/** 4.@ModelAttribute
 	 * @param m
@@ -131,7 +142,13 @@ public class PracticeController {
 	@RequestMapping(value="BD_selectBbsList.do", method=RequestMethod.PUT)
 	public void loginMA3(@ModelAttribute String bbsVo, @ModelAttribute String bbsObj) {
 	}
-	
+	@RequestMapping(value="BD_updateBbs.do")
+	public void lognMA4(@ModelAttribute MemberVO memVo) {
+	}
+	@RequestMapping("boardList")
+	public void loginMA5(@ModelAttribute List<String> list, @ModelAttribute String m) {
+		list.add(m);
+	}
 	
 	/** 5.@ModelAttribute 생략
 	 * @param M 
@@ -153,7 +170,11 @@ public class PracticeController {
 	@RequestMapping(value="BD_updateBbsForm.do", method=RequestMethod.POST)
 	public void loginMAEllipsis5(String dataVo, String paramMap2, String paramMapp2) {
 	}
-	
+	@RequestMapping(value="BD_updateBbsForm.do", method=RequestMethod.POST)
+	public void loginMAEllipsis6(List<String> listStr, String mem) {
+		listStr.add(mem);
+		listStr.clear();
+	}
 	
 	
 	
