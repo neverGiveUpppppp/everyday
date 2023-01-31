@@ -215,6 +215,11 @@ public class PracticeController {
 	@RequestMapping(".do")
 	public void hsr(HttpServletRequest request, HttpSession session) {
 	}
+	@RequestMapping("htpsvreq")
+	public void htpServReq6(HttpServletRequest htReq) {
+	}
+	@RequestMapping("url.do")
+	public void htpServReq7(HttpServletRequest request, HttpSession session) {}
 	
 	
 	
@@ -239,6 +244,8 @@ public class PracticeController {
 	}
 	@RequestMapping("login.do")
 	public void rp6(@RequestParam(value="page") int page, @RequestParam(value="goods", defaultValue="apple") String goods) {}
+	@RequestMapping("requestParam.req")
+	public void rp7(@RequestParam(value="req") String req) {}
 	
 	
 	// 3. @RequestParam 생략방식
@@ -261,6 +268,12 @@ public class PracticeController {
 	public void rpEllipsis6(String goods, int ea, String desc) {}
 	@RequestMapping(value="goods.goods", method=RequestMethod.DELETE)
 	public void rpEllipsis7(String goods, int ea) {}
+	@RequestMapping("login.me")
+	public void RPEllipsis8(String item) {}
+	
+	
+	
+	
 	
 	// 4. @ModelAttribute 방식 : 객체 매핑
 	@RequestMapping(value="url", method=RequestMethod.GET)
@@ -274,6 +287,19 @@ public class PracticeController {
 	}
 	@RequestMapping(value="apple.buy", method=RequestMethod.PATCH)
 	public void appleBuy(@ModelAttribute MemberVO mVo) {}
+	@RequestMapping(value="select.list", method=RequestMethod.HEAD)
+	public void buyGoods(@ModelAttribute String goods) {}
+	@RequestMapping(value="update.item")
+	public void buyGoods2(@ModelAttribute String gooods) {
+		gooods.charAt(0);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	// 5. @ModelAttribute 생략방식
 	@RequestMapping(value=".do", method=RequestMethod.POST)
@@ -285,6 +311,11 @@ public class PracticeController {
 	@RequestMapping(value="watermelon.buy", method=RequestMethod.HEAD)
 	public void maEllipsis3(MemberVO m) {
 	}
+	@RequestMapping(value="melon.buy",method=RequestMethod.PATCH)
+	public void	maEllipsis4(MemberVO m) {}
+	
+	
+	
 	
 //	UserMenu.domnCode
 //	bbsConfigVo.searchColumns
