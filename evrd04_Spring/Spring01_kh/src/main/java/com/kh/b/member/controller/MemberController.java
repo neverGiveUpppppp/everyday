@@ -149,7 +149,56 @@ public class MemberController {
 		}
 	}
 	
+	/**	회원가입
+	 * @param memberVo
+	 * @param post
+	 * @param address1
+	 * @param address2
+	 * @return
+	 */
+	@RequestMapping(value="minsert.me",method=RequestMethod.POST)
+	public String insertMember(@ModelAttribute MemberVO memberVo,
+								@RequestParam("post") String post,
+								@RequestParam("address1") String address1,
+								@RequestParam("address2") String address2) {
+		memberVo.setAddress(post + "/" + address1 + " / " + address2);
+		String encPwd = bcrypt.encode(memberVo.getPwd());
+		memberVo.setPwd(encPwd);
+		int result = mService.insertMember(memberVo);
+		
+		if(result > 0) {
+			return "redirect:home.do";
+		}else {
+			throw new MemberException("회원 가입 실패");
+		}
+	}
 	
+	
+	@RequestMapping("myinfo.me") // menubar.jsp
+	public String myInfo() {
+		return "mypage";
+	}
+	@RequestMapping("mupdateView.me")
+	public String updateView() {
+		return "memberUpdateForm";
+	}
+	@RequestMapping("mupdate.me")
+	public String updateMember(@ModelAttribute MemberVO memberVo,
+								@RequestParam("post") String post,
+								@RequestParam("address1") String address1,
+								@RequestParam("address2") String address2,
+								Model model) {
+		memberVo.setAddress(post+"/"+address1+"/"+address2);
+		
+		int result = mService.updateMember(memberVo);
+		MemberVO loginUser = mService.login(memberVo);
+		if(result > 0 ) {
+			model.addAttribute("loginUser",loginUser);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("회원정보 수정에 실패하였습니다");
+		}
+	}
 	
 	
 	
