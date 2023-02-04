@@ -19,13 +19,10 @@ public class MemberService {
     public ArrayList<MemberJSPTable> getMemberAll(){
         Connection conn = getConnect();
         ArrayList<MemberJSPTable> list = mDAO.getMemberAll(conn);
-
-        if(list != null){
-            TemplateMember.commit(conn);
-        }else{
-            TemplateMember.rollback(conn); // transaction 말고 stmt,rset 같은거 닫아줬었나?
-        }
         return list;
+
+        // 조회는 트랜잭션 처리 필요x
+        // DML문만 트랜잭션 처리
     }
 
 
@@ -33,45 +30,28 @@ public class MemberService {
     public MemberJSPTable getMemberId(String mId){
         Connection con = getConnect();
         MemberJSPTable member = mDAO.getMemberId(con,mId);
-
-        if(member != null){
-            commit(con);
-        }else{
-            rollback(con);
-        }
+        // 조회는 트랜잭션 처리 필요x
+        // DML문만 트랜잭션 처리
         return member;
     }
     public MemberJSPTable getMemberNickname(String mNickname){
         Connection con = getConnect();
         MemberJSPTable member = mDAO.getMemberNickname(con, mNickname);
-        if(member != null){
-            commit(con);
-        }else{
-            rollback(con);
-        }
+        // 조회는 트랜잭션 처리 필요x
+        // DML문만 트랜잭션 처리
         return member;
     }
     public MemberJSPTable getMemberPhone(String mPhone){
         Connection con = getConnect();
         MemberJSPTable member = mDAO.getMemberPhone(con, mPhone);
-
-        if(member != null){
-            commit(con);
-        }else{
-            rollback(con);
-        }
         return member;
     }
     public MemberJSPTable getMemberAdres(String mAdres){
         Connection conn = getConnect();
         MemberJSPTable member = mDAO.getMemberAdres(conn, mAdres);
-
-        if(member != null){
-            commit(conn);
-        }else{
-            rollback(conn);
-        }
-        return member;
+        // 조회는 트랜잭션 처리 필요x
+        // DML문만 트랜잭션 처리
+         return member;
     }
 
 
@@ -89,6 +69,23 @@ public class MemberService {
 
 
 
+    public int checkId(String checkId){
+        Connection conn = getConnect();
+        int result = mDAO.checkId(conn, checkId);
+        return result;
+    }
+
+    public int putMemberPwd(String checkId, int menuNum, String putContext){
+        Connection conn = getConnect();
+        int result = mDAO.putMemberPwd(conn, checkId, menuNum,putContext);
+
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
 
 
     public void exitApp(){

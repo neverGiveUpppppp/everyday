@@ -226,4 +226,45 @@ public class MemberDAO {
 
 
 
+
+
+
+    public int checkId(Connection conn, String checkId){
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("checkId"); // select 객체가 아닌 count로 int로 받아오기
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,checkId);
+            result = pstmt.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return result;
+    }
+
+    public int putMemberPwd(Connection conn, String checkId, int menuNum, String putContext){
+
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("putMember"+menuNum); // DML문 select 객체가 아닌 count로 int로 받아오기
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,putContext);
+            pstmt.setString(2,checkId);
+            result = pstmt.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(pstmt);
+        }
+        return result;
+    }
+
+
 }
