@@ -28,4 +28,10 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.insertMember(sqlSession, m);
 	}
 
+	
+	@Override
+	public int updateMember(MemberVO memberVo) {
+		return mDAO.updateMember(sqlSession, memberVo);
+	}
+	
 }

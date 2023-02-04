@@ -18,7 +18,9 @@ public class MemberDAO {
 	}
 	
 	
-	
+	public int updateMember(SqlSessionTemplate sqlSession, MemberVO memberVo) {
+		return sqlSession.update("memberMapper.updateMember",memberVo);
+	}
 	
 
 }
