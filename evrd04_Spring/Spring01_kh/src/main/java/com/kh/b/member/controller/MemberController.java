@@ -172,7 +172,31 @@ public class MemberController {
 			throw new MemberException("회원 가입 실패");
 		}
 	}
+	@RequestMapping(value="minsert.me",method=RequestMethod.POST)
+	public String insertMember2(@ModelAttribute MemberVO mem,
+								@RequestParam("post") String post,
+								@RequestParam("address") String address) {
+		mem.setAddress(address+post);
+		String encodePwd = bcrypt.encode(mem.getPwd());
+		mem.setPwd(encodePwd);
+		int result = mService.insertMember(mem);
+		if(result > 0) {
+			return "redirect:home.do";
+		}else {
+			throw new MemberException("회원가입 완료");
+		}
+	}
 	
+	
+	
+	/** 유저 정보 업데이트
+	 * @param memberVo
+	 * @param post
+	 * @param address1
+	 * @param address2
+	 * @param model
+	 * @return
+	 */
 	
 	@RequestMapping("myinfo.me") // menubar.jsp
 	public String myInfo() {
@@ -182,6 +206,7 @@ public class MemberController {
 	public String updateView() {
 		return "memberUpdateForm";
 	}
+
 	@RequestMapping("mupdate.me")
 	public String updateMember(@ModelAttribute MemberVO memberVo,
 								@RequestParam("post") String post,
@@ -201,8 +226,46 @@ public class MemberController {
 	}
 	
 	
-	
-	
+	@RequestMapping("myinfo.me")
+	public String myInfo2() {
+		return "mypage";
+	}
+	@RequestMapping("mupdateView.me")
+	public String updateView2() {
+		return "memberUpdateForm";
+	}
+	@RequestMapping("mupdate.me")
+	public String updateMember2(@ModelAttribute MemberVO memberVo,
+								@RequestParam("post") String post,
+								@RequestParam("address1") String address1,
+								@RequestParam("address2") String address2,
+								Model model) {
+		memberVo.setAddress(post+address1+address2);
+		int result = mService.updateMember(memberVo);
+		MemberVO myInfoNew = mService.login(memberVo);
+		if(result > 0) {
+			model.addAttribute("loginUser",myInfoNew);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("회원 정보 수정 실패");
+		}
+	}
+	@RequestMapping("mupdateView.me")
+	public String updateMember3(@ModelAttribute MemberVO memVo,
+								@RequestParam(value="post", defaultValue="주소없음") String post,
+								@RequestParam(value="address") String address,
+								Model model){
+		memVo.setAddress(post+address);
+		int result = mService.updateMember(memVo);
+		MemberVO loginUser = mService.login(memVo);
+		if(result >0) {
+			model.addAttribute("loginUser",loginUser);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("수정 실패");
+		}
+		
+	}
 	
 	
 }
