@@ -58,8 +58,31 @@ public class MemberController {
 			throw new MemberException("로그인에 실패하였습니다");
 		}
 	}
-	
-	
+	@RequestMapping(value="login.me",method=RequestMethod.POST)
+	public String login2(MemberVO memVo, Model model) {
+		MemberVO loginMember = mService.login(memVo);
+		boolean match = bcrypt.matches(memVo.getPwd(), loginMember.getPwd());
+		
+		if(match) {
+			model.addAttribute("loginUser",loginMember);
+			logger.info(loginMember.getId());
+			return "redirect:home.do";
+		}else {
+			throw new MemberException("로그인에 실패하였습니다");
+		}
+	}
+	@RequestMapping("login.me")
+	public String login3(@ModelAttribute MemberVO member, Model model) {
+		MemberVO loginMember = mService.login(member);
+		boolean match = bcrypt.matches(member.getPwd(), loginMember.getPwd());
+		if(match) {
+			model.addAttribute("loginUser",loginMember);
+			logger.info(member.getId());
+			return "redirect:home.do";
+		}else {
+			throw new MemberException("failed");
+		}
+	}
 	
 	
 	/** 로그아웃
@@ -68,7 +91,7 @@ public class MemberController {
 	 */
 	@RequestMapping("logout.me")
 	public String logout(SessionStatus status){
-		status.setComplete();
+		status.setComplete();	// 해당 유저의 세션 종료하는 메소드
 		return "redirect:home.do";
 	}
 	
@@ -89,6 +112,13 @@ public class MemberController {
 	
 	
 	
+	/**	회원가입(@RequestParam버젼)
+	 * @param id
+	 * @param name
+	 * @param pwd
+	 * @param pwd2
+	 * @param nickName
+	 */
 	@RequestMapping("minsert.me")
 	public void insertMember1(@RequestParam(value="id", required=true) String id,
 							 @RequestParam(value="name", required=true) String name,
@@ -149,7 +179,7 @@ public class MemberController {
 		}
 	}
 	
-	/**	회원가입
+	/**	회원가입(최종버젼)
 	 * @param memberVo
 	 * @param post
 	 * @param address1

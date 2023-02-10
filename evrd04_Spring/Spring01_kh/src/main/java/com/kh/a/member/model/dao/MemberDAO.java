@@ -12,6 +12,9 @@ public class MemberDAO {
 	public MemberVO login(SqlSessionTemplate sqlSession, MemberVO m) {
 		return sqlSession.selectOne("memberMapper.login",m);
 	}
+	public MemberVO login2(SqlSessionTemplate sqlSession, MemberVO memberVo) {
+		return sqlSession.selectOne("memberMapper.login",memberVo);
+	}
 
 	public int insertMember(SqlSessionTemplate sqlSession, MemberVO m) {
 		return sqlSession.insert("memberMapper.insertMember",m);
