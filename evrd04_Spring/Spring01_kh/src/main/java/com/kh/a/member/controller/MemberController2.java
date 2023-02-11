@@ -14,6 +14,7 @@ import com.kh.a.member.exception.MemberException;
 import com.kh.a.member.model.service.MemberService;
 import com.kh.a.member.model.vo.MemberVO;
 
+
 @Controller
 public class MemberController2 {
 
@@ -26,18 +27,22 @@ public class MemberController2 {
 	private Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	
-	/**	로그인
-	 * @param memberVo
+
+	/** 로그인
+	 * @param m
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="login.me")
-	public String login(@ModelAttribute MemberVO memberVo, Model model) {
+	@RequestMapping(value="login.me",method=RequestMethod.POST)
+	public String login(MemberVO m, Model model) {
+
+		System.out.println(bcrypt.encode(m.getPwd()));
 		
-		MemberVO loginMember = mService.login(memberVo);
-		boolean matches = bcrypt.matches(memberVo.getPwd(), loginMember.getPwd());
+		MemberVO loginMember = mService.login(m);
 		
-		if(matches) {
+		boolean match = bcrypt.matches(m.getPwd(), loginMember.getPwd());
+		
+		if(match) {
 			model.addAttribute("loginUser",loginMember);
 			logger.info(loginMember.getId());
 			return "redirect:home.do";
@@ -57,8 +62,7 @@ public class MemberController2 {
 			throw new MemberException("로그인 실패");
 		}
 	}
-	
-	
+
 	
 	
 	/** 로그아웃
@@ -97,24 +101,33 @@ public class MemberController2 {
 			logger.debug("회원가입페이지");
 		}
 		return "memberJoin";
+
+
+
+
+
+
+	@RequestMapping(value = "minsert.me", method=RequestMethod.POST)
+	public String insertMember(@ModelAttribute MemberVO m, @RequestParam("post") String post,
+								@RequestParam("address1") String address1,
+								@RequestParam("address2") String address2){
+
+		m.setAddress(post+"/"+address1+"/"+address2);
+		String encPwd = bcrypt.encode(m.getPwd());
+		m.setPwd(encPwd); // bcrpyt로 암호화하여 다시 vo에 비번값으로 넣어줌
+		
+		int result = mService.insertMember(m); // encode한 비번을 그대로 db에 저장시킴
+		if(result > 0) {
+			return "redirect:home.do";
+		}else {
+			throw new MemberException("회원가입 실패");
+		}
 	}
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
