@@ -388,6 +388,7 @@ public class MemberController {
 	public String updatePwd2(@RequestParam("pwd") String oldPwd, 
 		 					@RequestParam("newPwd1") String newPwd, Model model) {
 		
+		// 비번을 바꿀려는 건 이미 로그인해야 가능한 상태이기 때문에 세션에서 로그인 정보를 가져오는 것
 		MemberVO memVo = (MemberVO)model.getAttribute("loginUser");
 		
 		int result = 0;
