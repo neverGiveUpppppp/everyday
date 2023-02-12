@@ -1,5 +1,7 @@
 package com.kh.a.member.model.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
+	/*********************************************/
 	
 	@Override
 	public MemberVO login(MemberVO m) {
@@ -37,5 +40,21 @@ public class MemberServiceImpl implements MemberService {
 	public int updateMember(MemberVO memberVo) {
 		return mDAO.updateMember(sqlSession, memberVo);
 	}
+	
+	@Override
+	public int updatePwd(HashMap<String, String> map) {
+		return mDAO.updatePwd(sqlSession, map);
+	}
+	
+	@Override
+	public int deleteMember(String id) {
+		return mDAO.deleteMember(sqlSession, id);
+	}
+	
+	@Override
+	public int checkIdDup(String id) {
+		return mDAO.checkIdDup(sqlSession, id);
+	}
+	
 	
 }

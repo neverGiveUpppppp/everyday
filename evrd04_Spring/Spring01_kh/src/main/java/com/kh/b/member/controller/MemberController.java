@@ -1,6 +1,6 @@
 package com.kh.b.member.controller;
 
-import java.util.List;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -296,6 +296,127 @@ public class MemberController {
 		}
 		
 	}
+	@RequestMapping("mupdate.me")
+	public String updateMember4(@ModelAttribute MemberVO memberVo,
+								@RequestParam("post") String post,
+								@RequestParam("address1") String address1,
+								@RequestParam("address2") String address2,
+								Model model) {
+		memberVo.setAddress(post + "/" + address1 + "/" + address2 );
+		
+		int result = mService.updateMember(memberVo);
+		MemberVO infoUpdate = mService.login(memberVo);
+		
+		if(result > 0	) {
+			model.addAttribute("loginUser",infoUpdate);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("회원정보 수정 실패");
+		}
+		
+	}
+	@RequestMapping("mupdate.me")
+	public String updateMember5(MemberVO memVo, @RequestParam("post") String post,
+												@RequestParam("address1") String address1,
+												@RequestParam("address2") String address2,
+												Model model) {
+		memVo.setAddress(post+address1+address2);
+		int result = mService.updateMember(memVo);
+		MemberVO loginUser = mService.login(memVo);
+		if(result > 0) {
+			model.addAttribute("loginUser",loginUser);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("업데이트 실패");
+		}
+	}
+	@RequestMapping("mupdate.me")
+	public String updateMember6(MemberVO memVo, @RequestParam("post") String post,
+												@RequestParam("address1") String address1,
+												@RequestParam("address2") String address2,
+												Model model) {
+		memVo.setAddress(post+address1+address2);
+		int result = mService.updateMember(memVo);
+		MemberVO loginUser = mService.login(memVo);
+		if(result>0) {
+			model.addAttribute("loginUser",loginUser);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("업데이트 실패");
+		}
+		
+	}
 	
+	
+	
+	@RequestMapping("mupdateView.me")
+	public String pwdUpdateView() {
+		return "memberPwdUpdateForm";
+	}
+	
+	
+	@RequestMapping("mPwdUpdate.me")
+	public String updatePwd(@RequestParam("pwd") String oldPwd, 
+		 					@RequestParam("newPwd1") String newPwd, Model model) {
+//		MemberVO memVo = (MemberVO)model.getAttribute("loginUser");
+//		String encode = bcrypt.encode(oldPwd);
+//		boolean match = bcrypt.matches(oldPwd, encode);
+//		if(match) {
+//			model.addAttribute();
+//			return ;
+//		}
+		MemberVO memVo = (MemberVO)model.getAttribute("loginUser");
+		
+		int result = 0;
+		String encode = null;
+		if(bcrypt.matches(oldPwd, memVo.getPwd())) {
+			HashMap<String,String> map = new HashMap<>(); // 객체선언함. 프레임워크 IoC 원칙에 거스르긴함
+			map.put("id",memVo.getId());
+			encode = bcrypt.encode(memVo.getPwd());
+			map.put("newPwd",encode);
+			result = mService.updatePwd(map);
+		}
+		
+		if(result > 0) {
+			model.addAttribute("loginUser",memVo);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("업데이트 실패");
+		}
+	}
+	@RequestMapping("mPwdUpdate.me")
+	public String updatePwd2(@RequestParam("pwd") String oldPwd, 
+		 					@RequestParam("newPwd1") String newPwd, Model model) {
+		
+		MemberVO memVo = (MemberVO)model.getAttribute("loginUser");
+		
+		int result = 0;
+		String encode = null;
+		if(bcrypt.matches(memVo.getPwd(), newPwd)) {
+			HashMap<String, String> map = new HashMap<>();
+			map.put("id",memVo.getId());
+			encode = bcrypt.encode(memVo.getPwd());
+			map.put("newPwd",encode);
+			result = mService.updatePwd(map);
+		}
+		if(result > 0) {
+			memVo.setPwd(encode);
+			model.addAttribute("loginUser",memVo);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("업데이트 실패");
+		}
+	}
+	@RequestMapping("mPwdUpdate.me")
+	public String updatePwd3(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newPwd, Model model	) {
+		
+		
+	}
+	/** 연습 텍스트**/
+	// 로그인 정보 가져오기
+	// 전 비번과 새 비번 일치하는 지 비교
+	// 바뀐 비번 저장하기
+	// 바뀐 비번, DB에 업데이트 저장
+	// 새 비번 정보를 뷰에 보내기
 	
 }

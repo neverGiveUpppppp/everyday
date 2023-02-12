@@ -1,4 +1,4 @@
-package com.kh.a.member.controller;
+package com.kh.b.member.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.kh.a.member.controller.MemberController;
 import com.kh.a.member.exception.MemberException;
 import com.kh.a.member.model.service.MemberService;
 import com.kh.a.member.model.vo.MemberVO;
@@ -101,12 +104,19 @@ public class MemberController2 {
 			logger.debug("회원가입페이지");
 		}
 		return "memberJoin";
+	}
 
 
 
 
 
-
+	/** 회원등록
+	 * @param m
+	 * @param post
+	 * @param address1
+	 * @param address2
+	 * @return
+	 */
 	@RequestMapping(value = "minsert.me", method=RequestMethod.POST)
 	public String insertMember(@ModelAttribute MemberVO m, @RequestParam("post") String post,
 								@RequestParam("address1") String address1,
@@ -123,6 +133,7 @@ public class MemberController2 {
 			throw new MemberException("회원가입 실패");
 		}
 	}
+	
 	
 	
 	

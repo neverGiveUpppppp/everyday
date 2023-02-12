@@ -25,5 +25,14 @@
 	</resultMap>
 	
 	
+	
+	<update id="updatePwd">
+		update member
+		set pwd = #{newPwd}
+		where id = #{id}
+	</update>
+	
+	
+	
 
 </mapper>
