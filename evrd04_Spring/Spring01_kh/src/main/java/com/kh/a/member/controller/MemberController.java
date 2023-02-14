@@ -108,22 +108,24 @@ public class MemberController {
 	 * @return
 	 */
 	@RequestMapping(value = "minsert.me", method=RequestMethod.POST)
-	public String insertMember(@ModelAttribute MemberVO m,
-								@RequestParam("post") String post,
-								@RequestParam("address1") String address1,
-								@RequestParam("address2") String address2){
+	public String insertMember(@ModelAttribute Member m, 		// 회원가입하는 유저에 대한 객체 정보 받기
+							   @RequestParam("post") String post,
+							   @RequestParam("address1") String address1,
+							   @RequestParam("address2") String address2) {
 		
-		m.setAddress(post+"/"+address1+"/"+address2);
+		m.setAddress(post +"/" + address1 + "/" + address2);
+		
 		String encPwd = bcrypt.encode(m.getPwd());
-		m.setPwd(encPwd); // bcrpyt로 암호화하여 다시 vo에 비번값으로 넣어줌
-		
-		int result = mService.insertMember(m); // encode한 비번을 그대로 db에 저장시킴
+		m.setPwd(encPwd);
+	
+		int result = mService.insertMember(m);
 		if(result > 0) {
 			return "redirect:home.do";
-		}else {
-			throw new MemberException("회원가입 실패");
+		} else {
+			throw new MemberException ("회원가입에 실패하였습니다.");
 		}
-	}
+		
+	}	
 	/** 연습 텍스트**/
 	// 회원가입하는 유저에 대한 객체 정보 받기
 	// 상세주소 포함해서 주소 다시 저장
@@ -137,7 +139,7 @@ public class MemberController {
 	/** 내정보보기
 	 * @return
 	 */
-	@RequestMapping("myinfo.me")
+	@RequestMapping("myinfo.me") // menubar.jsp
 	public String myInfo() {
 		return "mypage";
 	}
@@ -173,7 +175,7 @@ public class MemberController {
 								@RequestParam(value="address2") String address2,
 								Model model) {
 		// 상세주소들 유저정보에 넣기
-		member.setAddress(post+address1+address2);
+		member.setAddress(post +"/" + address1 + "/" + address2);
 		
 		// 저장한 값 DB로
 		int result = mService.updateMember(member);
@@ -203,7 +205,7 @@ public class MemberController {
 	/** 비번 수정폼
 	 * @return
 	 */
-	@RequestMapping("mpwdUpdateView.me")
+	@RequestMapping("mpwdUpdateView.me") // mypage.jsp 비밀번호 수정하기 버튼 url
 	public String pwdUpdateView() {
 		return "memberPwdUpdateForm";
 	}
@@ -218,29 +220,29 @@ public class MemberController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("mPwdUpdate.me")
-	public String updatePwd(@RequestParam(value="pwd") String pwd,
-							@RequestParam(value="newPwd1") String newPwd,
-							Model model) {
+	@RequestMapping("mPwdUpdate.me") // memberPwdUpdateForm.jsp의 폼태그 submit url
+	public String updatePwd(@RequestParam("pwd") String oldPwd, 
+						 	@RequestParam("newPwd1") String newPwd, Model model) {
 		
 		MemberVO memberVo = (MemberVO)model.getAttribute("loginUser");
 		
 		int result = 0;
 		String encode = null;
-		if(bcrypt.matches(pwd, newPwd)) {
-			HashMap<String, String> map = new HashMap<>();
-			map.put("id",memberVo.getId());
-			encode = bcrypt.encode(memberVo.getPwd());
+		if(bcrypt.matches(oldPwd, memberVo.getPwd())) {
+			HashMap<String, String> map = new HashMap<>(); // db에 수정될 비번값을 보내야하니 HashMap으로 처리
+			map.put("id", memberVo.getId()); // 어떤 id의 pw를 바꾸는지 알아야하기에 id도 저장
+			encode = bcrypt.encode(newPwd);
 			map.put("newPwd", encode);
+		// 바뀐 비번, DB에 업데이트 저장
 			result = mService.updatePwd(map);
 		}
 		
 		if(result > 0) {
 			memberVo.setPwd(encode);
 			model.addAttribute("loginUser",memberVo);
-			return "redirect:myinfo.me	";
+			return "redirect:myinfo.me";
 		}else {
-			throw new MemberException("비밀번호 변경 실패");
+			throw new MemberException("비밀번호 변경에 실패했습니다");
 		}
 	}
 	/** 연습 텍스트**/
@@ -259,14 +261,16 @@ public class MemberController {
 	 */
 	@RequestMapping("mdelete.me")
 	public String deleteMember(Model model) {
-		String id = ((MemberVO)model.getAttribute("loginUser")).getId();
-		int result = mService.deleteMember(id);
-		if(result>0) {
-			return "redirect:logout.me";
-		}else {
-			throw new MemberException("회원 탈퇴 실패");
-		}
 		
+		String id = ((MemberVO)model.getAttribute("loginUser")).getId();
+		
+		int result = mService.deleteMember(id);
+		
+		if(result > 0) {
+			return "redirect:logout.me";
+		} else {
+			throw new MemberException("회원 탈퇴에 실패했습니다");
+		}
 	}
 	/** 연습 텍스트**/
 	// 세션에서 id값 가져와서 저장 : 어느 id를 삭제할 지 알아야하니 id 필요
@@ -279,9 +283,11 @@ public class MemberController {
 	public void duplicateId(@RequestParam("id") String id, HttpServletResponse response) {
 		
 		int result = mService.checkIdDup(id);
+		
 		try {
-			response.getWriter().print(result); // 뷰에 중복확인결과 전송 : 하나만 보낼꺼니 그냥 printWrtier 써보겠다
-		}catch(IOException e) {
+			// 뷰에 중복확인결과 전송 : 하나만 보낼꺼니 그냥 printWrtier 써보겠다
+			response.getWriter().print(result);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

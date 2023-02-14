@@ -408,10 +408,72 @@ public class MemberController {
 			throw new MemberException("업데이트 실패");
 		}
 	}
+	@RequestMapping("mPwdUpdate.me") // memberPwdUpdateForm.jsp의 폼태그 submit url
+	public String updatePwdd(@RequestParam("pwd") String oldPwd, 
+						 	@RequestParam("newPwd1") String newPwd, Model model) {
+		
+		MemberVO memberVo = (MemberVO)model.getAttribute("loginUser");
+		
+		int result = 0;
+		String encode = null;
+		if(bcrypt.matches(oldPwd, memberVo.getPwd())) {
+			HashMap<String, String> map = new HashMap<>(); // db에 수정될 비번값을 보내야하니 HashMap으로 처리
+			map.put("id", memberVo.getId()); // 어떤 id의 pw를 바꾸는지 알아야하기에 id도 저장
+			encode = bcrypt.encode(newPwd);
+			map.put("newPwd", encode);
+		// 바뀐 비번, DB에 업데이트 저장
+			result = mService.updatePwd(map);
+		}
+		
+		if(result > 0) {
+			memberVo.setPwd(encode);
+			model.addAttribute("loginUser",memberVo);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("비밀번호 변경에 실패했습니다");
+		}
+	}
 	@RequestMapping("mPwdUpdate.me")
-	public String updatePwd3(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newPwd, Model model	) {
+	public String updatePwd3(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newPwd, Model model) {
+
+		MemberVO memberVo = (MemberVO)model.getAttribute("loginUser");
 		
+		int result = 0;
+		String encode = null;
+		if(bcrypt.matches(oldpwd, memberVo.getPwd())) {
+			HashMap<String, String> hMap = new HashMap<>();
+			hMap.put("id", memberVo.getId());
+			encode = bcrypt.encode(newPwd);
+			hMap.put("newPwd", encode);
+			result = mService.updatePwd(hMap);
+		}
+		if(result > 0) {
+			memberVo.setPwd(encode);
+			model.addAttribute("loginUser",memberVo);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("비밀번호 변경에 실패했습니다");
+		}
+	}
+	@RequestMapping("mPwdUpdate.me")
+	public String updatePwd4(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newpwd, Model model) {
+		MemberVO memVo = (MemberVO) model.getAttribute("loginUser");
 		
+		int result = 0;
+		String encode=null;
+		if(bcrypt.matches(oldpwd, memVo.getPwd())) {
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("id",memVo.getId());
+			encode = bcrypt.encode(newpwd);
+			map.put("newPwd",encode);
+			result = mService.updatePwd(map);
+		}
+		if(result > 0) {
+			model.addAttribute("loginUser",memVo);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("비밀번호 변경에 실패했습니다");
+		}
 	}
 	/** 연습 텍스트**/
 	// 로그인 정보 가져오기
