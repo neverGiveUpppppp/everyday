@@ -434,7 +434,6 @@ public class MemberController {
 		}
 	}
 	@RequestMapping("mPwdUpdate.me")
-<<<<<<< HEAD
 	public String updatePwd3(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newPwd, Model model	) {
 		MemberVO memVo = (MemberVO)model.getAttribute("loginUser");
 		
@@ -453,32 +452,11 @@ public class MemberController {
 		}else {
 			throw new MemberException("비번 수정 실패");
 		}
-=======
-	public String updatePwd3(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newPwd, Model model) {
-
-		MemberVO memberVo = (MemberVO)model.getAttribute("loginUser");
-		
-		int result = 0;
-		String encode = null;
-		if(bcrypt.matches(oldpwd, memberVo.getPwd())) {
-			HashMap<String, String> hMap = new HashMap<>();
-			hMap.put("id", memberVo.getId());
-			encode = bcrypt.encode(newPwd);
-			hMap.put("newPwd", encode);
-			result = mService.updatePwd(hMap);
-		}
-		if(result > 0) {
-			memberVo.setPwd(encode);
-			model.addAttribute("loginUser",memberVo);
-			return "redirect:myinfo.me";
-		}else {
-			throw new MemberException("비밀번호 변경에 실패했습니다");
-		}
-	}
+	
+	
 	@RequestMapping("mPwdUpdate.me")
 	public String updatePwd4(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newpwd, Model model) {
 		MemberVO memVo = (MemberVO) model.getAttribute("loginUser");
->>>>>>> 5e94f735f420e7395338a75a0b68d40f7dcdccbf
 		
 		int result = 0;
 		String encode=null;
