@@ -410,7 +410,23 @@ public class MemberController {
 	}
 	@RequestMapping("mPwdUpdate.me")
 	public String updatePwd3(@RequestParam("pwd") String oldpwd, @RequestParam("newPwd1") String newPwd, Model model	) {
+		MemberVO memVo = (MemberVO)model.getAttribute("loginUser");
 		
+		int result = 0;
+		String encode = null;
+		if(bcrypt.matches(oldpwd, memVo.getPwd())) {
+			HashMap<String, String> hMap = new HashMap<>();
+			hMap.put("id",memVo.getId());
+			encode = bcrypt.encode(newPwd);
+			hMap.put("newPwd",newPwd);
+			result = mService.updatePwd(hMap);
+		}
+		if(result>0) {
+			model.addAttribute("loginUser",memVo);
+			return "redirect:myinfo.me";
+		}else {
+			throw new MemberException("비번 수정 실패");
+		}
 		
 	}
 	/** 연습 텍스트**/
@@ -419,5 +435,35 @@ public class MemberController {
 	// 바뀐 비번 저장하기
 	// 바뀐 비번, DB에 업데이트 저장
 	// 새 비번 정보를 뷰에 보내기
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
