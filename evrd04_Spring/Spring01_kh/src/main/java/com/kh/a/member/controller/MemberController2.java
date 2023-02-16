@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @SessionAttributes("loginUser")
 @Controller
-public class MemberController {
+public class MemberController2 {
 	
 	@Autowired
 	private MemberService mService;

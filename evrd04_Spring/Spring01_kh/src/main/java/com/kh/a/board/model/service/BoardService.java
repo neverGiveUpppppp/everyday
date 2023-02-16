@@ -9,5 +9,6 @@ public interface BoardService {
 
 	int getListCount();
 	ArrayList<BoardVO> getBoardList(PageInfo pi);
+	int insertBoard(BoardVO b);
 
 }

@@ -2,6 +2,7 @@ package com.kh.a.board.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -26,6 +27,7 @@ import com.kh.a.board.exception.BoardException;
 import com.kh.a.board.model.service.BoardService;
 import com.kh.a.board.model.vo.BoardVO;
 import com.kh.a.board.model.vo.PageInfo;
+import com.kh.a.board.model.vo.Reply;
 import com.kh.a.common.Pagination;
 
 
@@ -44,11 +46,9 @@ public class BoardController {
 	@RequestMapping("blist.bo") // menubar.jsp의 게시판 버튼의 url주소
 	public ModelAndView boardList(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		
-		// 넘겨받은 데이터 중에 currentPage가 있으면 currentPage에 받아온 currentPage값을 넣어줘야함
-		int currentPage = 1; // currentPage
+		int currentPage = 1; 
 		
-		if(page != null ) { // page가 int라 null 못들어감. 기존 방법이랑 다르게 값 넘어온게 있는지 여부만 체크하고 싶은 상황. 기존 방법은 받아온 값 자체를 체크하는 방식 : if(request.getParameter("currentPage") != null )
-		// string으로 받아오면 파싱을 해야되는게 귀찮. 래퍼클래스 Integer 사용하면 모두 해결됨 
+		if(page != null ) { 
 			currentPage = page;
 		}
 		
@@ -63,7 +63,6 @@ public class BoardController {
 		ArrayList<BoardVO> list = bService.getBoardList(pi);
 		
 		if(list != null) {
-		// model과 ModelAndView 둘 중 하나 선택가능
 			mv.addObject("list",list);
 			mv.addObject("pi",pi);
 			mv.setViewName("boardListView");
@@ -85,19 +84,13 @@ public class BoardController {
 	
 	// 게시판 글쓰기
 	@RequestMapping("binsert.bo")
-	public String insertBoard(@ModelAttribute Board b, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
-		// 리퀘스트파램에 받아오는 uploadFile속성은 첨부파일 name속성의 이름
+	public String insertBoard(@ModelAttribute BoardVO b, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
 		// 메소드에서 멀티파트파일을 사용할거긴한데, 필드로 올려야하는건 @Autowired 올리는게 맞는데
 		// ...은 객체로 만들져서 들어오기 때문에 @Autowired 할 필요가 없는 것 강의3:24
-		// 필드에 들어간다는건 객체가 들어간 상태...
-//		System.out.println(b);
-//		System.out.println(uploadFile);
-		
 		
 		if(uploadFile != null && !uploadFile.isEmpty()) { // 미연의 사고방지를 위한 if조건문
 			// jar파일 자체에 잘못이나 인터넷이 안좋다거나 하면 분명 null뜨는 경우가 생김. 만약의 상황의 대비한 if+null조건문 강의 3:31
-			// 파일이 들어오면 저장하면 됨
-			String renameFileName = saveFile(uploadFile, request); // 여기 request는 HttpServletRequest가 맞음
+			String renameFileName = saveFile(uploadFile, request); 
 			
 			b.setOriginalFileName(uploadFile.getOriginalFilename());
 			b.setRenameFileName(renameFileName);
@@ -249,13 +242,13 @@ public class BoardController {
 	
 	
 	@RequestMapping("bupView.bo")
-	public String boardUpdateForm(@ModelAttribute Board b, @RequestParam("page") int page, Model model) {
+	public String boardUpdateForm(@ModelAttribute BoardVO b, @RequestParam("page") int page, Model model) {
 		model.addAttribute("board", b).addAttribute("page", page);
 		return "boardUpdateForm";
 	}
 	
 	@RequestMapping("bupdate.bo") // boardUpdateForm.jsp에서 수정하기버튼의 url blist.bo
-	public String updateBoard(@ModelAttribute Board b, @RequestParam("page") int page, // 페이지 보드아이디, 변경이름이니까 페이지, 보드
+	public String updateBoard(@ModelAttribute BoardVO b, @RequestParam("page") int page, // 페이지 보드아이디, 변경이름이니까 페이지, 보드
 							  @RequestParam("reloadFile") MultipartFile reloadFile, 
 							  HttpServletRequest request, Model model) { 	
 		
@@ -364,7 +357,7 @@ public class BoardController {
 	@ResponseBody
 	public String addReply(@ModelAttribute Reply r, HttpSession session) {
 			// 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
-		String id = ((Member)session.getAttribute("loginUser")).getId(); // session영역에서 로그인 중인 유저의 id정보를 얻어서 vo Member타입으로 형변환
+		String id = ((MemberVO)session.getAttribute("loginUser")).getId(); // session영역에서 로그인 중인 유저의 id정보를 얻어서 vo Member타입으로 형변환
 		r.setReplyWriter(id);
 		
 		int result = bService.insertReply(r);
@@ -461,7 +454,7 @@ public class BoardController {
 		
 	@RequestMapping("topList.bo")
 	public void topList(HttpServletResponse response) {
-		ArrayList<Board> list =	bService.topList();	
+		ArrayList<BoardVO> list =	bService.topList();	
 		
 		System.out.println(list);
 		

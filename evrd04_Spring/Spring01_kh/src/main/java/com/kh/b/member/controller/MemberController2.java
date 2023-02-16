@@ -66,6 +66,19 @@ public class MemberController2 {
 	// 해당 유저id정보 로그 남기기
 	// 어떤 뷰로 갈지 지정
 	
+	@RequestMapping(value="login.me", method=RequestMethod.POST)
+	public String login2(@ModelAttribute MemberVO memVo, Model model) {
+		MemberVO loginMember = mService.login(memVo);
+		boolean match = bcrypt.matches(memVo.getPwd(), loginMember.getPwd());
+		if(match) {
+			model.addAttribute("loginUser",loginMember);
+			logger.info(memVo.getPwd());
+			return "redirect:home.do";
+		}else{
+			throw new MemberException("로그인 실패");
+		}
+		
+	}
 	
 	
 	/** 로그아웃
@@ -81,6 +94,11 @@ public class MemberController2 {
 	// 세션 종료 선언
 	// 어떤 뷰로 갈지 지정
 	
+	@RequestMapping(value="logout.me")
+	public String logout2(SessionStatus status) {
+		status.setComplete();
+		return "redirect:home.do";
+	}
 	
 	
 	
@@ -98,7 +116,13 @@ public class MemberController2 {
 	// 로그 남기기
 	// 회원등록 버튼 눌렀을 때 해당 페이지로 이동하도록
 	
-	
+	@RequestMapping("enrollView.me")
+	public String enrollView2() {
+		if(logger.isDebugEnabled()) {
+			logger.debug("회원등록페이지");
+		}
+		return "memberJoin";
+	}
 	
 	/** 회원 등록
 	 * @param m
@@ -132,9 +156,24 @@ public class MemberController2 {
 	// 유저 정보 중 비번을 암호화하는 작업
 	// DB처리
 	
-	
-	
-	
+	@RequestMapping(value = "minsert.me", method=RequestMethod.POST)
+	public String insertMember2(@ModelAttribute MemberVO m, 		// 회원가입하는 유저에 대한 객체 정보 받기
+							   @RequestParam("post") String post,
+							   @RequestParam("address1") String address1,
+							   @RequestParam("address2") String address2) {
+		m.setAddress(post +"/" + address1 + "/" + address2);
+		
+		String encodePwd = bcrypt.encode(m.getPwd());
+		m.setPwd(encodePwd);
+		
+		int result = mService.insertMember(m);
+		
+		if(result > 0) {
+			return "redirect:home.do";
+		} else {
+			throw new MemberException ("회원가입에 실패하였습니다.");
+		}
+	}
 	
 	/** 내정보보기
 	 * @return
@@ -146,7 +185,10 @@ public class MemberController2 {
 	/** 연습 텍스트**/
 	// 내정보보기 눌렀을 때 해당 페이지로 넘겨주기
 	
-	
+	@RequestMapping("myinfo.me")
+	public String myInfo2() {
+		return "mypage";
+	}
 	
 	/**회원 수정폼
 	 * @return

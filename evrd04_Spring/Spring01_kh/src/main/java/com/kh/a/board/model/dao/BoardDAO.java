@@ -33,7 +33,9 @@ public class BoardDAO {
 	   0 10 20이 들어가게됨 여기에 마지막에 +1만 하면 1 11이 나옴 */
 
 
-
+	public int insertBoard(SqlSessionTemplate sqlSession, BoardVO b) {
+		return sqlSession.insert("boardMapper.insertBoard",b);
+	}
 	
 	
 	
