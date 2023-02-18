@@ -43,8 +43,7 @@ public class BoardController2 {
 	
 	
 	
-	
-	/** 게시판 목록 조회
+	/** 게시판 목록 조회 + 페이지네이션
 	 * @param page
 	 * @param mv
 	 * @return
@@ -62,15 +61,29 @@ public class BoardController2 {
 		
 		if(list != null) {
 			mv.addObject("list",list);
+			mv.addObject("pi",pageInfo);
 			mv.setViewName("boardListView");
 		}else {
 			throw new BoardException("게시글 전체 조회에 실패");
 		}
 		return mv;
 	}
+	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
+	// 현재 페이지 선언할당
+	// 페이지가 널or0이 아닐 경우 현재페이지와 페이지 바인딩
+	// 전체페이지수 db처리
+	// 페이징vo에 필드값 넣기
+	// 게시판 목록 불러오기
+	// 뷰에 데이터 넣어주고 뷰 지정 & 리턴 boardListView
 	
 	
-	
+	/** 글쓰기 폼 이동
+	 * @return
+	 */
+	@RequestMapping("binsertView.bo")
+	public String boardInsertForm() {
+		return "boardInsertForm";
+	}
 	
 	
 	/** 게시판 등록
@@ -98,9 +111,12 @@ public class BoardController2 {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
 		}
 	}
-	/** 연습 텍스트**/
+	/** 연습 텍스트 : 게시판 등록 **/
 	// 유저가 업로드한 파일이 없는 경우 대비
-	// 
+	// 리네임파일 가져오기
+	// 오리지널파일 저장
+	// 리네임파일 저장
+	// db 처리 및 리턴 blist.bo
 	
 	public String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
 		
@@ -132,7 +148,7 @@ public class BoardController2 {
 		}
 		return renameFileName;
 	}
-	/** 연습 텍스트**/
+	/** 연습 텍스트 : saveFile **/
 	// root경로 세팅
 	// 파일 경로 세팅 = root + 파일저장소 위치
 	// 파일 생성 및 경로 지정
@@ -142,6 +158,26 @@ public class BoardController2 {
 	// 리네임 파일명 겟 : 파일명 규칙, 현재시간+오리지널파일명
 	// 리네임파일 경로 지정 : 파일경로 + 리네임파일명
 	// 받은 파일을 지정 저장경로에 전송
+	// return renamefile
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
