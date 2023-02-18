@@ -1,6 +1,7 @@
 package com.prac.MVC.jdbcTemplate.d.model.dao;
 
 import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
+import jdk.nashorn.internal.runtime.ECMAException;
 
 import javax.xml.transform.Result;
 import java.io.FileNotFoundException;
@@ -265,6 +266,69 @@ public class MemberDAO {
         }
         return result;
     }
+    public int putMemberName(Connection conn, String checkId, int menuNum, String putContext){
+
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("putMember"+menuNum);
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,putContext);
+            pstmt.setString(2,checkId);
+            result = pstmt.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(pstmt);
+        }
+        return result;
+    }
+    public int putMemberNick(Connection conn, String checkId, int menuNum, String putContext) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("putMember"+menuNum);
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, putContext);
+            pstmt.setString(2,checkId);
+            result = pstmt.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            close(pstmt);
+        }
+        return result;
+    }
+    public int putMemberEmail(Connection conn, String checkId, int menuNum, String putContext) {
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("putMember"+menuNum);
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1,putContext);
+            pstmt.setString(2,checkId);
+            result = pstmt.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            close(pstmt);
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 }

@@ -86,6 +86,51 @@ public class MemberService {
         }
         return result;
     }
+    public int putMemberName(String checkId, int menuNum, String putContext){
+        Connection conn = getConnect();
+        int result = mDAO.putMemberName(conn, checkId, menuNum, putContext);
+
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+    public int putMemberNick(String checkId, int menuNum, String putContext){
+        Connection conn = getConnect();
+        int result = mDAO.putMemberNick(conn, checkId, menuNum, putContext);
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+    public int putMemberEmail(String checkId, int menuNum, String putContext) {
+        Connection conn = getConnect();
+        int result = mDAO.putMemberEmail(conn, checkId, menuNum, putContext);
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public void exitApp(){
@@ -94,5 +139,6 @@ public class MemberService {
         close(getConnect()); // 위의 쓸데 없는 코드 없애고 간소화
 
     }
+
 
 }

@@ -84,13 +84,23 @@ public class MemberController {
 
         if(checkIdReslt > 0){
             int menuNum = mView.putMember();
+            String putContext = mView.putMemberContxt();
 
             switch(menuNum){
                 case 1:
-                    String putContext = mView.putMemberContxt();
                     result = mService.putMemberPwd(checkId, menuNum, putContext);
                     break;
-//                case 2:
+                case 2:
+                    result = mService.putMemberName(checkId, menuNum, putContext);
+                    break;
+                case 3:
+                    result = mService.putMemberNick(checkId, menuNum, putContext);
+                    break;
+                case 4:
+                    result = mService.putMemberEmail(checkId, menuNum, putContext);
+                    break;
+//                case 5:
+//                      주소변경하기 추가
 //                    break;
             }
         }
