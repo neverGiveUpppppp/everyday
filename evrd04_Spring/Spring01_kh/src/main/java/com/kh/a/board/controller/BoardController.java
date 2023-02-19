@@ -70,6 +70,7 @@ public class BoardController {
 		return mv;
 	}
 	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
+	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 현재 페이지 선언할당
 	// 페이지가 널or0이 아닐 경우 현재페이지와 페이지 바인딩
 	// 전체페이지수 db처리
@@ -113,10 +114,12 @@ public class BoardController {
 		}
 	}
 	/** 연습 텍스트 : 게시판 등록 **/
+	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 유저가 업로드한 파일이 없는 경우 대비
-	// 리네임파일 가져오기
-	// 오리지널파일 저장
-	// 리네임파일 저장
+	// 유저가 업로드한 파일, vo에 저장하기
+	// 		리네임파일 가져오기
+	// 		오리지널파일 저장
+	// 		리네임파일 저장
 	// db 처리 및 리턴 blist.bo
 	
 	public String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
@@ -141,6 +144,8 @@ public class BoardController {
 		String renamePath = folder + "\\" + renameFileName;
 		
 		try {
+			// https://dev-gorany.tistory.com/123 : 멀티파일 관련 참조자료
+			// 단일파일이 아닌 복수파일 업로드 내용포함
 			multipartFile.transferTo(new File(renamePath));
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
@@ -150,15 +155,17 @@ public class BoardController {
 		return renameFileName;
 	}
 	/** 연습 텍스트 : saveFile **/
+	// 받아올 파라미터 & 사용할 객체 체크
 	// root경로 세팅
-	// 파일 경로 세팅 = root + 파일저장소 위치
-	// 파일 생성 및 경로 지정
+	// 파일 지정경로 세팅 = root + 파일저장소 위치
+	// 파일 객체 생성 및 경로 지정 for renameFile 저장
 	// 파일이 없을 경우 대비
-	// 날짜데이터 포맷파싱 객체선언
+	//		디렉토리 생성
+	// 날짜데이터포맷 객체선언 및 형식지정
 	// 오리지널 파일명 겟
 	// 리네임 파일명 겟 : 파일명 규칙, 현재시간+오리지널파일명
-	// 리네임파일 경로 지정 : 파일경로 + 리네임파일명
-	// 받은 파일을 지정 저장경로에 전송
+	// 리네임파일 파일명 및 경로 지정 : 파일경로 + 리네임파일명
+	// 받은 파일을 지정 저장경로에 전송 & 저장
 	// return renamefile
 	
 	

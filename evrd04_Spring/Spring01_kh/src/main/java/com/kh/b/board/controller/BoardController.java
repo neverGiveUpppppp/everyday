@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,6 +60,7 @@ public class BoardController {
 		}
 		return mv;
 	}
+	
 	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
 	// 현재 페이지 선언할당
 	// 페이지가 널or0이 아닐 경우 현재페이지와 페이지 바인딩
@@ -75,7 +77,7 @@ public class BoardController {
 	public String boardInsertForm() {
 		return "boardInsertForm";
 	}
-	
+
 	/** 게시판 등록
 	 * @param boardVo
 	 * @param uploadFile
@@ -119,7 +121,6 @@ public class BoardController {
 		String originFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) 
 								+ originFileName.substring(originFileName.lastIndexOf("."));
-		
 		
 		String renamePath = folder + "\\" + renameFileName;
 		
