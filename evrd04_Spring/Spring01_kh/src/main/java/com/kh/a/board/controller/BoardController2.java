@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -106,6 +107,26 @@ public class BoardController2 {
 			throw new BoardException("게시글 전체조회 실패");
 		}
 	}
+	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
+	public ModelAndView boardList4(@RequestParam(value="page") Integer page, ModelAndView mv) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = bService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<BoardVO> boardList = bService.getBoardList(pi);
+		
+		if(boardList != null) {
+			mv.addObject("list",boardList);
+			mv.addObject("pi",pi);
+			mv.setViewName("boardListView");
+		}else {
+			throw new BoardException("게시글 전체 조회에 실패했습니다");
+		}
+		return mv;
+		
+	}
 	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 현재 페이지 선언할당
@@ -114,6 +135,7 @@ public class BoardController2 {
 	// 페이징vo에 필드값 넣기
 	// 게시판 목록 불러오기
 	// 뷰에 데이터 넣어주고 뷰 지정 & 리턴 boardListView
+	
 	
 	
 	/** 글쓰기 폼 이동
@@ -131,6 +153,12 @@ public class BoardController2 {
 	public String boardInsertForm3() {
 		return "boardInsertForm";
 	}
+	@RequestMapping("binsertView.bo")
+	public String boardInsertForm4() {
+		return "boardInsertForm";
+	}
+	
+	
 	
 	/** 게시판 등록
 	 * @param boardVo
@@ -188,6 +216,21 @@ public class BoardController2 {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
 		}
 	}
+	@RequestMapping("binsert.bo")
+	public String insertBoard4(@ModelAttribute BoardVO boardVo, 
+							   @RequestParam(value="uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile3(uploadFile, request);
+			boardVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(boardVo);
+		if(result > 0) {
+			return "blist.bo";
+		} else {
+			throw new BoardException("게시글 등록에 실패하였습니다.");
+		}
+	}
 	/** 연습 텍스트 : 게시판 등록 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 유저가 업로드한 파일이 없는 경우 대비
@@ -206,7 +249,7 @@ public class BoardController2 {
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
-			folder.mkdir();
+			folder.mkdirs();
 		}
 		// 저장할 파일명을 변경해야함 -> 리네임 규약(ex:카톡파일명) 만들어야하나 수업에서는 패스
 		// 파일명 랜덤값 만들어서 겹치지 않게 해야하나 이번 수업 때는 생략. 필요하면 jspServlet쪽에 찾아보기를 
@@ -235,8 +278,32 @@ public class BoardController2 {
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
-			folder.mkdir();
+			folder.mkdirs();
 		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String originFileName = multipartFile.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renamePath = folder + "\\" + renameFileName;
+		try {
+			multipartFile.transferTo(new File(renamePath));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
+	}
+	public String saveFile3(MultipartFile multipartFile, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resource");
+		String savePath = root + "\\uplodaFiles";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String originFileName = multipartFile.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
