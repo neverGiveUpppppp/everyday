@@ -70,7 +70,7 @@ public class BoardController2 {
 		return mv;
 	}
 	@RequestMapping("blist.bo") // menubar.jsp의 게시판 버튼의 url주소
-	public ModelAndView boardList2(@RequestParam(value="page") Integer page, ModelAndView mv	) {
+	public ModelAndView boardList2(@RequestParam(value="page", required=false) Integer page, ModelAndView mv	) {
 		
 		int currentPage = 1;
 		if(page != null) {
@@ -90,7 +90,7 @@ public class BoardController2 {
 	}
 	// ModelAndView -> Model
 	@RequestMapping("blist.bo") // menubar.jsp의 게시판 버튼의 url주소
-	public String boardList3(@RequestParam(value="page") Integer page, Model model) {
+	public String boardList3(@RequestParam(value="page", required=false) Integer page, Model model) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -108,7 +108,7 @@ public class BoardController2 {
 		}
 	}
 	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
-	public ModelAndView boardList4(@RequestParam(value="page") Integer page, ModelAndView mv) {
+	public ModelAndView boardList4(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -126,6 +126,23 @@ public class BoardController2 {
 		}
 		return mv;
 		
+	}
+	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
+	public String boardList5(@RequestParam(value="page", required=false) Integer page, Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = bService.getListCount();
+		PageInfo pageInfo = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<BoardVO> aList = bService.getBoardList(pageInfo);
+		if(aList != null) {
+			model.addAttribute("list",aList);
+			model.addAttribute("pi",pageInfo);
+			return "redirect:boardListView";
+		}else {
+			throw new BoardException("게시글 전체 조회에 실패했습니다");
+		}
 	}
 	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
@@ -157,7 +174,10 @@ public class BoardController2 {
 	public String boardInsertForm4() {
 		return "boardInsertForm";
 	}
-	
+	@RequestMapping("binsertView.bo")
+	public String boardInsertForm5() {
+		return "boardInsertForm";
+	}
 	
 	
 	/** 게시판 등록
@@ -211,7 +231,7 @@ public class BoardController2 {
 		}
 		int result = bService.insertBoard(boardVo);
 		if(result > 0) {
-			 return "blist.bo";
+			 return "redirect:blist.bo";
 		} else {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
 		}
@@ -226,7 +246,21 @@ public class BoardController2 {
 		}
 		int result = bService.insertBoard(boardVo);
 		if(result > 0) {
-			return "blist.bo";
+			return "redirect:blist.bo";
+		} else {
+			throw new BoardException("게시글 등록에 실패하였습니다.");
+		}
+	}
+	@RequestMapping("binsert.bo")
+	public String insertBoard5(BoardVO boardVo, @RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile5(uploadFile, request);
+			boardVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(boardVo);
+		if(result > 0) {
+			return "redirect:blist.bo";
 		} else {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
 		}
@@ -243,7 +277,7 @@ public class BoardController2 {
 	public String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
 		
 		// 프로젝트파일의 저장소 위치 : webapp - resource - buploadFiles
-		String root = request.getSession().getServletContext().getRealPath("resource"); //  webapp폴더 아래 resources폴더를 의미함
+		String root = request.getSession().getServletContext().getRealPath("resources"); //  webapp폴더 아래 resources폴더를 의미함
 		
 		String savePath = root + "\\buploadFiles";
 		
@@ -273,7 +307,7 @@ public class BoardController2 {
 		return renameFileName;
 	}
 	public String saveFile2(MultipartFile multipartFile, HttpServletRequest request) {
-		String root = request.getSession().getServletContext().getRealPath("resource");
+		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
 		
 		File folder = new File(savePath);
@@ -296,7 +330,7 @@ public class BoardController2 {
 	}
 	public String saveFile3(MultipartFile multipartFile, HttpServletRequest request) {
 		
-		String root = request.getSession().getServletContext().getRealPath("resource");
+		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\uplodaFiles";
 		
 		File folder = new File(savePath);
@@ -318,6 +352,28 @@ public class BoardController2 {
 		}
 		return renameFileName;
 	}
+	public String saveFile5(MultipartFile uploadFile, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String originFileName = uploadFile.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		String renamePath = folder + "\\" + renameFileName;
+		try {
+			uploadFile.transferTo(new File(renamePath));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
+	}
 	/** 연습 텍스트 : saveFile **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// root경로 세팅
@@ -329,7 +385,7 @@ public class BoardController2 {
 	// 오리지널 파일명 겟
 	// 리네임 파일명 겟 : 파일명 규칙, 현재시간+오리지널파일명
 	// 리네임파일 파일명 및 경로 지정 : 파일경로 + 리네임파일명
-	// 받은 파일을 지정 저장경로에 전송 & 저장
+	// 리네임파일, 톰캣 서버에 파일 생성 : 지정 저장경로에 전송 & 저장
 	// return renamefile
 	
 	

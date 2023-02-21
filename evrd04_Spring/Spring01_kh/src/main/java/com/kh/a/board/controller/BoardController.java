@@ -72,7 +72,7 @@ public class BoardController {
 	}
 	// ModelAndView -> Model
 	@RequestMapping("blist.bo") // menubar.jsp의 게시판 버튼의 url주소
-	public String boardList3(@RequestParam(value="page") Integer page, Model model) {
+	public String boardList2(@RequestParam(value="page") Integer page, Model model) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -151,7 +151,7 @@ public class BoardController {
 	public String saveFile(MultipartFile multipartFile, HttpServletRequest request) {
 		
 		// 프로젝트파일의 저장소 위치 : webapp - resource - buploadFiles
-		String root = request.getSession().getServletContext().getRealPath("resource"); //  webapp폴더 아래 resources폴더를 의미함
+		String root = request.getSession().getServletContext().getRealPath("resources"); //  webapp폴더 아래 resources폴더를 의미함
 		
 		String savePath = root + "\\buploadFiles";
 		
