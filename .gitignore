@@ -17,7 +17,7 @@
 /.metadata/
 */.metadata/
 .*/.metadata/
-
+/target/
 
 
 # doc/notes.txt 파일은 무시하고 doc/server/arch.txt 파일은 무시하지 않음

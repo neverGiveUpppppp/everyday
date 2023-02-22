@@ -107,7 +107,7 @@ public class BoardController2 {
 			throw new BoardException("게시글 전체조회 실패");
 		}
 	}
-	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
+	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
 	public ModelAndView boardList4(@RequestParam(value="page", required=false) Integer page, ModelAndView mv) {
 		int currentPage = 1;
 		if(page != null) {
@@ -140,6 +140,23 @@ public class BoardController2 {
 			model.addAttribute("list",aList);
 			model.addAttribute("pi",pageInfo);
 			return "redirect:boardListView";
+		}else {
+			throw new BoardException("게시글 전체 조회에 실패했습니다");
+		}
+	}
+	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
+	public String boardList6(@RequestParam(value="page", required=false) Integer page, Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = bService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<BoardVO> list = bService.getBoardList(pi);
+		if(list != null) {
+			model.addAttribute("list",list);
+			model.addAttribute("pi",pi);
+			return "redirect:boardListView"; 
 		}else {
 			throw new BoardException("게시글 전체 조회에 실패했습니다");
 		}
@@ -178,6 +195,11 @@ public class BoardController2 {
 	public String boardInsertForm5() {
 		return "boardInsertForm";
 	}
+	@RequestMapping("binsertView.bo")
+	public String boardInsertForm6() {
+		return "boardInsertForm";
+	}
+	
 	
 	
 	/** 게시판 등록
@@ -259,6 +281,22 @@ public class BoardController2 {
 			boardVo.setRenameFileName(renameFileName);
 		}
 		int result = bService.insertBoard(boardVo);
+		if(result > 0) {
+			return "redirect:blist.bo";
+		} else {
+			throw new BoardException("게시글 등록에 실패하였습니다.");
+		}
+	}
+	@RequestMapping(value="binsert.bo",method=RequestMethod.POST)
+	public String insertBoard6(@ModelAttribute BoardVO boardVo, @RequestParam("uploadFile") MultipartFile uploadFile,
+																HttpServletRequest request) {
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile6(uploadFile,request);
+			boardVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(boardVo);
+		
 		if(result > 0) {
 			return "redirect:blist.bo";
 		} else {
@@ -361,10 +399,37 @@ public class BoardController2 {
 		if(!folder.exists()) {
 			folder.mkdirs();
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String originFileName = uploadFile.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
 		String renamePath = folder + "\\" + renameFileName;
+		try {
+			uploadFile.transferTo(new File(renamePath));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
+	}
+	public String saveFile6(MultipartFile uploadFile, HttpServletRequest request) {
+		
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		
+		String originFileName = uploadFile.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renamePath = folder + "\\" + renameFileName;
+		
 		try {
 			uploadFile.transferTo(new File(renamePath));
 		} catch (IllegalStateException e) {
@@ -387,6 +452,30 @@ public class BoardController2 {
 	// 리네임파일 파일명 및 경로 지정 : 파일경로 + 리네임파일명
 	// 리네임파일, 톰캣 서버에 파일 생성 : 지정 저장경로에 전송 & 저장
 	// return renamefile
+	
+	
+	
+	
+	
+	/** 게시판 상세
+	 * @param bId
+	 * @param page
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("bdetail.bo")
+	public ModelAndView boardDetail (@RequestParam("bId") int bId, @RequestParam("page") int page, ModelAndView mv) {
+		
+		BoardVO board = bService.selectBoard(bId);
+		
+		if(board != null) {
+			mv.addObject("board",board).addObject("page",page).setViewName("boardDetailView");
+		} else {
+			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	
 	
 	
 	

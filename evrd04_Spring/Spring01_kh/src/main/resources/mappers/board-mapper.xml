@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+
+<mapper namespace="boardMapper">
+
+	
+	
+	<update id="addReadCount">
+		update board
+		set board_count = board_count + 1
+		where board_id = #{bId}
+	</update>
+
+	<select id="selectBoard" resultMap="boardResultSet">
+		select *
+		from board
+			join member on (board_writer = id)
+		where board_id = #{bId} and board_status = 'Y'
+	</select>
+
+
+
+</mapper>

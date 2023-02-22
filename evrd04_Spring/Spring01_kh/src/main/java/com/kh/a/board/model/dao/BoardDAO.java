@@ -39,5 +39,16 @@ public class BoardDAO {
 	
 	
 	
+	public int addReadCount(SqlSessionTemplate sqlSession, int bId) {
+		return sqlSession.update("boardMapper.addReadCount",bId);
+	}
+	public BoardVO selectBoard(SqlSessionTemplate sqlSession, int bId) {
+		return sqlSession.selectOne("boardMapper.selectBoard", bId);
+	}
+
+
+
+	
+	
 	
 }

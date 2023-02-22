@@ -37,6 +37,15 @@ public class BoardServiceImpl implements BoardService {
 		return bDAO.insertBoard(sqlSession, b);
 	}
 	
+	public BoardVO selectBoard(int bId) {
+		int result = bDAO.addReadCount(sqlSession, bId);
+		
+		BoardVO boardVo = null;
+		if(result > 0) {
+			boardVo = bDAO.selectBoard(sqlSession, bId);
+		}
+		return boardVo;
+	}
 	
 	
 	
