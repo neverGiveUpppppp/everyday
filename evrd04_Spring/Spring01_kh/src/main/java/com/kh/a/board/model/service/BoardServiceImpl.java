@@ -46,8 +46,29 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return boardVo;
 	}
-	
-	
+	public BoardVO selectBoard2(int bId) {
+		int result = bDAO.addReadCount2(sqlSession, bId);
+		
+		BoardVO boardVo = null;
+		if(result > 0) {
+			boardVo = bDAO.selectBoard2(sqlSession, bId);
+		}
+		return boardVo;
+	}
+	public BoardVO selectBoard3(int bId) {
+		int result = bDAO.addReadCount3(sqlSession, bId);
+		
+		BoardVO boardVo = null;
+		if(result > 0) {
+			boardVo = bDAO.selectBoard3(sqlSession, bId);
+		}
+		return boardVo;
+	}
+	/** 연습 텍스트 : 게시판 상세  **/
+	// 게시글 읽기하니 조회수+1 해야함
+	// vo객체 선언
+	// 해당 게시판 db에서 가져오기
+	// 리턴
 	
 	
 	

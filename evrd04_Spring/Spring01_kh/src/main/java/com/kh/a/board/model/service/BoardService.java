@@ -11,6 +11,8 @@ public interface BoardService {
 	ArrayList<BoardVO> getBoardList(PageInfo pi);
 	int insertBoard(BoardVO b);
 	BoardVO selectBoard(int bId);
+	BoardVO selectBoard2(int bId);
+	BoardVO selectBoard3(int bId);
 	
 
 }

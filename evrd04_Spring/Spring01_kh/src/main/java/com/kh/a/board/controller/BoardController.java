@@ -197,4 +197,35 @@ public class BoardController {
 	
 	
 	
+	
+	
+	
+	/** 게시판 상세
+	 * @param bId
+	 * @param page
+	 * @param mv
+	 * @return
+	 */
+	@RequestMapping("bdetail.bo")
+	public ModelAndView boardDetail (@RequestParam("bId") int bId, @RequestParam("page") int page, ModelAndView mv) {
+		
+		BoardVO board = bService.selectBoard(bId);
+		
+		if(board != null) {
+			mv.addObject("board",board).addObject("page",page).setViewName("boardDetailView");
+		} else {
+			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	/** 연습 텍스트 : 게시판 상세  **/
+	// 받아올 파라미터 & 사용할 객체 체크
+	// db에서 상세페이지 데이터 받아오기
+	// 뷰에 보낼 데이터 저장 및 리턴
+	
+	
+	
+	
+	
+	
 }

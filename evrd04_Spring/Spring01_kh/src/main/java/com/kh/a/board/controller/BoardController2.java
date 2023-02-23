@@ -475,9 +475,32 @@ public class BoardController2 {
 		}
 		return mv;
 	}
-	
-	
-	
+	@RequestMapping("bdetail.bo")
+	public ModelAndView boardDetail2(@RequestParam("bId") int bId, @RequestParam("page") int page, ModelAndView mv) {
+		BoardVO boardVo = bService.selectBoard2(bId);
+		
+		if(boardVo != null) {
+			mv.addObject("board", boardVo).addObject("page",page).setViewName("boardDetailView");
+		} else {
+			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	@RequestMapping("bdetail.bo")
+	public ModelAndView boardDetail3(@RequestParam("bId") int bId, @RequestParam("page") int page, ModelAndView mv) {
+		BoardVO boardVo = bService.selectBoard3(bId);
+		
+		if(boardVo != null) {
+			mv.addObject("board",boardVo).addObject("page",page).setViewName("boardDetailView");
+		} else {
+			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	/** 연습 텍스트 : 게시판 상세  **/
+	// 받아올 파라미터 & 사용할 객체 체크
+	// db에서 상세페이지 데이터 받아오기
+	// 뷰에 보낼 데이터 저장 및 리턴
 	
 	
 	
