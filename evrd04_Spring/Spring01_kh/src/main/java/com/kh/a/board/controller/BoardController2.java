@@ -303,6 +303,22 @@ public class BoardController2 {
 			throw new BoardException("게시글 등록에 실패하였습니다.");
 		}
 	}
+	@RequestMapping("binsert.bo")
+	public String insertBoard7(@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request, 
+								@ModelAttribute BoardVO boardVo) {
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile(uploadFile, request);
+			boardVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(boardVo);
+		
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시물 등록 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 등록 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 유저가 업로드한 파일이 없는 경우 대비
@@ -369,7 +385,7 @@ public class BoardController2 {
 	public String saveFile3(MultipartFile multipartFile, HttpServletRequest request) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uplodaFiles";
+		String savePath = root + "\\buploadFiles";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -393,7 +409,7 @@ public class BoardController2 {
 	public String saveFile5(MultipartFile uploadFile, HttpServletRequest request) {
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uploadFiles";
+		String savePath = root + "\\buploadFiles";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -416,7 +432,7 @@ public class BoardController2 {
 		
 		
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root + "\\uploadFiles";
+		String savePath = root + "\\buploadFiles";
 		
 		File folder = new File(savePath);
 		if(!folder.exists()) {
@@ -435,6 +451,30 @@ public class BoardController2 {
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
+	}
+	public String saveFile7(MultipartFile uploadFile, HttpServletRequest request) {
+		
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		
+		File file = new File(savePath);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		
+		String originFileName = uploadFile.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renamePath = file + "\\" + renameFileName;
+		try {
+			uploadFile.transferTo(new File(renamePath));
+		}catch(IllegalStateException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
 			e.printStackTrace();
 		}
 		return renameFileName;
@@ -497,6 +537,18 @@ public class BoardController2 {
 		}
 		return mv;
 	}
+	
+	@RequestMapping("bdetail.bo")
+	public String boardDetail4(@RequestParam("page") int page, @RequestParam("bId") int bId, Model model) {
+		BoardVO boardVo = bService.selectBoard4(bId);
+		
+		if(boardVo != null) {
+			model.addAttribute("board",boardVo).addAttribute("page",page);
+			return "redirect:boardDetailView";
+		} else {
+			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
+		}
+	}
 	/** 연습 텍스트 : 게시판 상세  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// db에서 상세페이지 데이터 받아오기
@@ -507,8 +559,7 @@ public class BoardController2 {
 	
 	
 	
-	
-	
+
 	
 	
 	
