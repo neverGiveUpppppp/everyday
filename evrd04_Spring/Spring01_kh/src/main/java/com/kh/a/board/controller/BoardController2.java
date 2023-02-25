@@ -127,7 +127,7 @@ public class BoardController2 {
 		return mv;
 		
 	}
-	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
+	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
 	public String boardList5(@RequestParam(value="page", required=false) Integer page, Model model) {
 		int currentPage = 1;
 		if(page != null) {
@@ -144,7 +144,7 @@ public class BoardController2 {
 			throw new BoardException("게시글 전체 조회에 실패했습니다");
 		}
 	}
-	@RequestMapping(value="blist.bo", method=RequestMethod.POST)
+	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
 	public String boardList6(@RequestParam(value="page", required=false) Integer page, Model model) {
 		int currentPage = 1;
 		if(page != null) {
@@ -161,6 +161,24 @@ public class BoardController2 {
 			throw new BoardException("게시글 전체 조회에 실패했습니다");
 		}
 	}
+	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
+	public String boardList7(@RequestParam(value="page") Integer page, 
+							 @ModelAttribute BoardVO boVo, Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = bService.getListCount();
+		PageInfo pageVo	= Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<BoardVO> aList = bService.getBoardList(pageVo);
+		if(aList != null) {
+			model.addAttribute("list",aList).addAttribute("pi",pageVo);
+			return "redirect:boardListView";
+		}else {
+			throw new BoardException("게시글 목록 조회 실패");
+		}
+	}
+	
 	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 현재 페이지 선언할당
@@ -199,6 +217,11 @@ public class BoardController2 {
 	public String boardInsertForm6() {
 		return "boardInsertForm";
 	}
+	@RequestMapping("binsertView.bo")
+	public String boardInsertForm7() {
+		return "boardInsertForm";
+	}
+	
 	
 	
 	
@@ -317,6 +340,21 @@ public class BoardController2 {
 			return "redirect:blist.bo";
 		}else {
 			throw new BoardException("게시물 등록 실패");
+		}
+	}
+	@RequestMapping(value="binsert.bo",method=RequestMethod.POST)
+	public String insertBoard8(BoardVO bodVo, HttpServletRequest request,
+				@RequestParam(value="uploadFile", required=false) MultipartFile uploadFile) {
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile7(uploadFile,request);
+			bodVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			bodVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(bodVo);
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시글 등록 실패");
 		}
 	}
 	/** 연습 텍스트 : 게시판 등록 **/
@@ -456,7 +494,30 @@ public class BoardController2 {
 		return renameFileName;
 	}
 	public String saveFile7(MultipartFile uploadFile, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+
+		File file = new File(savePath);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		
+		String originFileName = uploadFile.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renamePath = file + "\\" + renameFileName;
+		try {
+			uploadFile.transferTo(new File(renamePath));
+		}catch(IllegalStateException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
+	}
+
+	public String saveFile8(HttpServletRequest request, MultipartFile file) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
 		
@@ -471,7 +532,7 @@ public class BoardController2 {
 		
 		String renamePath = file + "\\" + renameFileName;
 		try {
-			uploadFile.transferTo(new File(renamePath));
+			file.transferTo(new File(renameFilePath));
 		}catch(IllegalStateException e) {
 			e.printStackTrace();
 		}catch(IOException e) {
@@ -549,10 +610,13 @@ public class BoardController2 {
 			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
 		}
 	}
-	/** 연습 텍스트 : 게시판 상세  **/
+	public ModelAndView boardDetail5(@RequestParam("bId") int boardId, @RequestParam(value="page",required=false)) {
+		BoardVO bodVo = bService.selectBoard2(bId);
+		
+	}
+	/** 연습 텍스트 : boardDetail **/
 	// 받아올 파라미터 & 사용할 객체 체크
-	// db에서 상세페이지 데이터 받아오기
-	// 뷰에 보낼 데이터 저장 및 리턴
+	// 비니지스 로직 실행 : 게시판상세읽기
 	
 	
 	
