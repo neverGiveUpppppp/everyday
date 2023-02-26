@@ -63,8 +63,12 @@ public class BoardDAO {
 	public BoardVO selectBoard4(SqlSessionTemplate sqlSession, int bId) {
 		return sqlSession.selectOne("boardMapper.selectBoard",bId);
 	}
-	
-	
+	public int addReadCount6(SqlSessionTemplate sqlSession, int bId) {
+		return sqlSession.update("boardMapper.addReadCount",bId);
+	}
+	public BoardVO selectBoard6(SqlSessionTemplate sqlSession, int bId) {
+		return sqlSession.selectOne("boardMapper.selectBoard",bId);
+	}
 	
 	
 }

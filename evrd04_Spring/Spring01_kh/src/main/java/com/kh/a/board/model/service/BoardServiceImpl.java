@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService {
 	public int insertBoard(BoardVO b) {
 		return bDAO.insertBoard(sqlSession, b);
 	}
-	
+	@Override
 	public BoardVO selectBoard(int bId) {
 		int result = bDAO.addReadCount(sqlSession, bId);
 		
@@ -46,6 +46,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return boardVo;
 	}
+	@Override
 	public BoardVO selectBoard2(int bId) {
 		int result = bDAO.addReadCount2(sqlSession, bId);
 		
@@ -55,6 +56,7 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return boardVo;
 	}
+	@Override
 	public BoardVO selectBoard3(int bId) {
 		int result = bDAO.addReadCount3(sqlSession, bId);
 		
@@ -64,11 +66,22 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return boardVo;
 	}
+	@Override
 	public BoardVO selectBoard4(int bId) {
 		int result = bDAO.addReadCount4(sqlSession, bId);
 		BoardVO boardVo = null;
 		if(result > 0) {
 			boardVo = bDAO.selectBoard4(sqlSession,bId);
+		}
+		return boardVo;
+	}
+	@Override
+	public BoardVO selectBoard6(int bId) {
+		int result = bDAO.addReadCount6(sqlSession,bId);
+		
+		BoardVO boardVo = null;
+		if(result > 0) {
+			boardVo = bDAO.selectBoard6(sqlSession,bId);
 		}
 		return boardVo;
 	}

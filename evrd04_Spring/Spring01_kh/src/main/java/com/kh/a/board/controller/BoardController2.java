@@ -521,16 +521,16 @@ public class BoardController2 {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\buploadFiles";
 		
-		File file = new File(savePath);
-		if(!file.exists()) {
-			file.mkdirs();
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		
-		String originFileName = uploadFile.getOriginalFilename();
+		String originFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
 		
-		String renamePath = file + "\\" + renameFileName;
+		String renameFilePath = file + "\\" + renameFileName;
 		try {
 			file.transferTo(new File(renameFilePath));
 		}catch(IllegalStateException e) {
@@ -610,9 +610,29 @@ public class BoardController2 {
 			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
 		}
 	}
-	public ModelAndView boardDetail5(@RequestParam("bId") int boardId, @RequestParam(value="page",required=false)) {
-		BoardVO bodVo = bService.selectBoard2(bId);
+	@RequestMapping("bdetail.bo")
+	public ModelAndView boardDetail5(@RequestParam("bId") int boardId, @RequestParam(value="page",required=false)
+									ModelAndView mv) {
+		BoardVO bodVo = bService.selectBoard2(boardId);
 		
+		if(bodVo != null) {
+			mv.addObject("list",bodVo);
+		} else {
+			throw new BoardException ("게시글 상세보기에 실패하였습니다.");
+		}
+		return mv;
+	}
+	@RequestMapping("bdetail.bo")
+	public String boardDetail6(@RequestParam("bId") int bId, @RequestParam("page") int page, Model model) {
+							
+		BoardVO bVo = bService.selectBoard6(bId);
+		
+		if(bVo != null) {
+			model.addAttribute("board",bVo).addAttribute("page",page);
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시글 상세 조회 실패");
+		}
 	}
 	/** 연습 텍스트 : boardDetail **/
 	// 받아올 파라미터 & 사용할 객체 체크
@@ -623,6 +643,34 @@ public class BoardController2 {
 	
 	
 	
+	/** 게시판 수정폼 이동
+	 * @param b
+	 * @param page
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("bupView.bo")
+	public String boardUpdateForm(@ModelAttribute BoardVO b, @RequestParam("page") int page, Model model) {
+		model.addAttribute("board", b).addAttribute("page", page);
+		return "boardUpdateForm";
+	}
+	
+	
+	
+	
+	/** 게시판 수정 + 파일
+	 * @param boardVo
+	 * @param page
+	 * @param reloadFile
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("bupdate.bo")
+	public String updateBoard(@ModelAttribute BoardVO boardVo, @RequestParam("page") int page,
+								@RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request, Model model) {
+		
+		return ;
+	}
 
 	
 	
