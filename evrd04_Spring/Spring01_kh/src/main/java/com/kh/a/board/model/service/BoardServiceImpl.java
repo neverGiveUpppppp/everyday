@@ -75,6 +75,15 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return boardVo;
 	}
+	public BoardVO selectBoard5(int boardId) {
+		int result = bDAO.addReadCount5(sqlSession, boardId);
+		BoardVO boardVo = null;
+		if(result > 0) {
+			boardVo = bDAO.selectBoard5(sqlSession, boardId);
+		}
+		return boardVo;
+	}
+
 	@Override
 	public BoardVO selectBoard6(int bId) {
 		int result = bDAO.addReadCount6(sqlSession,bId);

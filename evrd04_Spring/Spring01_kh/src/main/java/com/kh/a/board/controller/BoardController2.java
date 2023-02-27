@@ -635,6 +635,19 @@ public class BoardController2 {
 		}
 	}
 	/** 연습 텍스트 : boardDetail **/
+	
+	@RequestMapping("bdetail.bo")
+	public String boardDetail7(@RequestParam(value="page",required=false) int page, @RequestParam("bId") int boardId, Model model){
+		BoardVO boardVo = bService.selectBoard5(boardId);
+		if(boardVo != null) {
+			model.addAttribute("page",page);
+			model.addAttribute("bId",boardId);
+			return "redirect:boardDetailView";
+		}else {
+			throw new BoardException("게시글 상세보기 실패");
+		}
+	}
+	/** 연습 텍스트 : 게시판 상세  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 비니지스 로직 실행 : 게시판상세읽기
 	

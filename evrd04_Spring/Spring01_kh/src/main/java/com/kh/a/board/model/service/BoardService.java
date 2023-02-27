@@ -14,7 +14,13 @@ public interface BoardService {
 	BoardVO selectBoard2(int bId);
 	BoardVO selectBoard3(int bId);
 	BoardVO selectBoard4(int bId);
+	BoardVO selectBoard5(int boardId);
 	BoardVO selectBoard6(int bId);
 	
+
+
+
+
+
 
 }
