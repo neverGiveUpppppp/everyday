@@ -79,7 +79,9 @@ public class BoardDAO {
 	
 
 
-
-
+	
+	public int updateBoard(SqlSessionTemplate sqlSession, BoardVO boardVo) {
+		return sqlSession.update("boardMapper.updateBoard",boardVo);
+	}
 
 }

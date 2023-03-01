@@ -16,6 +16,7 @@ public interface BoardService {
 	BoardVO selectBoard4(int bId);
 	BoardVO selectBoard5(int boardId);
 	BoardVO selectBoard6(int bId);
+	int updateBoard(BoardVO boardVo);
 	
 
 

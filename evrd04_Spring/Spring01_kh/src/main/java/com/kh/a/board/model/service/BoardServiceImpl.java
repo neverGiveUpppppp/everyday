@@ -101,7 +101,10 @@ public class BoardServiceImpl implements BoardService {
 	// 리턴
 	
 	
-	
+	@Override
+	public int updateBoard(BoardVO boardVo) {
+		return bDAO.updateBoard(sqlSession, boardVo);
+	}
 	
 	
 }
