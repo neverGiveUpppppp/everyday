@@ -252,6 +252,7 @@ public class BoardController {
 			return "redirect:bdetail.bo";
 		} else {
 			throw new BoardException("게시글 수정에 실패하였습니다.");
+		}
 	}
 	/** 연습 텍스트 : 게시판 수정 + 파일  **/
 	// 받아올 파라미터 & 사용할 객체 체크

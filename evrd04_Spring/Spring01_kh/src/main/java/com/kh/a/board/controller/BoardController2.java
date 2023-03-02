@@ -704,6 +704,28 @@ public class BoardController2 {
 			throw new BoardException("게시글 수정에 실패하였습니다.");
 		}
 	}
+	@RequestMapping("bupdate.bo")
+	public String updateBoard2(@ModelAttribute BoardVO boardVo, @RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request,
+								Model model, @RequestParam("page") int page) {
+		if(reloadFile != null && !reloadFile.isEmpty()){
+			if(boardVo.getRenameFileName() != null ) {
+				deleteFile(boardVo.getRenameFileName(),request);
+			}
+			String renameFileName = saveFile(reloadFile, request); 
+			boardVo.setOriginalFileName(reloadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.updateBoard(boardVo);
+		if(result > 0) {
+			model.addAttribute("bId",boardVo.getBoardId());
+			model.addAttribute("page",page);
+			return "redirect:bdetail.bo";
+			//return "redirect:bdetail.bo?bId=" + b.getBoardId() + "&page=" + page;
+			// 리다이렉트인데 데이터보존됨
+		} else {
+			throw new BoardException("게시글 수정에 실패하였습니다.");
+		}
+	}
 	/** 연습 텍스트 : 게시판 수정 + 파일  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 새업로드파일 여부 체크
@@ -718,6 +740,14 @@ public class BoardController2 {
 		
 		File f = new File(savePath + "\\" + fileName);
 		if(f.exists()) { // 파일이 존재하는지 확인하고 삭제. 없는 파일삭제하라면 에러발생하기 때문
+			f.delete();
+		}
+	}
+	public void deleteFile2(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources"); // Q.이 resources 경로가 다른 플젝도 같을까?
+		String savePath = root + "\\buploadFiles";
+		File f = new File(savePath + "\\" + fileName);
+		if(f.exists()) {
 			f.delete();
 		}
 	}
