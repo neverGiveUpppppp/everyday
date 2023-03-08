@@ -762,6 +762,45 @@ public class BoardController2 {
 			throw new BoardException("게시글 수정에 실패하였습니다.");
 		}
 	}
+	@RequestMapping("bupdate.bo")
+	public String updateBoard3(@ModelAttribute BoardVO bodVo, @RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request,
+								@RequestParam("page") int page, Model model) {	
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(bodVo.getRenameFileName() != null) {
+				deleteFile3(bodVo.getRenameFileName(), request);
+			}
+			String reloadFileName = saveFile(reloadFile, request);
+			bodVo.setOriginalFileName(bodVo.getOriginalFileName());
+			bodVo.setRenameFileName(reloadFileName);
+		}
+		int result = bService.updateBoard(bodVo);
+		if(result > 0) {
+			model.addAttribute("page",page);
+			model.addAttribute("bId",bodVo.getBoardId());
+			return "redirect:bdetail.bo";
+		} else {
+			throw new BoardException("게시글 수정에 실패하였습니다.");
+		}
+	}
+	@RequestMapping(value="bupdate.bo")
+	public String updateBoard4(BoardVO bodVo, @RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request, 
+								@RequestParam("page") int page, Model model) {
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(bodVo.getRenameFileName() != null) {
+				deleteFile4(bodVo.getRenameFileName(), request);
+			}
+			String renameFileName = saveFile(reloadFile, request); 
+			bodVo.setOriginalFileName(reloadFile.getOriginalFilename());
+			bodVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.updateBoard(bodVo);
+		if(result > 0) {
+			model.addAttribute("bId",bodVo.getBoardId()).addAttribute("page",page);
+			return "redirect:bdetail.bo";
+		}else {
+			throw new BoardException("게시글 수정 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 수정 + 파일  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 새업로드파일 여부 체크
@@ -782,6 +821,22 @@ public class BoardController2 {
 	public void deleteFile2(String fileName, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources"); // Q.이 resources 경로가 다른 플젝도 같을까?
 		String savePath = root + "\\buploadFiles";
+		File f = new File(savePath + "\\" + fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	public void deleteFile3(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		File f = new File(savePath+"\\"+fileName);
+		if(f.exists()) {
+			f.delete();
+		}
+	}
+	public void deleteFile4(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "buploadFiles";
 		File f = new File(savePath + "\\" + fileName);
 		if(f.exists()) {
 			f.delete();
