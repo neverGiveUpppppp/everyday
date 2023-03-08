@@ -357,6 +357,20 @@ public class BoardController2 {
 			throw new BoardException("게시글 등록 실패");
 		}
 	}
+	@RequestMapping(value="binsert.bo", method=RequestMethod.POST)
+	public String insertBoard9(@ModelAttribute BoardVO boardVo, @RequestParam("uploadFile") MultipartFile uploadFile,HttpServletRequest request) { 
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile9(uploadFile, request);
+			boardVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(boardVo);
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else{
+			throw new BoardException("게시글 등록 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 등록 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 유저가 업로드한 파일이 없는 경우 대비
@@ -531,6 +545,28 @@ public class BoardController2 {
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
 		
 		String renameFilePath = file + "\\" + renameFileName;
+		try {
+			file.transferTo(new File(renameFilePath));
+		}catch(IllegalStateException e) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName;
+	}
+	public String saveFile9(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath9 = root + "\\buploadFiles";
+		File f = new File(savePath9);
+		if(!f.exists()) {
+			f.mkdirs();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renameFilePath = f + "\\" + renameFileName;
+		
 		try {
 			file.transferTo(new File(renameFilePath));
 		}catch(IllegalStateException e) {
