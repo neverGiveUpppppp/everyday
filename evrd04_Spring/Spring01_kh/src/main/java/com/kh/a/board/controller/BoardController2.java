@@ -706,9 +706,13 @@ public class BoardController2 {
 	@RequestMapping("bupView.bo")
 	public String boardUpdateForm2(BoardVO b, @RequestParam("page") int page, Model model) {
 		model.addAttribute("board",b).addAttribute("page", page);
-		return "boardUpdateFomr";
+		return "boardUpdateForm";
 	}
-	
+	@RequestMapping("bupView.bo")
+	public String boardUpdateForm3(@ModelAttribute BoardVO bVo, @RequestParam("page") int page, Model model) {
+		model.addAttribute("board",bVo).addAttribute("page",page);
+		return "boardUpdateForm";
+	}
 	
 	
 	/** 게시판 수정 + 파일
@@ -801,6 +805,26 @@ public class BoardController2 {
 			throw new BoardException("게시글 수정 실패");
 		}
 	}
+	@RequestMapping(value="bupdate.bo",method=RequestMethod.POST)
+	public String updateBoard5(@ModelAttribute BoardVO boardVo, @RequestParam("page") int page, Model model,
+								@RequestParam("reloadFile") MultipartFile reloadFile, HttpServletRequest request) {
+		if(reloadFile != null && !reloadFile.isEmpty()) {
+			if(boardVo.getRenameFileName() != null) {
+				deleteFile5(boardVo.getRenameFileName(), request);
+			}
+			String renameFileName = saveFile(reloadFile, request);
+			boardVo.setOriginalFileName(reloadFile.getOriginalFilename());
+			boardVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.updateBoard(boardVo);
+		if(result > 0) {
+			model.addAttribute("bId",boardVo.getBoardId());
+			model.addAttribute("page",page);
+			return "redirect:bdetail.bo";
+		}else {
+			throw new BoardException("게시글 수정 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 수정 + 파일  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 새업로드파일 여부 체크
@@ -839,6 +863,14 @@ public class BoardController2 {
 		String savePath = root + "buploadFiles";
 		File f = new File(savePath + "\\" + fileName);
 		if(f.exists()) {
+			f.delete();
+		}
+	}
+	public void deleteFile5(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "buploadFiles";
+		File f = new File(savePath + "\\" + fileName);
+		if(!f.exists()) {
 			f.delete();
 		}
 	}
