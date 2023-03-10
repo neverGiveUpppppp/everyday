@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.taglibs.standard.lang.jstl.OrOperator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -178,7 +179,22 @@ public class BoardController2 {
 			throw new BoardException("게시글 목록 조회 실패");
 		}
 	}
-	
+	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
+	public String boardList8(BoardVO bodVo, @RequestParam("page") int page, Model model) {
+		int currentPage = 1;
+		if(page != page) {
+			currentPage = page;
+		}
+		int listCount = bService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<BoardVO> boardList = bService.getBoardList(pi);
+		if(boardList != null) {
+			model.addAttribute("list",boardList).addAttribute("pi",pi);
+			return "redirect:boardListView";
+		}else {
+			throw new BoardException("게시글 목록 조회 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 목록 조회 + 페이지네이션 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
 	// 현재 페이지 선언할당
@@ -221,7 +237,10 @@ public class BoardController2 {
 	public String boardInsertForm7() {
 		return "boardInsertForm";
 	}
-	
+	@RequestMapping("binsertView.bo")
+	public String boardInsertViewForm8() {
+		return "boardInsertForm";
+	}
 	
 	
 	
@@ -370,6 +389,22 @@ public class BoardController2 {
 		}else{
 			throw new BoardException("게시글 등록 실패");
 		}
+	}
+	@RequestMapping("binsert.bo")
+	public ModelAndView insertBoard10(@ModelAttribute BoardVO bodVo, ModelAndView mv,
+										@RequestParam("uploadFile") MultipartFile uploadFile, HttpServletRequest request) {
+		if(uploadFile != null && !uploadFile.isEmpty()) {
+			String renameFileName = saveFile10(uploadFile, request);
+			bodVo.setOriginalFileName(uploadFile.getOriginalFilename());
+			bodVo.setRenameFileName(renameFileName);
+		}
+		int result = bService.insertBoard(bodVo);
+		if(result > 0) {
+			mv.setViewName("blist.bo");
+		}else {
+			throw new BoardException("게시글 등록 실패");
+		}
+		return mv;
 	}
 	/** 연습 텍스트 : 게시판 등록 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 뷰에서 받아오는 name속성값 체크 
@@ -575,6 +610,29 @@ public class BoardController2 {
 			e.printStackTrace();
 		}
 		return renameFileName;
+	}
+	public String saveFile10(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\buploadFiles";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renameFilePath = folder + "\\" + renameFileName;
+		
+		try {
+			file.transferTo(new File(renameFilePath));
+		}catch(IllegalStateException e	) {
+			e.printStackTrace();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		return renameFileName; // 이 메소드의 하는 역할? 파일 생성 및 리네임파일변수의 리네임짓기
 	}
 	/** 연습 텍스트 : saveFile **/
 	// 받아올 파라미터 & 사용할 객체 체크
