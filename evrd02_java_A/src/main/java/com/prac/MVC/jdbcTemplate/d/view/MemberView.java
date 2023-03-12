@@ -158,8 +158,8 @@ public class MemberView {
 
     public char deleteMember(){
         System.out.println("해당 회원을 탈퇴시킵니다");
-        System.out.println("정말로 탈퇴 처리 하시겠습니까?(Y/N)");
-        char YN = sc.nextLine().charAt(0);
+        System.out.print("정말로 탈퇴 처리 하시겠습니까?(Y/N) : ");
+        char YN = sc.nextLine().toUpperCase().charAt(0);
         return YN;
     }
 

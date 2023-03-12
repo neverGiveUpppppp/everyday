@@ -117,16 +117,26 @@ public class MemberController {
 
     public void deleteMember(){
         String checkId = mView.checkId();
-        char YN = mView.deleteMember();
-        System.out.println(YN);
-        if(YN != 0){
-            int result = mService.deleteMember(checkId);
-            if(result > 0){
-                mView.message("해당 회원 탈퇴 완료");
-            }else{
-                mView.message("회원 탈퇴 실패");
+        int checkIdReslt = mService.checkId(checkId);
+        if(checkIdReslt == 1){
+            char YN = mView.deleteMember();
+            if(YN == 'N') { // N일 경우 다시 메뉴로 돌려보내줌. 그러나 아무 키나 둘러도 삭제되기 때문에 코드 수정요망
+                mView.message("메뉴로 돌아갑니다.");
+                return ;
+            }else if(YN == 'Y'){
+                int result = mService.deleteMember(checkId);
+                if(result > 0){
+                    mView.message("해당 회원 탈퇴 완료");
+                }else{
+                    mView.message("회원 탈퇴 실패");
+                }
+            }else {
+                mView.message("키를 잘못 누르셨습니다.");
             }
+        }else{
+            mView.message("해당 회원은 존재하지 않습니다.");
         }
+
 
     }
 
