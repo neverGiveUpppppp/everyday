@@ -94,6 +94,15 @@ public class BoardServiceImpl implements BoardService {
 		}
 		return boardVo;
 	}
+	public BoardVO selectBoard7(int boardId) {
+		int result = bDAO.addReadCount7(sqlSession, boardId);
+		
+		BoardVO board = null;
+		if(result == 1) {
+			board = bDAO.selectBoard7(sqlSession, boardId);
+		}
+		return board;
+	}
 	/** 연습 텍스트 : 게시판 상세  **/
 	// 게시글 읽기하니 조회수+1 해야함
 	// vo객체 선언

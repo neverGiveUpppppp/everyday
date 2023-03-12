@@ -43,6 +43,19 @@ public class BoardController2 {
 	public BoardService bService;
 	
 	
+	/**  
+	 * 게시판 목록 조회 + 페이지네이션
+	 * 
+	 * 글쓰기 폼 이동
+	 * 게시판 등록
+	 * 게시판 등록 & saveFile
+	 * 
+	 * 게시판 상세
+	 * 
+	 * 게시판 수정폼 이동
+	 * 게시판 수정 + 파일 & deleteFile
+	 * 
+	 * **/
 	
 	
 	/** 게시판 목록 조회 + 페이지네이션
@@ -238,7 +251,7 @@ public class BoardController2 {
 		return "boardInsertForm";
 	}
 	@RequestMapping("binsertView.bo")
-	public String boardInsertViewForm8() {
+	public String boardInsertForm8() {
 		return "boardInsertForm";
 	}
 	
@@ -741,6 +754,16 @@ public class BoardController2 {
 			throw new BoardException("게시글 상세보기 실패");
 		}
 	}
+	@RequestMapping("bdetail.bo")
+	public String boardDetail8(@RequestParam("bId") int boardId, @RequestParam(value="page", required=false) int page, Model model) {
+		BoardVO board = bService.selectBoard7(boardId);
+		if(board != null) {
+			model.addAttribute("page",page).addAttribute("bId",boardId);
+			return "redirect:boardDetailView";
+		}else {
+			throw new BoardException("게시글 상세보기 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 상세  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 비니지스 로직 실행 : 게시판상세읽기
@@ -932,7 +955,7 @@ public class BoardController2 {
 			f.delete();
 		}
 	}
-	/** 연습 텍스트 : 게시판 수정 + 파일  **/
+	/** 연습 텍스트 : 게시판 수정 + 파일 & deleteFile  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 루트 및 파일저장 경로 설정
 	// 파일객체 생성 및 경로지정
