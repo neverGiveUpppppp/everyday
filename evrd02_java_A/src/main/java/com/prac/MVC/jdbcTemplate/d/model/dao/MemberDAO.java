@@ -322,9 +322,41 @@ public class MemberDAO {
 
 
 
+    public int putMemberAdres(Connection conn, String checkId, int menuNum, String putContext){
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("putMember"+menuNum);
 
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, putContext);
+            pstmt.setString(2,checkId);
+            result = pstmt.executeUpdate();
 
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            close(pstmt);
+        }
+        return result;
+    }
 
+    public int deleteMember(Connection connection, String checkId){
+        PreparedStatement pstmt = null;
+        int result = 0;
+        String query = properties.getProperty("deleteMember");
+        try{
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1,checkId);
+            result = pstmt.executeUpdate();
+
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(pstmt);
+        }
+        return result;
+    }
 
 
 

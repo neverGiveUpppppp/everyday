@@ -7,10 +7,7 @@ import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
 import java.sql.Connection;
 import java.util.ArrayList;
 
-import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.close;
-import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.getConnect;
-import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.commit;
-import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.rollback;
+import static com.prac.MVC.jdbcTemplate.d.common.TemplateMember.*;
 
 public class MemberService {
 
@@ -121,10 +118,28 @@ public class MemberService {
 
 
 
+    public int putMemberAdres(String checkId, int menuNum, String putContext){
+        Connection conn = getConnect();
+        int result = mDAO.putMemberAdres(conn, checkId, menuNum, putContext);
+        if(result > 0){
+            commit(conn);
+        }else{
+            rollback(conn);
+        }
+        return result;
+    }
 
 
-
-
+    public int deleteMember(String checkId){
+        Connection connection = getConnect();
+        int result = mDAO.deleteMember(connection, checkId);
+        if(result > 0){
+            commit(connection);
+        }else{
+            rollback(connection);
+        }
+        return result;
+    }
 
 
 

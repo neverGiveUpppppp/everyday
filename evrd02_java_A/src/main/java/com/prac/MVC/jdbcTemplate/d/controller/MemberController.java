@@ -99,9 +99,9 @@ public class MemberController {
                 case 4:
                     result = mService.putMemberEmail(checkId, menuNum, putContext);
                     break;
-//                case 5:
-//                      주소변경하기 추가
-//                    break;
+                case 5:
+                    result = mService.putMemberAdres(checkId, menuNum, putContext);
+                    break;
             }
         }
 
@@ -115,6 +115,20 @@ public class MemberController {
     }
 
 
+    public void deleteMember(){
+        String checkId = mView.checkId();
+        char YN = mView.deleteMember();
+        System.out.println(YN);
+        if(YN != 0){
+            int result = mService.deleteMember(checkId);
+            if(result > 0){
+                mView.message("해당 회원 탈퇴 완료");
+            }else{
+                mView.message("회원 탈퇴 실패");
+            }
+        }
+
+    }
 
     // 멤버조건검색 이슈
     // 없는 회원 A로 검색하면 null값으로 vo에 채워지는데 조회가 되는 이상한 상황

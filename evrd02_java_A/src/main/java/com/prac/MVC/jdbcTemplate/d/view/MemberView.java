@@ -28,6 +28,7 @@ public class MemberView {
                 case 2: mCon.getMemberCondition(); break;
                 case 3: mCon.postMember(); break;
                 case 4: mCon.putMember(); break;
+                case 5: mCon.deleteMember(); break;
                 case 0: mCon.exitApp(); return ; // return ;이 메인메소드로 돌려보내서 앱 종료시킴
                 default:
                     System.out.println("메뉴 번호가 잘못 입력되었습니다. 재입력 해주세요.");
@@ -152,6 +153,17 @@ public class MemberView {
         String putContext = sc.nextLine();
         return putContext;
     }
+
+
+
+    public char deleteMember(){
+        System.out.println("해당 회원을 탈퇴시킵니다");
+        System.out.println("정말로 탈퇴 처리 하시겠습니까?(Y/N)");
+        char YN = sc.nextLine().charAt(0);
+        return YN;
+    }
+
+
 
 //    public MemberJSPTable putMember(){
 //        System.out.print("====== 회원 정보 수정 ====== ");
