@@ -1,14 +1,24 @@
 package com.prac.MVC.jdbcTemplate.e.controller;
 
+import com.prac.MVC.jdbcTemplate.b.model.vo.MemberVO;
+import com.prac.MVC.jdbcTemplate.e.model.service.MemberService;
+import com.prac.MVC.jdbcTemplate.e.view.MenuView;
+import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
+
+import java.util.ArrayList;
+
 public class MemberController {
+    MenuView mv = new MenuView();
+    MemberService ms = new MemberService();
 
+    public void memSelectAll() {
+        ArrayList<MemberJSPTable> aList = ms.memSelectAll();
 
+        if(aList != null){
+            mv.memSelectAll();
+        }
 
-
-
-
-
-
+    }
 
 
     // 멤버조건검색 이슈

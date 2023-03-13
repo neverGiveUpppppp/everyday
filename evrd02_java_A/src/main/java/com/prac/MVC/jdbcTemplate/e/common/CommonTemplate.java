@@ -8,17 +8,17 @@ import java.util.Properties;
 
 public class CommonTemplate {
 
-    public CommonTemplate(){}
-
     public static Connection connection = null;
 
+    public CommonTemplate(){}
 
-    public static Connection getConnection(Connection connection){
+
+    public static Connection getConnection(){
 
         if(connection == null) {
             try {
                 Properties properties = new Properties();
-                properties.load(new FileReader(""));
+                properties.load(new FileReader("src/main/java/com/prac/MVC/jdbcTemplate/e/config/database.properties"));
 
                 Class.forName(properties.getProperty("driver"));
                 connection = DriverManager.getConnection(properties.getProperty("url"),
