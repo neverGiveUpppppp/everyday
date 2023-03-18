@@ -6,6 +6,54 @@
 <mapper namespace="boardMapper">
 
 	
+<!-- 페이징처리1 :총게시물수 가져오기 -->
+	<select id="getListCount" resultType="_int">
+		SELECT
+			COUNT(BOARD_ID) 
+		FROM BOARD
+		WHERE BOARD_STATUS = 'Y'
+	</select>
+	
+	
+<!-- 페이징처리2 : 원하는 게시판 번호 조회 -->
+	<select id="getBoardList" resultMap="boardResultSet">
+		SELECT *
+		FROM BOARD
+			JOIN MEMBER ON (BOARD_WRITER = ID)
+		WHERE BOARD_STATUS = 'Y'
+		ORDER BY BOARD_ID DESC
+	</select>
+	<resultMap type="Board" id="boardResultSet">
+		<id column="BOARD_ID" property="boardId"/> 			        <!-- PK(기본키) -->
+		<result column="BOARD_TITLE" property="boardTitle"/>		<!-- 일반 컬럼 -->
+		<result column="BOARD_WRITER" property="boardWriter"/>
+		<result column="NICKNAME" property="nickName"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>  <!-- 위의 select태그에서 join해서 가져온 멤버테이블의 컬럼 nickname  -->
+		<result column="ORIGINAL_FILENAME" property="originalFileName"/>
+		<result column="RENAME_FILENAME" property="renameFileName"/>
+		<result column="BOARD_COUNT" property="boardCount"/>
+		<result column="BOARD_CREATE_DATE" property="boardCreateDate"/>
+		<result column="BOARD_MODIFY_DATE" property="boardModifyDate"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>
+	</resultMap>
+	
+	
+	<insert id="insertBoard" parameterType="Board">
+		INSERT INTO BOARD
+			VALUES(
+				SEQ_BID.NEXTVAL, 
+				#{boardTitle}, 
+				#{boardWriter}, 
+				#{boardContent}, 
+				#{originalFileName}, 
+				#{renameFileName}, 
+				DEFAULT,
+				SYSDATE,
+				SYSDATE,
+				DEFAULT
+			)
+	</insert>
+	
 	
 	<update id="addReadCount">
 		update board
@@ -20,6 +68,23 @@
 		where board_id = #{bId} and board_status = 'Y'
 	</select>
 
+
+	<update id="updateBoard" parameterType="Board">
+		UPDATE BOARD
+			SET BOARD_TITLE = #{boardTitle},
+				BOARD_CONTENT = #{boardContent},
+				<if test="originalFileName != null">
+					ORIGINAL_FILENAME = #{originalFileName},
+				</if>
+				RENAME_FILENAME = #{renameFileName},
+				BOARD_MODIFY_DATE = #{boardModifyDate}
+			WHERE BOARD_ID = #{boardId}
+	</update>
+
+	<delete id="deleteBoard" parameterType="Board">
+		DELETE FROM BOARD
+			WHERE BOARD_ID = #{bId}
+	</delete>
 
 
 </mapper>

@@ -13,8 +13,12 @@
 
 	<typeAliases>
 		<typeAlias type="com.kh.Spring.member.model.vo.Member" alias="Member"/>
-		<typeAlisas type="com.kh.Spring.board.model.vo.Board" alias="Board"/>
+		<typeAlias type="com.kh.Spring.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.kh.Spring.board.model.vo.Reply" alias="Reply"/>
+		
+		<typeAlias type="com.kh.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.vo.Board" alias="Board"/>
+		<typeAlias type="com.kh.vo.Reply" alias="Reply"/>
 	</typeAliases>
 
 	<mappers>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.a.board.model.vo.BoardVO;
 import com.kh.a.board.model.vo.PageInfo;
+import com.kh.vo.Reply;
 
 public interface BoardService {
 
@@ -19,6 +20,9 @@ public interface BoardService {
 	BoardVO selectBoard7(int boardId);
 	
 	int updateBoard(BoardVO boardVo);
+	int deleteBoard(int bId);
+	
+	int insertReply(Reply replyVo);
 	
 
 
