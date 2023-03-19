@@ -20,15 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.a.board.exception.BoardException;
 import com.kh.a.board.model.service.BoardService;
 import com.kh.a.board.model.vo.BoardVO;
 import com.kh.a.board.model.vo.PageInfo;
-import com.kh.a.board.model.vo.Reply;
+import com.kh.vo.Reply;
 import com.kh.a.common.Pagination;
+import com.kh.vo.Member;
 
 
 
@@ -41,6 +40,28 @@ public class BoardController {
 	@Autowired
 	public BoardService bService;
 	
+	
+	
+
+	/**  
+	 * 게시판 목록 조회 + 페이지네이션
+	 * 
+	 * 글쓰기 폼 이동
+	 * 게시판 등록
+	 * 게시판 등록 & saveFile
+	 * 
+	 * 게시판 상세
+	 * 
+	 * 게시판 수정폼 이동
+	 * 게시판 수정 + 파일 & deleteFile
+	 * 
+	 * 게시판 삭제  + 파일
+	 *
+	 * 댓글 쓰기
+	 * 댓글 목록읽기
+	 * Top-N 분석
+	 * 
+	 * **/
 	
 	
 	
@@ -282,6 +303,62 @@ public class BoardController {
 	
 	
 	
+	@RequestMapping("bdelete.bo")
+	public String deleteBoard(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
+		// 뷰에서 @RequestParam으로 renameFileName 보내는 곳 : boardDetailView.jsp 87-89 Line < c:url>,< c:param>을 통해 보냄
+		if(!renameFileName.equals("")) { // renameFileName이 비어있지 않다면
+			deleteFile(renameFileName, request); // renameFileName을 넘겨준다, 어디서 삭제할 것인가:request
+		}
+		int result = bService.deleteBoard(bId);
+		
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시판 삭제 실패");
+		}
+	}
+	/** 연습 텍스트 : 게시판 삭제 + 파일   **/
+	// 받아올 파라미터 & 사용할 객체 체크
+	// 삭제할 게시판에 파일이 있는지 체크 : 게시판만 삭제하고 파일을 남길 수는 없으니
+	// 남아 있다면 파일삭제
+	// 삭제 실행
+	
+	
+	
+	@RequestMapping("addReply.bo")
+	@ResponseBody
+	public String addReply(@ModelAttribute Reply replyVo, HttpSession session) {
+		String id = ((Member)session.getAttribute("loginUser")).getId(); // session영역에서 로그인 중인 유저의 id정보를 얻어서 vo Member타입으로 형변환
+		replyVo.setReplyWriter(id);
+		
+		int result = bService.insertReply(replyVo);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new BoardException("댓글 등록에 실패하였습니다.");
+		}
+	}
+	/** 연습 텍스트 : 댓글 쓰기 **/
+	// 받아올 파라미터 & 사용할 객체 체크
+	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
+	// 댓글쓴이 정보를 vo에 저장
+	// 댓글 정보 DB 저장
+	
+	
+	
+	
+	/** 연습 텍스트 : 댓글 목록읽기 **/
+	// 받아올 파라미터 & 사용할 객체 체크
+	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
+	// 댓글쓴이 정보를 vo에 저장
+	// 댓글 정보 DB 저장
+	
+	
+	/** 연습 텍스트 : Top-N 분석  **/
+	// 받아올 파라미터 & 사용할 객체 체크
+	// 루트 및 파일저장 경로 설정
+	// 파일객체 생성 및 경로지정
+	// 파일이 있다면, 삭제
 	
 	
 }

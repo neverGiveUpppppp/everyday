@@ -997,11 +997,24 @@ public class BoardController2 {
 
 	@RequestMapping("bdelete.bo")
 	public String deleteBoard(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
+		// 뷰에서 @RequestParam으로 renameFileName 보내는 곳 : boardDetailView.jsp 87-89 Line < c:url>,< c:param>을 통해 보냄
 		if(!renameFileName.equals("")) { // renameFileName이 비어있지 않다면
 			deleteFile(renameFileName, request); // renameFileName을 넘겨준다, 어디서 삭제할 것인가:request
 		}
 		int result = bService.deleteBoard(bId);
 		
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시판 삭제 실패");
+		}
+	}
+	@RequestMapping("bdelete.bo")
+	public String deleteBoard2(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
+		if(!renameFileName.equals("")) {
+			deleteFile2(renameFileName, request);
+		}
+		int result = bService.deleteBoard(bId);
 		if(result > 0) {
 			return "redirect:blist.bo";
 		}else {
@@ -1027,6 +1040,18 @@ public class BoardController2 {
 			return "success";
 		}else {
 			throw new BoardException("댓글 등록에 실패하였습니다.");
+		}
+	}
+	@RequestMapping("addReply.bo")
+	@ResponseBody
+	public String addReply2(Reply replyVo, HttpSession session) {
+		String id = ((Member)session.getAttribute("loginuser")).getId();
+		replyVo.setReplyWriter(id);
+		int result = bService.insertReply(replyVo);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new BoardException("댓글 등록 실패");
 		}
 	}
 	/** 연습 텍스트 : 댓글 쓰기 **/
