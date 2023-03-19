@@ -14,8 +14,10 @@ public class MemberController {
     public void memSelectAll() {
         ArrayList<MemberJSPTable> aList = ms.memSelectAll();
 
-        if(aList != null){
-            mv.memSelectAll();
+        if(aList != null && !aList.isEmpty()){
+            mv.memSelectAll(aList);
+        }else{
+            mv.message("전체 회원 조회 실패");
         }
 
     }

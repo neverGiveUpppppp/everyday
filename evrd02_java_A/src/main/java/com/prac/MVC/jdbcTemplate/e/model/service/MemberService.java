@@ -1,6 +1,7 @@
 package com.prac.MVC.jdbcTemplate.e.model.service;
 
 import com.prac.MVC.jdbcTemplate.b.model.vo.MemberVO;
+import com.prac.MVC.jdbcTemplate.e.common.CommonTemplate;
 import com.prac.MVC.jdbcTemplate.e.model.dao.MemberDAO;
 import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
 
@@ -13,13 +14,9 @@ public class MemberService {
     MemberDAO md = new MemberDAO();
 
     public ArrayList<MemberJSPTable> memSelectAll(){
-        Connection connection = getConnection();
+        Connection connection = CommonTemplate.getConnection();
         ArrayList<MemberJSPTable> aList = md.memSelectAll(connection);
-        if(aList != null){
-            commit(connection);
-        }else{
-            rollback(connection);
-        }
+        // DML이 아니므로 트랜잭션 필요x
         return aList;
     }
 

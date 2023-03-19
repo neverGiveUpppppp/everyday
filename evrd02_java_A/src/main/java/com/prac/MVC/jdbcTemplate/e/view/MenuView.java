@@ -1,7 +1,9 @@
 package com.prac.MVC.jdbcTemplate.e.view;
 
 import com.prac.MVC.jdbcTemplate.e.controller.MemberController;
+import com.prac.MVC.jdbcTemplate.vo.MemberJSPTable;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuView {
@@ -23,7 +25,7 @@ public class MenuView {
             System.out.print("메뉴 번호 입력 : ");
             menuSelection = Integer.parseInt(sc.nextLine());
 
-            switch (menuSelection){
+            switch(menuSelection){
                 case 1: mc.memSelectAll(); break;
 //                case 2: break;
 //                case 3: break;
@@ -41,8 +43,13 @@ public class MenuView {
     }
 
 
-    public void memSelectAll(){
-
+    public void memSelectAll(ArrayList<MemberJSPTable> aList){
+//        for(int i=0; i < aList.size();i++){
+//            System.out.println(aList.get(i));
+//        }
+        for(MemberJSPTable m : aList){
+            System.out.println(m);
+        }
     }
 
 
