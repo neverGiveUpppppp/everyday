@@ -1021,6 +1021,18 @@ public class BoardController2 {
 			throw new BoardException("게시판 삭제 실패");
 		}
 	}
+	@RequestMapping("bdelete.bo")
+	public String deleteBoard3(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
+		if(renameFileName != null && !renameFileName.isEmpty()) {
+			deleteFile3(renameFileName, request);
+		}
+		int result = bService.deleteBoard(bId);
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시판 삭제 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 삭제 + 파일   **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 삭제할 게시판에 파일이 있는지 체크 : 게시판만 삭제하고 파일을 남길 수는 없으니
@@ -1046,6 +1058,18 @@ public class BoardController2 {
 	@ResponseBody
 	public String addReply2(Reply replyVo, HttpSession session) {
 		String id = ((Member)session.getAttribute("loginuser")).getId();
+		replyVo.setReplyWriter(id);
+		int result = bService.insertReply(replyVo);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new BoardException("댓글 등록 실패");
+		}
+	}
+	@RequestMapping("addReply.bo")
+	@ResponseBody
+	public String addReply3(Reply replyVo, HttpSession session) {
+		String id = ((Member)session.getAttribute("loginUser")).getId();
 		replyVo.setReplyWriter(id);
 		int result = bService.insertReply(replyVo);
 		if(result > 0) {
