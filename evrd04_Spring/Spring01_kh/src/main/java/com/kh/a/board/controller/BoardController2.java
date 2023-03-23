@@ -557,7 +557,7 @@ public class BoardController2 {
 		}
 		return renameFileName;
 	}
-	public void saveFile9(MultipartFile uploadFile, HttpServletRequest request) {
+	public String saveFile9(MultipartFile uploadFile, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\uploadFiles";
 		File file = new File(savePath);
@@ -575,6 +575,7 @@ public class BoardController2 {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+		return renameFileName;
 	}
 	/** 연습 텍스트 : saveFile **/
 	// 받아올 파라미터 & 사용할 객체 체크
