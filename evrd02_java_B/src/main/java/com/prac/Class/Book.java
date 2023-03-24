@@ -12,14 +12,8 @@ public class Book {
     @Override
     public String toString() {
         System.out.println(bookTitle+" "+bookNumber);
+        return bookTitle+" "+bookNumber;
     }
+
 }
 
-public class toStringEx {
-    public static void main (String[] args) {
-        Book book = new Book(100,"개미");
-
-        System.out.println(book);
-        System.out.println(book.toString());
-    }
-}

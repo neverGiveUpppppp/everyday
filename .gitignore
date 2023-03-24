@@ -19,6 +19,8 @@
 .*/.metadata/
 /target/
 
+evrd02_java_B/out/
+
 
 # doc/notes.txt 파일은 무시하고 doc/server/arch.txt 파일은 무시하지 않음
 #doc/*.txt
