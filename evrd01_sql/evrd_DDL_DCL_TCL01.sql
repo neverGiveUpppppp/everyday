@@ -1,8 +1,14 @@
 /*
-DDL(DATA DEFINITION LANGUAGE)
-- CREATE, ALTER, RENAME, DROP
+DDL(DATA DEFINITION LANGUAGE):  데이터 정의어
+- CREATE, ALTER, RENAME, DROP, TRUNCATE 
 
- 간단 정리하기
+DCL(Data Control Language) : 데이터 제어어
+ - GRANT, REVOKE
+
+TCL(Transaction Control Language) : 트랜잭션 제어어
+ - COMMIT, ROLLBACK, SAVEPOINT
+
+
 
 */
 
