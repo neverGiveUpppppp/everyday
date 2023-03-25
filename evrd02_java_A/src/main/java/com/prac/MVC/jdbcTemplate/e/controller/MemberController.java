@@ -19,6 +19,27 @@ public class MemberController {
         }else{
             mv.message("전체 회원 조회 실패");
         }
+    }
+
+    public void memSelectCondition() {
+        int selectNum = mv.memSelectCondition();
+        MemberJSPTable memVo = null;
+        switch(selectNum){
+            case 1:
+                String memberId = mv.memberId();
+                memVo = ms.memSelectId(memberId);
+
+            case 2:
+
+                System.out.println("1.아이디로 회원조회");
+                System.out.println("2.닉네임으로 회원조회");
+                System.out.println("0.메인 메뉴로 돌아가기");
+        }
+        if(memVo != null){
+            mv.memberSelectReslt(memVo);
+        }else{
+            mv.message("회원 조회 실패");
+        }
 
     }
 

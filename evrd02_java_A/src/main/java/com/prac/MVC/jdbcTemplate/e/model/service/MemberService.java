@@ -21,5 +21,12 @@ public class MemberService {
     }
 
 
+    public MemberJSPTable memSelectId(String memberId) {
+        Connection conn = getConnection();
+        MemberJSPTable memVo = md.memSelectId(conn, memberId);
+        return memVo;
+    }
+
+
 
 }
