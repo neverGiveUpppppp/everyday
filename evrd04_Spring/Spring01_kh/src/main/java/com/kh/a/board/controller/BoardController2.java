@@ -195,9 +195,9 @@ public class BoardController2 {
 		}
 	}
 	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
-	public String boardList8(BoardVO bodVo, @RequestParam("page") int page, Model model) {
+	public String boardList8(BoardVO bodVo, @RequestParam("page") Integer page, Model model) {
 		int currentPage = 1;
-		if(page != page) {
+		if(page != null) {
 			currentPage = page;
 		}
 		int listCount = bService.getListCount();
@@ -205,6 +205,22 @@ public class BoardController2 {
 		ArrayList<BoardVO> boardList = bService.getBoardList(pi);
 		if(boardList != null) {
 			model.addAttribute("list",boardList).addAttribute("pi",pi);
+			return "redirect:boardListView";
+		}else {
+			throw new BoardException("게시글 목록 조회 실패");
+		}
+	}
+	@RequestMapping(value="blist.bo", method=RequestMethod.GET)
+	public String boardList9(BoardVO boardVo, @RequestParam("page") Integer page, Model model) {
+		int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = bService.getListCount();
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount);
+		ArrayList<BoardVO> boardList = bService.getBoardList(pi);
+		if(boardList != null) {
+			model.addAttribute("list",boardList);
 			return "redirect:boardListView";
 		}else {
 			throw new BoardException("게시글 목록 조회 실패");
