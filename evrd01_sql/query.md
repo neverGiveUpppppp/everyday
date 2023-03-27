@@ -1,6 +1,7 @@
 
 
-# DDL(DATA DEFINITION LANGUAGE):  데이터 정의어    
+# DDL    
+DDL(DATA DEFINITION LANGUAGE):  데이터 정의어    
 - CREATE, ALTER, RENAME, DROP, TRUNCATE     
 
 
