@@ -1,5 +1,8 @@
 
 
+# DDL(DATA DEFINITION LANGUAGE):  데이터 정의어    
+- CREATE, ALTER, RENAME, DROP, TRUNCATE     
+
 
 ## ALTER
 컬럼 추가,수정,삭제    
