@@ -19,8 +19,8 @@ WHERE 직원코드 IN (1001,1002);
 ---- ALTER TABLE 해당 테이블명 DROP COLUMN 삭제할 컬럼명;
 -- ALTER 제약조건 추가, 수정,삭제
 ---- ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건(컬럼명);
----- ALTER TABLE 테이블명 MODIFY 컬럼명 CONSTRAINT 제약조건명 NOT NULL;
----- NOT NULL만 MODIFY이고 나머지는 ADD
+---- ALTER TABLE 테이블명 MODIFY 컬럼명 CONSTRAINT 제약조건명;
+---- NOT NULL은 이미 NULL조건이기 때문에 MODIFY로 수정해야함
 ALTER TABLE 직원 ADD 성별 VARCHAR2(1);
 ALTER TABLE 부서 ADD 부서분류 VARCHAR2(20);
 ALTER TABLE 직원 MODIFY 성별 VARCHAR2(10);
