@@ -27,7 +27,7 @@ public class MenuView {
 
             switch(menuSelection){
                 case 1: mc.memSelectAll(); break;
-//                case 2: break;
+                case 2: mc.memSelectCondition(); break;
 //                case 3: break;
                 default:
                     System.out.println("잘못 입력하셨습니다");
@@ -42,6 +42,11 @@ public class MenuView {
         System.out.println(str);
     }
 
+    public String memberId(){
+        System.out.print("회원 아이디 :  ");
+        String memberId = sc.nextLine();
+        return memberId;
+    }
 
     public void memSelectAll(ArrayList<MemberJSPTable> aList){
 //        for(int i=0; i < aList.size();i++){
@@ -51,6 +56,30 @@ public class MenuView {
             System.out.println(m);
         }
     }
+
+
+    public int memSelectCondition() {
+        System.out.println("1.아이디로 회원조회");
+        System.out.println("2.닉네임으로 회원조회");
+        System.out.println("0.메인 메뉴로 돌아가기");
+        System.out.print("번호 선택 : ");
+        int selectNum = Integer.parseInt(sc.nextLine());
+
+        switch (selectNum){
+            case 1: case 2: case 0: return selectNum;
+            default:
+                System.out.println("잘못 입력하셨습니다. 다시 입력해주세요.");
+                memSelectCondition(); // while문 안쓰고 반복 시켜보기
+        }
+        return selectNum;
+    }
+    public void memberSelectReslt(MemberJSPTable memVo) {
+        System.out.println(memVo);
+    }
+
+
+
+
 
 
 }

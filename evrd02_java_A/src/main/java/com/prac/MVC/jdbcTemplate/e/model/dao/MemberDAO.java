@@ -63,4 +63,39 @@ public class MemberDAO {
 
 
 
+
+    public MemberJSPTable memSelectId(Connection conn, String memberId){
+        MemberJSPTable memVo = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query = propetis.getProperty("mem_selectId");
+
+        try{
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, memberId);
+            rs = pstmt.executeQuery();
+
+//            System.out.println(rs);
+
+            while(rs.next()){
+                // 조회해서 보여줄 필요 없는 비번 같은 건 안받아옴
+                String userName = rs.getString("USER_NAME");
+                String nickname = rs.getString("NICKNAME");
+                String phone = rs.getString("PHONE");
+                String email = rs.getString("EMAIL");
+                String address = rs.getString("ADDRESS");
+                String interest= rs.getString("INTEREST");
+                memVo = new MemberJSPTable(memberId, userName,nickname,phone, email, address, interest);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally {
+            close(rs);
+            close(pstmt);
+        }
+        return memVo;
+    }
+
+
+
 }
