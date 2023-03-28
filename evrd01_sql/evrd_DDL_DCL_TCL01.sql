@@ -14,6 +14,28 @@ TCL(Transaction Control Language) : 트랜잭션 제어어
 
 
 
+/*
+
+ ALTER : 객체 수정
+ 컬럼 추가/삭제, 제약조건 추가/삭제, 컬럼 자료형 변경, 디폴트값 변경 & 테이블명/컬럼명/제약조건명 변경
+
+1)ALTER 컬럼 추가, 수정,삭제
+ALTER TABLE 테이블명 ADD 추가할컬럼명 데이터타입
+ALTER TABLE 테이블명 MODIFY 수정할컬럼명 데이터타입          ※ 수정할려는 크기가 더 작으면 에러
+ALTER TABLE 테이블명 DROP COLUMN 삭제할 컬럼명;
+
+2)ALTER 제약조건 추가, 수정,삭제
+ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건(컬럼명);
+ALTER TABLE 테이블명 MODIFY 컬럼명 CONSTRAINT 제약조건명;
+※ NOT NULL은 이미 NULL이 기본으로 있는 상태이기 때문에 ADD가 아닌 MODIFY로 수정해야함
+
+*/
+ALTER TABLE 사무용품 ADD 컴퓨터 VARCHAR2(10);
+ALTER TABLE 사무용품 MODIFY 컴퓨터 DATE;
+ALTER TABLE 사무용품 MODIFY 컴퓨터 VARCHAR2(20);
+ALTER TABLE 사무용품 DROP COLUMN 컴퓨터 CASCADE CONSTRAINTS;
+
+
 CREATE TABLE 테이블명(
     시퀀스넘버 NUMBER NOT NULL,
     식별번호 NUMBER NOT NULL,

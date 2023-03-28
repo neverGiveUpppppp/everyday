@@ -1,3 +1,47 @@
+
+SELECT 학과, 점수
+FROM 학생
+GROUP BY 학과;
+
+SELECT 학과, MIN(점수)AS 최소점수, MAX(점수) AS 최대점수
+FROM 학생
+--GROUP BY 학과
+GROUP BY 학과;
+--GROUP BY 학과,점수;
+HAVING AVG(점수) >= 90;
+
+SELECT * FROM 학생;
+ALTER TABLE 학생 DROP COLUMN 학과 CASCADE CONSTRAINT;
+ALTER TABLE 학생 ADD 점수 NUMBER;
+INSERT INTO 학생 VALUES('컴퓨터구조', 95);
+INSERT INTO 학생 VALUES('컴퓨터구조', 84);
+INSERT INTO 학생 VALUES('DB', 89);
+INSERT INTO 학생 VALUES('인공지능', 92);
+INSERT INTO 학생 VALUES('DB', 100);
+INSERT INTO 학생 VALUES('DB', 88);
+INSERT INTO 학생 VALUES('인공지능', 93);
+
+DELETE FROM 학생; 
+SELECT * FROM 학생;
+---------
+
+SELECT 학과, COUNT(학과) AS 학과별튜플수
+FROM 학생
+GROUP BY 학과;
+
+CREATE TABLE 학생(
+    학과 VARCHAR2(10)
+);
+INSERT INTO 학생 VALUES('전기');
+INSERT INTO 학생 VALUES('컴퓨터');
+INSERT INTO 학생 VALUES('전자');
+INSERT INTO 학생 VALUES('전자');
+INSERT INTO 학생 VALUES('컴퓨터');
+
+
+
+
+
 -- INDEX
 -- INDEX 생성 : CREATE INDEX 인덱스명 ON 테이블명(컬럼명)
 -- INDEX 삭제 : DROP INDEX 인덱스명
@@ -10,17 +54,22 @@ FROM 직원
 WHERE 직원코드 IN (1001,1002);
 
 
--- ALTER : 객체 수정
--- 컬럼 추가/삭제, 제약조건 추가/삭제, 컬럼 자료형 변경, 디폴트값 변경 & 테이블명/컬럼명/제약조건명 변경
--- ALTER 컬럼 추가, 수정,삭제
----- ALTER TABLE 테이블명 ADD 추가할컬럼명 데이터타입
----- ALTER TABLE 테이블명 MODIFY 수정할컬럼명 데이터타입 
------- 수정할려는 크기가 더 작으면 에러
----- ALTER TABLE 해당 테이블명 DROP COLUMN 삭제할 컬럼명;
--- ALTER 제약조건 추가, 수정,삭제
----- ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건(컬럼명);
----- ALTER TABLE 테이블명 MODIFY 컬럼명 CONSTRAINT 제약조건명;
----- NOT NULL은 이미 NULL조건이기 때문에 MODIFY로 수정해야함
+/*
+
+ ALTER : 객체 수정
+ 컬럼 추가/삭제, 제약조건 추가/삭제, 컬럼 자료형 변경, 디폴트값 변경 & 테이블명/컬럼명/제약조건명 변경
+
+1)ALTER 컬럼 추가, 수정,삭제
+ALTER TABLE 테이블명 ADD 추가할컬럼명 데이터타입
+ALTER TABLE 테이블명 MODIFY 수정할컬럼명 데이터타입          ※ 수정할려는 크기가 더 작으면 에러
+ALTER TABLE 테이블명 DROP COLUMN 삭제할 컬럼명;
+
+2)ALTER 제약조건 추가, 수정,삭제
+ALTER TABLE 테이블명 ADD CONSTRAINT 제약조건명 제약조건(컬럼명);
+ALTER TABLE 테이블명 MODIFY 컬럼명 CONSTRAINT 제약조건명;
+※ NOT NULL은 이미 NULL이 기본으로 있는 상태이기 때문에 ADD가 아닌 MODIFY로 수정해야함
+
+*/
 ALTER TABLE 직원 ADD 성별 VARCHAR2(1);
 ALTER TABLE 부서 ADD 부서분류 VARCHAR2(20);
 ALTER TABLE 직원 MODIFY 성별 VARCHAR2(10);
