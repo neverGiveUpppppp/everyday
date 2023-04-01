@@ -1070,7 +1070,7 @@ public class BoardController2 {
 	}
 	@RequestMapping("bdelete.bo")
 	public String deleteBoard3(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
-		if(renameFileName != null && !renameFileName.isEmpty()) {
+		if(!renameFileName.equals("")) { // renameFileName이 비어있지 않다면
 			deleteFile3(renameFileName, request);
 		}
 		int result = bService.deleteBoard(bId);
@@ -1082,7 +1082,7 @@ public class BoardController2 {
 	}
 	@RequestMapping("bdelete.bo")
 	public String deleteBoard4(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
-		if(renameFileName != null && !renameFileName.isEmpty()) {
+		if(!renameFileName.equals("")) { 
 			deleteFile4(renameFileName, request);
 		}
 		int result = bService.deleteBoard(bId);
@@ -1091,6 +1091,20 @@ public class BoardController2 {
 		}else {
 			throw new BoardException("게시판 삭제 실패");
 		}
+	}
+	@RequestMapping("bdelete.bo")
+	public String deleteBoard5(@RequestParam("bId") int bId,
+							@RequestParam("renameFileName") String renameFileName, HttpServletRequest request ) {
+		if(!renameFileName.equals("")) { // renameFileName이 비어있지 않다면
+			deleteFile(renameFileName, request); // renameFileName을 넘겨준다, 어디서 삭제할 것인가:request
+		}
+		int result = bService.deleteBoard(bId);
+		if(result > 0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시판 삭제 실패");
+		}
+		
 	}
 	/** 연습 텍스트 : 게시판 삭제 + 파일   **/
 	// 받아올 파라미터 & 사용할 객체 체크
@@ -1149,6 +1163,19 @@ public class BoardController2 {
 			throw new BoardException("댓글 등록 실패");
 		}
 	}
+	@RequestMapping("addReply.bo")
+	@ResponseBody
+	public String addReply5(@ModelAttribute Reply replyVo, HttpSession session) {
+		String replyWriter = ((Member)session.getAttribute("loginUser")).getId();
+		replyVo.setReplyWriter(replyWriter);
+		int result = bService.insertReply(replyVo);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new BoardException("댓글 등록 실패");
+		}
+	}
+	
 	/** 연습 텍스트 : 댓글 쓰기 **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
