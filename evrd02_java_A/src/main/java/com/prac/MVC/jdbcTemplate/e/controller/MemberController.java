@@ -30,7 +30,6 @@ public class MemberController {
                 memVo = ms.memSelectId(memberId);
 
             case 2:
-
                 System.out.println("1.아이디로 회원조회");
                 System.out.println("2.닉네임으로 회원조회");
                 System.out.println("0.메인 메뉴로 돌아가기");
