@@ -782,6 +782,17 @@ public class BoardController2 {
 			throw new BoardException("게시글 상세보기 실패");
 		}
 	}
+	@RequestMapping("bdetail.bo")
+	public String boardDetail9(@RequestParam("bId") int bId, @RequestParam(value="page", required=false) int page, Model model) {
+		BoardVO board = bService.selectBoard9(bId);
+		if(board != null) {
+			model.addAttribute("bId",bId);
+			model.addAttribute("page",page);
+			return "redirect:boardDetailView";
+		}else {
+			throw new BoardException("게시글 상세조회 실패");
+		}
+	}
 	/** 연습 텍스트 : 게시판 상세  **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 비니지스 로직 실행 : 게시판상세읽기

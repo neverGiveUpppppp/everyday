@@ -18,11 +18,13 @@ public interface BoardService {
 	BoardVO selectBoard5(int boardId);
 	BoardVO selectBoard6(int bId);
 	BoardVO selectBoard7(int boardId);
+	BoardVO selectBoard9(int bId);
 	
 	int updateBoard(BoardVO boardVo);
 	int deleteBoard(int bId);
 	
 	int insertReply(Reply replyVo);
+
 	
 
 
