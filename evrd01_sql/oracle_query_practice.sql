@@ -1,5 +1,25 @@
 
+SELECT A.코드, A.이름, 동아리명
+FROM 사원 A
+    LEFT JOIN 동아리 B ON (A.CODE = B.CODE);
 
+SELECT 과목이름, MIN(점수), MAX(점수)
+FROM 성적
+GROUP BY 과목이름
+HAVING AVG(점수) >= 90;
+
+SELECT 학과, COUNT(*) AS 학과별튜플수
+FROM 학생
+GROUP BY 학과;
+
+SELECT * FROM 회원 
+WHERE 이름 LIKE '이%'
+ORDER BY 가입일순 DESC;
+
+CREATE INDEX idx_name ON student(name);
+SELECT 학번, 이름 FROM 학생 WHERE 학년 IN (3,4);
+ALTER TABLE 학생 ADD 주소 VARCHAR2(20);
+DELETE FROM 학생 WHERE 이름 = '민수';
 
 
 ----------
@@ -11,7 +31,7 @@ FROM EMPLOYEE EMP
     JOIN JOB J ON(EMP.JOB_CODE = J.JOB_CODE)
 WHERE EMP_NAME LIKE '선%';
 
--- 오라클 구준 + LIKE
+-- 오라클 구문 + LIKE
 SELECT EMP_NAME, DEPT_CODE, SAL_LEVEL
 FROM EMPLOYEE E,JOB J
 WHERE E.JOB_CODE = J.JOB_CODE
