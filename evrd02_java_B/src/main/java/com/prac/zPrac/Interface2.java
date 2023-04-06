@@ -63,7 +63,7 @@ public class Interface2 {
         Perm perm = new Perm();
         hairCut.setCustomerType("남성");
         perm.setCustomerType("여성");
-        hairCut.customerType
+//        hairCut.customerType
         hairdresser.hairJob(hairCut);
         hairdresser.hairJob(perm);
         hairdresser.waiting(hairCut);
