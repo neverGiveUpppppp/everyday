@@ -36,7 +36,7 @@ class Samsung extends Smartphone2 implements Brand{
 }
 
 class Manufacturer{
-//    void produce(Apple apple){ 
+//    void produce(Apple apple){
 //        System.out.println("아이폰 생산");
 //    }
 //    void produce(Samsung samsung){
