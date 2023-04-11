@@ -1,4 +1,6 @@
 
+
+
 SELECT A.코드, A.이름, 동아리명
 FROM 사원 A
     LEFT JOIN 동아리 B ON (A.CODE = B.CODE);
