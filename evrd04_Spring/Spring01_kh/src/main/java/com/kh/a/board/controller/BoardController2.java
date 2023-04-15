@@ -1150,13 +1150,26 @@ public class BoardController2 {
 		}else {
 			throw new BoardException("게시판 삭제 실패");
 		}
-		
+	}
+	@RequestMapping("bdelete.bo")
+	public String deleteBoard6(@RequestParam("bId") int bId, @RequestParam("renameFileName") String renameFileName, HttpServletRequest request) {
+		if(!renameFileName.equals("")) {
+			deleteFile(renameFileName,request);
+		}
+		int result = bService.deleteBoard(bId);
+		if(result>0) {
+			return "redirect:blist.bo";
+		}else {
+			throw new BoardException("게시판 삭제 실패");
+		}
 	}
 	/** 연습 텍스트 : 게시판 삭제 + 파일   **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 삭제할 게시판에 파일이 있는지 체크 : 게시판만 삭제하고 파일을 남길 수는 없으니
 	// 남아 있다면 파일삭제
 	// 삭제 실행
+	// blist.bo로 이동
+	
 	
 	
 	
@@ -1227,7 +1240,6 @@ public class BoardController2 {
 	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
 	// 댓글쓴이 정보를 vo에 저장
 	// 댓글 정보 DB 저장
-	
 	
 	
 	

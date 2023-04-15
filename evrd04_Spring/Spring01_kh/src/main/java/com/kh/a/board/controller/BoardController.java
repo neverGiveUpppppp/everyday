@@ -322,7 +322,7 @@ public class BoardController {
 	// 삭제할 게시판에 파일이 있는지 체크 : 게시판만 삭제하고 파일을 남길 수는 없으니
 	// 남아 있다면 파일삭제
 	// 삭제 실행
-	
+	// blist.bo로 이동
 	
 	
 	@RequestMapping("addReply.bo")
