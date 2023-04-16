@@ -1,7 +1,7 @@
 package com.prac.Interface;
 
 
-// 출처 : https://kjh95.tistory.com/137
+// 출처 및 원본 : https://kjh95.tistory.com/137
 
 import java.rmi.Remote;
 
@@ -21,6 +21,9 @@ interface RemoteControl{
 
     static final int MAX_VOLUMN = 10; // static final 생략가능. 컴파일 시, 자동추가해줌
     static final int MIN_VOLUMN = 0;
+//    static boolean POWER = false; // 인터페이스 내에서는 자동으로 final이 추가됨. 따라서 TV 클래스에 생성해야함
+
+
     public abstract void turnOn();    // abstract 생략가능. 컴파일 시, 자동추가해줌
     public abstract void turnOff();
     public abstract void setVolume(int volume);
@@ -55,6 +58,8 @@ class Audio implements RemoteControl{
 }
 class Television implements RemoteControl{
     private int volume;
+    static boolean POWER = false;
+
     @Override
     public void turnOn(){
         System.out.println("TV : turn on");
