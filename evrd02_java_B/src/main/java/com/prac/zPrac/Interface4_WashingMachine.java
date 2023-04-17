@@ -58,7 +58,7 @@ class LGWashingMachine implements WashingMachine, PlusFunction{
 
 
 
-public class Interface_WashingMachine {
+public class Interface4_WashingMachine {
     public static void main(String[] args) {
         LGWashingMachine lg = new LGWashingMachine();
         lg.startButton();

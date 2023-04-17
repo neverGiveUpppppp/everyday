@@ -6,7 +6,7 @@ package com.prac.zPrac;
 interface Remote_Control{
     static final int MAX_VOLUME = 10;
     static final int MIN_VOLUME = 0;
-//    static boolean POWER = false; // 인터페이스 내에서는 자동으로 final이 추가됨. 따라서 TV 클래스에 생성해야함
+//    static boolean POWER = false; // 인터페이스 내에서는 상수(final)만 선언가능하며, 자동으로 final이 추가됨. 따라서 TV 클래스에 생성해야함
 
     public abstract boolean turnOn();
     public abstract boolean turnOff();
@@ -15,44 +15,49 @@ interface Remote_Control{
 
 }
 
-class TV implements Remote_Control{
+class TVController implements Remote_Control{
     TvView tvView = new TvView();   // 메세지 출력할 view 클래스 인스턴스생성
-    private int volume = 0;
-    static boolean POWER = false;
+    TvVO tvVO = new TvVO(); // class를 파일별로 분할 시에는 import로
 
 
     @Override
     public boolean turnOn() {
         tvView.turnOn();
-        return POWER = true;
+        tvVO.setPOWER(true);
+//        System.out.println(tvVO.POWER); // 디버깅용
+        return tvVO.POWER;
+//        return tvVO.POWER = true;
     }
     @Override
     public boolean turnOff() {
         tvView.turnOff();
-        return POWER = false;
+        tvVO.setPOWER(false);
+//        return POWER = false;
+        return tvVO.POWER;
     }
     @Override
     public int setVolume(int volume) {
-        if(POWER == true) {
+        if(tvVO.POWER == true) {
             if (volume > MAX_VOLUME) {
-                this.volume = MAX_VOLUME;
+//                this.volume = MAX_VOLUME;     vo class 적용
+                tvVO.setVolume(MAX_VOLUME);
                 tvView.maxVolume();
                 tvView.currentVolume(volume);
             } else if (volume < MIN_VOLUME) {
-                this.volume = MIN_VOLUME;
+//                this.volume = MIN_VOLUME;     vo class 적용
+                tvVO.setVolume(MIN_VOLUME);
                 tvView.minVolume();
                 tvView.currentVolume(volume);
             } else {
-                this.volume = volume;
+//                this.volume = volume;         vo class 적용
+                tvVO.setVolume(volume);
                 tvView.currentVolume(volume);
             }
         }else{
             tvView.power();
         }
-        return volume;
+        return tvVO.getVolume();
     }
-
-
 }
 
 class TvView{
@@ -78,12 +83,27 @@ class TvView{
 }
 
 class TvVO{
+    private int volume = 0;
+    static boolean POWER = false;
+
+    public int getVolume() {
+        return volume;
+    }
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+    public static boolean isPOWER() {
+        return POWER;
+    }
+    public static void setPOWER(boolean POWER) {
+        TvVO.POWER = POWER;
+    }
 
 }
 
-public class Interface6_RemoteControl_MVC {
+public class Interface5_RemoteControl_MVC {
     public static void main(String[] args) {
-        TV tv = new TV();
+        TVController tv = new TVController();
         tv.turnOn();
         tv.setVolume(5);
         tv.setVolume(10);
