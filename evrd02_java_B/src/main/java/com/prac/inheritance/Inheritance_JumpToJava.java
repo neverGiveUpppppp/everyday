@@ -24,7 +24,6 @@ class HouseDog extends Dog{
     void sleep(int hour){
         System.out.println(this.name + " zzz in house for " + hour + "hours");
     }
-
 }
 
 
@@ -41,7 +40,5 @@ public class Inheritance_JumpToJava {
         houseDog.sleep(); // happy zz
         // 오버라이딩(재정의) 후 : happy zzz in house
         houseDog.sleep(5); // happy zzz in house for 5hours
-
-
     }
 }

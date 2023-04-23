@@ -6,7 +6,7 @@ class SuperObject{
         draw();
     }
     public void draw(){
-        draw();
+        draw(); // subclass draw()로 내려감
         System.out.println("프린트 : Super Object");
     }
 }
@@ -20,13 +20,11 @@ class SubObject extends SuperObject{
     }
 }
 
-
 public class Inheritance_moveTurn2{
     public static void main(String[]args){
 
         SuperObject superObj = new SubObject();
         superObj.print();
-
 //        System.out.println(1%2); // 1
 //        System.out.println(2%4); // 2
 //        System.out.println(3%4); // 3
@@ -34,10 +32,4 @@ public class Inheritance_moveTurn2{
 //        System.out.println(6%3); // 0
 //        System.out.println(3%6); // 3
     }
-
-
-
-
-
-
 }
