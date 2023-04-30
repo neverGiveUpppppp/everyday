@@ -4,15 +4,18 @@ package com.prac.Interface;
 interface Predator{
     String getFood();
 
-    // 자바8 버전 이후부터는 interface에 디폴트 메서드(default method) 사용가능
+    // interface default method
+    //      java ver.8이상 사용가능
+    //      사용법 : default메소드는 하위클래스에서 메소드 선언안해도 인터페이스 디폴트 메소드를 사용가능
     default void printFood(){
-
         System.out.printf("my food is %s%n",getFood());
     }
 
-    // 자바8 버전 이후부터는 인터페이스에 스태틱 메서드(static method) 사용 가능
-    int LEG_COUNT = 4; // 인터페이스 상수
-
+    // interface static method
+    //      java ver.8이상 사용가능
+    //      사용법 : 일반 클래스의 스태틱 메서드 사용처럼 사용 가능
+    int LEG_COUNT = 4; // 인터페이스의 상수
+                       // 인터페이스의 상수는 public static final 생략 가능(다른 형태의 상수 정의는 불가능)
     static int speed(){
         return LEG_COUNT * 30;
     }
@@ -33,6 +36,7 @@ class Tiger extends Animal implements Predator{
     public String getFood() {  // 인터페이스의 메서드는 항상 public으로 구현
         return "apple";
     }
+
 }
 class Lion extends Animal implements Predator{
     public String getFood(){
@@ -51,6 +55,7 @@ class ZooKeeper{
 
     // 인터페이스 추가 후
     void feed(Predator predator){
+
         System.out.println("feed " + predator.getFood());
     }
 
@@ -64,6 +69,18 @@ public class Interface_JumpToJava {
         zooKeeper.feed(tiger); // feed apple
         zooKeeper.feed(lion);  // feed banana
 
+
+        // interface default method 사용법
+        tiger.printFood();  // my food is apple
+        lion.printFood();   // my food is banana
+
+        // interface static method 사용법
+        Predator.speed();
+        System.out.println(Predator.speed()); // 120
+
+        // interface final 상수 사용법
+        System.out.println(Predator.LEG_COUNT); // 4
+        Jump to Java interface commentary & code added : how to use interface default method,static method, interface final
 
 /*
 인터페이스 필요성
