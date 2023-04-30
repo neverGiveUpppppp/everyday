@@ -105,4 +105,10 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.insertReply",replyVo);
 	}
 
+
+	// 댓글 가져오기 : selectList
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int bId) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", bId);
+	}
+
 }

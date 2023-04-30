@@ -24,6 +24,8 @@ public interface BoardService {
 	int deleteBoard(int bId);
 	
 	int insertReply(Reply replyVo);
+	
+	ArrayList<Reply> selectReplyList(int bId);
 
 	
 

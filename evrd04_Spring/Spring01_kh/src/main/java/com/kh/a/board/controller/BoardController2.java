@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -1234,7 +1236,18 @@ public class BoardController2 {
 			throw new BoardException("댓글 등록 실패");
 		}
 	}
-	
+	@RequestMapping("addReply.bo")
+	@ResponseBody
+	public String addReply6(@ModelAttribute Reply replyVo, HttpSession session) {
+		String writerId = ((Member)session.getAttribute("loginUser")).getId();
+		replyVo.setReplyWriter(writerId);
+		int result = bService.insertReply(replyVo);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new BoardException("댓글 등록 실패");
+		}
+	}
 	/** 연습 텍스트 : 댓글 쓰기 **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
@@ -1243,11 +1256,61 @@ public class BoardController2 {
 	
 	
 	
+	
+	@RequestMapping(value="rList.bo", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String getReplyList(@RequestParam("bId") int bId) {
+		ArrayList<Reply> list = bService.selectReplyList(bId);
+
+		JSONArray jArr = new JSONArray();
+		for(Reply r : list) {
+			JSONObject job = new JSONObject();
+			job.put("replyId", r.getReplyId());
+			job.put("replyContent", r.getReplyContent());
+			job.put("replyWriter", r.getReplyWriter());
+			job.put("nickName", r.getNickName());
+			job.put("replyCreateDate", r.getReplyCreateDate());
+			job.put("replyModifyDate", r.getReplyModifyDate());
+			job.put("replyStatus", r.getReplyStatus());
+			
+			jArr.put(job);
+		}
+		// @ResponseBody 필요
+		// 이유 : 리턴이 스트링인데 뷰리졸버가 뷰파일로 바꾸기 때문
+		// 뷰리졸버에게 뷰에대한 경로를 넘기지 않고 데이터로 담아서 보낼 수 있게 인지시켜야함
+		return jArr.toString();
+		// 연습텍스트 다른 파일에 넣어주기
+	}
+	@RequestMapping(value="rList.bo", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String getReplyList2(@RequestParam("bId") int bId) {
+		
+		ArrayList<Reply> replyList = bService.selectReplyList(bId);
+		
+		JSONArray jsonArr = new JSONArray();
+		
+		for(Reply reply : replyList) {
+			JSONObject jsonObj	= new JSONObject();
+			jsonObj.put("replyId", reply.getReplyId());
+			jsonObj.put("replyContent", reply.getReplyContent());
+			jsonObj.put("replyWriter", reply.getReplyWriter());
+			jsonObj.put("nickName", reply.getNickName());
+			jsonObj.put("replyCreateDate", reply.getReplyCreateDate());
+			jsonObj.put("replyModifyDate", reply.getReplyModifyDate());
+			jsonObj.put("replyStatus", reply.getReplyStatus());
+			
+			jsonArr.put(jsonObj);
+		}
+		return jsonArr.toString();
+	}
 	/** 연습 텍스트 : 댓글 목록읽기 **/
-	// 받아올 파라미터 & 사용할 객체 체크
-	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
-	// 댓글쓴이 정보를 vo에 저장
-	// 댓글 정보 DB 저장
+	// 받아올 파라미터 & 사용할 객체 체크 : 해당 게시판에 달린 댓글정보를 구분하기 위한 정보 받아오기
+	// DB에서 댓글 정보 받아오기
+	// 댓글들 데이터 받아올 객체 생성 : 줄줄이 받아야와야함
+	// 댓글이 여러개 일 수 있으니 반복문으로 받아오기 
+	// DB에서 받아온 객체들을 생성한 json객체에 넣어주기
+	// 객체에 저장한 정보 리턴
+	
 	
 	
 	/** 연습 텍스트 : Top-N 분석  **/
