@@ -80,7 +80,7 @@ public class Interface_JumpToJava {
 
         // interface final 상수 사용법
         System.out.println(Predator.LEG_COUNT); // 4
-        Jump to Java interface commentary & code added : how to use interface default method,static method, interface final
+
 
 /*
 인터페이스 필요성
