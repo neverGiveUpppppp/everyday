@@ -15,7 +15,7 @@ public class MenuView {
         int menuSelection = 0;
 
         while(true){
-            System.out.println("=== 메인 메뉴 ===");
+            System.out.println("======== 메인 메뉴 ========");
             System.out.println("1.전체 회원 조회");
             System.out.println("2.특정 조건 회원 조회 ");
             System.out.println("3.회원 추가");
@@ -32,10 +32,7 @@ public class MenuView {
                 default:
                     System.out.println("잘못 입력하셨습니다");
             }
-
-
         }
-
     }
 
     public void message(String str){
@@ -46,6 +43,11 @@ public class MenuView {
         System.out.print("회원 아이디 :  ");
         String memberId = sc.nextLine();
         return memberId;
+    }
+    public String memberNickname(){
+        System.out.print("회원 닉네임 : ");
+        String memberNickname = sc.nextLine();
+        return memberNickname;
     }
 
     public void memSelectAll(ArrayList<MemberJSPTable> aList){
@@ -75,6 +77,7 @@ public class MenuView {
     }
     public void memberSelectReslt(MemberJSPTable memVo) {
         System.out.println(memVo);
+        System.out.println();
     }
 
 

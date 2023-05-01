@@ -69,8 +69,17 @@ public class MemberJSPTable {
 		this.interest = interest;
 	}
 
+	public MemberJSPTable(String userId, String username, String phone, String email, String address, String interest) {
+		this.userId = userId;
+		this.userName = username;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.interest = interest;
+	}
 
-    public String getUserId() {
+
+	public String getUserId() {
 		return userId;
 	}
 

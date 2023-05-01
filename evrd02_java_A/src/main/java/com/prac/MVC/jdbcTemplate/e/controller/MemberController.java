@@ -30,9 +30,17 @@ public class MemberController {
                 memVo = ms.memSelectId(memberId);
 
             case 2:
-                System.out.println("1.아이디로 회원조회");
-                System.out.println("2.닉네임으로 회원조회");
-                System.out.println("0.메인 메뉴로 돌아가기");
+                String memberNickname = mv.memberNickname();
+                memVo = ms.memSelectNick(memberNickname);
+                if(memVo != null && !memVo.equals("")) {
+                    mv.message("해당 회원 조회 완료");
+                    mv.memberSelectReslt(memVo);
+                }else{
+                    mv.message("해당 회원이 없습니다.");
+                }
+            case 0:
+                mv.message("메뉴로 돌아갑니다.");
+                return ;
         }
         if(memVo != null){
             mv.memberSelectReslt(memVo);

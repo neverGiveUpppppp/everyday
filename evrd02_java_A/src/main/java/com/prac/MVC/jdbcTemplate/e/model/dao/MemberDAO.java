@@ -97,5 +97,38 @@ public class MemberDAO {
     }
 
 
+    public MemberJSPTable memSelectNick(Connection connection, String memberNickname) {
+        MemberJSPTable memVo = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        String query = propetis.getProperty("mem_selectNick");
+
+        try {
+            pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, memberNickname);
+            rs = pstmt.executeQuery();
+
+            // 객체 하나 받아올거라 while으로 반복해서 값이 더 있는지 체크할 필요 없지 않을까?
+            // 반복문 없이 만들어보자 -> error : java.sql.SQLException: ResultSet.next가 호출되지 않았음 
+            // while(rs.next()) 안했을 시 발생하며, 에러가 안나도 값을 못받아옴. vo에 null로 계속있음
+            while(rs.next()){
+            // 조회해서 보여줄 필요 없는 비번 같은 건 안받아옴
+            String userId = rs.getString("USER_ID");
+            String username = rs.getString("USER_NAME");
+            String phone = rs.getString("PHONE");
+            String email = rs.getString("EMAIL");
+            String address = rs.getString("ADDRESS");
+            String interest = rs.getString("INTEREST");
+
+                memVo = new MemberJSPTable(userId, username, phone, email, address, interest);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }finally{
+            close(rs);  // error : java.sql.SQLException: ResultSet.next가 호출되지 않았음 // while(rs.next()) 안했을 시 발생
+            close(pstmt);
+        }
+        return memVo;
+    }
 
 }

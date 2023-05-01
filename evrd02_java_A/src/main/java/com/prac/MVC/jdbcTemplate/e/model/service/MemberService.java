@@ -27,6 +27,10 @@ public class MemberService {
         return memVo;
     }
 
-
+    public MemberJSPTable memSelectNick(String memberNickname){
+        Connection connection = getConnection();
+        MemberJSPTable memVo = md.memSelectNick(connection, memberNickname);
+        return memVo;
+    }
 
 }
