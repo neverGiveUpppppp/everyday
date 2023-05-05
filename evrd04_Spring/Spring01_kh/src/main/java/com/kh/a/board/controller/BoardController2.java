@@ -1303,6 +1303,28 @@ public class BoardController2 {
 		}
 		return jsonArr.toString();
 	}
+	@RequestMapping(value="rList.bo", produces="application/json, charset=UTF=8")
+	@ResponseBody
+	public String getReplyList3(@RequestParam("bId") int bId ) {
+		ArrayList<Reply> rplyList = bService.selectReplyList2(bId);
+		
+		JSONArray jsonArray = new JSONArray();
+		
+		for(Reply reply : rplyList) {
+			JSONObject jsonObj	= new JSONObject();
+			jsonObj.put("replyId", reply.getReplyId());
+			jsonObj.put("replyContent", reply.getReplyContent());
+			jsonObj.put("replyWriter", reply.getReplyWriter());
+			jsonObj.put("nickName", reply.getNickName());
+			jsonObj.put("replyCreateDate", reply.getReplyCreateDate());
+			jsonObj.put("replyModifyDate", reply.getReplyModifyDate());
+			jsonObj.put("replyStatus", reply.getReplyStatus());
+			
+			jsonArray.put(jsonObj);
+		}
+		return jsonArray.toString();
+	}
+	
 	/** 연습 텍스트 : 댓글 목록읽기 **/
 	// 받아올 파라미터 & 사용할 객체 체크 : 해당 게시판에 달린 댓글정보를 구분하기 위한 정보 받아오기
 	// DB에서 댓글 정보 받아오기

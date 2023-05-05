@@ -140,88 +140,60 @@
 	
 	<script>
 		// 댓글 등록 : jQuery ajax
-		$('#rSubmit').click(function(){
-			var rContent = $('#replyContent').val();
-			var refBId = ${board.boardId};
-			
-			$.ajax({
-				url: 'addReply.bo',
-				data: {replyContent:rContent, refBoardId:refBId},
-				success: function(data) {
-					console.log(data);
-					if(data == 'success'){
-						$('#replyContent').val(' '); // .val(' ') 넣는 이유?
-					}
-				},
-				error: function(data) {
-					console.log(data);
-				}
-			});
-		});
 		
-		// 등록한 댓글 읽어오기
-		function getReplyList() {
+		function getReplyList1(){
 			$.ajax({
-				url: 'rList.bo',
-				data: {bId:${board.boardId}},
-				success: function(data) {
+				url : 'rList.bo',
+				data : {bId:${board.boardId}},
+				success: function(data){
 					console.log(data);
 					
-					// 계속 이어붙기 때문에 공백 넣어줘야함
-					$tableBody = $('#rtb tbody'); // 쓴 댓글 보이는 부분 136라인 table태그 안 tbody태그
+					$tableBody = $('#rtb tbody');
 					$tableBody.html('');
 					
-					// 변수선언
-					// var a; 자바스크립트 변수. 흔히 아는 방식으로 스크립트만 사용 가능
-					var $tr;	// var $a; jQuery 변수. jQuery에서 사용하는 내장 함수들을 모두 사용가능
-					var $writer;	
+					var $tr;
+					var $writer;
 					var $content;
 					var $date;
-					$('#rCount').text('댓글(' + data.length + ')'); // 댓글(5) <-댓글5개 달렸다고 알려주는 메세지
+					$('#rCount').text('댓글('+data.length+')');
 					
-					if(data.length > 0) {
-						for (var i in data) {
-							$tr = $('<tr>');	// 위에서 선언한 변수 var $tr;에서 다시 가져다 쓰므로 var 빠지고 $tr만
+					if(data.length > 0){
+						for(var i in data){
+							$tr = $('<tr>');
 							$writer = $('<td>').css('width', '100px').text(data[i].nickName);
-							$content = $('<td>').text(data[i].replyContent);
+							$content = $('<td>').text(data[i].replyContent); 
 							$date = $('<td width="100px">').text(data[i].replyCreateDate);
-							// 읽어올 보드id 보내서 댓글 받아오면, 받아온 댓글내용과 함께 창을 생성까지 해줘야한다. 
-							// 왜냐하면 없는 댓글의 창을 미리 만들어두는 것도 모양이 이상하고, 몇개가 달릴지도 모르기 때문
 							
 							$tr.append($writer);
 							$tr.append($content);
-							$tr.append($date);	
+							$tr.append($date);
 							$tableBody.append($tr);
 						}
 					}else{
 						$tr = $('<tr>');
-						$content = $('<td colspan="3">').text('등록된 댓글이 없습니다.');  /* attr해서 집어넣는 것도 가능 */
-					
+						$content = $('<td colspan="3">').text('등록된 댓글이 없습니다.');
+						
 						$tr.append($content);
 						$tableBody.append($tr);
 					}
 				},
-				error: function(data) {
-					console.log(data);
+				error: function(data){
+					console.log(data);					
 				}
+				// 등록한 댓글 읽어오기
 				/* 연습 텍스트 : 등록한 댓글 읽어오기 */
 				// 함수 및 함수명 선언
 				// ajax선언
 				// url 설정
 				// 컨트롤러로 전송할 데이터 설정
 				// 성공 시, 받아올 데이터와 함께 처리할 로직 설정
-				// 실패 시, 받아올 데이터와 함께 처리할 로직 설정ㄴ
-			});
+				// 실패 시, 받아올 데이터와 함께 처리할 로직 설정
+			})
 		}
+				
+		
 		
 		// 다른 사람이 쓴 댓글도 볼 수 있게 5초마다 읽어오도록
-		$(function(){
-			getReplyList();
-			
-			setInterval(function(){
-				getReplyList();
-			}, 5000); // 5000 = 5초
-		});
 		
 	</script>
 	

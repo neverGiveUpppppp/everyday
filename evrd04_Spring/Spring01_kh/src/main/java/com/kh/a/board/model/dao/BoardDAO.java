@@ -110,5 +110,11 @@ public class BoardDAO {
 	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int bId) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", bId);
 	}
+	public ArrayList<Reply> selectReplyList2(SqlSessionTemplate sqlSession, int bId){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList2",bId);
+	}
+	
+	
+	
 
 }

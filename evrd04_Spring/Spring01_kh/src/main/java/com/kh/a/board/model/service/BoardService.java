@@ -26,6 +26,7 @@ public interface BoardService {
 	int insertReply(Reply replyVo);
 	
 	ArrayList<Reply> selectReplyList(int bId);
+	ArrayList<Reply> selectReplyList2(int bId);
 
 	
 

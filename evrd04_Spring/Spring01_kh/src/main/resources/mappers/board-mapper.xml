@@ -85,6 +85,32 @@
 		DELETE FROM BOARD
 			WHERE BOARD_ID = #{bId}
 	</delete>
+	
+	
+	
+	<!-- 댓글 가져오기  -->
+	<select id="selectReplyList" resultMap="replyResultSet">
+		SELECT *
+		FROM REPLY
+			JOIN MEMBER ON (REPLY.REPLY_WRITER = MEMBER.ID)
+		WHERE REF_BOARD_ID = #{bId}
+			AND REPLY_STATUS = 'Y'
+		ORDER BY REPLY_ID DESC 
+	</select>
+	<resultMap id="replyResultSet" type="Reply">
+		<id column="REPLY_ID" property="replyId" />
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REF_BOARD_ID" property="refBoardId"/>
+		<result column="REPLY_WRITER" property="replyWriter"/>
+		<result column="REPLY_CREATE_DATE" property="replyCreateDate"/>
+		<result column="REPLY_MODIFY_DATE" property="replyModifyDate"/>
+		<result column="REPLY_STATUS" property="replyStatus"/>
+	</resultMap>
+
+		
+	
+	
+	
 
 
 </mapper>

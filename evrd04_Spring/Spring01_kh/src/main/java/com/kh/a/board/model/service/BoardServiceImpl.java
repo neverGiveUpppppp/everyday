@@ -142,6 +142,9 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Reply> selectReplyList(int bId) {
 		return bDAO.selectReplyList(sqlSession, bId);
 	}
-	
+	@Override
+	public ArrayList<Reply> selectReplyList2(int bId){
+		return bDAO.selectReplyList2(sqlSession,bId);
+	}
 	
 }
