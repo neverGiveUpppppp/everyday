@@ -27,6 +27,7 @@ public interface BoardService {
 	
 	ArrayList<Reply> selectReplyList(int bId);
 	ArrayList<Reply> selectReplyList2(int bId);
+	ArrayList<Reply> selectReplyList3(int bId);
 
 	
 
