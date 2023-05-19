@@ -1,7 +1,6 @@
 package com.prac.inheritance;
 
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 
 class Animal{
     String name;
