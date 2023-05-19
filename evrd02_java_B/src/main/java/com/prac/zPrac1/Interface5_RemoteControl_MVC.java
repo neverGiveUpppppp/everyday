@@ -1,4 +1,4 @@
-package com.prac.zPrac;
+package com.prac.zPrac1;
 
 
 // interface RemoteControl 예제 -> MVC 적용해보기

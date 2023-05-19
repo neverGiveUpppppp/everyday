@@ -1,4 +1,4 @@
-package com.prac.zPrac;
+package com.prac.zPrac1;
 
 // 인터페이스 다중상속 + MVC패턴 적용
 

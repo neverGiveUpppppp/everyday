@@ -1,4 +1,4 @@
-package com.prac.zPrac;
+package com.prac.zPrac1;
 
 abstract class Vehicle{
     String name;
