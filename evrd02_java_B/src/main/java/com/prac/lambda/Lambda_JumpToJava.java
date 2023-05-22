@@ -3,6 +3,7 @@ package com.prac.lambda;
 
 
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 
 // 점프투 자바 : 함수형 프로그래밍
@@ -167,6 +168,13 @@ class Sample5 {
 //      BinaryOperator<Integer> mc = (a, b) -> a + b;   // 전부 동일한 타입이라면 BinaryOperator<Integer> 대체가능
         int result = mc.apply(3, 4);  // sum이 아닌 apply 메서드를 사용해야 한다.
         System.out.println(result);  // 7 출력
+
+
+        BiFunction<Integer,Integer,Integer> bi2 = Integer::sum;      // 람다 메서드참조
+//        Function<Integer,Integer> function = (int a) -> a;
+        Function<Integer,Integer> function2 = (a) -> a;
+        // Function<Integer,Integer>에서 Integer를 선언해뒀으므로 int a, int b처럼 데이터타입 선언하면 컴파일 에러 발생하는 것
+
     }
 }
 
