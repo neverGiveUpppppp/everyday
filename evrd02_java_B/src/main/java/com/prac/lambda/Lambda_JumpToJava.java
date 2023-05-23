@@ -178,6 +178,18 @@ class Sample5 {
     }
 }
 
+class Sample5_2{
+    public static void main(String[] args) {
+        BiFunction<String, String, String> bi = (a,b) ->{
+        a = "a"; // 변수a로 str_a값이 들어와서 a="str_a"가 되지만, a에 다시 "a"가 들어와서 덮힘
+        b = "b";
+        return a+b;
+        };
+        String str = bi.apply("str_a ","str_b "); // apply로 붙인 str_a값이 위의 람다함수 안에 a="a"에 묻힘
+        System.out.println(str); // ab
+    }
+}
+
 
 
 
