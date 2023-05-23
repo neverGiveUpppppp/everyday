@@ -11,8 +11,7 @@ A.Functional Interface and Lambda
  */
 
 
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import java.util.function.*;
 
 interface Lambda3_1_1{
     void doIt();
@@ -222,6 +221,13 @@ class Lambda3_2_2{
 //    입력값ㅇ 1개 리턴값x
 //    accept(), andThen()
 class Lambda3_2_3{
+    public static void main(String[] args) {
+        // Consumer : 입력값 1개 & 리턴x
+        Consumer<Integer> consumer = (i) -> System.out.println(i); // 10 12 차례로 찍힘
+        consumer.accept(10);
+        consumer.accept(12);
+    }
+
 
 }
 
@@ -230,7 +236,11 @@ class Lambda3_2_3{
 //    입력값ㅇ 1개
 //    get()
 class Lambda3_2_4{
-
+    public static void main(String[] args) {
+        Supplier<String> supplier = () -> "서플라이어"; // ()선언부가 비어있어야함
+        Supplier<Integer> get10 = () -> 10;
+        System.out.println();
+    }
 }
 
 
@@ -238,13 +248,41 @@ class Lambda3_2_4{
 //    입력값ㅇ 1개 리턴값ㅇ boolean
 //    and(), or(), nagate()
 class Lambda3_2_5{
+    public static void main(String[] args) {
+        Predicate<String> isValid = (s) -> s.startsWith("validation");
+        isValid.test("a");
+        isValid.or(isValid);
 
+        System.out.println(isValid.toString()); // String.valueOf(), .toString()도 안먹히는데 객체로만 나옴
+        System.out.println(String.valueOf(isValid)); // String.valueOf(), .toString()도 안먹히는데 객체로만 나옴
+        System.out.println(isValid.test("a")); // false
+        System.out.println(isValid.test("valid")); // false
+        System.out.println(isValid.test("validation")); // true
+        System.out.println(isValid.or(isValid)); // java.util.function.Predicate$$Lambda$17/0x0000000800c4a268@6d03e736
+
+    }
 }
 
 
 //6.UnaryOperator<T>
 //    Function의 <>이 동일할 때 사용가능
 class Lambda3_2_6{
+    public static void main(String[] args) {
+        UnaryOperator<String> unary = (str) -> str + "Operator";
+        UnaryOperator<Integer> plus10 = (i) -> i + 10;
+        UnaryOperator<Integer> multiply3 = (i) -> i * 3;
+        unary.apply("Unary");
+        System.out.println(unary.apply("Unary"));
+        plus10.apply(10);
+        System.out.println(plus10.apply(10)); // 20
+
+        // compose() : 함수조합
+        plus10.compose(multiply3).apply(1);
+        System.out.println(plus10.compose(multiply3).apply(1)); // 13 = 10+(1x3)
+        // andThen() : 함수조합
+        plus10.andThen(multiply3).apply(1);
+        System.out.println(plus10.andThen(multiply3).apply(1)); // 33 = (1+10)x3
+    }
 
 }
 
@@ -252,6 +290,21 @@ class Lambda3_2_6{
 //7.BinaryOperator<T>
 //    BiFunction의 <>이 동일할 때 사용가능
 class Lambda3_2_7{
+    public static void main(String[] args) {
+        BinaryOperator<Integer> biOper = (param1, param2) -> {
+            return param1 - param2;
+        };
+        BinaryOperator<Integer> biFunc = (param1,param2) -> {
+            return param1 + param2;
+        };
+        Function<Integer,Integer> function = (i) -> i % 5;
+
+        biOper.apply(10,5);
+//        biOper.andThen(biFunc.apply(10,10)).apply(10,5);
+        biOper.andThen(function); //BinaryOperator의 andThen() 안에는 Function을 받음
+
+
+    }
 
 }
 
@@ -262,10 +315,122 @@ class Lambda3_2_7{
 
 /*******************************************************************************************************/
 
+/*
+
+C.람다 표현식
+
+람다
+    ● (인자리스트) -> {바디}
+
+인자 리스트
+    ● 인자가 없을 때: ()
+    ● 인자가 한개일 때: (one) 또는  one
+    ● 인자가 여러개 일  때: (one, two)
+    ● 인자의 타입은 생략 가능, 컴파일러가 추론(infer)하지만 명시할 수도 있다. (Integer one,Integer two)
+바디
+    ● 화살표 오른쪽에 함수 본문을 정의한다.
+    ● 여러 줄인 경우에 { }를 사용해서 묶는다.
+    ● 한 줄인 경우에 생략 가능, return도 생략 가능.
+
+변수 캡처(Variable Capture)
+    ● 로컬 변수 캡처
+        ○ final이거나 effective final인 경우에만 참조할 수  다.
+        ○ 그렇지 않을 경우 concurrency 문제가  길 수 있어서 컴파일가 방지한다.
+    ● effective final
+        ○ 이것도  역시  자바  8부터  지원하는  기능으로  “사실상" final인  변수.
+        ○ final 키워드  사용하지  않은  변수를  익명  클래스  구현체  또는  람다에서  참조할  수 있다.
+
+    ● 익명 클래스 구현체와 달리 ‘쉐도윙’하지 않는다.
+        ○ 익명 클래스는 새로 스콥을 만들지만, 람다는 람다를 감싸고 있는 스콥과 같다.
+
+
+ */
+
+
+class Lambda4_1_1{
+    public static void main(String[] args) {
+        // interface Supplier : get()
+        Supplier<Integer> noParam1 = () -> 10;
+        Supplier<Integer> noParam2 = () -> {
+            return 10;
+        };
+        noParam1.get();
+        System.out.println(noParam1.get()); // 10
+        BinaryOperator<Integer> biOper = (Integer a, Integer b) -> a + b;
+        biOper.apply(10,20);
+        System.out.println(biOper.apply(10,20)); // 30
+
+    }
+}
+
+
+
+class Lambda4_1_2{
+    public static void main(String[] args) {
+        Lambda4_1_2 lambda = new Lambda4_1_2();
+        lambda.run();
+    }
+
+    private void run(){
+        int num = 10;
+        IntConsumer intConsumer = (i) -> {
+            System.out.println(i + num); // 25 =10+25
+        };
+        intConsumer.accept(15);
+    }
+
+
+}
+
+
+
+class Lambda4_1_3{
+    public static void main(String[] args) {
+
+    }
+}
+
+
+
+class Lambda4_1_4{
+    public static void main(String[] args) {
+
+    }
+}
+
+
+
+class Lambda4_1_5{
+    public static void main(String[] args) {
+
+    }
+}
+
+
+
+class Lambda4_1_6{
+    public static void main(String[] args) {
+
+    }
+}
+
+
+
+class Lambda4_1_7{
+    public static void main(String[] args) {
+
+    }
+}
 
 
 
 
+
+/*******************************************************************************************************/
+
+
+
+/*******************************************************************************************************/
 
 
 

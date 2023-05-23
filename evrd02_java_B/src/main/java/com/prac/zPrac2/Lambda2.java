@@ -69,6 +69,7 @@ class MyCalc2_2{
 // 2. 함수형 인터페이스 사용 시, 주의사항
 @FunctionalInterface // 함수형 인터페이스가 될 수 있게 추상메소드를 1개만 강제하는 어노테이션
 // 2개 이상되면 밑줄 에러 뜬다
+interface Calc2_23{
     int sum(int a, int b);
 //    int mul(int a, int b); // 람다용 인터페이스는 추상메소드가 1개여야만함. 다른 디폴트,스태틱 같은 메소드는 상관x only abstract method
 }
