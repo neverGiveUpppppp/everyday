@@ -64,7 +64,7 @@ class LambdaEx3_1_2{
 
 // 4.내장 함수 인터페이스
 
-public class Lambda2 {
+public class Lambda2_JumpToJava {
     public static void main(String[] args) {
         BiFunction<Integer,Integer,Integer> bi = ( a,  b) -> a + b;  //
         BiFunction<Integer,Integer,Integer> bi2 = Integer::sum;      // 람다 메서드참조
