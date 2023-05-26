@@ -364,11 +364,12 @@ class Lambda4_1_1{
 }
 
 
-
+// 변수 캡처(Variable Capture)
 class Lambda4_1_2{
     public static void main(String[] args) {
         Lambda4_1_2 lambda = new Lambda4_1_2();
         lambda.run();
+        lambda.run2();
     }
 
     private void run(){
@@ -379,7 +380,12 @@ class Lambda4_1_2{
         intConsumer.accept(15);
     }
 
-
+    private void run2(){
+        int num = 10;
+        IntConsumer int_Consumer = (i) -> System.out.println(i - num);
+//        IntConsumer intConsumer2 = (i) ->  // return x (void)
+        int_Consumer.accept(5); // -5
+    }
 }
 
 
