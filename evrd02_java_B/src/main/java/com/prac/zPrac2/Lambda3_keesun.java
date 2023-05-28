@@ -11,6 +11,8 @@ A.Functional Interface and Lambda
  */
 
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.*;
 
 interface Lambda3_1_1{
@@ -334,8 +336,8 @@ C.람다 표현식
 
 변수 캡처(Variable Capture)
     ● 로컬 변수 캡처
-        ○ final이거나 effective final인 경우에만 참조할 수  다.
-        ○ 그렇지 않을 경우 concurrency 문제가  길 수 있어서 컴파일가 방지한다.
+        ○ final이거나 effective final인 경우에만 참조할 수 있다.
+        ○ 그렇지 않을 경우 concurrency 문제가 생길 수 있어서 컴파일 에러가 방지한다.
     ● effective final
         ○ 이것도  역시  자바  8부터  지원하는  기능으로  “사실상" final인  변수.
         ○ final 키워드  사용하지  않은  변수를  익명  클래스  구현체  또는  람다에서  참조할  수 있다.
@@ -389,54 +391,212 @@ class Lambda4_1_2{
 }
 
 
-
+// 쉐도잉 적용 여부 차이 비교하기
 class Lambda4_1_3{
     public static void main(String[] args) {
+        Lambda4_1_3 lam = new Lambda4_1_3();
+        lam.run();
+    }
 
+    private void run(){
+        int baseNumber = 10;
+
+        // 로컬 클래스
+        class LocalClass{
+            void printBaseNumber(){
+                int baseNumber = 11;
+                System.out.println(baseNumber);
+            }
+        }
+        
+        // 익명 클래스 : 지역변수 쉐도잉
+        Consumer<Integer> integerConsumer = new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer){
+                int baseNumber = 11;
+                System.out.println(baseNumber);
+            }
+        };
+
+        // 익명 클래스 : 메소드 파라미터 쉐도잉
+        Consumer<Integer> integerConsumer1 = new Consumer<Integer>() {
+            @Override
+            public void accept(Integer integer) {
+                System.out.println(baseNumber);
+            }
+        };
+        // 람다
+        IntConsumer printInt = (i) -> System.out.println(i + baseNumber); // 20
+        printInt.accept(10);
+    }
+
+
+    // 람다에서 쉐도잉이 안되는 예시(scope 공유)
+    private void run2(){
+        int baseNumber = 10;
+//        IntConsumer printInt = (baseNumber) -> { // 컴파일에러 : Variable 'baseNumber' is already defined in the scope
+//            System.out.println(baseNumber);      // 람다는 run2()와 scope를 공유하기 때문에 같은 변수명을 선언해서 에러발생
+//        };
+//        printInt.accept(10);
+
+    }
+
+    private void run3(){
+        int baseNumber = 10; // effective final(실질적 final. 값 변동되면 안됨)
+
+        IntConsumer printInt = (i) -> System.out.println(baseNumber);
+        printInt.accept(10);
+
+//        baseNumber++;  // effective final인 baseNumber값을 변경하려고 하니 람다에서 컴파일 에러 발생
+        // 람다는 final or effective final만 참조 가능
     }
 }
 
+
+
+
+/*******************************************************************************************************/
+
+/*
+
+
+
+D.메소드 참조하는 방법
+    1)스태틱 메소드 참조 (타입::스태틱 메소드)
+    2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+    3)임의 객체의 인스턴스 메소드 참조 (타입::인스턴스 메소드)
+    4)생성자 참조 (타입::new)
+
+
+ */
+class Greeting{
+    private String name;
+
+    //기본 생성자
+    public Greeting(){   // 기본생성자, 입력값은 없는데 결과값은 있음
+    }
+    // 값이 있는 생성자
+    public Greeting(String name){   // 생성자가 리턴하는 것은? 해당 생성자의 객체
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    // 인스턴스 메소드
+    public String hello(String name){
+        return "hello! " + name;
+    }
+    // static한 메소드
+    public static String hi(String name){
+        return "hi! " + name;
+    }
+}
 
 
 class Lambda4_1_4{
     public static void main(String[] args) {
-
+        UnaryOperator<String> hi = (i) -> "hi " + i;
     }
 }
 
 
-
+// 1.스태틱 메소드 참조
+//      타입::스태틱 메소드
 class Lambda4_1_5{
     public static void main(String[] args) {
-
+        UnaryOperator<String> hi = Greeting::hi; // 타입::스태틱 메소드
+        System.out.println(hi.apply("robert"));
     }
 }
 
-
-
+// 2.특정 객체의 인스턴스 메소드 참조
+//     객체 레퍼런스::인스턴스 메소드
+//        (static한 메소드가 아닌 그 안에 들어있는 인스턴스 메소드를 사용해야하는 경우)
 class Lambda4_1_6{
     public static void main(String[] args) {
-
+        Greeting greeting = new Greeting();            // 2.특정 객체의 인스턴스 메소드 참조
+        UnaryOperator<String> hello = greeting::hello; // 객체 레퍼런스::인스턴스 메소드
+        System.out.println(hello.apply("Robert"));   // hello! Robert
     }
 }
 
 
-
+/*
+3.임의 객체의 인스턴스 메소드 참조
+        타입::인스턴스 메소드
+    특정 타입이긴한데 그 타입의 불특정 다수 인스턴스의 특정 인스턴스 메소드를 참조하는 방법
+        -특정 타입 : String[]
+        -그 타입의 불특정 다수 인스턴스(ex:"keesun", "whiteship","toby"??)의 특정 인스턴스 메소드 : compareToIgnoreCase
+*/
 class Lambda4_1_7{
     public static void main(String[] args) {
+        String[] names = {"keesun","whiteship","toby"};
+
+        // 1)익명함수
+        Arrays.sort(names, new Comparator<String>(){
+            @Override
+            public int compare(String o1, String o2) {
+                return 0;
+            }
+        });
+
+        // 2)람다
+        Arrays.sort(names, (o3,o4) -> 0);
+        Arrays.sort(names, String::compareToIgnoreCase);
+        System.out.println(Arrays.toString(names));
 
     }
 }
 
 
 
+/*
+ 4.생성자  참조
+    타입::new
+    1) 기본생성자 : 입력값x 리턴 o
+    2) 매개변수 있는 생성자 : 입력값o 리턴o
+
+1)입력값이 없는 기본 생성자의 경우
+        public Greeting(){
+        }
+
+2)입력값이 있는 생성자의 경우
+        public Greeting(String name){
+            this.name = name;
+        }
+
+ */
+class Lambda4_1_8{
+
+//1)입력값이 없는 기본 생성자의 경우
+//    public Greeting(){
+//    }
+    public static void main(String[] args) {
+        Supplier<Greeting> constructor = Greeting::new; // 4.생성자 참조 - 타입::new
+        // new라는 생성자 참조
+        // 위 코드는 Supplier이지 Greeting이 아님
+        Greeting greeting = constructor.get();   // 객체 생성
+    }
+}
 
 
-/*******************************************************************************************************/
+//  4.생성자  참조
+//     2)입력값이 있는 생성자의 경우
+//         public Greeting(String name){
+//             this.name = name;
+//         }
+class Lambda4_1_9{
+    public static void main(String[] args) {
+        Function<String,Greeting> func = Greeting::new;
+        Greeting greeting = func.apply("keesun");
 
+        Supplier<Greeting> supplier = Greeting::new;
+        System.out.println(greeting.getName());
+    }
+}
 
-
-/*******************************************************************************************************/
 
 
 

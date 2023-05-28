@@ -9,7 +9,7 @@ public class Lambda_EX2 {
         int getMax(int num1, int num2);
     }
     public static void main(String[] args){
-        MyNumber max = (x,y) -> (x >= y) ? x : y;
+        MyNumber max = (x,y) -> (x >= y) ? x : y; // (x,y) -> 에서 데이터형 int를 선언안해도 되는 이유는 interface getMax()에서 했기 때문
         System.out.println(max.getMax(10,20)); // 10,20이 윗줄 x,y에 다시 들어감.
 /*
      람다식 자체가 함수형 인터페이스형에 관련된 것이니 굳이 인터페이스를 implements 같은 걸로 잇지 않아도
