@@ -24,7 +24,8 @@ public class Inheritance_moveTurn2{
     public static void main(String[]args){
 
         SuperObject superObj = new SubObject();
-        superObj.print();
+        superObj.print(); // 부모(Super)와 자식(Sub) 똑같이 매개변수 없는 print()가 있지만,
+        // 부모(super) 타입일 뿐 인스턴스 자체는 자식(sub)이기 때문에 자식의 print()로 찾아간다
 //        System.out.println(1%2); // 1
 //        System.out.println(2%4); // 2
 //        System.out.println(3%4); // 3
