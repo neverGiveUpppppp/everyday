@@ -152,5 +152,14 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
+	@Override
+	public ArrayList<BoardVO> topList(){
+		return bDAO.topList(sqlSession);
+	}
+	@Override
+	public ArrayList<BoardVO> topList1(){
+		return bDAO.topList1(sqlSession);
+	}
+	
 	
 }

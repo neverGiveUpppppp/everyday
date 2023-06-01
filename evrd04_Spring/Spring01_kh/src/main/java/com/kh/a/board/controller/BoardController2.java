@@ -1248,6 +1248,20 @@ public class BoardController2 {
 			throw new BoardException("댓글 등록 실패");
 		}
 	}
+	@RequestMapping("addReply.bo")
+	@ResponseBody
+	public String addReply7(@ModelAttribute Reply replyVo, HttpSession session) {
+		String writerId = ((Member)session.getAttribute("loginUser")).getId();
+//		String writerId2 = ((Member)session.getAttribute("loginUser")).getId();
+		replyVo.setReplyWriter(writerId);
+		int result = bService.insertReply(replyVo);
+		if(result > 0) {
+			return "success";
+		}else {
+			throw new BoardException("댓글 등록 실패");
+		}
+		
+	}
 	/** 연습 텍스트 : 댓글 쓰기 **/
 	// 받아올 파라미터 & 사용할 객체 체크
 	// 댓글쓴이 변수설정 및 로그인정보 가져오기 : 누가 썼는지 알아야하기 때문에 모델어트리뷰트나 HttpSession을 통해서 가져올 수 있음
@@ -1354,12 +1368,32 @@ public class BoardController2 {
 	// 객체에 저장한 정보 리턴
 	
 	
-	
+	@RequestMapping(value="topList", produces="application/json charset=UTF-8")
+	@ResponseBody
+	public String topList1() {
+		ArrayList<BoardVO> listTopN = bService.topList1();
+		
+		JSONArray jsonArr = new JSONArray();
+		for(BoardVO boardVo : listTopN) {  // listTopN에는 게시판 한 개 한 개가 담겨있음
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("boardId", boardVo.getBoardId());
+			jsonObj.put("boardTitle", boardVo.getBoardTitle());
+			jsonObj.put("boardContent", boardVo.getBoardContent());
+			jsonObj.put("nickName", boardVo.getNickName());
+			jsonObj.put("boardModifyDate", boardVo.getBoardModifyDate());
+			jsonObj.put("boardCount", boardVo.getBoardCount());
+			jsonObj.put("originalFileName", boardVo.getOriginalFileName());
+			
+			jsonArr.put(jsonObj);
+		}
+		return jsonArr.toString();
+	}
 	/** 연습 텍스트 : Top-N 분석  **/
 	// 받아올 파라미터 & 사용할 객체 체크
-	// 루트 및 파일저장 경로 설정
-	// 파일객체 생성 및 경로지정
-	// 파일이 있다면, 삭제
+	// Top N목록 정보를 받을 객체 선언 및 생성
+	// 해당 정보를 담아서 보낼 JSON객체 생성
+	// DB에서 받아온 게시판 정보 각각을 담을 수 있게 loop로 json객체 담기
+	// 뷰단으로 json 객체 전송
 	
 	
 	

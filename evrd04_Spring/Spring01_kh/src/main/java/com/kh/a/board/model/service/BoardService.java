@@ -8,6 +8,7 @@ import com.kh.vo.Reply;
 
 public interface BoardService {
 
+	// interface는 public abstract가 생략됨
 	int getListCount();
 	ArrayList<BoardVO> getBoardList(PageInfo pi);
 	int insertBoard(BoardVO b);
@@ -30,7 +31,9 @@ public interface BoardService {
 	ArrayList<Reply> selectReplyList3(int bId);
 
 	
-
+	public abstract ArrayList<BoardVO> topList();
+	public abstract ArrayList<BoardVO> topList1();
+	
 
 
 

@@ -38,6 +38,9 @@
 	</resultMap>
 	
 	
+	
+	
+<!-- 게시판 글쓰기 -->
 	<insert id="insertBoard" parameterType="Board">
 		INSERT INTO BOARD
 			VALUES(
@@ -54,7 +57,8 @@
 			)
 	</insert>
 	
-	
+
+<!-- 게시판 상세보기+ 파일업로드 -->	
 	<update id="addReadCount">
 		update board
 		set board_count = board_count + 1
@@ -69,6 +73,9 @@
 	</select>
 
 
+
+
+<!-- 게시판 수정 + 파일수정  -->
 	<update id="updateBoard" parameterType="Board">
 		UPDATE BOARD
 			SET BOARD_TITLE = #{boardTitle},
@@ -81,6 +88,9 @@
 			WHERE BOARD_ID = #{boardId}
 	</update>
 
+
+
+<!-- 게시판 삭제 -->
 	<delete id="deleteBoard" parameterType="Board">
 		DELETE FROM BOARD
 			WHERE BOARD_ID = #{bId}
@@ -88,7 +98,25 @@
 	
 	
 	
-	<!-- 댓글 가져오기  -->
+	
+<!-- 댓글 쓰기 -->
+	<insert id="insertReply">
+		INSERT INTO REPLY
+			VALUES(
+				SEQ_RID.NEXTVAL, 
+				#{replyContent}, 
+				#{refBoardId}, 
+				#{replyWriter}, 
+				sysdate, 
+				sysdate, 
+				default
+			)
+	</insert>
+	
+	
+	
+	
+<!-- 댓글 가져오기  -->
 	<select id="selectReplyList" resultMap="replyResultSet">
 		SELECT *
 		FROM REPLY
@@ -108,8 +136,36 @@
 	</resultMap>
 
 		
-	
-	
+		
+		
+<!-- Top-N 분석 : select -->
+	<select id="topList" resultMap="boardResultSet">
+		<![CDATA[
+		SELECT *
+		FROM(
+			SELECT *
+			FROM BOARD
+				JOIN MEMBER ON(BOARD_WRITER = ID)
+			ORDER BY BOARD_COUNT DESC
+			)	
+		WHERE BOARD_STATUS = 'Y'
+			AND ROWNUM <= 5
+		]]>
+		
+	</select>
+	<select id="topList1" resultMap="boardResultSet">
+		<![CDATA[
+		SELECT *
+		FROM(
+			SELECT *
+			FROM BOARD
+				JOIN MEMBER ON(BOARD_WRITER = ID)
+			ORDER BY BOARD_COUNT DESC
+			)
+		WHERE BOARD_STATUS = 'Y'
+			AND ROWNUM <= 5
+		]]>
+	</select>
 	
 
 

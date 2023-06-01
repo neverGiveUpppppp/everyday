@@ -29,6 +29,7 @@ import com.kh.a.board.model.vo.BoardVO;
 import com.kh.a.board.model.vo.PageInfo;
 import com.kh.vo.Reply;
 import com.kh.a.common.Pagination;
+import com.kh.vo.Board;
 import com.kh.vo.Member;
 
 
@@ -376,11 +377,32 @@ public class BoardController {
 	// DB에서 받아온 객체들을 생성한 json객체에 넣어주기
 	// 객체에 저장한 정보 리턴
 	
+	@RequestMapping(value="topList.bo", produces="application/json; charset=UTF-8")
+	@ResponseBody
+	public String topList() {
+		ArrayList<BoardVO> list = bService.topList();
+		
+		JSONArray jsonArray = new JSONArray();
+		for(BoardVO boardVo : list) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("boardId",boardVo.getBoardId());
+			jsonObj.put("boardTitle",boardVo.getBoardTitle());
+			jsonObj.put("boardContent", boardVo.getBoardContent());
+			jsonObj.put("nickName", boardVo.getNickName());
+			jsonObj.put("boardModifyDate", boardVo.getBoardModifyDate());
+			jsonObj.put("boardCount", boardVo.getBoardCount());
+			jsonObj.put("originalFileName", boardVo.getOriginalFileName());
+			
+			jsonArray.put(jsonObj);
+		}
+		return jsonArray.toString(); // 뷰이름이 아닌 객체(json)을 넘기기에 뷰리졸버가 인식할 수 있도록 @ResponseBody 사용 필수
+	}
 	/** 연습 텍스트 : Top-N 분석  **/
 	// 받아올 파라미터 & 사용할 객체 체크
-	// 루트 및 파일저장 경로 설정
-	// 파일객체 생성 및 경로지정
-	// 파일이 있다면, 삭제
+	// Top N목록 정보를 받을 객체 선언 및 생성
+	// 해당 정보를 담아서 보낼 JSON객체 생성
+	// DB에서 받아온 게시판 정보 각각을 담을 수 있게 loop로 json객체 담기
+	// 뷰단으로 json 객체 전송
 	
 	
 }

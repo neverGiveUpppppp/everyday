@@ -119,6 +119,12 @@ public class BoardDAO {
 	
 	
 	
+	public ArrayList<BoardVO> topList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("boardMapper.topList");
+	}
+	public ArrayList<BoardVO> topList1(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("boardMapper.topList1");
+	}
 	
 	
 	
