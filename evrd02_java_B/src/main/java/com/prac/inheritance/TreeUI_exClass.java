@@ -42,6 +42,10 @@ public class TreeUI_exClass {
         premiLeague.childItems.add(new Team());
         leagueList.add(new League("잉글랜드 프리미어리그"));
 
+        System.out.println(leagueList);
+        leagueList.forEach(System.out::println);
+        System.out.println(premiLeague);
+
         Car aCar = new Car("Spark"); // aCar에 Spark가 아닌 bCar에서 저장한 Morning이 들어가있음
         Car bCar = aCar;                 // 이유 : referenceType이라 주소값 복사라서 값 공유. primitiveType이라면 주소값 복사 안되기 때문에 값 공유x
         bCar.setName("Morning");

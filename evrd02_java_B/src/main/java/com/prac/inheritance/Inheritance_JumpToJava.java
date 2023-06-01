@@ -36,7 +36,7 @@ public class Inheritance_JumpToJava {
 
         HouseDog houseDog = new HouseDog();
         houseDog.setName("happy");
-        houseDog.sleep(); // happy zz
+        houseDog.sleep(); // happy zz : sleep()에 매개변수가 없기 때문에 houseDog의 sleep(int hour)가 아닌 상위의 Dog의 sleep()을 찾아감
         // 오버라이딩(재정의) 후 : happy zzz in house
         houseDog.sleep(5); // happy zzz in house for 5hours
     }

@@ -27,8 +27,6 @@ class Car extends Vehicle {
 
     public void setName(String newName){
         this.name = newName;
-
-
     }
 }
 
