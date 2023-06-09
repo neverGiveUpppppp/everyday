@@ -1,6 +1,10 @@
 package com.prac.zPrac2;
 
 
+import com.prac.Interface.vehiclable.Main;
+
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.*;
 
 @FunctionalInterface
@@ -424,6 +428,96 @@ class Variable_Capture{
 
 /***************************************** D.Method Reference ****************************************/
 
+class Greetings{
+    private String name;
+
+    public Greetings(){
+        this.name = name;
+    }
+
+    public Greetings(String s) {
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    // 인스턴스 메소드
+    public String hello(String name){
+        return "hello! " + name;
+    }
+    // static한 메소드 : public static이 달림
+    public static String hi(String name) {
+        return "hi!" + name;
+    }
+}
+
+/*
+메소드 참조하는 방법
+    1)스태틱 메소드 참조 (데이터타입::스태틱 메소드)
+    2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+    3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+    4)생성자 참조 (데이터타입::new)
+*/
+
+// 1)스태틱 메소드 참조 (데이터타입::스태틱 메소드)
+class staticMethod_Ref{
+    public static void main(String[] args) {
+        UnaryOperator<String> hi = Greetings::hi;   // 데이터타입::스태틱 메소드
+        System.out.println(hi.apply("Robin"));   // hi!Robin
+    }
+}
+
+
+// 2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+class SpecObjInstncMethod_Ref{
+    public static void main(String[] args) {
+        Greetings greetings = new Greetings();
+        UnaryOperator<String> hello = greetings::hello;         // 객체 레퍼런스::인스턴스 메소드
+        System.out.println(hello.apply("instance method"));  // hello! instance method
+    }
+}
+
+
+// 3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+class RandmObjInstncMethod_Ref{
+    public static void main(String[] args) {
+        String[] names = {"instance method", "static method", "object"};
+        
+        // 1)익명 함수
+        Arrays.sort(names, new Comparator<String>(){
+            @Override
+            public int compare(String o1, String o2){
+                return 0;
+            }
+        });
+        
+        // 2)람다
+        Arrays.sort(names, (o1,o2) -> 0);
+
+        // 3)메소드 참조
+        Arrays.sort(names, String::compareToIgnoreCase);
+// Arrays.sort(names, String::compareToIgnoreCase); 코드 의미 : keesun이 whiteship을 compareToIgnoreCase 파라미터에 넘겨서 int값을 리턴 받는 것
+// 두번째는 whiteship이 toby랑 비교를 해서 int값을 return함
+
+
+    }
+}
+
+
+// 4)생성자 참조 (데이터타입::new)
+class Constrctor_Ref{
+    public static void main(String[] args) {
+        Supplier<Greetings> function2 = Greetings::new;         // 매개변수 없는 기본생성자 참조
+        Greetings greetings = function2.get();
+        System.out.println(greetings);
+
+        Function<String, Greetings> function1 = Greetings::new;  // 매개변수 있는 생성자 참조
+        function1.apply("bye");
+        System.out.println(function1.apply("bye"));
+    }
+
+}
 
 
 public class Lambda5_whiteship {
