@@ -33,7 +33,7 @@ class Car extends Vehicle {
 
 public class Inheritance_VehicleCar {
     public static void main(String[] args) {
-        Vehicle obj = new Car("Spark");
+        Vehicle obj = (Vehicle) new Car("Spark");
         System.out.println(obj.getName()); // obj.getName()이 부모클래스만 찍히는 이유
                                            // 부모클래스의 기능을 사용할려고 Car클래스를 데이터타입 Vehicle로 형변환를 시켜 사용한 것
         // abstract class : 클래스의 규칙, 목적 등을 강제함

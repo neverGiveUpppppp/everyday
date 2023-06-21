@@ -21,7 +21,7 @@ class Bus implements Vehiclable{
 
 }
 
-class Driver{
+class Driver implements Vehiclable{
     public void manipulate_go(Vehiclable vehiclable){
         vehiclable.go();
     }
@@ -31,6 +31,21 @@ class Driver{
     public void setSpeed(Vehiclable vehiclable, int speed){
         vehiclable.setSpeed(speed);
         System.out.printf("속도를 %dkm로 변경합니다.",speed);
+    }
+
+    @Override
+    public void go() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public int setSpeed(int speed) {
+        return 0;
     }
 }
 

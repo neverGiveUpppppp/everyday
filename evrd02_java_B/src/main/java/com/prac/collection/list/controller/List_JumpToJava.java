@@ -100,6 +100,9 @@ class Array_to_ArrayList{
         }
         rslt = rslt.substring(0, rslt.length()-1); // 마지막 값인 ,는 빼고 출력
         System.out.println(rslt);   // 138,129,142
+                    // StringBuilder도 위와 똑같이 가능
+                    StringBuilder sb = new StringBuilder();
+                    sb.substring(0, sb.length()-1);
 
         // String.join
         //      위의 코드를 간단하게
