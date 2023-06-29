@@ -21,6 +21,12 @@ public class MapPractice {
         System.out.println(prop); // {b=bb, a=aa, c=cc}
         System.out.println(prop.getProperty("a")); // aa   <- map형태가 아닌 str
 
+        prop.get("a");
+        prop.getProperty("a");
+        System.out.println(prop.get("a"));          // a    <- map형태가 아닌 str
+        System.out.println(prop.getProperty("a"));  // a    <- map형태가 아닌 str
+
+
         System.out.println(prop.containsKey("a")); // true
 
 
@@ -72,7 +78,7 @@ public class MapPractice {
         // 5.keySet() & entrySet()
         // keySet()
         // keySet():Set<K>
-        // 맵에 있는 key들을 set에 담아 반환
+        // 맵에 있는 key들을 Set에 담아 Set으로 반환
         // 방법1
         System.out.println("keyset() : "+hm.keySet()); // [a, b]
         System.out.println(hm.keySet());
@@ -515,7 +521,7 @@ public class MapPractice {
     // 5.keySet() & entrySet()
     // keySet()
     // keySet():Set<K>
-    // 맵에 있는 key들을 set에 담아 반환
+    // 맵에 있는 key들을 Set에 담아 Set으로 반환
 
     // 방법1
 //        System.out.println(hmap.keySet()); // [사과류, 참외류]

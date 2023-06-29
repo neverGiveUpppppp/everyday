@@ -117,7 +117,7 @@ public class ListPractice {
 //            [a(0점), a(1점), a(2점), a(3점), a(4점)]
         }
         for(Student a : al){
-            // 변수 al의 요소 하나씩 순서대로 al길이만큼 반복
+            // 변수 al의 요소 하나씩을 index를 넣어서 al길이만큼 반복
             System.out.println(a);
 //            a(0점)
 //            a(1점)
