@@ -96,9 +96,7 @@ public class MapPractice {
             String kset = it.next();
             System.out.println(kset); // a
             System.out.println("밸류값 : "+hm.get(kset)); // 밸류값 : Snack{flavor='단맛', price=10}
-
         }
-
 
         // entrySet()
         // entrySet():Set<Map.Entry<K,V>>
@@ -191,6 +189,7 @@ public class MapPractice {
         // containsKey(Object key):boolean
         // containsValue(Object value):boolean
         hMap.containsKey("ㄴ");
+        hMap.containsValue("단맛");
         System.out.println(hMap.containsKey("ㄴ")); // true
 
 
