@@ -432,10 +432,10 @@ class Greetings{
     private String name;
 
     public Greetings(){
-        this.name = name;
     }
 
     public Greetings(String s) {
+        this.name = name;
     }
 
     public String getName() {
