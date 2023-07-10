@@ -350,6 +350,90 @@ class Method_Ref4{
     }
 }
 
+
+
+
+/***************************************** D.Method Reference ****************************************/
+
+
+/*
+메소드 참조하는 방법
+    1)스태틱 메소드 참조 (데이터타입:스태틱 메소드)
+    2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+    3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+    4)생성자 참조 (데이터타입::new)
+ */
+
+
+// 1)스태틱 메소드 참조(데이터타입::스태틱메소드)
+class Static_Method_Ref_1{
+    public static void main(String[] args) {
+        UnaryOperator<String> hi = MethodRef::hi;
+        System.out.println(hi.apply("데이터타입::스태틱메소드"));  // hi! 데이터타입::스태틱메소드
+    }
+}
+
+// 2)특정한 객체의 인스턴스 메소드 참조(객체 레퍼런스::인스턴스 메소드)
+class Specfic_InstanceMethod_Red_1{
+    public static void main(String[] args) {
+        MethodRef methodRef = new MethodRef();
+        UnaryOperator<String> hello = methodRef::hello;
+        System.out.println(hello.apply("객체 레퍼런스::인스턴스 메소드")); // hello! 객체 레퍼런스::인스턴스 메소드
+    }
+}
+
+// 3)임의 객체의 인스턴스 메소드 참조(데이터타입::인스턴스 메소드)
+class RanObj_InstanceMethod_Ref{
+    public static void main(String[] args) {
+        UnaryOperator<String> hello = String::toUpperCase;
+        hello.apply("try");
+        System.out.println(hello.apply("try")); // TRY
+
+        Function<Integer,Integer> math = Math::abs;
+        math.apply(-5);
+        System.out.println(math.apply(-5)); // 5 : Math.abs()로 -5가 절대값으로 5가 됨
+
+
+
+        String[] names = {"instance method", "static method","object"};
+        // 1)익명 함수
+        Arrays.sort(names, new Comparator<String>(){
+            @Override
+            public int compare(String o1, String o2) {
+                return 0;
+            }
+        });
+        // 2)람다
+        Arrays.sort(names, (o1,o2) -> 0);
+        // 3)메소드 참조
+        Arrays.sort(names, String::compareToIgnoreCase);
+    }
+}
+
+
+// 4)생성자 참조(데이터타입::new)
+class Constructor_Ref_1{
+    public static void main(String[] args) {
+        // 1)기본생성자 참조
+        Supplier<Greeting> greetingsSupplier = Greeting::new; // new 찍어서 어디로 가나 확인
+        greetingsSupplier.get();
+        System.out.println(greetingsSupplier.get()); // com.prac.zPrac2.Greeting@3b07d329
+
+
+        // 2)매개변수 있는 생성자 참조
+        Supplier<MethodRef> meth = MethodRef::new; // new 찍어서 어디로 가나 확인
+        MethodRef methodRef = meth.get();
+        System.out.println(methodRef.hello("constructor"));    // hello! constructor
+
+        UnaryOperator<String> hello = methodRef::hello;
+        hello.apply("default constructor reference");
+        System.out.println(hello.apply("default constructor reference")); // hello! default constructor reference
+
+    }
+}
+
+
+
 public class Lambda6_whiteship {
 
 }
