@@ -18,6 +18,7 @@
 */.metadata/
 .*/.metadata/
 /target/
+/out/
 
 evrd02_java_B/out/
 
