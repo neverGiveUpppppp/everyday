@@ -1,12 +1,7 @@
-package hello.core2.member;
+package hello.core3.member2;
 
 public class MemberServiceImpl implements MemberService{
-
     private MemberRepository memberRepository = new MemoryMemberRepository();
-
-    public MemberServiceImpl(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
 
     @Override
     public void join(Member member) {
@@ -14,9 +9,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Member findMember(Long memberid) {
-        return memberRepository.findById(memberid);
+    public Member findMember(Long memberId) {
+        return memberRepository.findById(memberId);
     }
-
-
 }
