@@ -8,7 +8,12 @@ import hello.core3.member.MemberServiceImpl;
 public class MemberApp {
     public static void main(String[] args) {
 
-        MemberService memberService = new MemberServiceImpl();
+        // DIP,OCP 위반
+//        MemberService memberService = new MemberServiceImpl();
+
+        // DIP,OCP 위반 해결 : DI컨테이너
+        AppConfig appConfig = new AppConfig();
+        MemberService memberService = appConfig.memberService();
 
         Member member = new Member(1L,"memberA", Grade.VIP);
         memberService.join(member);
