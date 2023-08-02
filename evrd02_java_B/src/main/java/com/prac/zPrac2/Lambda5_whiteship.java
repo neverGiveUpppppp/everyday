@@ -500,7 +500,7 @@ class RandmObjInstncMethod_Ref{
 // Arrays.sort(names, String::compareToIgnoreCase); 코드 의미 : keesun이 whiteship을 compareToIgnoreCase 파라미터에 넘겨서 int값을 리턴 받는 것
 // 두번째는 whiteship이 toby랑 비교를 해서 int값을 return함
 
-
+        System.out.println(Arrays.toString(names)); // 정렬됨
     }
 }
 
