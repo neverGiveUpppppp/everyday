@@ -251,10 +251,10 @@ class Ex_Predicate{
 class MethodRef{ // vo class
     private String name;
 
-    public MethodRef(String s){
+    public MethodRef(){
     }
 
-    public MethodRef() {
+    public MethodRef(String name) {
         this.name = name;
     }
 
@@ -434,6 +434,80 @@ class Constructor_Ref_1{
 
 
 
+
+/***************************************** D.Method Reference ****************************************/
+
+
+/*
+메소드 참조하는 방법
+    1)스태틱 메소드 참조 (데이터타입:스태틱 메소드)
+    2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+    3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+    4)생성자 참조 (데이터타입::new)
+ */
+
+
+// 1)스태틱 메소드 참조(데이터타입::스태틱메소드)
+class Static_Method_Refer{
+    public static void main(String[] args) {
+        UnaryOperator<String> staticMethod = MethodRef::hi;
+        staticMethod.apply("힘내!");
+        System.out.println(staticMethod.apply("힘내!"));  // hi! 힘내!
+
+        Function<Integer, Integer> datatype = Math::abs; // abs : static메소드
+        System.out.println(datatype.apply(-100));   // 100
+    }
+}
+//2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+class SpecificObject_Instance_Method{
+    public static void main(String[] args) {
+        MethodRef methodRef = new MethodRef();
+        Function<String, String> biFunction = methodRef::hello;
+        System.out.println(biFunction.compose(biFunction).apply("힘내!!"));
+    }
+}
+//3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+class RandomObject_Instance_Method{
+    public static void main(String[] args) {
+        String[] arr = {"a", "b", "c"};
+        // 1)Anonymous Function
+        Arrays.sort(arr, new Comparator<String>(){
+            @Override
+            public int compare(String o1, String o2) {
+                return 0;
+            }
+        });
+        // 2)람다
+        Arrays.sort(arr, ((o1, o2) -> 0));
+        // 3)메소드 참조
+        Arrays.sort(arr, String::compareToIgnoreCase);
+        System.out.println(Arrays.toString(arr));
+    }
+}
+//4)생성자 참조 (데이터타입::new)
+class Constructor_Reference{
+    public static void main(String[] args) {
+        // 1)기본 생성자
+        Supplier<MethodRef> str = MethodRef::new;
+        MethodRef methodRef = str.get();
+        System.out.println(methodRef);
+
+        // 2)매개변수 있는 생성자
+        Function<String,MethodRef> str2 = MethodRef::new;
+        System.out.println(str2.apply("괜찮아"));
+        
+    }
+}
+
+
+
+
+
+
+
+
+
 public class Lambda6_whiteship {
+    
 
 }
