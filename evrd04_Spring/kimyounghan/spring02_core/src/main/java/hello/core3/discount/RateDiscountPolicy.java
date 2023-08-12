@@ -2,7 +2,13 @@ package hello.core3.discount;
 
 import hello.core3.member.Grade;
 import hello.core3.member.Member;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
+@Component
+@Primary    // section7-6 @Autowired 필드 명, @Qualifier, @Primary
+//@Qualifier("mainDiscountPolicy") // section7-6 @Autowired 필드 명, @Qualifier, @Primary
 public class RateDiscountPolicy implements DiscountPolicy{
 
     private int discountRate = 10;

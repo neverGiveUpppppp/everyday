@@ -1,7 +1,10 @@
 package hello.core3.member;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class MemoryMemberRepository implements MemberRepository{
 
