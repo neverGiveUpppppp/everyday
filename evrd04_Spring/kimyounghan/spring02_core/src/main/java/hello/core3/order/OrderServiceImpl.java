@@ -3,11 +3,13 @@ package hello.core3.order;
 import hello.core3.discount.DiscountPolicy;
 import hello.core3.member.Member;
 import hello.core3.member.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     // DIP,OCP 위반
 //    MemberRepository memberRespository = new MemoryMemberRepository();
@@ -17,16 +19,9 @@ public class OrderServiceImpl implements OrderService {
 //    MemberRepository memberRepository;
 //    DiscountPolicy discountPolicy;
 
-<<<<<<< HEAD
-    @Autowired
-    public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
-        this.memberRepository = memberRepository;
-        this.discountPolicy = discountPolicy;
-=======
     // section7-1 의존관계 자동 주입
-//    private final MemberRepository memberRepository;
-//    private final DiscountPolicy discountPolicy;
->>>>>>> 141b81d18eab1dbc045c3190e4ee52f093c49757
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
 
     // 1) 생성자 주입  // 생성자 1개 autowired 생략가능
 //    private final MemberRepository memberRepository;
