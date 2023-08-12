@@ -5,6 +5,7 @@ import hello.core2.discount.FixDiscountPolicy;
 import hello.core2.discount.RateDiscountPolicy;
 import hello.core2.member.*;
 
+
 public class OrderServiceImpl implements OrderService{
 
     // DIP 위반
@@ -28,6 +29,11 @@ public class OrderServiceImpl implements OrderService{
         int discountPrice = discountPolicy.discount(member, itemPrice);
 
         return new Order(memberId, itemName, itemPrice, discountPrice);
+    }
+
+
+    public MemberRepository getMemberRepository(){
+        return memberRepository;
     }
 
 }

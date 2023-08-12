@@ -1,8 +1,16 @@
 package hello.core2.member;
 
-public class MemberServiceImpl implements MemberService{
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
-    private MemberRepository memberRepository = new MemoryMemberRepository();
+//@Service
+public class MemberServiceImpl implements MemberService{
+    // DIP 위반 해결
+//    private MemberRepository memberRepository = new MemoryMemberRepository();
+
+    // DIP 위반 해결
+    private MemberRepository memberRepository;
+
 
     public MemberServiceImpl(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
@@ -18,5 +26,8 @@ public class MemberServiceImpl implements MemberService{
         return memberRepository.findById(memberid);
     }
 
+    public MemberRepository getMemberRepository() {
+        return memberRepository;
+    }
 
 }
