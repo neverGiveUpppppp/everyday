@@ -1,5 +1,7 @@
 package hello.core3.scan.filter;
 
+import hello.core3.scan.MyExcludeComponent;
+import hello.core3.scan.MyIncludeComponent;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
