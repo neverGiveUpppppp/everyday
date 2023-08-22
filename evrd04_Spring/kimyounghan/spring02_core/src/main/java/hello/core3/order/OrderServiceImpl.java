@@ -1,5 +1,6 @@
 package hello.core3.order;
 
+import hello.core3.annotation.MainDiscountPolicy;
 import hello.core3.discount.DiscountPolicy;
 import hello.core3.member.Member;
 import hello.core3.member.MemberRepository;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
     // DIP,OCP 위반
 //    MemberRepository memberRespository = new MemoryMemberRepository();
@@ -20,8 +21,9 @@ public class OrderServiceImpl implements OrderService {
 //    DiscountPolicy discountPolicy;
 
     // section7-1 의존관계 자동 주입
-    private final MemberRepository memberRepository;
-    private final DiscountPolicy discountPolicy;
+//    private final MemberRepository memberRepository;
+//    private final DiscountPolicy discountPolicy;
+
 
     // 1) 생성자 주입  // 생성자 1개 autowired 생략가능
 //    private final MemberRepository memberRepository;
@@ -63,8 +65,26 @@ public class OrderServiceImpl implements OrderService {
 //        this.memberRepository = memberRepository;
 //        this.discountPolicy = discountPolicy;
 //    }
-    
-    
+
+    // section7-7
+    // 1)생성자 자동 주입
+    private final MemberRepository memberRepository;
+    private final DiscountPolicy discountPolicy;
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRespository, @MainDiscountPolicy DiscountPolicy discountPolicy){
+        this.memberRepository = memberRespository;
+        this.discountPolicy = discountPolicy;
+    }
+
+    // 2)수정자 자동 주입
+//    private MemberRepository memberRepository;
+//    private DiscountPolicy discountPolicy; // final 키워드 빠짐
+//    @Autowired
+//    public DiscountPolicy setDiscountPolicy(@MainDiscountPolicy DiscountPolicy discountPolicy) {
+//        this.discountPolicy = discountPolicy;
+//    }
+
+
 
 /********************* business logic *******************************/
 
