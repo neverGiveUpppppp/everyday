@@ -3,6 +3,7 @@ package hello.predo.scope;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -27,15 +28,40 @@ public class PrototypeProviderTest {
     }
 
     static class ClientBean {
-        @Autowired
-        private ApplicationContext ac;
+        // section9-4 : 1)스프링컨테이너에 요청
+//        @Autowired
+//        private ApplicationContext ac;
+//
+//        public int logic() {
+//            PrototypeBean prototypeBean = ac.getBean(PrototypeBean.class); // Dependency Lookup (DL) 의존관계조회(탐색) : 직접 필요한 의존관계를 찾는 것
+//
+//            prototypeBean.addCount();
+//            int count = prototypeBean.getCount();
+//            return count;
+//        }
 
-        public int logic() {
-            PrototypeBean prototypeBean = ac.getBean(PrototypeBean.class);
+        // section9-4 : 2)ObjectFactory, ObjectProvider
+//        @Autowired
+//        private ObjectProvider<PrototypeBean> prototypeBeanProvider;
+//
+//        public int logic(){
+//            PrototypeBean prototypeBean = prototypeBeanProvider.getObject();
+//            prototypeBean.addCount();
+//            int count = prototypeBean.getCount();
+//            return count;
+//        }
+
+        // section9-4 : 3) JSR-330 Provider
+        @Autowired
+        private Provider<PrototypeBean> provider;
+
+        public int logic(){
+            PrototypeBean prototypeBean = provider.get();
             prototypeBean.addCount();
             int count = prototypeBean.getCount();
             return count;
         }
+
     }
 
     @Scope("prototype")
