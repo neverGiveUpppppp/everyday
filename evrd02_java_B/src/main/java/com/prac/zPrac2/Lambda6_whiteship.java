@@ -438,8 +438,6 @@ class Constructor_Ref_1{
 /***************************************** D.Method Reference ****************************************/
 
 
-<<<<<<< HEAD
-=======
 class GreetingD{
 
     private String name;
@@ -460,7 +458,6 @@ class GreetingD{
     }
 }
 
->>>>>>> 96d138d15767ef7acc6e90b76e3787e2d8d9ff0d
 /*
 메소드 참조하는 방법
     1)스태틱 메소드 참조 (데이터타입:스태틱 메소드)
@@ -470,7 +467,6 @@ class GreetingD{
  */
 
 
-<<<<<<< HEAD
 // 1)스태틱 메소드 참조(데이터타입::스태틱메소드)
 class Static_Method_Refer{
     public static void main(String[] args) {
@@ -525,13 +521,6 @@ class Constructor_Reference{
 
 
 
-
-
-
-
-
-
-=======
 // 1)스태틱 메소드 참조 (데이터타입::스태틱 메소드)
 class staticMethod_Refe{
     public static void main(String[] args) {
@@ -607,7 +596,76 @@ class Constructor_Refer{
     }
 }
 
->>>>>>> 96d138d15767ef7acc6e90b76e3787e2d8d9ff0d
+
+
+/*
+메소드 참조하는 방법
+    1)스태틱 메소드 참조 (데이터타입:스태틱 메소드)
+    2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+    3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+    4)생성자 참조 (데이터타입::new)
+ */
+
+
+// 1)스태틱 메소드 참조(데이터타입::스태틱메소드)
+class staticMethods{
+    public static void main(String[] args) {
+        UnaryOperator<String> hi = Greeting::hi;
+        String print = hi.apply(" 하이");
+        System.out.println(print); // hi!  하이
+
+        UnaryOperator<String> elses = String::toLowerCase;
+        String apply = elses.apply("- toLowerCase 적용");
+        System.out.println(apply); // - tolowercase 적용
+    }
+}
+//2)특정 객체의 인스턴스 메소드 참조 (객체 레퍼런스::인스턴스 메소드)
+class SpecificObj_InstanceMethods{
+    public static void main(String[] args) {
+        Greeting greeting = new Greeting();
+        UnaryOperator<String> spObj = greeting::hello;
+        String apply = spObj.apply("specfic Object + instance method");
+        System.out.println(apply); // hello! specfic Object + instance method
+    }
+}
+//3)임의 객체의 인스턴스 메소드 참조 (데이터타입::인스턴스 메소드)
+class RandomObject_InstanceMethods{
+    public static void main(String[] args) {
+        String[] names = {"static methods, instance methods, object"};
+
+        // 1) anonymous function
+        Arrays.sort(names, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return 0;
+            }
+        });
+
+        // 2) Lambda
+        Arrays.sort(names, (o1, o2) -> {
+            return 0;
+        });
+
+        // 3)메소드 참조
+        Arrays.sort(names, String::compareToIgnoreCase);
+
+        System.out.println(Arrays.toString(names));
+    }
+}
+//4)생성자 참조 (데이터타입::new)
+class Constructor_References{
+    public static void main(String[] args) {
+        Supplier<Greeting> func1 = Greeting::new;
+        Greeting greeting = func1.get();
+        System.out.println(greeting);
+
+        Function<String, Greeting> func2 = Greeting::new;
+        Greeting constructorRef = func2.apply("생성자 참조");
+        System.out.println(constructorRef);
+    }
+}
+
+
 public class Lambda6_whiteship {
     
 
