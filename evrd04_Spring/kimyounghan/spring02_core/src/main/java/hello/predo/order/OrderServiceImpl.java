@@ -23,8 +23,10 @@ public class OrderServiceImpl implements OrderService{
         this.discountPolicy = discountPolicy;
     }
 
-
-
+    // section5-5 검증용 테스트코드 for MemberRepository 조회
+    public MemberRepository getMemberRepository(){
+        return memberRepository;
+    }
 
     /*************************** business logic *******************************/
 
