@@ -1,11 +1,13 @@
 package hello.predo.member;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 
 //@Repository
+@Component // 추가 : section 6-1 컴포넌트스캔과 의존관계 자동 주입 시작하기
 public class MemoryMemberRepository implements MemberRepository {
 
     private static Map<Long, Member> store = new HashMap<>();

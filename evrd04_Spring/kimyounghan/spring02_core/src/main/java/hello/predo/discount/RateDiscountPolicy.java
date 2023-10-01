@@ -2,7 +2,9 @@ package hello.predo.discount;
 
 import hello.predo.member.Grade;
 import hello.predo.member.Member;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RateDiscountPolicy implements DiscountPolicy {
     private int rateDiscountPrice = 10;
 
