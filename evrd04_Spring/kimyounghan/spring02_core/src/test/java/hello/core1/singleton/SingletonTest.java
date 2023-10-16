@@ -1,7 +1,7 @@
-package hello.core.singleton;
+package hello.core1.singleton;
 
-import hello.core.AppConfig;
-import hello.core.member.MemberService;
+import hello.core2.member.MemberService;
+import hello.core2.AppConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;

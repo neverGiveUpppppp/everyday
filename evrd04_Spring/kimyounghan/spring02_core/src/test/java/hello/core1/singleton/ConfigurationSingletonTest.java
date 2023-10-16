@@ -1,9 +1,9 @@
-package hello.core.singleton;
+package hello.core1.singleton;
 
-import hello.core.AppConfig;
-import hello.core.member.MemberRepository;
-import hello.core.member.MemberServiceImpl;
-import hello.core.order.OrderServiceImpl;
+import hello.core2.AppConfig;
+import hello.core2.member.MemberRepository;
+import hello.core2.member.MemberServiceImpl;
+import hello.core2.order.OrderServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
