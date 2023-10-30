@@ -1,11 +1,9 @@
 package com.group.libraryapp.domain.book.user;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
+@Entity
 public class User {
 
     @Id

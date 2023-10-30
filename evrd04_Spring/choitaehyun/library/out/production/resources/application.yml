@@ -1,0 +1,7 @@
+
+spring:
+  datasource:
+    url: "jdbc:mysql://localhost/library"
+    username : "toy"
+    password: "qrwe"
+    driver-class-name: com.mysql.cj.jdbc.Driver
