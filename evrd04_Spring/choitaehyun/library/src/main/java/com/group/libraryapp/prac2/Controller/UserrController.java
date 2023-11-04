@@ -1,13 +1,11 @@
 package com.group.libraryapp.prac2.Controller;
 
+import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.prac2.Service.UserrService;
 import com.group.libraryapp.prac2.domain.Userr;
 import com.group.libraryapp.prac2.dto.request.UserCreateReq;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,6 +26,11 @@ public class UserrController {
     @GetMapping("/user")
     public List<Userr> getUsers() {
         return userService.getUsers();
+    }
+
+    @PutMapping("/user")
+    public void updateUser(@RequestBody UserUpdateRequest request) {
+        userService.updateUser(request);
     }
 
 }

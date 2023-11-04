@@ -1,5 +1,6 @@
 package com.group.libraryapp.prac2.Service;
 
+import com.group.libraryapp.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.prac2.Repository.UserrRepository;
 import com.group.libraryapp.prac2.domain.Userr;
@@ -34,5 +35,11 @@ public class UserrService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
+    public void updateUser(UserUpdateRequest request) {
+        Userr user = userRepository.findById(request.getId()) // .findById() : select * from user whwere id = ?; 이 쿼리가 자동으로 나가게됨. 반환값은 Optional<User>
+                .orElseThrow(IllegalArgumentException::new);// 해당 id 유저가 없다면 예외 발생(유효성 체크)
+        user.updateName(request.getName()); // update sql를 바로 호출하는게 아닌 User객체를 최신화해주고 save()로 Update 진행
+    }
 
 }
