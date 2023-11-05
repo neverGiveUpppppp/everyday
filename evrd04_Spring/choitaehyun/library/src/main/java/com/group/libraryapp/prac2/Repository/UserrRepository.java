@@ -5,8 +5,11 @@ import com.group.libraryapp.prac2.domain.Userr;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 public interface UserrRepository extends JpaRepository<Userr, Long> {
 
 
+    Optional<Userr> findByName(String name);
 }

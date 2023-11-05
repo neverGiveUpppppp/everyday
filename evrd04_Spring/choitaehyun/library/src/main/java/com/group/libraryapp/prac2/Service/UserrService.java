@@ -28,8 +28,8 @@ public class UserrService {
         userRepository.save(new Userr(req.getName(), req.getAge()));
     }
 
-    @Transactional
-    public List<Userr> getUsers() {
+    @Transactional(readOnly = true)
+    public List<UserResponse> getUsers() {
         return userRepository.findAll().stream()
                 .map(users -> new UserResponse(users.getId(),users.getName(),users.getAge()))
                 .collect(Collectors.toList());
@@ -42,4 +42,11 @@ public class UserrService {
         user.updateName(request.getName()); // update sql를 바로 호출하는게 아닌 User객체를 최신화해주고 save()로 Update 진행
     }
 
+    @Transactional
+    public void deleteUser(String name) {
+        Userr user = userRepository.findByName(name)
+                .orElseThrow(IllegalArgumentException::new);
+        if(user == null)
+            throw new IllegalArgumentException();
+    }
 }

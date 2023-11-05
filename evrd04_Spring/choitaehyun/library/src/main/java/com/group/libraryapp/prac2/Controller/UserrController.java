@@ -1,6 +1,7 @@
 package com.group.libraryapp.prac2.Controller;
 
 import com.group.libraryapp.dto.user.request.UserUpdateRequest;
+import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.prac2.Service.UserrService;
 import com.group.libraryapp.prac2.domain.Userr;
 import com.group.libraryapp.prac2.dto.request.UserCreateReq;
@@ -24,13 +25,18 @@ public class UserrController {
     }
 
     @GetMapping("/user")
-    public List<Userr> getUsers() {
+    public List<UserResponse> getUsers() {
         return userService.getUsers();
     }
 
     @PutMapping("/user")
     public void updateUser(@RequestBody UserUpdateRequest request) {
         userService.updateUser(request);
+    }
+
+    @DeleteMapping
+    public void deleteUser(@RequestParam String name) {
+        userService.deleteUser(name);
     }
 
 }
