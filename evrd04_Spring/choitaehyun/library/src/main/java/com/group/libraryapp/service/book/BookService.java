@@ -2,9 +2,9 @@ package com.group.libraryapp.service.book;
 
 
 import com.group.libraryapp.prac2.Repository.BookRepository;
-import com.group.libraryapp.prac2.Repository.UserrRepository;
-import com.group.libraryapp.prac2.domain.Userr;
+import com.group.libraryapp.prac2.domain.user.Userr;
 import com.group.libraryapp.prac2.domain.book.Book;
+import com.group.libraryapp.prac2.domain.user.loanhistory.UserLoanHistoryRepository;
 import com.group.libraryapp.prac2.dto.request.BookCreateRequest;
 import com.group.libraryapp.prac2.dto.request.BookLoanRequest;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BookService {
 
-    private UserrRepository userRepository;
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
+    private final UserLoanHistoryRepository userLoanHistoryRepository; // 대출 기록 loanBook() 확인을 위한 필드 추가
+
+    public BookService(BookRepository bookRepository, UserLoanHistoryRepository userLoanHistoryRepository) {
+        this.bookRepository = bookRepository;
+        this.userLoanHistoryRepository = userLoanHistoryRepository;
+    }
 
     @Transactional
     public void createBook(BookCreateRequest request) {
