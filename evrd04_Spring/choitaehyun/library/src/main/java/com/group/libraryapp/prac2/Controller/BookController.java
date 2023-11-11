@@ -1,8 +1,8 @@
 package com.group.libraryapp.prac2.Controller;
 
+import com.group.libraryapp.prac2.Service.BookService;
 import com.group.libraryapp.prac2.dto.request.BookCreateRequest;
 import com.group.libraryapp.prac2.dto.request.BookLoanRequest;
-import com.group.libraryapp.service.book.BookService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +26,6 @@ public class BookController {
     public void bookLoan(@RequestBody BookLoanRequest request){
         bookService.bookLoan(request);
     }
-
 
 
 }

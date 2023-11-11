@@ -2,6 +2,7 @@ package com.group.libraryapp.service.book;
 
 
 import com.group.libraryapp.prac2.Repository.BookRepository;
+import com.group.libraryapp.prac2.domain.user.UserRepository;
 import com.group.libraryapp.prac2.domain.user.Userr;
 import com.group.libraryapp.prac2.domain.book.Book;
 import com.group.libraryapp.prac2.domain.user.loanhistory.UserLoanHistoryRepository;
@@ -15,10 +16,13 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final UserLoanHistoryRepository userLoanHistoryRepository; // 대출 기록 loanBook() 확인을 위한 필드 추가
+    private final UserRepository userRepository;
 
-    public BookService(BookRepository bookRepository, UserLoanHistoryRepository userLoanHistoryRepository) {
+
+    public BookService(BookRepository bookRepository, UserLoanHistoryRepository userLoanHistoryRepository, UserRepository userRepository) {
         this.bookRepository = bookRepository;
         this.userLoanHistoryRepository = userLoanHistoryRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
@@ -38,6 +42,6 @@ public class BookService {
         // 4)유저 정보를 가져온다.(도메인 객체 리팩토링)
         Userr user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalArgumentException::new);
-        user.loanBook(book.getName());
+        user.bookLoan(book.getName());
     }
 }

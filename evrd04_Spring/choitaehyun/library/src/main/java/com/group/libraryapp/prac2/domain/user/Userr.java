@@ -1,6 +1,9 @@
 package com.group.libraryapp.prac2.domain.user;
 
+import com.group.libraryapp.prac2.domain.user.loanhistory.UserLoanHistory;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Userr {
@@ -12,6 +15,13 @@ public class Userr {
     @Column(nullable = false, length = 255, name = "name")
     private String name;
     private Integer age;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLoanHistory> userLoanHistories;
+
+    public Userr(){
+
+    }
 
     public Userr(String name, Integer age) {
         if(name == null || name.isBlank()){
@@ -35,6 +45,10 @@ public class Userr {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    public void bookLoan(String bookName) {
+        this.userLoanHistories.add(new UserLoanHistory(this, bookName));
     }
 
     public void returnBook(String bookName) {
