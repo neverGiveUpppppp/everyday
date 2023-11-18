@@ -16,6 +16,12 @@ public class User {
     private String name;
     private Integer age;
 
+
+    protected User() {
+
+    }
+
+
     public User(Long id, String name, Integer age) {
         this.id = id;
         this.name = name;
@@ -30,6 +36,7 @@ public class User {
         this.age = age;
     }
 
+
     public Long getId() {
         return id;
     }
@@ -41,4 +48,11 @@ public class User {
     public Integer getAge() {
         return age;
     }
+
+
+    public void updateUser(String name) {
+        this.name = name;
+    }
+
+
 }

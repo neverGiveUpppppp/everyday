@@ -3,6 +3,7 @@ package com.group.libraryapp.prac3.service;
 import com.group.libraryapp.dto.user.response.UserResponse;
 import com.group.libraryapp.prac3.domain.user.User;
 import com.group.libraryapp.prac3.dto.user.request.UserCreateRequest;
+import com.group.libraryapp.prac3.dto.user.request.UserUpdateRequest;
 import com.group.libraryapp.prac3.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,15 @@ public class UserService {
                 .map(UserResponse::new)
                 .collect(Collectors.toList());
 
+    }
+
+
+    @Transactional
+    public void updateUser(UserUpdateRequest request) {
+        User user = userRepository.findById(request.getId())
+                .orElseThrow(IllegalAccessError::new);
+        user.updateUser(request.getName());
+        userRepository.save(user);
     }
 
 
