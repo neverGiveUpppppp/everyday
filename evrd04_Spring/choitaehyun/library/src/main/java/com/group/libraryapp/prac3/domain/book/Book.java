@@ -20,5 +20,13 @@ public class Book {
     public Book(String bookName) {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
 
 }
