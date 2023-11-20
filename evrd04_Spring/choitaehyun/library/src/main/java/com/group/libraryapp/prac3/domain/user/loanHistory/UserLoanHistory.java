@@ -25,8 +25,15 @@ public class UserLoanHistory {
         this.bookName = bookName;
         this.isReturn = isReturn;
     }
+    public UserLoanHistory(User user, String bookName) {
+        this.user = user;
+        this.bookName = bookName;
+        this.isReturn = false;
+    }
 
-
+    public void doReturn(){   // 대출 중(false)인 것을 반납완료 상태인 대여가능상태(true)로 바꿔주기 위해 추가
+        this.isReturn = true;
+    }
 
 
 }

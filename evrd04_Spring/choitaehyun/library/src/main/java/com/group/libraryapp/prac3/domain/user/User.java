@@ -1,11 +1,11 @@
 package com.group.libraryapp.prac3.domain.user;
 
+import com.group.libraryapp.prac3.domain.user.loanHistory.UserLoanHistory;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
@@ -15,10 +15,11 @@ public class User {
     private Long id = null;
     private String name;
     private Integer age;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserLoanHistory> userLoanHistory = new ArrayList<>();
 
 
     protected User() {
-
     }
 
 
@@ -36,6 +37,15 @@ public class User {
         this.age = age;
     }
 
+    public void updateUser(String name) {
+        this.name = name;
+    }
+
+    public void loanBook(String bookName){
+        this.userLoanHistory.add(new UserLoanHistory(this, bookName));
+
+    }
+
 
     public Long getId() {
         return id;
@@ -48,11 +58,5 @@ public class User {
     public Integer getAge() {
         return age;
     }
-
-
-    public void updateUser(String name) {
-        this.name = name;
-    }
-
 
 }
