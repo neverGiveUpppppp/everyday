@@ -3,6 +3,7 @@ package com.group.libraryapp.prac3.controller;
 import com.group.libraryapp.prac3.dto.book.request.BookCreateRequest;
 import com.group.libraryapp.prac3.dto.book.request.BookLoanRequest;
 import com.group.libraryapp.prac3.dto.book.request.BookReturnRequest;
+import com.group.libraryapp.prac3.dto.book.request.BookReturnRequest2;
 import com.group.libraryapp.prac3.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,5 +36,12 @@ public class BookController {
     public void returnBook(@RequestBody BookReturnRequest request) {
         bookService.returnBook(request);
     }
+
+
+    @PutMapping("/book/return")
+    public void returnBook2(@RequestBody BookReturnRequest2 request2){
+        bookService.returnBook2(request2);
+    }
+
 
 }

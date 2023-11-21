@@ -6,6 +6,7 @@ import com.group.libraryapp.prac3.domain.user.loanHistory.UserLoanHistory;
 import com.group.libraryapp.prac3.dto.book.request.BookCreateRequest;
 import com.group.libraryapp.prac3.dto.book.request.BookLoanRequest;
 import com.group.libraryapp.prac3.dto.book.request.BookReturnRequest;
+import com.group.libraryapp.prac3.dto.book.request.BookReturnRequest2;
 import com.group.libraryapp.prac3.repository.BookRepository;
 import com.group.libraryapp.prac3.repository.UserLoanHistoryRepository;
 import com.group.libraryapp.prac3.repository.UserRepository;
@@ -60,6 +61,20 @@ public class BookService {
                 .orElseThrow(IllegalArgumentException::new);
         userLoanHistory.doReturn();
         userLoanHistoryRepository.save(userLoanHistory);
+
+    }
+
+    @Transactional
+    public void returnBook2(BookReturnRequest2 request2) {
+//        User user = userRepository.findByName(request2.getUserName())
+//                .orElseThrow(IllegalArgumentException::new);
+//        UserLoanHistory userLoanHistory = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request2.getBookName())
+//                .orElseThrow(IllegalArgumentException::new);
+//        userLoanHistory.doReturn();
+//        userLoanHistoryRepository.save(userLoanHistory);
+        User user = userRepository.findByName(request2.getUserName())
+                .orElseThrow(IllegalArgumentException::new);
+        user.returnBook(request2.getBookName());
 
     }
 

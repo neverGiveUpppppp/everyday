@@ -46,6 +46,13 @@ public class User {
 
     }
 
+    public void returnBook(String bookName){
+        UserLoanHistory targetHistory = this.userLoanHistory.stream()
+                .filter(history -> history.getBookName().equals(bookName))
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        targetHistory.doReturn();
+    }
 
     public Long getId() {
         return id;
