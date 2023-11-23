@@ -83,15 +83,18 @@ public class BookService {
         // 1)userId를 찾아서 가져오기
         // 2)요구사항에 user 정보는 찾아왔으니 userId와 bookname으로 대출 기록 찾기
         // 3)대여가능 상태로 변경하기(책 반납)
-//        Optional<User> user = userRepository.findByName(request.getUserName());
+////        Optional<User> user = userRepository.findByName(request.getUserName());
+//        User user = userRepository.findByName(request.getUserName())
+//                .orElseThrow(IllegalArgumentException::new);
+////        if(user.isPresent()) {
+//            UserLoanHistory userLoanHistory = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName())
+//                    .orElseThrow(IllegalArgumentException::new);
+////        }
+//        userLoanHistory.doReturn();
+//        userLoanHistoryRepository.save(userLoanHistory);
         User user = userRepository.findByName(request.getUserName())
                 .orElseThrow(IllegalArgumentException::new);
-//        if(user.isPresent()) {
-            UserLoanHistory userLoanHistory = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName())
-                    .orElseThrow(IllegalArgumentException::new);
-//        }
-        userLoanHistory.doReturn();
-        userLoanHistoryRepository.save(userLoanHistory);
+        user.returnBook3(request.getBookName());
     }
 
 
