@@ -43,5 +43,10 @@ public class BookController {
         bookService.returnBook2(request2);
     }
 
+    @PutMapping("/book/return3")
+    public void returnBook4(@RequestBody BookReturnRequest2 request) {
+        bookService.returnBook4(request);
+    }
+
 
 }
