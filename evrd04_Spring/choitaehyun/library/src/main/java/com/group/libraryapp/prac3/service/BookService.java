@@ -107,7 +107,17 @@ public class BookService {
         UserLoanHistory history = userLoanHistoryRepository.findByUserIdAndBookName(user.getId(), request.getBookName())
                 .orElseThrow(IllegalArgumentException::new);
         history.doReturn();
-
     }
+
+    public void returnBook5(BookReturnRequest2 request2) {
+//         1)userId를 찾아서 가져오기
+//         2)요구사항에 user 정보는 찾아왔으니 userId와 bookname으로 대출 기록 찾기
+//         3)대여가능 상태로 변경하기(책 반납)
+        User user = userRepository.findByName(request2.getUserName())
+                .orElseThrow(IllegalArgumentException::new);
+        user.returnBook5(request2.getBookName());
+    }
+
+
 }
 

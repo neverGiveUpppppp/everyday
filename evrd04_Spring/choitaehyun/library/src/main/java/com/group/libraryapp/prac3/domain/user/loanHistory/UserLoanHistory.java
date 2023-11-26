@@ -39,7 +39,11 @@ public class UserLoanHistory {
     public void doReturn2(){
         this.isReturn = true;
     }
-    public void doRetur3(){
+    public void doReturn3(){
+        this.isReturn = true;
+    }
+
+    public void doReturn5(){
         this.isReturn = true;
     }
 
