@@ -5,3 +5,5 @@ spring:
     username : "toy"
     password: "qrwe"
     driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8086

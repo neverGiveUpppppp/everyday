@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+//@Service
 public class UserrService {
 
     private final UserrRepository userRepository;
 
-    @Autowired
+//    @Autowired
     public UserrService(UserrRepository userRepository) {
         this.userRepository = userRepository;
     }

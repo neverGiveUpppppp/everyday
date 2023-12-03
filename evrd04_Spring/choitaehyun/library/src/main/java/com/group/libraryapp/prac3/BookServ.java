@@ -6,7 +6,7 @@ import com.group.libraryapp.prac3.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("book")
+@Service
 public class BookServ {
 
     private final BookRepo bookRepo;
@@ -31,4 +31,20 @@ public class BookServ {
         user.bookReturn(request.getBookName());
 
     }
+
+
+    public void loanBook(BookLoanRequest request) {
+        // 책 빌릴려는 유저가 있는 지 체크(로그인 상태라면 필요x)
+        User user = userRepository.findByName(request.getUserName())
+                .orElseThrow(IllegalArgumentException::new);
+        // 해당 책이 있는 지 확인
+        Book book = bookRepo.findByBookname(request.getBookName()).stream()
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+        // 책 대여상태로 변경
+        if(bookRepo != null)
+            user.loanBook(request);
+
+    }
+
 }
