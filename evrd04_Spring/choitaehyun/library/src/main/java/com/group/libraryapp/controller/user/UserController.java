@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
 public class UserController {
 
-    @Autowired
+//    @Autowired
     private final UserService userService;
 
     public UserController(UserService userService) {

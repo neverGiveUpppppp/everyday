@@ -37,5 +37,8 @@ public class User {
         targetHistory.doReturn();
     }
 
+    public void loanBook(BookLoanRequest request) {
+        historyList.add(new UserLoanHistory(this, request.getBookName(),true));
+    }
 
 }

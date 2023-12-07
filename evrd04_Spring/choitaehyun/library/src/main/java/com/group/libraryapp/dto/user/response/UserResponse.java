@@ -19,6 +19,8 @@ public class UserResponse {
         this.age = user.getAge();
     }
 
+    public UserResponse(com.group.libraryapp.domain.book.user.User user) {
+    }
 
 
     public Long getId() {
