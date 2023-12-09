@@ -2,6 +2,7 @@ package com.group.libraryapp.prac3;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -23,5 +24,6 @@ public class BookCon {
     public void loanBook(BookLoanRequest request) {
         bookServ.loanBook(request);
     }
+
 
 }
