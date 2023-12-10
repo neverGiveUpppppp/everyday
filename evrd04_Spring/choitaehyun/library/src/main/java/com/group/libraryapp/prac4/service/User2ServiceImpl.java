@@ -4,6 +4,7 @@ import com.group.libraryapp.dto.user.request.UserCreateRequest;
 import com.group.libraryapp.prac4.domain.User2;
 import com.group.libraryapp.prac4.dto.User2CreateRequest;
 import com.group.libraryapp.prac4.dto.User2Response;
+import com.group.libraryapp.prac4.dto.User2UpdateReq;
 import com.group.libraryapp.prac4.repository.User2Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,14 +35,26 @@ public class User2ServiceImpl implements User2Service {
                 .collect(Collectors.toList());
     }
 
-    @Transactional // @Transactional : 트랜잭션 원자성(atomic) 적용 어노테이션 // 해당 메소드가 시작될 때 start transaction;을 해주고 에러 없으면 commit 있으면 rollback함
-    public void saveUser(UserCreateRequest request) {
-//        User u = userRepository.save(new User(request.getName(), request.getAge()));// jpa는 해당 메소드에 객체를 넣어주면 자동으로 쿼리 생성해서 보냄
-        Consumer<User> users = (user) -> System.out.println(user);
-        Consumer<User> userss = (user) -> User::new;
-//        userRepository.save(Consumer<User> users = (user) -> user::new);
-//        throw new IllegalArgumentException(); // (Unchecked Exception) 인위적으로 예외 발생시켜 트랜잭션 원자성 확인
-//        throw new IOException(); // checked Exception은 Unchecked와 달리 트랜잭션 안에서 rollback 안됨
+
+    @Transactional
+    public void userUpdate(User2UpdateReq request) {
+        user2Repository.findByName(request.getName());           // 이름으로 찾기
+        User2 user = user2Repository.findById(request.getId())   // Id로 찾기 
+                .orElseThrow(IllegalArgumentException::new);     // 유효성 체크
+//        user.userUpdate(request.getName()); // 파라미터로 하나씩 받기
+        user.userUpdate(request);             // dto 객체 통째로 받기
     }
+
+
+
+//    @Transactional // @Transactional : 트랜잭션 원자성(atomic) 적용 어노테이션 // 해당 메소드가 시작될 때 start transaction;을 해주고 에러 없으면 commit 있으면 rollback함
+//    public void saveUser(UserCreateRequest request) {
+////        User u = userRepository.save(new User(request.getName(), request.getAge()));// jpa는 해당 메소드에 객체를 넣어주면 자동으로 쿼리 생성해서 보냄
+//        Consumer<User> users = (user) -> System.out.println(user);
+//        Consumer<User> userss = (user) -> User::new;
+////        userRepository.save(Consumer<User> users = (user) -> user::new);
+////        throw new IllegalArgumentException(); // (Unchecked Exception) 인위적으로 예외 발생시켜 트랜잭션 원자성 확인
+////        throw new IOException(); // checked Exception은 Unchecked와 달리 트랜잭션 안에서 rollback 안됨
+//    }
 
 }

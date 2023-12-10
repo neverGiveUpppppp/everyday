@@ -30,13 +30,15 @@ public class User2 {
         this.age = user2.getAge();
     }
 
+
+
     // 생성자, 객체로 받기
-    public User(User user) { // 파라미터 하나씩 받는 대신 User 객체 통으로 받음. 심플해지고, 메소드참조 사용 가능해짐
-        if(user.name == null || user.name.isBlank())
-            throw new IllegalArgumentException(String.format("잘못된 name(%s)값이 들어왔습니다.", name));
-        this.name = user.getName();
-        this.age = user.getAge();
-    }
+//    public User(User user) { // 파라미터 하나씩 받는 대신 User 객체 통으로 받음. 심플해지고, 메소드참조 사용 가능해짐
+//        if(user.name == null || user.name.isBlank())
+//            throw new IllegalArgumentException(String.format("잘못된 name(%s)값이 들어왔습니다.", name));
+//        this.name = user.getName();
+//        this.age = user.getAge();
+//    }
 
 
 

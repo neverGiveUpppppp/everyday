@@ -3,11 +3,10 @@ package com.group.libraryapp.prac4.controller;
 import com.group.libraryapp.prac4.domain.User2;
 import com.group.libraryapp.prac4.dto.User2CreateRequest;
 import com.group.libraryapp.prac4.dto.User2Response;
+import com.group.libraryapp.prac4.dto.User2UpdateReq;
 import com.group.libraryapp.prac4.service.User2ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,10 +27,14 @@ public class User2Controller {
     }
 
     @GetMapping("/user")
-    public List<User2Response> userGetAll(){
+    public List<User2Response> userGetAll() {
         return user2Service.userGetAll();
     }
 
+    @PutMapping("/user")
+    public void userUpdate(@RequestBody User2UpdateReq request) {
+        user2Service.userUpdate(request);
+    }
 
 
 }
