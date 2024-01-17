@@ -1,0 +1,15 @@
+spring:
+  datasource:
+      driver-class-name: org.h2.Driver
+      url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;
+  sql:
+    init:
+      schema-locations: classpath:/org/springframework/batch/core/schema-h2.sql
+  batch:
+    job:
+      enabled: false # CommandLineRunner 설정 해제
+      # CommandLineRunner : 앱 구동시점에 특정 작업이 실행될 수 있도록 해주는 역할
+      # 스케쥴러를 사용할 것이기 때문에 구동시점에 동작하는 작업을 제거해주는 설정을 추가함
+
+  logging.level.com.deeplify.tutorial.batch: debug
+
