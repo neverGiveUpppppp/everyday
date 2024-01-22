@@ -15,12 +15,12 @@ import java.util.List;
 public class FindFile {
 
 	/**
-	 * @param args
+	 * @param argsㄹ
 	 * @throws  
 	 */
 	public static void main(String[] args)  {
 		
-		String folder = "D:\\�̰�����\\Favorites";
+		String folder = "D:\\assginment\\Favorites";
 		try		{
 		
 			if ( args[0] != "" || args[0] != null )		{ // args[0]이 null이 아니고 공백값이 아닐 때, folder변수에 값을 대입
@@ -53,9 +53,9 @@ public class FindFile {
 			int cnt = 0;
 			
 			String temp = "";			
-			temp += "\t" ;   // temp변수에 \t 추가
+			temp += "\t" ;   // 탭 삽입
 			temp += folder ; // temp변수에 위의 folder변수에 받았던 것들을 삽입
-			temp += "\n" ;   // temp변수에 \n 추가
+			temp += "\n" ;   // 줄바꿈
 
 			byte [] barray = temp.getBytes();	 // String타입 temp변수의 값을 byte[]으로 캐스팅
 			for(int i=0; i<barray.length; i++) { // barray길이만큼 loop 반복
@@ -89,27 +89,27 @@ public class FindFile {
 			
 			String name = list[i];  // 배열의 각 인덱스 값을 name 변수에 대입
 			
-			File file2 = new File(folder + "\\" + name); //
+			File file2 = new File(folder + "\\" + name); // 폴더 경로에 파일명 추가하여 파일 인스턴스 생성
 			
-			if ( file2.isFile() ) 	{
-				fileList.add( name );
+			if ( file2.isFile() ) 	{   // file2가 파일이라면
+				fileList.add( name );   // fileList에 i번째 file추가
 			}
-			else	{
-				folderList.add( name );
+			else{
+				folderList.add( name ); // 파일이 아니라면, folderList에 추가
 			}
 
 		}
 
-		for ( int j = 0 ; j < folderList.size() ; j++ ){
+		for ( int j = 0 ; j < folderList.size() ; j++ ){ // folderList 길이만큼 반복
 			String temp = "";
-			for ( int k = 0 ; k <= cnt ; k++ )		{
-				temp += "\t" ;
+			for ( int k = 0 ; k <= cnt ; k++ )		{ 	 // k가 메인메소드에서 넘겨받은 cnt보다 작아 같아질 때까지 반복
+				temp += "\t" ;	// 탭 삽입
 			}
-			temp += "\t" ;
-			temp += folderList.get(j) ;
-			temp += "\n" ;
+			temp += "\t" ;		// 탭 삽입
+			temp += folderList.get(j) ; // folderList에서 j번째 인덱스를 temp로 삽입
+			temp += "\n" ;		// 줄바꿈
 
-			byte [] barray = temp.getBytes();			
+			byte [] barray = temp.getBytes();		//
 			for(int i=0; i<barray.length; i++) {
 				try {
 					fileoutputstream.write(barray[i]);
