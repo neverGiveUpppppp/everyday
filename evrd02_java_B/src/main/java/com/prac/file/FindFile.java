@@ -13,11 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindFile {
+// 지정된 디렉토리 내의 모든 파일과 하위 디렉토리를 탐색하고, 이 정보를 파일에 기록하는 기능을 수행
+// main() : 유저에게 받은 인자를 경로들로 사용하여 FileOutputStream 객체를 생성하고, find() 메소드를 호출하여 디렉토리 탐색
+// find() : File 객체로 디렉토리 내의 파일과 폴더 목록을 가져오고, 이를 리스트에 저장. 파일은 fileList에, 폴더는 folderList에 각각 추가
+//			재귀 호출로 하위폴더 탐색하며, 결과를 파일로 기록
 
 	/**
-	 * @param argsㄹ
+	 * @param args
 	 * @throws  
 	 */
+	// 유저로부터 입력받은 폴더 경로와 결과를 저장할 파일의 경로를 처리
+	// folder 변수는 탐색할 디렉토리 경로를, fileName 변수는 결과를 저장할 파일의 경로를 저장
 	public static void main(String[] args)  {
 		
 		String folder = "D:\\assginment\\Favorites";
@@ -75,7 +81,8 @@ public class FindFile {
 		}
         
 	}
-	
+
+	// 지정된 디렉토리 내의 모든 파일과 폴더를 재귀적으로 탐색
 	public static void find ( FileOutputStream fileoutputstream , String folder , int cnt ){ // 메인메소드에서 파라미터 전달받음
 		
 		File file = new File(folder);   // File 인스턴스 생성 및 파일 경로를 folder에 있는 경로로 지정
@@ -109,32 +116,32 @@ public class FindFile {
 			temp += folderList.get(j) ; // folderList에서 j번째 인덱스를 temp로 삽입
 			temp += "\n" ;		// 줄바꿈
 
-			byte [] barray = temp.getBytes();		//
-			for(int i=0; i<barray.length; i++) {
+			byte [] barray = temp.getBytes();		// String타입 temp변수의 값을 byte[]으로 캐스팅
+			for(int i=0; i<barray.length; i++) {	// barray길이만큼 loop 반복
 				try {
 					fileoutputstream.write(barray[i]);
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException e) {     // IOException의 예외처리
+					e.printStackTrace();  	  // IOException의 에러 원인 추적
 				}
 			}
-			find ( fileoutputstream ,  folder + "\\" +  folderList.get(j) , (cnt+1) );
+			find ( fileoutputstream ,  folder + "\\" +  folderList.get(j) , (cnt+1) ); // find메소드 재귀호출을 통해 하위 폴더 탐색
 		}
 		
-		for ( int j = 0 ; j < fileList.size() ; j++ ){
+		for ( int j = 0 ; j < fileList.size() ; j++ ){ // folderList 길이만큼 반복
 			String temp = "";
-			for ( int k = 0 ; k <= cnt ; k++ )		{
-				temp += "\t" ;
+			for ( int k = 0 ; k <= cnt ; k++ )		{ 	 // k가 메인메소드에서 넘겨받은 cnt보다 작아 같아질 때까지 반복
+				temp += "\t" ;	// 탭 삽입
 			}
-			temp += "\t" ;
-			temp += fileList.get(j) ;
-			temp += "\n" ;
+			temp += "\t" ;		// 탭 삽입
+			temp += folderList.get(j) ; // folderList에서 j번째 인덱스를 temp로 삽입
+			temp += "\n" ;		// 줄바꿈
 
-			byte [] barray = temp.getBytes();			
-			for(int i=0; i<barray.length; i++) {
+			byte [] barray = temp.getBytes();		// String타입 temp변수의 값을 byte[]으로 캐스팅
+			for(int i=0; i<barray.length; i++) {	// barray길이만큼 loop 반복
 				try {
 					fileoutputstream.write(barray[i]);
-				} catch (IOException e) {
-					e.printStackTrace();
+				} catch (IOException e) {     // IOException의 예외처리
+					e.printStackTrace();  	  // IOException의 에러 원인 추적
 				}
 			}
 			
