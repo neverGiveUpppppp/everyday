@@ -1,0 +1,5 @@
+1. 원활한 작동을 위해서는 해당 프로젝트를 내려받은 후
+   HelloAnalyticsReporting.java 파일의 KEY_FILE_LOCATION, VIEW_ID를 채워 넣고 실행해야 합니다.
+2. KEY_FILE_LOCATION은 구글 클라우드 플랫폼 > Analytics Reporting API의 서비스 계정.json 정보 파일 위치를 말합니다.
+3. VIEW_ID는 구글 애널리틱스 > 관리 > 보기 설정 > 보기 ID 값을 말합니다.
+4. https://wakestand.tistory.com/674 해당 링크에서 자세한 적용방법을 확인하실 수 있습니다.
