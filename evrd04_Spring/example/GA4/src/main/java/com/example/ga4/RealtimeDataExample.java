@@ -16,10 +16,11 @@ public class RealtimeDataExample {
     public static void main(String[] args) {
         try {
             // JSON 키 파일의 경로
-            String keyFilePath = "D:/Dropbox/Developer/workspace_00_evrd/evrd04_Spring/example/GA4/firsttest-412405-9ce6f852e4dd.json";
+            String keyFilePath = "D:\\settings\\firsttest-412405-9ce6f852e4dd.json";
 
             // Google Analytics 뷰 ID
-            String viewId = "your-view-id";
+//            String viewId = "your-view-id";
+            String viewId = "6689665067";
 
             // 서비스 초기화
             AnalyticsReporting service = initializeAnalyticsReporting(keyFilePath);
@@ -45,7 +46,8 @@ public class RealtimeDataExample {
         // 사용자 활동 데이터 검색 요청 설정
         SearchUserActivityRequest request = new SearchUserActivityRequest();
         request.setViewId(viewId);
-        request.setUser("ga:123456");  // 사용자 식별자 설정
+//        request.setUser("ga:123456");  // 사용자 식별자 설정
+//        request.setUser("300387543");  // 사용자 식별자 설정
 
         // 요청 및 응답 처리
         try {
