@@ -72,9 +72,25 @@ public class RunReportSample { // 보고서 객체 생성하는 RunReportRequest
         }
 
         System.out.println("Report result:");
+        System.out.println("response.getRowsCount() :" + response.getRowsCount());
+//        for (Row row : response.getRowsList()) {
+//            System.out.printf(
+//                    "%s, %s%n", row.getDimensionValues(0).getValue(), row.getMetricValues(0).getValue());
+//        }
+
+//        int index = 0;
+//
+//        for (Row row : response.getRowsList()) {
+//            System.out.printf( // dimension 및 metric 개수에 따라 index수 조정해야함
+////                "%s, %s%n", row.getDimensionValues(index).getValue(), row.getMetricValues(index).getValue());
+//                "%s, %s%n", row.getDimensionValues(0).getValue(), row.getMetricValues(1).getValue());
+//
+//            if(index != response.getRowsCount())
+//                index++;
         for (Row row : response.getRowsList()) {
-            System.out.printf(
-                    "%s, %s%n", row.getDimensionValues(0).getValue(), row.getMetricValues(0).getValue());
+
+            System.out.printf( // dimension 및 metric 개수에 따라 index수 조정해야함
+                "%s, %s%n", row.getDimensionValues(row.getDimensionValuesCount()-1).getValue(), row.getMetricValues(row.getMetricValuesCount()-1).getValue());
         }
     }
 }
