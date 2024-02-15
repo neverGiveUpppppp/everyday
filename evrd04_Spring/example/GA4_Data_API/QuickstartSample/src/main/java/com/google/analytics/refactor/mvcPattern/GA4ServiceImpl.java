@@ -1,12 +1,20 @@
 package com.google.analytics.refactor.mvcPattern;
 
 import com.google.analytics.data.v1beta.*;
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GA4ServiceImpl {
+public class GA4ServiceImpl implements GA4Service{
     private final AnalyticsDataClient analyticsData;
+//    private final CacheManager cacheManager;
 
+//    public GA4ServiceImpl(AnalyticsDataClient analyticsData, CacheManager cacheManager) {
+//        this.analyticsData = analyticsData;
+//        this.cacheManager = cacheManager;
+//    }
     public GA4ServiceImpl(AnalyticsDataClient analyticsData) {
         this.analyticsData = analyticsData;
     }
@@ -54,5 +62,47 @@ public class GA4ServiceImpl {
         RunReportResponse response = analyticsData.runReport(request);
         return response.getRows(0).getMetricValues(0).getValue();
     }
+
+
+//    @Autowired
+//    public Integer getCacheTodayCnt(CacheManager cacheManager) {
+//        Cache<String, Integer> cache = cacheManager.getCache("visitorCounts", String.class, Integer.class);
+//
+//        System.out.println("getStatus() : " + cacheManager.getStatus());
+//
+//        // 캐쉬데이터 키값 초기화
+//        String todayNum = "todayNum";
+//        // 캐쉬값 로드
+//        Integer todayCnt = cache.get(todayNum);
+//
+//        if (todayCnt == null) {
+//            Integer today = Integer.valueOf(ga4VisitorNum().getTodayVisitors()); // GA4에서 방문자 수 가져오기
+//            // 캐시에 저장
+//            cache.put(todayNum, today);
+//        }
+//        // vo에 넣어야 하나? 값을?
+//        return todayCnt;
+//    }
+//
+//    @Autowired
+//    public Integer getCacheAllCnt(CacheManager cacheManager) {
+//        Cache<String, Integer> cache = cacheManager.getCache("visitorCounts", String.class, Integer.class);
+//
+//        System.out.println("getStatus() : " + cacheManager.getStatus());
+//
+//        // 캐쉬데이터 키값 초기화
+//        String allNum = "allNum";
+//        // 캐쉬값 로드
+//        Integer allCnt = cache.get(allNum);
+//
+//        if (allCnt == null) {
+//            Integer all = Integer.valueOf(ga4VisitorNum().getAllVisitors());
+//            // 캐시에 저장
+//            cache.put(allNum, all);
+//        }
+//        // vo에 넣어야 하나? 값을?
+//        return allCnt;
+//    }
+
 
 }

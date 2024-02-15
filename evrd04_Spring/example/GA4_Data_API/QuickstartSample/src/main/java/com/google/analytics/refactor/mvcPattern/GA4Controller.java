@@ -17,7 +17,10 @@ public class GA4Controller {
     }
 
     public GoogleAnalytics4VO getAnalyticsData() {
-        return service.ga4VisitorNum();
+        GoogleAnalytics4VO ga4Vo = service.ga4VisitorNum();
+        System.out.println(ga4Vo.getTodayVisitors());
+        System.out.println(ga4Vo.getAllVisitors());
+        return ga4Vo;
     }
 
 }
