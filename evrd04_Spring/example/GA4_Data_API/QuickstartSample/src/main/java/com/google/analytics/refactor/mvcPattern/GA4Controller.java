@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
@@ -62,13 +63,19 @@ public class GA4Controller {
         mv.setViewName("/hello");
         return mv;
     }
-    @RequestMapping(value = "/hello3")
+
+
+    // /hello 정상작동 테스트용
+    @RequestMapping(value = "/hello")
     public String getAnalyticsData3(GoogleAnalytics4VO ga4Vo, Model model) {
         ga4Vo.setTodayVisitors(service.ga4CacheToday());
         ga4Vo.setAllVisitors(service.ga4CacheAll());
         model.addAttribute("ga4Vo",ga4Vo);
         return "/hello";
     }
+
+
+
     @RequestMapping(value = "/hello4")
     public ModelAndView getAnalyticsData4(GoogleAnalytics4VO ga4Vo, ModelAndView mv) {
         ga4Vo.setTodayVisitors(service.ga4CacheToday());
@@ -80,10 +87,40 @@ public class GA4Controller {
 //        mv.setViewName("/templates/hello.html"); // 에러발생 : TemplateInputException
         return mv;
     }
+    @RequestMapping(value = "/hello5")
+    public ModelAndView getAnalyticsData5(GoogleAnalytics4VO ga4Vo, ModelAndView mv) {
+        ga4Vo.setTodayVisitors(service.ga4CacheToday());
+        ga4Vo.setAllVisitors(service.ga4CacheAll());
+        mv.addObject("ga4Vo",ga4Vo);
+        mv.setViewName("/menu/hello");         // 에러발생 : 브라우저 Whitelabel Error Page
+//        mv.setViewName("/hello.html");    // 에러발생 : TemplateInputException
+//        mv.setViewName("/templates/hello");      // 에러발생 : 브라우저 Whitelabel Error Page
+//        mv.setViewName("/templates/hello.html"); // 에러발생 : TemplateInputException
+        return mv;
+    }
+
+/*************** ajax 방법 시도 ***************/
+
+    // ajax 정상작동 테스트용
+    @RequestMapping(value = "/ga4")
+    public String getAnalyticsDataAjax(GoogleAnalytics4VO ga4Vo, Model model) {
+        ga4Vo.setTodayVisitors(service.ga4CacheToday());
+        ga4Vo.setAllVisitors(service.ga4CacheAll());
+        model.addAttribute("ga4Vo",ga4Vo);
+        return "/helloAjax";
+    }
+    // ajax 정상작동 테스트용
+    @RequestMapping(value = "/ga4Visitor")
+    @ResponseBody
+    public GoogleAnalytics4VO getAnalyticsDataAjaxCall(GoogleAnalytics4VO ga4Vo, Model model) {
+        ga4Vo.setTodayVisitors(service.ga4CacheToday());
+        ga4Vo.setAllVisitors(service.ga4CacheAll());
+        return ga4Vo;
+    }
 
 
 /*************** HttpServlet의 application Scope에 저장하는 방법 사용 ***************/
-// HttpServlet 및 HttpServletRequest가 interface라 호출 시, DI때문에 인스턴스 생성이 불가해서 막힌 상태 
+// HttpServlet 및 HttpServletRequest가 interface라 호출 시, DI때문에 인스턴스 생성이 불가해서 막힌 상태
     public String getTodayCnt(HttpServletRequest request, Model model){
         ServletContext servletContext = request.getServletContext(); // 서블릿 3.0이상에서 HttpServletRequest에서 getServletContext() 바로 가능
 //        ServletContext servletContext = this.getServletContext();    // 서블릿 3.0이하에서는  extends HttpServlet 후 this.getServletContext()로 가능

@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
+
+<!--    <div th:fragment="visitorAjax">
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                $.ajax({
+                    url: '/ga4Visitor',
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+                        $('#todayVisitors').text(data.todayVisitors);
+                        $('#allVisitors').text(data.allVisitors);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error:', error);
+                    }
+                });
+            });
+        </script>
+    </div>-->
+
+
+</head>
+<body>
+
+<h1>helloAjax</h1>
+<p th:text="'오늘 방문자수 : '  + ${ga4Vo}" >오늘</p>
+<p th:text="'오늘 방문자수 : '  + ${ga4Vo.todayVisitors}" >오늘</p>
+<p th:text="'오늘 방문자수 : '  + ${ga4Vo.allVisitors}" >오늘</p>
+<br>
+<!--<h1>방문자 수</h1>
+<div>오늘 방문자 수: <span id="todayVisitors"></span></div>
+<div>전체 방문자 수: <span id="allVisitors"></span></div>-->
+<!--<span th:include="span :: visitorCnt">aa</span>-->
+<!--<div th:include="span :: visitorCnt">AA</div>-->
+<!--<h2>템플릿 프래그먼트 A(th:include + frag)</h2>-->
+<!--<div th:include="footer :: footerA"></div>-->
+<!--<div th:replace="footer :: footerA"></div>-->
+<!--<div th:replace="~{[template/visitorCnt] :: copy}"></div>-->
+<!--
+<div th:insert="~{fragment/footer :: copy}"></div>
+<div th:replace="~{fragment/footer :: copy}"></div>
+
+<div th:replace="/header :: header"></div>
+<div th:replace="/header :: header" th:remove="tag"></div>
+-->
+<h2>-----------------------</h2>
+<div th:replace="/visitorCnt :: visitorAjax"></div> <!-- visitorCnt나 /visitorCnt 같음 -->
+
+
+
+</body>
+</html>
