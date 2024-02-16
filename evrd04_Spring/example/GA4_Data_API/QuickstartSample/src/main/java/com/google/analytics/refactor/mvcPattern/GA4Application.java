@@ -1,7 +1,7 @@
 package com.google.analytics.refactor.mvcPattern;
 
 import com.google.analytics.AnalyticsApplication;
-import com.google.common.cache.Cache;
+import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -30,17 +30,17 @@ public class GA4Application {
     public static void main(String[] args) {
         SpringApplication.run(AnalyticsApplication.class, args);
 
-        try{
-        AnalyticsDataClient analyticsData = new GoogleAnalyticsDataClient();
-        GA4ServiceImpl service = new GA4ServiceImpl(analyticsData);
-        GA4Controller controller = new GA4Controller(service);
-
-        GoogleAnalytics4VO ga4Vo = controller.getAnalyticsData();
-
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+//        try{
+//        AnalyticsDataClient analyticsData = new GoogleAnalyticsDataClient();
+//        GA4ServiceImpl service = new GA4ServiceImpl(analyticsData);
+//        GA4Controller controller = new GA4Controller(service);
+//
+//        GoogleAnalytics4VO ga4Vo = controller.getAnalyticsData();
+//
+//
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
 
         try {
 //            Cache<String, Integer> cache = new Cache<>();
@@ -57,20 +57,40 @@ public class GA4Application {
 
 //            ApplicationContext ac = new ApplicationContext(GA4CacheConfig.class);
 
-            AnalyticsDataClient analyticsDataClient = new GoogleAnalyticsDataClient();
-            GA4Service service = new GA4ServiceImpl(analyticsDataClient);
-            AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(GA4CacheConfig.class);
+//            AnalyticsDataClient analyticsDataClient = new GoogleAnalyticsDataClient();
+//            GA4Service service = new GA4ServiceImpl(analyticsDataClient);
+//            AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(GA4CacheConfig.class);
+//
+////            GA4CacheConfig cache = ac.getBean("ehCacheManager", GA4CacheConfig.class);
+////            GA4ServiceCache ga4Cache = new GA4ServiceCache(service, (CacheManager) cache);
+//
+//            CacheManager cm = ac.getBean("ehCacheManager", CacheManager.class);  // 스프링 컨테이너에서 직접 가져오는 방식으로 캐쉬데이터 끌어옴
+//            GA4Cache ga4Cache = new GA4Cache(service, cm);
+//            ga4Cache.getCacheTodayCnt();
+//            ga4Cache.getCacheAllCnt();
+//
+//            System.out.println(ga4Cache.getCacheTodayCnt());
+//            System.out.println(ga4Cache.getCacheAllCnt());
 
-//            GA4CacheConfig cache = ac.getBean("ehCacheManager", GA4CacheConfig.class);
-//            GA4ServiceCache ga4Cache = new GA4ServiceCache(service, (CacheManager) cache);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            CacheManager cm = ac.getBean("ehCacheManager", CacheManager.class);  // 스프링 컨테이너에서 직접 가져오는 방식으로 캐쉬데이터 끌어옴
-            GA4Cache ga4Cache = new GA4Cache(service, cm);
-            ga4Cache.getCacheTodayCnt();
-            ga4Cache.getCacheAllCnt();
+//            AnalyticsDataClient analyticsDataClient = new GoogleAnalyticsDataClient();
+//            AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(GA4CacheConfig.class);
+//            CacheManager cm = ac.getBean("ehCacheManager", CacheManager.class);  // 스프링 컨테이너에서 직접 가져오는 방식으로 캐쉬데이터 끌어옴
+//            GA4ServiceCache service = new GA4ServiceCache(analyticsDataClient, cm);
+//            System.out.println(service.ga4CacheToday());
+//            System.out.println(service.ga4CacheAll());
 
-            System.out.println(ga4Cache.getCacheTodayCnt());
-            System.out.println(ga4Cache.getCacheAllCnt());
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//            AnalyticsDataClient analyticsDataClient = new GoogleAnalyticsDataClient();
+//            AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(GA4CacheConfig.class);
+//            CacheManager cm = ac.getBean("ehCacheManager", CacheManager.class);  // 스프링 컨테이너에서 직접 가져오는 방식으로 캐쉬데이터 끌어옴
+//            Cache<String, String> cache = cm.getCache("visitorCounts", String.class, String.class);
+//            String todayNum = "todayNum";
+//            System.out.println("cache : " + cache.get(todayNum));
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

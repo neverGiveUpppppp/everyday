@@ -32,10 +32,10 @@ public class GA4CacheConfig {
         CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder() // CacheManagerBuilder를 사용하여 캐시 매니저 구성 시작
                 .withCache("visitorCounts", // "visitorCounts"라는 이름의 캐시 생성 // 캐시 컨테이너를 의미
                         CacheConfigurationBuilder.newCacheConfigurationBuilder(
-                                String.class, Integer.class, // 캐시 키와 값의 타입 지정
+                                String.class, String.class, // 캐시 키와 값의 타입 지정
                                 ResourcePoolsBuilder.heap(100)) // 힙 메모리 내에 최대 100개의 엔트리를 저장
 //                                .withExpiry(org.ehcache.expiry.Expirations.timeToLiveExpiration(java.time.Duration.ofMinutes(5))) // (deprecated)TTL 설정: 5분 동안 유효
-                                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(java.time.Duration.ofMinutes(120))) // TTL 설정: 항목은 120분 동안 유효합니다.
+                                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(java.time.Duration.ofMinutes(1))) // TTL 설정: 항목은 120분 동안 유효합니다.
 //                ).build(); // 캐시 매니저 빌드 //
         ).build(true); // build 메서드에 true를 전달하여 캐시 매니저를 바로 초기화함
 //        cacheManager.init(); // 캐시 매니저 초기화

@@ -1,40 +1,60 @@
 package com.google.analytics.refactor.mvcPattern;
 
 import com.google.analytics.data.v1beta.*;
+import org.ehcache.Cache;
 import org.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GA4ServiceImpl implements GA4Service{
-    private final AnalyticsDataClient analyticsData;
-
-    public GA4ServiceImpl(AnalyticsDataClient analyticsData) {
-        this.analyticsData = analyticsData;
-    }
+@Primary
+public class GA4ServiceCache {
 //    private final AnalyticsDataClient analyticsData;
-//    private final CacheManager cacheManager;
 //
-//    @Autowired
-//    public GA4ServiceImpl(AnalyticsDataClient analyticsData, CacheManager cacheManager) {
+//    public GA4ServiceImpl(AnalyticsDataClient analyticsData) {
 //        this.analyticsData = analyticsData;
-//        this.cacheManager = cacheManager;
 //    }
+    private final AnalyticsDataClient analyticsData;
+    private final CacheManager cacheManager;
 
+    @Autowired
+    public GA4ServiceCache(AnalyticsDataClient analyticsData, CacheManager cacheManager) {
+        this.analyticsData = analyticsData;
+        this.cacheManager = cacheManager;
+    }
 
-    public GoogleAnalytics4VO ga4VisitorNum() {
+    public String ga4CacheToday() {
         String propertyId = "425548737";
-        GoogleAnalytics4VO ga4Vo = new GoogleAnalytics4VO();
+        Cache<String, String> cache = cacheManager.getCache("visitorCounts", String.class, String.class);
 
         // 오늘 방문자 수 조회
-        String todayVisitors = getVisitors(propertyId, "today", "today", true);
-        ga4Vo.setTodayVisitors(todayVisitors);
+        String todayNum = "todayNum"; // 캐쉬데이터 키값 초기화
+        String todayCnt = cache.get(todayNum); // 캐쉬값 로드
+        if (todayCnt == null) {
+            String today = getVisitors(propertyId, "today", "today", true); // GA4에서 방문자 수 가져오기
+            // 캐시에 저장
+            cache.put(todayNum, today);
+            todayCnt = cache.get(todayNum);
+        }
+        return todayCnt;
+    }
+
+    public String ga4CacheAll() {
+        String propertyId = "425548737";
+        Cache<String, String> cache = cacheManager.getCache("visitorCounts", String.class, String.class);
 
         // 전체 방문자 수 조회
-        String allVisitors = getVisitors(propertyId, "2024-01-28", "today", false);
-        ga4Vo.setAllVisitors(allVisitors);
+        String allNum = "allNum";  // 캐쉬데이터 키값 초기화
+        String allCnt = cache.get(allNum); // 캐쉬값 로드
 
-        return ga4Vo;
+        if (allCnt == null) {
+            String all = getVisitors(propertyId, "2024-01-28", "today", false); // ga4VisitorNum()에서 이미 두 수를 다 가져옴
+            // 캐시에 저장
+            cache.put(allNum, all);
+            allCnt = cache.get(allNum);
+        }
+        return allCnt;
     }
 
     private String getVisitors(String propertyId, String startDate, String endDate, boolean retryOnFailure) {
