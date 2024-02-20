@@ -8,7 +8,7 @@
 </div>
 
 <div th:fragment="visitorAjax">
-    <div th:fragment="visitorAjax">
+    <div>
         <script th:inline="javascript">
             $(document).ready(function() {
                 $.ajax({
@@ -27,7 +27,7 @@
             });
         </script>
     </div>
-    <h1>방문자 수!!</h1>
+    <h1>방문자 수</h1>
     <div>오늘 방문자 수: <span id="todayVisitors"></span></div>
     <div>전체 방문자 수: <span id="allVisitors"></span></div>
 </div>

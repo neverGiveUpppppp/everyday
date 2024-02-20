@@ -1,9 +1,5 @@
 package com.google.analytics.refactor.mvcPattern;
 
-import com.google.analytics.data.v1beta.BetaAnalyticsDataClient;
-import com.google.analytics.data.v1beta.RunReportRequest;
-import com.google.analytics.data.v1beta.RunReportResponse;
-import org.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +19,10 @@ public class GA4Controller {
 //    public GA4Controller(GA4ServiceImpl service) {
 //        this.service = service;
 //    }
-    private final GA4ServiceCache service;
+    private final GA4ServiceImpl service;
 
     @Autowired
-    public GA4Controller(GA4ServiceCache service) {
+    public GA4Controller(GA4ServiceImpl service) {
         this.service = service;
     }
 
