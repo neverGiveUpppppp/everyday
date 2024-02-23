@@ -1,6 +1,7 @@
 package com.prac.formatter;
 
 import java.text.DecimalFormat;
+import java.util.logging.SimpleFormatter;
 
 public class DecimalFormatterTest {
 
@@ -16,6 +17,9 @@ public class DecimalFormatterTest {
 
         System.out.println(formattedNum1); // 12,345
         System.out.println(formattedNum2); // 123,456,789,000,000,000
+
+        SimpleFormatter spfm = new SimpleFormatter();
+
     }
 
 }

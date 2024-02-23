@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DecimalFormat;
 
 @Controller
 public class GA4Controller {
@@ -103,6 +104,7 @@ public class GA4Controller {
         ga4Vo.setTodayVisitors(service.ga4CacheToday());
         ga4Vo.setAllVisitors(service.ga4CacheAll());
         model.addAttribute("ga4Vo",ga4Vo);
+
         return "/helloAjax";
     }
     // ajax 정상작동 테스트용
@@ -135,5 +137,27 @@ public class GA4Controller {
         }
         return allCnt;
     }
+
+    // 실제 프로젝트 코드
+    // 기획팀 요청한 세자리마다 , 추가
+//    @RequestMapping(value = "/ND_ga4Visitor.do")
+//    public String ga4DataAjaxCall(GoogleAnalytics4VO ga4Vo, Model model) {
+//        String today = service.ga4CacheToday();
+//        String all = service.ga4CacheAll();
+//
+//        // DecimalFormat : 세자리수마다 , 추가
+//        DecimalFormat formatter = new DecimalFormat();
+//        String formattedToday = formatter.format(Long.parseLong(today));
+//        String formattedAll = formatter.format(Long.parseLong(all));
+////          String formattedToday = String.valueOf(Long.parseLong(today));
+////          String formattedAll = String.valueOf(Long.parseLong(all));
+//
+//        ga4Vo.setTodayVisitors(formattedToday);
+//        ga4Vo.setAllVisitors(formattedAll);
+//        return responseJson(model, ga4Vo); // 오픈웍스 BaseController의 responseJson()에서 model.addAttribute() 해줌
+////          ga4Vo.setTodayVisitors(service.ga4CacheToday());
+////          ga4Vo.setAllVisitors(service.ga4CacheAll());
+////          return responseJson(model, ga4Vo); // BaseController의 responseJson()에서 model.addAttribute() 해줌
+//    }
 
 }
