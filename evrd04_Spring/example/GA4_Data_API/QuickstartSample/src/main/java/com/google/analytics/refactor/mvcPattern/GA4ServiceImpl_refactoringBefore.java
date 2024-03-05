@@ -3,8 +3,7 @@ package com.google.analytics.refactor.mvcPattern;
 import com.google.analytics.data.v1beta.*;
 import org.springframework.stereotype.Service;
 
-@Service
-public class GA4ServiceImpl_refactoringBefore implements GA4Service{
+public class GA4ServiceImpl_refactoringBefore  {
     private final AnalyticsDataClient analyticsData;
 
     public GA4ServiceImpl_refactoringBefore(AnalyticsDataClient analyticsData) {

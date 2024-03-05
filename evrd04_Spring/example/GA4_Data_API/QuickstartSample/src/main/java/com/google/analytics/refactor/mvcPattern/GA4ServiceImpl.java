@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Primary
-public class GA4ServiceImpl {  // refactoring한 클래스
+public class GA4ServiceImpl implements GA4Service{  // refactoring한 클래스
 //    private final AnalyticsDataClient analyticsData;
 //
 //    public GA4ServiceImpl(AnalyticsDataClient analyticsData) {

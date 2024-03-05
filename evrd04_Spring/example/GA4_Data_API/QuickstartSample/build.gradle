@@ -20,14 +20,12 @@ dependencies {
 
 	implementation 'com.google.analytics:google-analytics-data:0.45.0'
 
-	implementation 'com.google.api.grpc:proto-google-analytics-data-v1beta:0.45.0' // ga4 data api
-
 //	implementation group: 'org.ehcache', name: 'ehcache', version: '3.10.8'
 	implementation group: 'org.ehcache', name: 'ehcache', version: '3.8.1'
 	implementation group: 'org.webjars', name: 'jquery', version: '3.7.1'
 
-	implementation 'org.slf4j:slf4j-api:2.0.9' 					// slf4j  (인터페이스)
-	testImplementation 'ch.qos.logback:logback-classic:1.4.14'	// logback(구현체)
+//	implementation 'org.slf4j:slf4j-api:2.0.9' 					// slf4j  (인터페이스)
+//	testImplementation 'ch.qos.logback:logback-classic:1.4.14'	// logback(구현체)
 
 
 }
