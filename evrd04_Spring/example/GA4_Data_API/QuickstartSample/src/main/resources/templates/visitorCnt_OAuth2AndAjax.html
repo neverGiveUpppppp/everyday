@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- 방문자수 호출에 성공한 CSR 코드-->
+<!-- 소스보기하면 토큰,id,pw가 다나와서 보완 문제-->
+<!-- RestTemplate 사용해서 REST API 요청하는 식으로 처리해보자-->
+
+<script>
+    //최초 요청 실행
+    makeAnalyticsRequest('ya29.a2N3_BCIH2vW5Fw-NhrHEkddpAkmQ0171');
+
+
+    function makeAnalyticsRequest(accessToken) {
+        $.ajax({
+            url: 'https://analyticsdata.googleapis.com/v1beta/properties/425548737:runReport',
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify({
+                "dimensions": [{ "name": "country" }],
+                "metrics": [{ "name": "activeUsers" }],
+                "dateRanges": [{ "startDate": "2024-01-01", "endDate": "2024-03-05" }]
+            }),
+            success: function(response) {
+                console.log(response);
+                var visitorsCount1 = response.rows[0].metricValues[0].value;
+                var visitorsCount2 = response.rows[1].metricValues[0].value;
+                console.log("방문자 수:", visitorsCount1);
+                console.log("방문자 수:", visitorsCount2);
+                $("#visitorCountsTest").text("방문자수 (오늘/전체): " + visitorsCount2 + "/" + visitorsCount1);
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                if(xhr.status == 401) { // Access Token 만료
+                    refreshTokenAndRetryRequest();
+                } else {
+                    console.error('Analytics 요청 실패:', error);
+                }
+            }
+        });
+    }
+
+
+
+    function refreshTokenAndRetryRequest() {
+        $.ajax({
+            url: 'https://oauth2.googleapis.com/token',
+            method: 'POST',
+            data: {
+                'client_id' : '722057675499-t3vsgbufu90thhij.apps.googleusercontent.com',
+                'client_secret' : 'GOCS-REG-7u1yMeG8mQAGPV',
+                'grant_type': 'refresh_token',
+                'refresh_token': '1//0edI4ei8A3OF-LmzyGk2xlkkygY4nMs8',
+                'Content-Type' : 'application/x-www-form-urlencoded',
+                "expires_in": 30
+            },
+            success: function(response) {
+                // 새로운 access token 저장
+                var newAccessToken = response.access_token;
+                // 새 토큰을 사용해 원래 요청 재시도
+                makeAnalyticsRequest(newAccessToken);
+            },
+            error: function(xhr, status, error) {
+                console.error('Refresh token 요청 실패:', error);
+            }
+        });
+    }
+</script>
+
+
+</body>
+</html>
