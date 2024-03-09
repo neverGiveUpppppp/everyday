@@ -1,4 +1,4 @@
-<!--
+
 <div th:fragment="b-content">
     <h2>This is part of B Page</h2>
     <p>This content comes from b.html</p>
@@ -11,11 +11,15 @@
 <div th:fragment="visitorAjax">
     <div>
         <script th:inline="javascript">
+            let accessToken = 'ya29.a0N3_BWFO5Fw-DWVl8Erqt_iqBLAsbZ_oISr_ym-1Y1II-0klxOYTZHOfmYWKEHKa';
             $(document).ready(function() {
                 $.ajax({
                     url: '/oauth2',
                     type: 'POST',
                     dataType: 'json',
+                    data: {
+                      "accessToken" : accessToken
+                    },
                     success: function(data) {
                         console.log(data);
                         $('#todayVisitors').text(data.todayVisitors);
@@ -31,4 +35,4 @@
     <h1>방문자 수</h1>
     <div>오늘 방문자 수: <span id="todayVisitors"></span></div>
     <div>전체 방문자 수: <span id="allVisitors"></span></div>
-</div>-->
+</div>

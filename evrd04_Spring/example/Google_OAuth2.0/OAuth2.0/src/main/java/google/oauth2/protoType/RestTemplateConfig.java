@@ -1,4 +1,4 @@
-package google.oauth2;
+package google.oauth2.protoType;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;

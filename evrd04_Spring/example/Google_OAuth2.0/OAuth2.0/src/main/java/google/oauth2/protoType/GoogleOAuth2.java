@@ -1,4 +1,4 @@
-package google.oauth2;
+package google.oauth2.protoType;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
