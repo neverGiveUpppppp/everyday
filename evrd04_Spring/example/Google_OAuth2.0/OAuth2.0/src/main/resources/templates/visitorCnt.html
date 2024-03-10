@@ -11,19 +11,23 @@
 <div th:fragment="visitorAjax">
     <div>
         <script th:inline="javascript">
-            let accessToken = 'ya29.a0N3_BWFO5Fw-DWVl8Erqt_iqBLAsbZ_oISr_ym-1Y1II-0klxOYTZHOfmYWKEHKa';
+            let accessToken = "ya29.a0N3_BWFO5Fw-DWVl8Erqt_iqBLAsbZ_oISr_ym-1Y1II-0klxOYTZHOfmYWKEHKa";
             $(document).ready(function() {
                 $.ajax({
-                    url: '/oauth2',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                      "accessToken" : accessToken
-                    },
+                    url: "/oauth2/ga4",
+                    // url: '/protoType/oauth2',
+                    type: "POST",
+                    // dataType: "json",
+                    // contentType: "application/json",
+                    // data: {
+                    //   "accessToken" : accessToken
+                    // },
+                    data: accessToken,
                     success: function(data) {
                         console.log(data);
+/*
                         $('#todayVisitors').text(data.todayVisitors);
-                        $('#allVisitors').text(data.allVisitors);
+                        $('#allVisitors').text(data.allVisitors);*/
                     },
                     error: function(xhr, status, error) {
                         console.log('Error:', error);

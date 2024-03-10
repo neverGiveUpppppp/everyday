@@ -3,9 +3,12 @@ package google.oauth2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -13,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService {
+public class GoogleAnalyticsServiceImpl {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -27,8 +30,8 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService {
     private static final String REFRESH_TOKEN_URL = "https://oauth2.googleapis.com/token";
 
 
+    public Map<String, Object> makeAnalyticsRequest(String accessToken) throws HttpClientErrorException{
 
-    public Map<String, Object> makeAnalyticsRequest(String accessToken) {
         // header 생성
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -48,10 +51,10 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService {
         }}});
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers); // reuqest 생성
-        ResponseEntity<String> response = restTemplate.postForEntity(ANALYTICS_URL, entity, String.class);
 
-        if (response.getStatusCode() == HttpStatus.UNAUTHORIZED) {
-            refreshTokenAndRetry();
+        ResponseEntity<String> response = restTemplate.postForEntity(ANALYTICS_URL, entity, String.class);
+        if (response.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+            refreshTokenAndRetry(); // 토큰 새로고침 후 요청 재시도
         }
         return handleAnalyticsResponse(response.getBody());
     }

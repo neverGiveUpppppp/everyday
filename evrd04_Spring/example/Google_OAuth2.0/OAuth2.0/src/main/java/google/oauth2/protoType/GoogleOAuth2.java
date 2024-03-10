@@ -144,9 +144,9 @@ public class GoogleOAuth2 {
             throw new RuntimeException("응답 처리 중 오류 발생", e);
         }
     }
-    
-    
-    public String visitors(String body, Model model){
+
+
+    public String visitors(String body, Model model) {
 
 
         return "helloAjax";
