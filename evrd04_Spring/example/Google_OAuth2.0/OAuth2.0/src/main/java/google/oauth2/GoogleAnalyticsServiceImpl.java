@@ -3,8 +3,6 @@ package google.oauth2;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -16,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class GoogleAnalyticsServiceImpl {
+public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -26,18 +24,27 @@ public class GoogleAnalyticsServiceImpl {
         this.objectMapper = objectMapper;
     }
 
-    private static final String ANALYTICS_URL = "https://analyticsdata.googleapis.com/v1beta/properties/425548737:runReport";
-    private static final String REFRESH_TOKEN_URL = "https://oauth2.googleapis.com/token";
-
-
     public Map<String, Object> makeAnalyticsRequest(String accessToken) throws HttpClientErrorException{
 
-        // header 생성
+        HttpHeaders httpHeaders = makeHeaders(accessToken);
+        HttpEntity<Map<String, Object>> httpEntity = makeBody(httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(GoogleOAuth2.ANALYTICS_URL, httpEntity, String.class);
+        if (response.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+            refreshTokenAndRetry(); // 토큰 새로고침 후 요청 재시도
+        }
+        return handleAnalyticsResponse(response.getBody());
+    }
+
+    public HttpHeaders makeHeaders(String accessToken){
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(accessToken);
+//        headers.setBearerAuth(accessToken);  // setBearerAuth() : 스프링5에 추가된 메서드
+        headers.add("Authorization", "Bearer " + accessToken); // 스프링3용 Bearer token
+        return headers;
+    }
 
-        // body생성
+    public HttpEntity<Map<String, Object>> makeBody(HttpHeaders httpHeaders){
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("dimensions", new Object[]{new HashMap<String, Object>() {{
             put("name", "country");
@@ -49,14 +56,7 @@ public class GoogleAnalyticsServiceImpl {
             put("startDate", "2024-01-28");
             put("endDate", "today");
         }}});
-
-        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers); // reuqest 생성
-
-        ResponseEntity<String> response = restTemplate.postForEntity(ANALYTICS_URL, entity, String.class);
-        if (response.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
-            refreshTokenAndRetry(); // 토큰 새로고침 후 요청 재시도
-        }
-        return handleAnalyticsResponse(response.getBody());
+        return new HttpEntity<>(requestBody, httpHeaders);
     }
 
     public void refreshTokenAndRetry() {
@@ -65,14 +65,14 @@ public class GoogleAnalyticsServiceImpl {
 
         MultiValueMap<String, String> map= new LinkedMultiValueMap<>(); // 토큰 새로고침 요청 본문 데이터
         // OAuth2 클라이언트 정보와 새로고침 토큰 설정
-        map.add("client_id", "722057675499-t3vsgfeak2ljk0o71351hbufu90thhij.apps.googleusercontent.com");
-        map.add("client_secret", "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");
+        map.add("client_id", GoogleOAuth2.CLIENT_ID);
+        map.add("client_secret", GoogleOAuth2.CLIENT_SECRET);
+        map.add("refresh_token", GoogleOAuth2.REFRESH_TOKEN);
         map.add("grant_type", "refresh_token");
-        map.add("refresh_token", "1//0edI4ei8A3OIoCgYIARAAGA4SNwF-L9IrcMTFQz-mFr12QrVJ2XjSaYFzw0zfs0zmSwjNptFCSZKQJC0r6mzyGk2xlkkygY4nMs8");
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers); // 요청 엔티티 생성
 
-        ResponseEntity<String> response = restTemplate.postForEntity(REFRESH_TOKEN_URL, request , String.class); // 토큰 새로고침 요청 실행
+        ResponseEntity<String> response = restTemplate.postForEntity(GoogleOAuth2.REFRESH_TOKEN_URL, request , String.class); // 토큰 새로고침 요청 실행
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();     // JSON 문자열을 객체로 변환하기 위한 ObjectMapper
@@ -87,7 +87,6 @@ public class GoogleAnalyticsServiceImpl {
 
     private Map<String, Object> handleAnalyticsResponse(String responseBody) {
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
 
             List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
