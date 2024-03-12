@@ -26,7 +26,7 @@ public class GoogleAnalysticsController {
 //    public void makeAnalyticsRequest(@RequestParam("accessToken") String accessToken, Model model) {
     public Map<String, Object> makeAnalyticsRequest(Model model) {
 //    public ResponseEntity<Map<String, Object>> makeAnalyticsRequest(Model model) {
-        String accessToken = "ya29.a0Ad52N38vm0h0Bhdks54oiJxgf0OKOjzwHeQMC2Cv2_RXj2BqQM253ELC6p2HkwOb64sEjRT58-wSNXlG8IIpjqJE8vNnzQcPiEgPZBr2HlA_M0HhjQiUv2Wj9sozwZDZZv78zBA1E6sxkGG2ONCz00hLcZ8xa-ZZs6ucaCgYKASoSARMSFQHGX2MiF7E5nJS6dR9tGx-Uj039bg0171";
+        String accessToken = "ya29.a0Ad52N398WVP7iRKeS_COxR8k_JBnkG6TvU9YYBlNH9eLSGAsAT0A_XmdIgtsEimdjTEinccZV7nvylPXUp9Und-GhfsCjmfVZzoD7r7thvYaQlPqyyC5-vxRFJ3-LNNN_Tip2Q3hs56zGObkvePFdLoUYDEvDnyeR2iXaCgYKAdoSARMSFQHGX2Mi7pS5921pEk0s6Dn5mBwjIg0171";
         Map<String, Object> response = gaService.makeAnalyticsRequest(accessToken);
 //        model.addAttribute("visitors", response);
         return response;
