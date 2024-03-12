@@ -1,0 +1,210 @@
+package zesinc.user.ga4OAuth2;
+
+
+import java.lang.reflect.Type;
+import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.ehcache.Cache;
+import org.ehcache.CacheManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
+
+
+@Service
+public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
+    
+//    @Autowired
+//    private CacheManager cacheManager;
+//    private final RestTemplate restTemplate;
+//    final Logger logger = LoggerFactory.getLogger(getClass());
+//    
+//    @Autowired
+//    public GoogleAnalyticsServiceImpl(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
+//      
+//    public GoogleAnalyticsServiceImpl() {
+//        this.restTemplate = new RestTemplate();
+//    }
+
+    
+    private CacheManager cacheManager;
+    private final RestTemplate restTemplate;
+    final Logger logger = LoggerFactory.getLogger(getClass());
+    
+    @Autowired
+    public GoogleAnalyticsServiceImpl(RestTemplate restTemplate, CacheManager cacheManager) {
+        this.restTemplate = restTemplate;
+        this.cacheManager = cacheManager;
+    }
+      
+    public GoogleAnalyticsServiceImpl() { // CGLib이 스프링3까지는 기본생성자 필수라 추가함
+        this.restTemplate = new RestTemplate();
+    }
+    
+    public GoogleAnalysticsVO makeAnalyticsRequest(GoogleAnalysticsVO gaVo, String accessToken) throws HttpClientErrorException{
+
+        Cache<String, String> cache = cacheManager.getCache("visitorCounts", String.class, String.class);
+        
+        // 오늘 방문자 수 조회
+        String todayNum = "todayNum";          // 캐쉬데이터 키값 초기화
+        String todayCnt = cache.get(todayNum); // 캐쉬값 로드
+        if (todayCnt == null) {
+
+            HttpHeaders httpHeaders1 = makeHeaders(accessToken);
+            HttpEntity<Map<String, Object>> httpEntity1 = makeBodyToday(httpHeaders1);
+    
+            ResponseEntity<String> response1 = restTemplate.postForEntity(GoogleOAuth2.ANALYTICS_URL, httpEntity1, String.class);
+            if (response1.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+                refreshTokenAndRetry(gaVo); // 토큰 새로고침 후 요청 재시도
+            }
+            String visitorsToday = handleAnalyticsResponse(response1.getBody());
+            
+            // 캐시에 저장
+            cache.put(todayNum, visitorsToday);
+            todayCnt = cache.get(todayNum);
+            logger.info(todayCnt);
+        }
+        gaVo.setToday(todayCnt);
+        
+        ///////////////////////////////////////////////////////////////////////////////////
+        
+        // 전체 방문자 수 조회
+        String allNum = "allNum";          // 캐쉬데이터 키값 초기화
+        String allCnt = cache.get(allNum); // 캐쉬값 로드
+
+        if (allCnt == null) {
+            HttpHeaders httpHeaders2 = makeHeaders(accessToken);
+            HttpEntity<Map<String, Object>> httpEntity2 = makeBodyAll(httpHeaders2);
+    
+            ResponseEntity<String> response2 = restTemplate.postForEntity(GoogleOAuth2.ANALYTICS_URL, httpEntity2, String.class);
+            if (response2.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+                refreshTokenAndRetry(gaVo); // 토큰 새로고침 후 요청 재시도
+            }
+            String visitorsAll = handleAnalyticsResponse(response2.getBody());
+            
+            // 캐시에 저장
+            cache.put(allNum, visitorsAll);
+            allCnt = cache.get(allNum);
+            logger.info(allCnt);
+        }
+        gaVo.setAll(allCnt);
+        return gaVo;
+    }
+
+    public HttpHeaders makeHeaders(String accessToken){
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.add("Authorization", "Bearer " + accessToken); 
+//        headers.add("User-Agent", "PostmanRuntime/7.15.0");
+        return headers;
+    }
+
+    public HttpEntity<Map<String, Object>> makeBodyToday(HttpHeaders httpHeaders){
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("dimensions", new Object[]{new HashMap<String, Object>() {{
+            put("name", "country");
+        }}});
+        requestBody.put("metrics", new Object[]{new HashMap<String, Object>() {{
+            put("name", "activeUsers");
+        }}});
+        requestBody.put("dateRanges", new Object[]{new HashMap<String, Object>() {{
+            put("startDate", "today");
+            put("endDate", "today");
+        }}});
+        return new HttpEntity<>(requestBody, httpHeaders);
+    }
+    
+    public HttpEntity<Map<String, Object>> makeBodyAll(HttpHeaders httpHeaders){
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("dimensions", new Object[]{new HashMap<String, Object>() {{
+            put("name", "country");
+        }}});
+        requestBody.put("metrics", new Object[]{new HashMap<String, Object>() {{
+            put("name", "activeUsers");
+        }}});
+        requestBody.put("dateRanges", new Object[]{new HashMap<String, Object>() {{
+            put("startDate", "2024-01-28");
+            put("endDate", "today");
+        }}});
+        return new HttpEntity<>(requestBody, httpHeaders);
+    }
+
+    public void refreshTokenAndRetry(GoogleAnalysticsVO gaVo) {
+        HttpHeaders headers = new HttpHeaders(); // HTTP 헤더 생성
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // Form-Urlencoded로 설정
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<>(); 
+        map.add("client_id", GoogleOAuth2.CLIENT_ID);
+        map.add("client_secret", GoogleOAuth2.CLIENT_SECRET);
+        map.add("refresh_token", GoogleOAuth2.REFRESH_TOKEN);
+        map.add("grant_type", "refresh_token");
+        map.add("expires_in", "18000");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers); // 요청 엔티티 생성
+        ResponseEntity<String> response = restTemplate.postForEntity(GoogleOAuth2.REFRESH_TOKEN_URL, request , String.class); // 토큰 새로고침 요청 실행
+
+        try {
+            Gson gson = new Gson(); 
+            Type type = new TypeToken<Map<String, String>>(){}.getType();         // 문자열을 Map으로 변환하기 위한 타입
+            Map<String, String> result = gson.fromJson(response.getBody(), type); //  Map으로 변환
+            String newAccessToken = result.get("access_token");                   // 새 액세스 토큰 추출
+            makeAnalyticsRequest(gaVo,newAccessToken);          
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            throw new RuntimeException("Refresh token 요청 실패", e); 
+        }
+    }
+    
+    
+    private String handleAnalyticsResponse(String responseBody) {
+        try {
+            Gson gson = new Gson();
+            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+            Map<String, Object> responseMap = gson.fromJson(responseBody, type);
+                
+            String visitorsCount = null;
+            DecimalFormat formatter = new DecimalFormat();
+            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
+            if (rows != null && !rows.isEmpty()) {
+                int totalVisitors = 0;
+                for (Map<String, Object> row : rows) {
+                    List<Map<String, String>> metricValues = (List<Map<String, String>>) row.get("metricValues");
+                    if (metricValues != null && !metricValues.isEmpty()) {
+                        totalVisitors += Integer.parseInt(metricValues.get(0).get("value"));
+                    }else {
+                        visitorsCount = "0";
+                    }
+                }
+                visitorsCount = String.valueOf(totalVisitors);
+            }else {
+                visitorsCount = "0";
+            }
+            return formatter.format(Long.parseLong(visitorsCount));
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("응답 처리 중 오류 발생", e);
+        }
+    }
+    
+}

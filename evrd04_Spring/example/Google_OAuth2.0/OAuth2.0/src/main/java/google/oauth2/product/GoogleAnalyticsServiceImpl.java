@@ -25,7 +25,6 @@ import com.google.gson.reflect.TypeToken;
 
 
 
-
 @Service
 public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
 
@@ -37,9 +36,15 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         this.restTemplate = restTemplate;
     }
       
-    public GoogleAnalyticsServiceImpl() {
-        this.restTemplate = new RestTemplate();
-    }
+    @Autowired
+    private Gson gson;
+    @Autowired
+    private TypeToken<Map<String, String>> type;
+    
+    
+//    public GoogleAnalyticsServiceImpl() {
+//        this.restTemplate = new RestTemplate();
+//    }
 
     public GoogleAnalysticsVO makeAnalyticsRequest(GoogleAnalysticsVO gaVo, String accessToken) throws HttpClientErrorException{
 
@@ -47,7 +52,8 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         HttpEntity<Map<String, Object>> httpEntity1 = makeBodyToday(httpHeaders1);
 
         ResponseEntity<String> response1 = restTemplate.postForEntity(GoogleOAuth2.ANALYTICS_URL, httpEntity1, String.class);
-        if (response1.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+//        if (response1.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+        if (response1.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
             refreshTokenAndRetry(gaVo); // 토큰 새로고침 후 요청 재시도
         }
         String visitorsToday = handleAnalyticsResponse(response1.getBody());
@@ -57,7 +63,8 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         HttpEntity<Map<String, Object>> httpEntity2 = makeBodyAll(httpHeaders2);
 
         ResponseEntity<String> response2 = restTemplate.postForEntity(GoogleOAuth2.ANALYTICS_URL, httpEntity2, String.class);
-        if (response2.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+//        if (response2.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
+        if (response2.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
             refreshTokenAndRetry(gaVo); // 토큰 새로고침 후 요청 재시도
         }
         String visitorsAll = handleAnalyticsResponse(response2.getBody());
@@ -118,8 +125,9 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         ResponseEntity<String> response = restTemplate.postForEntity(GoogleOAuth2.REFRESH_TOKEN_URL, request , String.class); // 토큰 새로고침 요청 실행
 
         try {
-            Gson gson = new Gson(); // Gson 인스턴스 생성
-            Type type = new TypeToken<Map<String, String>>(){}.getType(); // 문자열을 Map으로 변환하기 위한 타입
+            type.getType(); // 필드 주입 처리
+//            Gson gson = new Gson(); // 필드주입 처리
+//            Type type = new TypeToken<Map<String, String>>(){}.getType(); // 문자열을 Map으로 변환하기 위한 타입
             Map<String, String> result = gson.fromJson(response.getBody(), type); // 응답 본문을 Map으로 변환
             String newAccessToken = result.get("access_token"); // 새 액세스 토큰 추출
             makeAnalyticsRequest(gaVo,newAccessToken); // 새 토큰으로 요청 재시도
@@ -127,24 +135,11 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
             e.printStackTrace(); // 예외 정보 출력
             throw new RuntimeException("Refresh token 요청 실패", e); // 예외 던짐
         }
-//        try {
-//            
-////            ObjectMapper objectMapper = new ObjectMapper();     // JSON 문자열을 객체로 변환하기 위한 ObjectMapper
-////            Map<String, String> result = objectMapper.readValue(response.getBody(), Map.class); // 응답 본문을 Map으로 변환
-////            String newAccessToken = result.get("access_token"); // 새 액세스 토큰 추출
-////            makeAnalyticsRequest(newAccessToken);               // 새 토큰으로 요청 재시도
-//        } catch (Exception e) {
-//            e.printStackTrace();    // 예외 정보 출력
-//            throw new RuntimeException("Refresh token 요청 실패", e); // 예외 던짐
-//        }
     }
     
     
-    // jackson lib(objectMapper)을 읽지못하여   org.json(JSONObject)으로 변경 시도
     private String handleAnalyticsResponse(String responseBody) {
         try {
-            
-            // Gson 사용 : return responseMap
             Gson gson = new Gson();
             Type type = new TypeToken<Map<String, Object>>(){}.getType();
             Map<String, Object> responseMap = gson.fromJson(responseBody, type);
@@ -154,74 +149,15 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
             List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
             if (rows != null && !rows.isEmpty()) {
                 List<Map<String, String>> metricValues = (List<Map<String, String>>) rows.get(0).get("metricValues");
-
                 if (metricValues != null && !metricValues.isEmpty()) {
                     visitorsCount = formatter.format(Long.parseLong(metricValues.get(0).get("value")));
                 }else {
                     visitorsCount = "0";
                 }
-                
             }else {
                 visitorsCount = "0";
             }
             return visitorsCount;
-            
-            
-//            // Gson 사용 : return responseMap
-//            Gson gson = new Gson();
-//            Type type = new TypeToken<Map<String, Object>>(){}.getType();
-//            Map<String, Object> responseMap = gson.fromJson(responseBody, type);
-//
-//            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
-//            if (rows != null && !rows.isEmpty()) {
-//                List<Map<String, String>> metricValues1 = (List<Map<String, String>>) rows.get(0).get("metricValues");
-//                List<Map<String, String>> metricValues2 = (List<Map<String, String>>) rows.get(1).get("metricValues");
-//
-//                if (metricValues1 != null && !metricValues1.isEmpty()) {
-//                    String visitorsCount1 = metricValues1.get(0).get("value");
-//                    System.out.println("방문자 수: " + visitorsCount1);
-//                    String visitorsCount2 = metricValues2.get(0).get("value");
-//                    System.out.println("방문자 수: " + visitorsCount2);
-//                }
-//            }
-//            return responseMap;
-            
-            //  org.json(JSONObject) : responseObj.toMap() 에러
-//            JSONObject responseObj = new JSONObject(responseBody);
-//            JSONArray rows = responseObj.getJSONArray("rows");
-//            
-//            if (rows != null && rows.length() > 0) {
-//                JSONArray metricValues1 = rows.getJSONObject(0).getJSONArray("metricValues");
-//                JSONArray metricValues2 = rows.getJSONObject(1).getJSONArray("metricValues");
-//
-//                if (metricValues1 != null && metricValues1.length() > 0) {
-//                    String visitorsCount1 = metricValues1.getJSONObject(0).getString("value");
-//                    System.out.println("방문자 수: " + visitorsCount1);
-//                    String visitorsCount2 = metricValues2.getJSONObject(0).getString("value");
-//                    System.out.println("방문자 수: " + visitorsCount2);
-//                }
-//            }
-//            // JSONObject를 Map<String, Object>로 변환
-//            return responseObj.toMap();
-            
-            
-            // jackson lib(objectMapper)
-//            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
-//    
-//            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
-//            if (rows != null && !rows.isEmpty()) {
-//                List<Map<String, String>> metricValues1 = (List<Map<String, String>>) rows.get(0).get("metricValues");
-//                List<Map<String, String>> metricValues2 = (List<Map<String, String>>) rows.get(1).get("metricValues");
-//    
-//                if (metricValues1 != null && !metricValues1.isEmpty()) {
-//                    // 첫 번째 메트릭 값의 'value' 추출
-//                    String visitorsCount1 = metricValues1.get(0).get("value");
-//                    System.out.println("방문자 수: " + visitorsCount1);
-//                    String visitorsCount2 = metricValues2.get(0).get("value");
-//                    System.out.println("방문자 수: " + visitorsCount2);
-//                }
-//            }
-//            return responseMap;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("응답 처리 중 오류 발생", e);

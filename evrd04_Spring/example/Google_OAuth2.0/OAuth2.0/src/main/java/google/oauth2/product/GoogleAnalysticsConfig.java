@@ -18,11 +18,10 @@ public class GoogleAnalysticsConfig {
         return new RestTemplate(clientHttpRequestFactory());
     }
 
-    @Bean
     public ClientHttpRequestFactory clientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setConnectTimeout(5);
-        factory.setReadTimeout(5);
+        factory.setConnectTimeout(10);
+        factory.setReadTimeout(10);
         return factory;
     }
     
