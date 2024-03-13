@@ -30,18 +30,28 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
 
     
     private final RestTemplate restTemplate;
+    private final Gson gson;
     
     @Autowired
-    public GoogleAnalyticsServiceImpl(RestTemplate restTemplate) {
+    public GoogleAnalyticsServiceImpl(RestTemplate restTemplate, Gson gson) {
         this.restTemplate = restTemplate;
+        this.gson = gson;
     }
-      
-    @Autowired
-    private Gson gson;
-    @Autowired
-    private TypeToken<Map<String, String>> type;
+    
+    private static final Type RESPONSE_TYPE = new TypeToken<Map<String, Object>>(){}.getType();
     
     
+//    private final RestTemplate restTemplate;
+//    
+//    @Autowired
+//    public GoogleAnalyticsServiceImpl(RestTemplate restTemplate) {
+//        this.restTemplate = restTemplate;
+//    }
+//    
+//    @Autowired
+//    private Gson gson;
+    
+
 //    public GoogleAnalyticsServiceImpl() {
 //        this.restTemplate = new RestTemplate();
 //    }
@@ -68,6 +78,7 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
             refreshTokenAndRetry(gaVo); // 토큰 새로고침 후 요청 재시도
         }
         String visitorsAll = handleAnalyticsResponse(response2.getBody());
+//        String visitorsAll = "000";
         gaVo.setAll(visitorsAll);
         return gaVo;
     }
@@ -125,10 +136,11 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         ResponseEntity<String> response = restTemplate.postForEntity(GoogleOAuth2.REFRESH_TOKEN_URL, request , String.class); // 토큰 새로고침 요청 실행
 
         try {
-            type.getType(); // 필드 주입 처리
+//            Type type = typeToken.getType(); // 필드 주입 처리 -> 생성자주입 + @Configuration @Bean 처리
 //            Gson gson = new Gson(); // 필드주입 처리
 //            Type type = new TypeToken<Map<String, String>>(){}.getType(); // 문자열을 Map으로 변환하기 위한 타입
-            Map<String, String> result = gson.fromJson(response.getBody(), type); // 응답 본문을 Map으로 변환
+//            Map<String, String> result = gson.fromJson(response.getBody(), type); // 응답 본문을 Map으로 변환
+            Map<String, String> result = gson.fromJson(response.getBody(), RESPONSE_TYPE); // 응답 본문을 Map으로 변환
             String newAccessToken = result.get("access_token"); // 새 액세스 토큰 추출
             makeAnalyticsRequest(gaVo,newAccessToken); // 새 토큰으로 요청 재시도
         } catch (Exception e) {
@@ -140,9 +152,9 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
     
     private String handleAnalyticsResponse(String responseBody) {
         try {
-            Gson gson = new Gson();
-            Type type = new TypeToken<Map<String, Object>>(){}.getType();
-            Map<String, Object> responseMap = gson.fromJson(responseBody, type);
+//            Type type = new TypeToken<Map<String, Object>>(){}.getType();
+//            Map<String, Object> responseMap = gson.fromJson(responseBody, type);
+            Map<String, Object> responseMap = gson.fromJson(responseBody, RESPONSE_TYPE);
                 
             String visitorsCount = null;
             DecimalFormat formatter = new DecimalFormat();

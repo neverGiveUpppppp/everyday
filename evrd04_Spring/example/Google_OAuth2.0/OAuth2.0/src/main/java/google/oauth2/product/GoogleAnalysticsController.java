@@ -21,9 +21,9 @@ public class GoogleAnalysticsController extends UserController{
     }
     
     
-    @RequestMapping("/ND_ga4Visitors.do")
+    @RequestMapping("/ND_ga4Visitor.do")
     public String makeAnalyticsRequest(GoogleAnalysticsVO gaVo, Model model) {
-        String accessToken = "ya29.a0Ad52N39lV2SgQ8-Tivm02slIq3h1wEXdees4jfysq5gDCUTcww6XMb40x7UGiSi562nM3gKbfyXNG4-PvdJlo5r8kqeubvFVnVMuXNPa5FlDjklOUt2AN1BFTU3rqJStxrZoUDoQEuuRYvJWKhQDTRqySFgDEnEvjgtgaCgYKAe4SARMSFQHGX2MioO77y1myvhQPA5MnIeeTDw0171";
+        String accessToken = "ya29.a0Ad52N39YHt657QMALe6kMJMB4nV701coiiMUaAc-ZFse7Wa_EPnVLCSOSgxssDKEivWt3K4JD7qzxP_SUKJ5bxDrCJ2nQsMd4i_1eyiygoYtPvunqAePuJiDsB7tp7tcFyfSI4dkjPYY4DDRHLTFX6S3CtXFwpG8wcvraCgYKAWoSARMSFQHGX2MiJ93Moca_l__-AiKrJMx64A0171";
         GoogleAnalysticsVO response = gaService.makeAnalyticsRequest(gaVo, accessToken);
         model.addAttribute("ga4Vo", response);
         return responseJson(model, response);
