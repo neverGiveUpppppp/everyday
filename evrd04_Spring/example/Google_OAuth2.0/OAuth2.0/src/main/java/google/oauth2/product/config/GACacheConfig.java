@@ -1,4 +1,4 @@
-package google.oauth2.product;
+package google.oauth2.product.config;
 
 
 import org.ehcache.CacheManager;
