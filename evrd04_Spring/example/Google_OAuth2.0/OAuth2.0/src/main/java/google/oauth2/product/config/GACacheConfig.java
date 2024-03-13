@@ -21,7 +21,7 @@ public class GACacheConfig {
                 CacheConfigurationBuilder.newCacheConfigurationBuilder(
                         String.class, String.class,     // 캐시 키와 밸류값의 타입 설정
                         ResourcePoolsBuilder.heap(10))  // 힙에 최대 10개의 항목을 저장
-                        .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(java.time.Duration.ofMinutes(240))) // TTL(Time to Live) 설정 옵션 
+                        .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(java.time.Duration.ofMinutes(2))) // TTL(Time to Live) 설정 옵션 
             ).build();
         cacheManager.init(); // 초기화 콜백
         return cacheManager;

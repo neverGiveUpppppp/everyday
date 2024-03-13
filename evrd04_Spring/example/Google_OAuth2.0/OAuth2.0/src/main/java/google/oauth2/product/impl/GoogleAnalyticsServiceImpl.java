@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
@@ -52,7 +53,7 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         String todayNum = "todayNum";          
         String todayCnt = cache.get(todayNum); 
         if (todayCnt == null) {
-            String today = callApi(gaVo, accessToken, "today", "today"); // GA4에서 방문자 수 가져오기
+            String today = callApi(gaVo, accessToken, "today", "today", 5); // GA4에서 방문자 수 가져오기
             // 캐시에 저장
             cache.put(todayNum, today);
             todayCnt = cache.get(todayNum);
@@ -65,7 +66,7 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         String allCnt = cache.get(allNum); 
     
         if (allCnt == null) {
-          String all = callApi(gaVo, accessToken, "2024-01-28", "today"); // GA4에서 방문자 수 가져오기
+          String all = callApi(gaVo, accessToken, "2024-01-28", "today", 5); // GA4에서 방문자 수 가져오기
             // 캐시에 저장
             cache.put(allNum, all);
             allCnt = cache.get(allNum);
@@ -75,14 +76,17 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         return gaVo;
     }
     
-    public String callApi(GoogleAnalysticsVO gaVo, String accessToken, String startDate, String endDate) {
+    public String callApi(GoogleAnalysticsVO gaVo, String accessToken, String startDate, String endDate, int retryCnt) {
         HttpHeaders httpHeaders = makeHeaders(accessToken);
         HttpEntity<Map<String, Object>> httpEntity = makeBody(httpHeaders, startDate, endDate);
         ResponseEntity<String> response = restTemplate.postForEntity(GoogleOAuth2.ANALYTICS_URL, httpEntity, String.class);
         logger.debug("Http response reuslt : " + response);
         if (response.getStatusCode().equals(HttpStatus.UNAUTHORIZED)) {
             logger.info("Unauthorized request. Refreshing token and retrying : " + response.getStatusCode() );
-            refreshTokenAndRetry(gaVo, startDate, endDate); // 토큰 새로고침 후 요청 재시도
+            if (retryCnt <= 0) {
+                throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "인증 실패: 재시도 횟수 초과");
+            }
+            refreshTokenAndRetry(gaVo, startDate, endDate, retryCnt - 1); // 토큰 새로고침 후 요청 재시도
         }
         return handleAnalyticsResponse(response.getBody());
     }
@@ -109,12 +113,12 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         return new HttpEntity<>(requestBody, httpHeaders);
     }
     
-    public void refreshTokenAndRetry(GoogleAnalysticsVO gaVo, String startDate, String endDate) {
+    public void refreshTokenAndRetry(GoogleAnalysticsVO gaVo, String startDate, String endDate, int retryCnt) {
         HttpHeaders headers = new HttpHeaders(); // HTTP 헤더 생성
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED); // 내용 타입을 Form-Urlencoded로 설정
-
-        MultiValueMap<String, String> map= new LinkedMultiValueMap<>(); // 토큰 새로고침 요청 본문 데이터
+        
         // OAuth2 클라이언트 정보와 새로고침 토큰 설정
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<>(); // 토큰 새로고침 요청 본문 데이터
         map.add("client_id", GoogleOAuth2.CLIENT_ID);
         map.add("client_secret", GoogleOAuth2.CLIENT_SECRET);
         map.add("refresh_token", GoogleOAuth2.REFRESH_TOKEN);
@@ -125,11 +129,11 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
 
         try {
             Map<String, String> result = gson.fromJson(response.getBody(), RESPONSE_TYPE); // 응답 본문을 Map으로 변환
-            String newAccessToken = result.get("access_token"); // 새 액세스 토큰 추출
-            callApi(gaVo, newAccessToken, startDate, endDate); // 새 토큰으로 요청 재시도
+            String newAccessToken = result.get("access_token");          // 새 액세스 토큰 추출
+            callApi(gaVo, newAccessToken, startDate, endDate, retryCnt); // 새 토큰으로 요청 재시도
         } catch (Exception e) {
             e.printStackTrace(); // 예외 정보 출력
-            throw new RuntimeException("Refresh token 요청 실패", e); // 예외 던짐
+            throw new RuntimeException("Refresh token 요청 실패", e);
         }
     }
     
@@ -137,26 +141,6 @@ public class GoogleAnalyticsServiceImpl implements GoogleAnalyticsService{
         try {
             Map<String, Object> responseMap = gson.fromJson(responseBody, RESPONSE_TYPE);
                 
-            
-//            String visitorsCount = null;
-//            DecimalFormat formatter = new DecimalFormat();
-//            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
-//            if (rows != null && !rows.isEmpty()) {
-//                int totalVisitors = 0;
-//                for (Map<String, Object> row : rows) {
-//                    List<Map<String, String>> metricValues = (List<Map<String, String>>) row.get("metricValues");
-//                    if (metricValues != null && !metricValues.isEmpty()) {
-//                        totalVisitors += Integer.parseInt(metricValues.get(0).get("value"));
-//                    }else {
-//                        visitorsCount = "0";
-//                    }
-//                }
-//                visitorsCount = String.valueOf(totalVisitors);
-//            }else {
-//                visitorsCount = "0";
-//            }
-//            return formatter.format(Long.parseLong(visitorsCount));
-            
             String visitorsCount = null;
             DecimalFormat formatter = new DecimalFormat();
             List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
