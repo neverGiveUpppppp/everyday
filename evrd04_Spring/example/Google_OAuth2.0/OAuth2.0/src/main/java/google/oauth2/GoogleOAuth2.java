@@ -19,7 +19,6 @@ import java.util.Map;
 
 
 @RestController
-
 public class GoogleOAuth2 {
 
 
@@ -59,8 +58,8 @@ public class GoogleOAuth2 {
 //            String cnt = response.getRows(0).getMetricValues(0).getValue();
 //            RunReportResponse reportResponse = (RunReportResponse)response.getBody(); // inconvertable
             ResponseEntity<String> response = restTemplate.postForEntity(ANALYTICS_URL, entity, String.class); // POST 요청 실행
-//            System.out.println(response.getBody()); // 응답 본문 출력
-            handleAnalyticsResponse(response.getBody());
+            System.out.println(response.getBody()); // 응답 본문 출력
+//            handleAnalyticsResponse(response.getBody());
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) { // 액세스 토큰이 만료된 경우
                 refreshTokenAndRetryRequest(); // 토큰 새로고침 후 요청 재시도
@@ -97,28 +96,28 @@ public class GoogleOAuth2 {
     }
 
     // response.getBody()의 파싱용 메소드
-    public void handleAnalyticsResponse(String responseBody) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
-
-            // 예시 응답 구조에 따라 경로를 조정해야 할 수 있습니다.
-            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
-            if (rows != null && !rows.isEmpty()) {
-                // 첫 번째 'row'의 'metricValues' 가져오기
-                List<Map<String, String>> metricValues = (List<Map<String, String>>) rows.get(0).get("metricValues");
-
-                if (metricValues != null && !metricValues.isEmpty()) {
-                    // 첫 번째 메트릭 값의 'value' 추출
-                    String visitorsCount = metricValues.get(0).get("value");
-                    System.out.println("방문자 수: " + visitorsCount);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("응답 처리 중 오류 발생", e);
-        }
-    }
+//    public void handleAnalyticsResponse(String responseBody) {
+//        try {
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+//
+//            // 예시 응답 구조에 따라 경로를 조정해야 할 수 있습니다.
+//            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
+//            if (rows != null && !rows.isEmpty()) {
+//                // 첫 번째 'row'의 'metricValues' 가져오기
+//                List<Map<String, String>> metricValues = (List<Map<String, String>>) rows.get(0).get("metricValues");
+//
+//                if (metricValues != null && !metricValues.isEmpty()) {
+//                    // 첫 번째 메트릭 값의 'value' 추출
+//                    String visitorsCount = metricValues.get(0).get("value");
+//                    System.out.println("방문자 수: " + visitorsCount);
+//                }
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new RuntimeException("응답 처리 중 오류 발생", e);
+//        }
+//    }
     
     
     public String visitors(String body, Model model){
