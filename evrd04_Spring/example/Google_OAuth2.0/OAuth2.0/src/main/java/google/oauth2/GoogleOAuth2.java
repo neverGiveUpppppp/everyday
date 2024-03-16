@@ -1,16 +1,14 @@
 package google.oauth2;
 
-import com.google.analytics.data.v1beta.RunReportResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,12 +16,15 @@ import java.util.Map;
 
 
 
-@RestController
+//@RestController // spring4부터 가능
+@Controller     // 적용할 프로젝트는 스프링3이므로 @Controller 적용
 public class GoogleOAuth2 {
 
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    public GoogleOAuth2(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     private static final String ANALYTICS_URL = "https://analyticsdata.googleapis.com/v1beta/properties/425548737:runReport";
     private static final String REFRESH_TOKEN_URL = "https://oauth2.googleapis.com/token";
@@ -46,8 +47,8 @@ public class GoogleOAuth2 {
             put("name", "activeUsers");
         }}});
         requestBody.put("dateRanges", new Object[]{new HashMap<String, Object>() {{
-            put("startDate", "2024-01-01");
-            put("endDate", "2024-03-05");
+            put("startDate", "2024-01-28");
+            put("endDate", "today");
         }}});
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers); // 요청 엔티티 생성
@@ -118,6 +119,31 @@ public class GoogleOAuth2 {
 //            throw new RuntimeException("응답 처리 중 오류 발생", e);
 //        }
 //    }
+    public void handleAnalyticsResponse(String responseBody) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> responseMap = objectMapper.readValue(responseBody, Map.class);
+
+            // 예시 응답 구조에 따라 경로를 조정해야 할 수 있습니다.
+            List<Map<String, Object>> rows = (List<Map<String, Object>>) responseMap.get("rows");
+            if (rows != null && !rows.isEmpty()) {
+                // 첫 번째 'row'의 'metricValues' 가져오기
+                List<Map<String, String>> metricValues1 = (List<Map<String, String>>) rows.get(0).get("metricValues");
+                List<Map<String, String>> metricValues2 = (List<Map<String, String>>) rows.get(1).get("metricValues");
+
+                if (metricValues1 != null && !metricValues1.isEmpty()) {
+                    // 첫 번째 메트릭 값의 'value' 추출
+                    String visitorsCount1 = metricValues1.get(0).get("value");
+                    System.out.println("방문자 수: " + visitorsCount1);
+                    String visitorsCount2 = metricValues2.get(0).get("value");
+                    System.out.println("방문자 수: " + visitorsCount2);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("응답 처리 중 오류 발생", e);
+        }
+    }
     
     
     public String visitors(String body, Model model){
