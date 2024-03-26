@@ -1,0 +1,9 @@
+
+spring:
+  batch:
+    job:
+      names: ${job.name:NONE}
+    jdbc:
+      initialize-schema: always  # batch 메타 테이블을 생성할려면 never로 세팅
+#  main:
+#    web-application-type: none # batch가 끝나고 어플리케이션도 끝남
