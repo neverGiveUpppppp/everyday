@@ -1,5 +1,11 @@
 package hello.core5;
 
+import hello.core5.member.MemberRepository;
+import hello.core5.member.MemberService;
+import hello.core5.member.MemberServiceImpl;
+import hello.core5.member.MemoryMemberRepository;
+import hello.core5.order.OrderService;
+import hello.core5.order.OrderServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
