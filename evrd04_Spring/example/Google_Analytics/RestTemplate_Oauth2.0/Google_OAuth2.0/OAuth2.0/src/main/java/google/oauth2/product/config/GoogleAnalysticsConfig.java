@@ -21,13 +21,13 @@ public class GoogleAnalysticsConfig {
     }
 
     @Bean
-    public ClientHttpRequestFactory clientHttpRequestFactory() {
+        public ClientHttpRequestFactory clientHttpRequestFactory() {
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectTimeout(10*1000); // 10초 설정 : milliseconds단위
         factory.setReadTimeout(10*1000);
         return factory;
     }
-    
+
     @Bean
     public Gson gson() {
         return new Gson();
