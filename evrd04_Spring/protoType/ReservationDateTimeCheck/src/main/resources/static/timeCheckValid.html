@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script type="text/javascript">
+        //<![CDATA[
+
+        /* 공통 초기화 기능 */
+        $(document).ready(function() {
+
+            var timepickerEl = $("#fcltWkdysBgngTm1, #fcltWkdysEndTm1, #fcltWkdysBgngTm2, #fcltWkdysEndTm2,"+
+                "#fcltStdayBgngTm1, #fcltStdayEndTm1, #fcltStdayBgngTm2, #fcltStdayEndTm2,"+
+                "#fcltSndayBgngTm1, #fcltSndayEndTm1, #fcltSndayBgngTm2, #fcltSndayEndTm2");
+            facilSetTimepickers(timepickerEl);
+
+
+            $("#fcltWkdysBgngTm1, #fcltWkdysEndTm1, #fcltWkdysBgngTm2, #fcltWkdysEndTm2,"+
+                "#fcltStdayBgngTm1, #fcltStdayEndTm1, #fcltStdayBgngTm2, #fcltStdayEndTm2,"+
+                "#fcltSndayBgngTm1, #fcltSndayEndTm1, #fcltSndayBgngTm2, #fcltSndayEndTm2").on("input", function () {
+                // 숫자만 입력 가능 & maxlength 초과x
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+
+                // 글자 수가 maxlength를 초과하지 않도록
+                var maxLength = parseInt($(this).attr("maxlength"));
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substr(0, maxLength));
+                }
+            });
+            $("#fcltArea, #fcltNope").on("input", function () {
+                $(this).val($(this).val().replace(/[^0-9]/g, ''));
+
+                // 글자 수가 maxlength를 초과하지 않도록
+                var maxLength = parseInt($(this).attr("maxlength"));
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substr(0, maxLength));
+                }
+            });
+            $("#fcltFee1").on("input", function () {
+                if($("#fcltAdtnAmt1").val() === '1001'){
+                    $(this).val($(this).val().replace(/[^0-9.]+|(\.(?=.*\.))/g, '').replace(/(\.\d{1}).*/g, '$1'));
+                }else if($("#fcltAdtnAmt1").val() === '1002'){
+                    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                }
+
+                // 글자 수가 maxlength를 초과하지 않도록
+                var maxLength = parseInt($(this).attr("maxlength"));
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substr(0, maxLength));
+                }
+            });
+            $("#fcltFee2").on("input", function () {
+                if($("#fcltAdtnAmt2").val() === '1001'){
+                    $(this).val($(this).val().replace(/[^0-9.]+|(\.(?=.*\.))/g, '').replace(/(\.\d{1}).*/g, '$1'));
+                }else if($("#fcltAdtnAmt2").val() === '1002'){
+                    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                }
+
+                // 글자 수가 maxlength를 초과하지 않도록
+                var maxLength = parseInt($(this).attr("maxlength"));
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substr(0, maxLength));
+                }
+            });
+
+        });
+
+
+
+        function facilSetTimepickers(elements) {
+            elements.each(function() {
+                var minTime, maxTime;
+                if ($(this).attr('id').includes('BgngTm1') || $(this).attr('id').includes('EndTm1')) {
+                    // 오전 시간 설정
+                    minTime = '00:00';
+                    maxTime = '12:00';
+                } else if($(this).attr('id').includes('BgngTm2') || $(this).attr('id').includes('EndTm2'))  {
+                    // 오후 시간 설정
+                    minTime = '12:00';
+                    maxTime = '23:30';
+                }
+
+                $(this).timepicker({
+                    'timeFormat': 'H:i',
+                    'minTime': minTime,
+                    'maxTime': maxTime,
+                });
+
+            });
+        }
+
+
+        function opFcltSubmit() {
+
+            // 오전 시작시간과 오후 종료시간만 받을 경우를 처리하는 로직
+            if( $("#fcltWkdysBgngTm1").val() !== '' && $("#fcltWkdysEndTm1").val() === '' && $("#fcltWkdysBgngTm2").val() === '' && $("#fcltWkdysEndTm2").val() !== '' ){
+                $("#fcltWkdysEndTm1").val("12:00");
+                $("#fcltWkdysBgngTm2").val("12:00");
+            }else if( $("#fcltStdayBgngTm1").val() !== '' && $("#fcltStdayEndTm1").val() === '' && $("#fcltStdayBgngTm2").val() === '' && $("#fcltStdayEndTm2").val() !== '' ){
+                $("#fcltStdayEndTm1").val("12:00");
+                $("#fcltStdayBgngTm2").val("12:00");
+            }else if( $("#fcltSndayBgngTm1").val() !== '' && $("#fcltSndayEndTm1").val() === '' && $("#fcltSndayBgngTm2").val() === '' && $("#fcltSndayEndTm2").val() !== '' ){
+                $("#fcltSndayEndTm1").val("12:00");
+                $("#fcltSndayBgngTm2").val("12:00");
+            }
+
+            var mrnigPatn = /^(0[0-9]|1[0-1]):(00|30)|12:00$/;
+            var aftrnPatn = /^(1[2-9]|2[0-3]):(00|30)$/;
+
+            // 각 시간 그룹별 입력 필드 쌍 정의
+            var timePairs = [
+                { start: "#fcltWkdysBgngTm1", end: "#fcltWkdysEndTm1", pattern: mrnigPatn },
+                { start: "#fcltWkdysBgngTm2", end: "#fcltWkdysEndTm2", pattern: aftrnPatn },
+                { start: "#fcltStdayBgngTm1", end: "#fcltStdayEndTm1", pattern: mrnigPatn },
+                { start: "#fcltStdayBgngTm2", end: "#fcltStdayEndTm2", pattern: aftrnPatn },
+                { start: "#fcltSndayBgngTm1", end: "#fcltSndayEndTm1", pattern: mrnigPatn },
+                { start: "#fcltSndayBgngTm2", end: "#fcltSndayEndTm2", pattern: aftrnPatn }
+            ];
+
+            // 각 시간 필드값 별로 validation check
+            var isValid = true;
+            var firstInvalidField = null;
+
+            for (var i = 0; i < timePairs.length; i++) {
+                var pair = timePairs[i];
+                var startValue = $(pair.start).val().trim();
+                var endValue = $(pair.end).val().trim();
+
+                if ((startValue === '' && endValue !== '') || (startValue !== '' && endValue === '')) {
+                    alert("시작 시간과 종료 시간을 모두 입력해야 합니다.");
+                    if (startValue === '' && endValue !== ''){
+                        firstInvalidField = pair.start;
+                    }else{
+                        firstInvalidField = pair.end;
+                    }
+                    break; // 첫 번째 오류 발생 시 루프 종료
+                }
+
+                if(startValue !== '' || endValue !== ''){
+                    // 시간 형식과 시간대 맞는지 확인
+                    if(pair.pattern === mrnigPatn){
+                        if (!pair.pattern.test(startValue) || !pair.pattern.test(endValue)) {
+                            alert("오전은 00:00~12:00까지 30분 단위로 입력 가능합니다. ");
+                            firstInvalidField = !pair.pattern.test(startValue) ? pair.start : pair.end;
+                            break;
+                        }
+                    }else if(pair.pattern === aftrnPatn){
+                        if (!pair.pattern.test(startValue) || !pair.pattern.test(endValue)) {
+                            alert("오후시간은 12:00~23:30까지  30분 단위로 입력 가능합니다.");
+                            firstInvalidField = !pair.pattern.test(startValue) ? pair.start : pair.end;
+                            break;
+                        }
+                    }
+                }
+
+                // 시간 값을 분으로 환산 비교
+                var startTimeInMinutes = parseInt(startValue.split(":")[0]) * 60 + parseInt(startValue.split(":")[1]);
+                var endTimeInMinutes = parseInt(endValue.split(":")[0]) * 60 + parseInt(endValue.split(":")[1]);
+
+                // 시작 시간이 종료 시간보다 클 경우 alert 표출
+                if (startTimeInMinutes >= endTimeInMinutes) {
+                    alert("시작 시간은 종료 시간보다 빨라야 합니다.");
+                    if (startValue === '' && endValue !== ''){
+                        firstInvalidField = pair.start;
+                    }else{
+                        firstInvalidField = pair.end;
+                    }
+                    break; // 첫 번째 오류 발생 시 루프 종료
+                }
+            }
+
+            if (firstInvalidField) {
+                $(firstInvalidField).focus();
+                return false;
+            }
+
+
+            var fcltCdId = $("input[name='fcltCdId']:checked");
+            if(fcltCdId.length === 0){
+                alert("소속을 선택해 주세요.");
+                $("input[name='fcltCdId']").focus();
+                return false;
+            }
+            if($("#fcltArea").val()==""){
+                alert("면적을 입력해 주세요.");
+                $("#fcltArea").focus();
+                return false;
+            }
+            if($("#fcltNope").val()==""){
+                alert("수용인원을 입력해 주세요.");
+                $("#fcltNope").focus();
+                return false;
+            }
+            if($("#fcltExcptnMttr").val()==""){
+                alert("특이사항을 작성해 주세요.");
+                $("#fcltExcptnMttr").focus();
+                return false;
+            }
+            if($("#fcltAtntMttr").val()==""){
+                alert("주의사항을 작성해 주세요.");
+                $("#fcltAtntMttr").focus();
+                return false;
+            }
+
+            return true;
+
+
+        }
+
+        //]]>
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>
