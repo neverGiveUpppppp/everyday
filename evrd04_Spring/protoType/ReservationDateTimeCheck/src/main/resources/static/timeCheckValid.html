@@ -170,11 +170,94 @@
                     break; // 첫 번째 오류 발생 시 루프 종료
                 }
             }
-
             if (firstInvalidField) {
                 $(firstInvalidField).focus();
                 return false;
             }
+
+
+            /* 금액 유효성 검사 */
+            $("#fcltFee1").on("input", function () {
+                if($("#fcltAdtnAmt1").val() === '1001'){
+                    $(this).val($(this).val().replace(/[^0-9.]+|(\.(?=.*\.))/g, '').replace(/(\.\d{1}).*/g, '$1'));
+                }else if($("#fcltAdtnAmt1").val() === '1002'){
+                    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                }
+
+                // 글자 수가 maxlength를 초과하지 않도록
+                var maxLength = parseInt($(this).attr("maxlength"));
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substr(0, maxLength));
+                }
+            });
+            $("#fcltFee2").on("input", function () {
+                if($("#fcltAdtnAmt2").val() === '1001'){
+                    $(this).val($(this).val().replace(/[^0-9.]+|(\.(?=.*\.))/g, '').replace(/(\.\d{1}).*/g, '$1'));
+                }else if($("#fcltAdtnAmt2").val() === '1002'){
+                    $(this).val($(this).val().replace(/[^0-9]/g, ''));
+                }
+
+                // 글자 수가 maxlength를 초과하지 않도록
+                var maxLength = parseInt($(this).attr("maxlength"));
+                if ($(this).val().length > maxLength) {
+                    $(this).val($(this).val().substr(0, maxLength));
+                }
+            });
+
+            /* 항목상세와 금액 empty 체크  */
+            if ($("#fcltUseOpt1").val() !== '' && $("#fcltFee1").val() === ''){
+                alert("항목 상세에 대한 금액이 지정되어야합니다.");
+                $("#fcltFee1").focus();
+                return false;
+            }else if($("#fcltUseOpt1").val() === '' && $("#fcltFee1").val() !== ''){
+                alert("금액에 대한 상세항목이 지정되어야합니다.");
+                $("#fcltUseOpt1").focus();
+                return false;
+            }
+            if($("#fcltUseOpt2").val() !== '' && $("#fcltFee2").val() === '') {
+                alert("항목 상세에 대한 금액이 지정되어야합니다.");
+                $("#fcltFee2").focus();
+                return false;
+            }else if($("#fcltUseOpt2").val() === '' && $("#fcltFee2").val() !== '') {
+                alert("금액에 대한 상세항목이 지정되어야합니다.");
+                $("#fcltUseOpt2").focus();
+                return false;
+            }
+
+            // ￦과 % 유효성 체크
+            var regFeePercent = /^\d+(\.\d)?$/;
+            var regFeeWon = /^\d+$/;
+            if($("#fcltFee1").val() !== ''){
+                if($("#fcltAdtnAmt1").val() === '1001'){
+                    if(!regFeePercent.test($("#fcltFee1").val())){
+                        alert("%에는 자연수 및 소수점 이하 한자리까지 가능합니다.");
+                        $("#fcltFee1").focus();
+                        return false;
+                    }
+                }else if($("#fcltAdtnAmt1").val() === '1002'){
+                    if(!regFeeWon.test($("#fcltFee1").val())){
+                        alert("￦에는 숫자(자연수)만 입력 가능합니다.");
+                        $("#fcltFee1").focus();
+                        return false;
+                    }
+                }
+            }
+            if($("#fcltFee2").val() !== ''){
+                if($("#fcltAdtnAmt2").val() === '1001'){
+                    if(!regFeePercent.test($("#fcltFee2").val())){
+                        alert("%에는 정수 및 소수점 이하 한자리까지 가능합니다.");
+                        $("#fcltFee2").focus();
+                        return false;
+                    }
+                }else if($("#fcltAdtnAmt2").val() === '1002'){
+                    if(!regFeeWon.test($("#fcltFee2").val())){
+                        alert("￦에는 숫자(자연수)만 입력 가능합니다.");
+                        $("#fcltFee2").focus();
+                        return false;
+                    }
+                }
+            }
+
 
 
             var fcltCdId = $("input[name='fcltCdId']:checked");
