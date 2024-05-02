@@ -138,8 +138,15 @@
                     break; // 첫 번째 오류 발생 시 루프 종료
                 }
 
+                // 시작,종료 시간이 같을 경우
+                if(startValue == endValue && startValue !== '' && endValue !== ''){
+                    alert("시작과 종료 시간이 같을 수 없습니다.");
+                    firstInvalidField = !pair.pattern.test(startValue) ? pair.start : pair.end;
+                    break;
+                }
+
+                // 시간 형식과 시간대 맞는지 확인
                 if(startValue !== '' || endValue !== ''){
-                    // 시간 형식과 시간대 맞는지 확인
                     if(pair.pattern === mrnigPatn){
                         if (!pair.pattern.test(startValue) || !pair.pattern.test(endValue)) {
                             alert("오전은 00:00~12:00까지 30분 단위로 입력 가능합니다. ");
