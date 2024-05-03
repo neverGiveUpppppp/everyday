@@ -253,7 +253,6 @@ public class FacilServiceImpl {
 
 
 
-    @Override
     public String selectFcltInfo(FcltMngVO fcltMngVo) {
         String result = "Y";
         FcltMngVO dataVo = opFacilDao.selectFcltInfo(fcltMngVo); // 시설관리의 상시개방 시간 끌어오기 (facilSn,fcltCdId)
