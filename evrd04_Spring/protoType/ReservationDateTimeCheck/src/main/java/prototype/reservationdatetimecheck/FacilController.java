@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 public class FacilController {
 
 
+
     /** 예약가능시간 확인 기능
      *
      * @param request
@@ -18,7 +19,6 @@ public class FacilController {
     public String selectCheckTime(HttpServletRequest request, Model model, FacilLongVO facilLongVo) {
 
         String result = "N";
-
         ValidateResultHolder holder = ValidateUtil.validate(facilLongVo);
         if (holder.isValid()) {
             try {
@@ -42,13 +42,10 @@ public class FacilController {
                 fcltMngVo.addParam("q_rsvtBgngTm",facilLongVo.getRsvtBgngTm()); // fcltMngVo가 아닌 parent PageVO의 Map에 저장한 것
                 fcltMngVo.addParam("q_rsvtEndTm",facilLongVo.getRsvtEndTm());
                 fcltMngVo.addParam("q_rsvtDayCdId",facilLongVo.getRsvtDayCdId());
-                result = opFacilService.selectFcltInfo(fcltMngVo); // 시설관리의 상시개방 시간 끌어오기
-                if(result.equals("N")){
-                    return responseJson(model,result);
-                }
+                String resultOpnTm = opFacilService.selectFcltInfo(fcltMngVo); // 시설관리의 상시개방 시간 끌어오기
 
                 // 개방시간 안에 다른 예약과 겹치는지 중복 체크
-                if(result.equals("Y")) {
+                if(resultOpnTm.equals("Y")) {
                     FacilAplyVO facilAplyVo = new FacilAplyVO();
                     facilAplyVo.setFacilSn(facilSn);
                     facilAplyVo.setFcltCdId(facilLongVo.getFcltCdId());
@@ -57,46 +54,45 @@ public class FacilController {
                     facilAplyVo.addParam("q_rsvtBgngTm",facilLongVo.getRsvtBgngTm());
                     facilAplyVo.addParam("q_rsvtEndTm",facilLongVo.getRsvtEndTm());
                     facilAplyVo.addParam("q_rsvtDayCdId",facilLongVo.getRsvtDayCdId());
-                    result = opFacilService.selectAplyTmList(facilAplyVo);     // 시설예약신청 내역
-                    if(result.equals("N")){
-                        return responseJson(model,result);
-                    }
+                    resultOpnTm = opFacilService.selectAplyTmList(facilAplyVo);     // 시설예약신청 내역
                 }
 
                 Map<LocalDate, LocalTime[]> newReservation = opFacilService.newLongRsvtSelectedDayTimes(facilLongVo); // 비교를 위한  신규장기예약 데이터
-                // 요일 체크가 잘못 되었을 경우
-                if(newReservation.isEmpty()) {
+                if(newReservation.isEmpty()) {  // 사용자의 요일 체크가 잘못 되었을 경우
                     result = "N4"; // 요일 잘못 선택
                     return responseJson(model,result);
                 }
 
-                // 특정일 개방 중복 체크
-                if(result.equals("Y")) {
-                    FacilOpenMngVO facilOpenMngVo = new FacilOpenMngVO();
-                    facilOpenMngVo.setFacilSn(facilSn);
-                    result = opFacilService.selectSpecificOpenAplyTmList(facilOpenMngVo, newReservation);
+                // 특정일 개방 일시 체크
+                FacilOpenMngVO facilOpenMngVo = new FacilOpenMngVO();
+                facilOpenMngVo.setFacilSn(facilSn);
+                facilOpenMngVo.addParam("q_rsvtBgngDt",facilLongVo.getRsvtBgngDt());
+                facilOpenMngVo.addParam("q_rsvtEndDt",facilLongVo.getRsvtEndDt());
+                String resultSpOpnTm = opFacilService.selectSpecificOpenAplyTmList(facilOpenMngVo, newReservation);
 
-                    if(result.equals("N") || result.equals("N2")){
-                        return responseJson(model,result);
-                    }
+                // 상시개방 or 특정일개방 둘 중 하나 Y라면, 중복체크 계속
+                if(resultOpnTm.equals("N") && resultSpOpnTm.equals("N")){
+                    result = "N";
+                    return responseJson(model, result);
+                }else if(resultOpnTm.equals("Y") || resultSpOpnTm.equals("Y")){
+                    result = "Y";
                 }
 
                 // 기존 장기예약과  중복 체크
-                if(result.equals("Y")) {
-                    facilLongVo.setFacilSn(facilSn);
-                    result = opFacilService.selectLongAplyTmList(facilLongVo, newReservation); // 장기예약신청 내역(intra 신청관리 리스트)
-                }
+                facilLongVo.setFacilSn(facilSn);
+                result = opFacilService.selectLongAplyTmList(facilLongVo, newReservation); // 장기예약신청 내역(intra 신청관리 리스트)
+
             }catch(Exception e){
                 e.printStackTrace();
-                result = "N";
+                result = "N2";
                 return responseJson(model,result);
             }
-
         } else {
             return responseJson(model, Boolean.FALSE, MessageUtil.getMessage("common.validateFail"));
         }
         return responseJson(model,result);
     }
+
 
 
 

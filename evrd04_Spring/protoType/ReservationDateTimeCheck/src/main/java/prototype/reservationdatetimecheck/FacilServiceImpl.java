@@ -23,6 +23,7 @@ public class FacilServiceImpl {
 
 
 
+
     /**
      * 최소최대 시간 값 도출
      * @param bgngTm1
@@ -192,14 +193,14 @@ public class FacilServiceImpl {
      * @param result
      * @return
      */
-    public String resrvtionChekDayTime(LocalDateTime rsvtTm1, LocalDateTime rsvtTm2, LocalDateTime bgngTm, LocalDateTime endTm, String result) {
+    public String resrvtionChekDayTime(LocalDateTime newStart, LocalDateTime newEnd, LocalDateTime oldStart, LocalDateTime oldEnd, String result) {
         try {
             // 새 예약이 기존 예약을 전체적으로 포함하는 경우
-            if (rsvtTm1.isBefore(bgngTm) && rsvtTm2.isAfter(endTm)) {
+            if (newStart.isBefore(oldStart) && newEnd.isAfter(oldEnd)) {
                 return "N2";
             }
-            if (rsvtTm1.isAfter(bgngTm) && rsvtTm1.isBefore(endTm) || rsvtTm1.equals(bgngTm)||
-                    rsvtTm2.isAfter(bgngTm) && rsvtTm2.isBefore(endTm) || rsvtTm2.equals(endTm)) {
+            if (newStart.isAfter(oldStart) && newStart.isBefore(oldEnd) || newStart.equals(oldStart)||
+                    newEnd.isAfter(oldStart) && newEnd.isBefore(oldEnd) || newEnd.equals(oldEnd)) {
                 return result = "N2";
             }
         }catch(Exception e){
@@ -236,9 +237,59 @@ public class FacilServiceImpl {
                     LocalDateTime oldEnd = oldDate.atTime(dateEntry.getValue()[1]);
 
                     result = resrvtionChekDayTime(newStart, newEnd, oldStart, oldEnd, result);
+                    if(result.equals("N2")){
+                        return result;
+                    }
                 }
             }
         }
+        return result;
+    }
+    /**
+     * 특정일 개방 일시 체크용
+     * @param oldReservations
+     * @param newReservation
+     * @return
+     */
+    public String checkNewOldLongRsvt(Map<Integer, Map<LocalDate, LocalTime[]>> oldReservations, Map<LocalDate, LocalTime[]> newReservation) {
+        String result = "Y";
+        ArrayList<String> resultList = new ArrayList<>();
+
+        // 신규 예약의 모든 날짜와 시간을 순회
+        for (Map.Entry<LocalDate, LocalTime[]> newEntry : newReservation.entrySet()) {
+            LocalDate newDate = newEntry.getKey();
+            LocalDateTime newStart = newDate.atTime(newEntry.getValue()[0]);
+            LocalDateTime newEnd = newDate.atTime(newEntry.getValue()[1]);
+
+            // 기존 예약의 모든 항목(예약 번호) 순회
+            for (Map.Entry<Integer, Map<LocalDate, LocalTime[]>> oldEntry : oldReservations.entrySet()) {
+                Map<LocalDate, LocalTime[]> dateReservations = oldEntry.getValue();
+
+                // 해당 예약 번호에 대한 모든 날짜와 시간을 검사
+                for (Map.Entry<LocalDate, LocalTime[]> dateEntry : dateReservations.entrySet()) {
+                    LocalDate oldDate = dateEntry.getKey();
+                    LocalDateTime oldStart = oldDate.atTime(dateEntry.getValue()[0]);
+                    LocalDateTime oldEnd = oldDate.atTime(dateEntry.getValue()[1]);
+
+                    // 날짜가 다르면 패스, 날짜가 같으면 비교
+                    if(newDate.equals(oldDate)) {
+                        // 특정일 개방시간 안에서의 예약시간 체크
+                        if ((newStart.isAfter(oldStart) || newStart.equals(oldStart)) &&  // 예약시간이 시작시간보다 뒤이거나,같을 경우 : true면 예약가능. 중복X
+                                (newEnd.isBefore(oldEnd) || newEnd.equals(oldEnd))) {		  // 예약시간이 종료시간보다 전이거나,같을 경우 : true면 예약가능. 중복X
+                            resultList.add("Y");
+                        }else {
+                            resultList.add("N");
+                        }
+                        // 신규예약 기간이 특정일 예약 기간에서 벗어난 시간이 Y라면 N으로 바꾸기
+//					}else if() {
+//						resultList.add("N");
+//						resultList.set(?,"N");
+                    }
+                }
+            }
+        }
+        if(resultList.contains("N"))
+            result = "N";
         return result;
     }
 
@@ -353,7 +404,7 @@ public class FacilServiceImpl {
 
 
     /**
-     * 특정일 개방 체크
+     * 특정일 개방 일시 체크
      */
     public String selectSpecificOpenAplyTmList(FacilOpenMngVO facilOpenMngVo, Map<LocalDate, LocalTime[]> newReservation) {
         String result = "Y";
@@ -362,7 +413,7 @@ public class FacilServiceImpl {
 
         if (Validate.isNotEmpty(openAplyList)) {
             // 1.기존 특정일개방 전체 리스트 값을 요일별로 환산
-            Map<Integer,Map<LocalDate,LocalTime[]>> allReservations = new HashMap<>();
+            Map<Integer,Map<LocalDate,LocalTime[]>> oldAllReservations = new HashMap<>();
 
             int index = 0;
             for (FacilOpenMngVO dataVo : openAplyList) {
@@ -402,8 +453,10 @@ public class FacilServiceImpl {
                         afternon1 = dataVo.getFcltStdayBgngTm2();
                         afternon2 = dataVo.getFcltStdayEndTm2();
 
-                        LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
-                        reservations.put(currentDay, times);
+                        if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
+                            LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
+                            reservations.put(currentDay, times);
+                        }
                     }
                     else if (dayOfWeekSets.contains(date.getDayOfWeek()) && date.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
                         moning1 = dataVo.getFcltSndayBgngTm1();
@@ -411,28 +464,31 @@ public class FacilServiceImpl {
                         afternon1 = dataVo.getFcltSndayBgngTm2();
                         afternon2 = dataVo.getFcltSndayEndTm2();
 
-                        LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
-                        reservations.put(currentDay, times);
+                        if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
+                            LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
+                            reservations.put(currentDay, times);
+                        }
                     }else {
                         moning1 = dataVo.getFcltWkdysBgngTm1();
                         moning2 = dataVo.getFcltWkdysEndTm1();
                         afternon1 = dataVo.getFcltWkdysBgngTm2();
                         afternon2 = dataVo.getFcltWkdysEndTm2();
 
-                        LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
-                        reservations.put(currentDay, times);
+                        if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
+                            LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
+                            reservations.put(currentDay, times);
+                        }
                     }
                 }
-
-                allReservations.put(index, reservations);
+                oldAllReservations.put(index, reservations);
                 index++;
             }
 
-            // 2.기존 예약과 신규예약 중복 체크
-            result = checkNewOldLongRsvt(allReservations, newReservation, result);
+            // 2.특정일 개방 일시 체크
+            result = checkNewOldLongRsvt(oldAllReservations, newReservation);
 
         } else {
-            result = "Y";
+            result = "N";
         }
         return result;
     }
