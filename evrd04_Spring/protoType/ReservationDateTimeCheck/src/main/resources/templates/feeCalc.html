@@ -1,0 +1,513 @@
+<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.openworks.kr/jsp/jstl" prefix="op"%>
+<%@ taglib uri="http://www.openworks.kr/jsp/validate" prefix="valid"%>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title>시설예약 신청화면</title>
+    <link rel="stylesheet" href="/resources/openworks4/css/formbd.css">
+    <op:jsTag type="intra" items="opform" />
+    <op:jsTag type="user" items="opform, opvalidate, opPassword, datetime" />
+    <op:jsTag type="libs" items="datetime, datetimerange" />
+    <op:adres zip="zip" adres="adres" adres2="adres2" />
+    <!-- 기능별 스크립트 삽입 부 -->
+    <script src="/resources/user/form/js/formRspns.js"></script>
+    <script>
+        var groupList = [];
+        var isPossible = false;
+        //<![CDATA[
+        $(function() {
+
+            <%-- 한글/영문 허용 --%>
+            const setOnlyText = function (obj) {
+                obj.val(obj.val().replace(/[^a-zA-Zㄱ-힣]/g, ''));
+            }
+
+            <%-- 숫자 허용 --%>
+            const setOnlyNum = function (obj) {
+                obj.val(obj.val().replace(/[^0-9]/g, ''));
+            }
+
+            // 정규식 start
+            $(".textOnly").on('blur keyup', function (e) {
+                setOnlyText($(this));
+            });
+
+            $(".numOnly").on('blur keyup', function (e) {
+                setOnlyNum($(this));
+            });
+
+            // 사용옵션1 선택시
+            $("#fcltUseOptCd1").change(function() {
+
+                var fcltChrg = parseFloat($("#fcltChrg").val());
+                var fcltChrgBsc = parseFloat($("#fcltChrgBsc").val());
+                var fcltFee1 = parseFloat($("#fcltFee1").val()) || 0;
+                var fcltAdtnAmt1 = $("#fcltAdtnAmt1").val();
+                var fcltChrgPercent = (fcltChrgBsc * fcltFee1) / 100;
+
+                $("input[name='dscntSn1']").prop('checked', false);
+                $("input[name='dscntSn2']").prop('checked', false);
+                $("input[name='dscntSn3']").prop('checked', false);
+
+                if ($(this).is(":checked")) {
+                    if ($("#fcltChrg").val() === "") {
+                        alert("시간을 선택해주세요.");
+                        $("input[name='fcltUseOptCd1']").prop('checked', false);
+                        return false;
+                    }
+
+                    if (fcltAdtnAmt1 === "1001") {
+                        fcltChrg = fcltChrg + fcltChrgPercent;
+                        $("#fcltChrg").val(fcltChrg);
+                    } else if (fcltAdtnAmt1 === "1002") {
+                        fcltChrg = fcltChrg + fcltFee1;
+                        $("#fcltChrg").val(fcltChrg);
+                    }
+
+                } else {
+                    if (fcltAdtnAmt1 === "1001") {
+                        fcltChrg = fcltChrg - fcltChrgPercent;
+                        $("#fcltChrg").val(fcltChrg);
+                    } else if (fcltAdtnAmt1 === "1002") {
+                        fcltChrg = fcltChrg - fcltFee1;
+                        $("#fcltChrg").val(fcltChrg);
+                    }
+                }
+            });
+
+            // 사용옵션2 선택시
+            $("#fcltUseOptCd2").change(function() {
+
+                var fcltChrg = parseFloat($("#fcltChrg").val());
+                var fcltChrgBsc = parseFloat($("#fcltChrgBsc").val());
+                var fcltFee2 = parseFloat($("#fcltFee2").val()) || 0;
+                var fcltAdtnAmt2 = $("#fcltAdtnAmt2").val();
+                var fcltChrgPercent = (fcltChrgBsc * fcltFee2) / 100;
+
+                $("input[name='dscntSn1']").prop('checked', false);
+                $("input[name='dscntSn2']").prop('checked', false);
+                $("input[name='dscntSn3']").prop('checked', false);
+
+                if ($(this).is(":checked")) {
+                    if ($("#fcltChrg").val() === '') {
+                        alert("시간을 선택해주세요.");
+                        $("input[name='fcltUseOptCd2']").prop('checked', false);
+                        return false;
+                    }
+
+                    if (fcltAdtnAmt2 === "1001") {
+                        fcltChrg = fcltChrg + fcltChrgPercent;
+                        $("#fcltChrg").val(fcltChrg);
+                    } else if (fcltAdtnAmt2 === "1002") {
+                        fcltChrg = fcltChrg + fcltFee2;
+                        $("#fcltChrg").val(fcltChrg);
+                    }
+
+                } else {
+                    if (fcltAdtnAmt2 === "1001") {
+                        fcltChrg = fcltChrg - fcltChrgPercent;
+                        $("#fcltChrg").val(fcltChrg);
+                    } else if (fcltAdtnAmt2 === "1002") {
+                        fcltChrg = fcltChrg - fcltFee2;
+                        $("#fcltChrg").val(fcltChrg);
+                    }
+                }
+            });
+            // 정규식 end
+        });
+
+        // 이용자 구분 선택시
+        var opBscChrg = function(userSeCd, fcltCdId) {
+            $("input[name='dscntSn1']").prop('checked', false);
+            $("input[name='dscntSn2']").prop('checked', false);
+            $("input[name='dscntSn3']").prop('checked', false);
+            $("input[name='fcltUseOptCd2']").prop('checked', false);
+            $("input[name='fcltUseOptCd1']").prop('checked', false);
+
+            $.ajax({
+                url : "ND_selectBscChrgDscnt.do",
+                type : "POST",
+                data : {
+                    userSeCd : userSeCd
+                },
+                dataType : "json",
+                success : function(data) {
+                    var dscntOpt = $("#dscntOpt");
+
+                    dscntOpt.empty();
+                    $("#dscntOptLi").show();
+                    data.forEach(function(item, index) {
+                        var newRaw = '<span class="chks">'
+                            + '<input type="hidden" id="dscntRt' + (index + 1) + '" name="dscntRt" value="' + item.dscntRt + '">'
+                            + '<input type="checkbox" name="dscntSn' + (index + 1) + '" id="dscntSn' + (index + 1) + '" value="' + item.dscntSn + '" onclick="opDscnt(this);" class="checkbox-inline">'
+                            + '<label for="dscntSn' + (index + 1) + '">' + item.dscntCrtrCn + '</label>'
+                            + '</span>';
+                        dscntOpt.append(newRaw);
+                    });
+                },
+                error : function(response) {
+                    opSysErrorMsg(response.responseText);
+                    return false;
+                }
+            });
+
+            var aplyPrgrsTm = $("input[name='aplyPrgrsTm']:checked").val();
+            if (typeof aplyPrgrsTm != "undefined") {
+                $.ajax({
+                    url : "ND_selectBscChrg.do",
+                    type : "POST",
+                    data : {
+                        userSeCd : userSeCd,
+                        fcltCdId : fcltCdId,
+                        aplyPrgrsTm : aplyPrgrsTm
+                    },
+                    dataType : "json",
+                    success : function(data) {
+                        $("#fcltChrg").val(data);
+                        $("#fcltChrgBsc").val(data);
+                    },
+                    error : function(response) {
+                        opSysErrorMsg(response.responseText);
+                        return false;
+                    }
+                });
+            }
+        };
+
+        // 예약시간 변경시
+        function opChange() {
+            $("input[name='aplyPrgrsTm']").prop('checked', false);
+            $("input[name='fcltUseOptCd2']").prop('checked', false);
+            $("input[name='fcltUseOptCd1']").prop('checked', false);
+            $("input[name='dscntSn1']").prop('checked', false);
+            $("input[name='dscntSn2']").prop('checked', false);
+            $("input[name='dscntSn3']").prop('checked', false);
+            $("input[name='fcltChrg']").val("");
+        }
+
+        // 이용시간 선택시
+        function chageTm(tmCd, aplyPrgrsTm) {
+            $("input[name='fcltUseOptCd2']").prop('checked', false);
+            $("input[name='fcltUseOptCd1']").prop('checked', false);
+            $("input[name='dscntSn1']").prop('checked', false);
+            $("input[name='dscntSn2']").prop('checked', false);
+            $("input[name='dscntSn3']").prop('checked', false);
+
+            var userSeCd = $("input[name='userSeCd']:checked").val();
+            if (typeof userSeCd === "undefined") {
+                alert("이용자구분을 선택해주세요.");
+                $("input[name='aplyPrgrsTm']").prop('checked', false);
+                return false;
+            }
+
+            var facilAplyBgngTm = $("#facilAplyBgngTm").val();
+            var aplyPrgrsTm = parseFloat($("input[name='aplyPrgrsTm']:checked").val());
+            var timeParts = facilAplyBgngTm.split(":");
+            var hours = parseInt(timeParts[0], 10);
+            var minutes = parseInt(timeParts[1], 10);
+
+            var aplyEndHour = hours + aplyPrgrsTm;
+            if (aplyEndHour < 10) {
+                aplyEndHour = "0" + aplyEndHour;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+
+            var aplyEndTm = aplyEndHour + "" + minutes;
+            var aplyEndTmInt = parseInt(aplyEndTm);
+            var facilAplyEndTm = aplyEndHour + ":" + minutes;
+
+            $("#facilAplyBgngTm").val(facilAplyBgngTm);
+            $("#facilAplyEndTm").val(facilAplyEndTm);
+
+            var weekNum = ${weekNum};
+            var TimeFull = ${TimeFull};
+            var aplyTimeFull = ${aplyTimeFull};
+
+            var facilSn = $("#facilSn").val();
+            var fcltCdId = $("#fcltCdId").val();
+            var facilAplyDt = $("#facilAplyDt").val();
+
+            // 예약가능여부 조회
+            $.ajax({
+                url : "ND_selectRsvtPosblAt.do",
+                type : "POST",
+                async : false,
+                data : {
+                    facilSn : facilSn,
+                    fcltCdId : fcltCdId,
+                    weekNum : weekNum,
+                    facilAplyDt : facilAplyDt,
+                    facilAplyBgngTm : facilAplyBgngTm,
+                    facilAplyEndTm : facilAplyEndTm
+                },
+                dataType : "json",
+                success : function(data) {
+                    isPossible = data.result;
+                    if (!isPossible) {
+                        $("#timeInfo").text("선택하신 이용시간은 이미 예약마감된 시간이 포함되어있습니다.");
+                        $("input[name='aplyPrgrsTm']").prop('checked', false);
+                        return false;
+                    }
+                },
+                error : function(response) {
+                    opSysErrorMsg(response.responseText);
+                    return false;
+                }
+            });
+
+            if (!isPossible) return false;
+
+            // 요일별 개방시간 이벤트
+            if (!TimeFull.includes(aplyEndTm)) {
+                alert("개방시간이 아닙니다.");
+                $("input[name='aplyPrgrsTm']").prop('checked', false);
+                return false;
+            }
+
+            var maxHour = Math.max(...TimeFull);
+
+            var numericTimeList = TimeFull.map(function(time) {
+                return parseInt(time, 10);
+            });
+            var maxTime = Math.max(...numericTimeList);
+
+            var aplyMaxHour = Math.max(...aplyTimeFull)
+
+            var aplyTimeList = aplyTimeFull.map(function(time) {
+                return parseInt(time, 10);
+            });
+            var aplymaxTime = Math.max(...aplyTimeList);
+
+            // 가장 큰 값을 "HH:mm" 형식으로 변환
+            var formattedTime = maxTime.toString().padStart(4, '0'); // 4자리로 만들고 앞에 0 채우기
+            formattedTime = formattedTime.replace(/(\d{2})(\d{2})/, "$1:$2");
+
+            $("#timeInfo").text("마감시간은 " + formattedTime + " 입니다.");
+
+            if (aplyEndTmInt > maxHour) {
+                alert("예약 시작 시간은 개방종료 시간 이전으로 선택해주세요.");
+                $("input[name='aplyPrgrsTm']").prop('checked', false);
+                return false;
+            }
+
+            var formattedTime2 = aplymaxTime.toString().padStart(4, '0'); // 4자리로 만들고 앞에 0 채우기
+            formattedTime2 = formattedTime2.replace(/(\d{2})(\d{2})/, "$1:$2");
+
+            if (aplyEndTmInt > aplymaxTime) {
+                alert("신청하실수있는 시간대가 아닙니다.");
+                $("input[name='aplyPrgrsTm']").prop('checked', false);
+                return false;
+            }
+
+            // 시설 기본 이용료 세팅
+            $.ajax({
+                url : "ND_selectBscChrg.do",
+                type : "POST",
+                data : {
+                    userSeCd : userSeCd,
+                    fcltCdId : fcltCdId,
+                    aplyPrgrsTm : aplyPrgrsTm
+                },
+                dataType : "json",
+                success : function(data) {
+                    $("#fcltChrg").val(data);
+                    $("#fcltChrgBsc").val(data);
+                },
+                error : function(response) {
+                    opSysErrorMsg(response.responseText);
+                    return false;
+                }
+            });
+        }
+
+        // 감면옵션 선택시 시설사용료 계산
+        function opDscnt(chk) {
+            var isChecked = chk.checked;
+            var chks = $(chk).closest(".chks");
+            var dscntRt = chks.find("input[type='hidden']").val();
+
+            var fcltChrg = parseFloat($("#fcltChrg").val());
+            var fcltChrgBsc = parseFloat($("#fcltChrgBsc").val());
+            var fcltChrgPercent = (fcltChrgBsc * dscntRt) / 100;
+
+            if ($("#fcltChrg").val() === "") {
+                alert("시간을 선택해주세요.");
+                $("input[name='dscntSn1']").prop('checked', false);
+                $("input[name='dscntSn2']").prop('checked', false);
+                $("input[name='dscntSn3']").prop('checked', false);
+                return false;
+            }
+
+            if (isChecked) {
+                fcltChrg = fcltChrg - fcltChrgPercent;
+                $("#fcltChrg").val(fcltChrg);
+            } else {
+                fcltChrg = fcltChrg + fcltChrgPercent;
+                $("#fcltChrg").val(fcltChrg);
+            }
+        }
+
+        //submit
+        function opSubmit() {
+            var userSeCd = $("input[name='userSeCd']:checked").val();
+            if (typeof userSeCd === "undefined") {
+                alert("이용자구분을 선택해주세요.");
+                return false;
+            }
+
+            var aplyPrgrsTm = parseFloat($("input[name='aplyPrgrsTm']:checked").val());
+            if (typeof aplyPrgrsTm === "undefined") {
+                alert("시간을 선택해주세요.");
+                return false;
+            }
+
+            if ($("#fcltChrg").val() == "") {
+                alert("시설사용료가 비어있습니다!");
+                return false;
+            }
+
+            if ($("#aplcntRgnTelno").val() == "") {
+                alert("전화번호를 입력해주세요.");
+                return false;
+            }
+
+            if ($("#aplcntTelofcTelno").val() == "") {
+                alert("전화번호를 입력해주세요.");
+                return false;
+            }
+
+            if ($("#aplcntIndivTelno").val() == "") {
+                alert("전화번호를 입력해주세요.");
+                return false;
+            }
+
+            var fcltNope = ${selectFclt.fcltNope};
+            var facilAplyNope = $("#facilAplyNope");
+            if (facilAplyNope.val() == "") {
+                alert("사용인원을 입력해주세요.");
+                facilAplyNope.focus();
+                return false;
+            } else {
+                if (fcltNope < facilAplyNope.val()) {
+                    alert("사용인원은 수용인원을 넘을 수 없습니다.");
+                    facilAplyNope.focus();
+                    return false;
+                }
+            }
+
+            if (!$("input[name='useAgreYn']").is(":checked")) {
+                alert("사용수칙에 동의해주세요.");
+                $("input[name='useAgreYn']").focus();
+                return false;
+            }
+
+            var facilAgree = $("input[name='facilAgree']:checked").val();
+            if (facilAgree != 'Y') {
+                alert("개인정보제공에 동의해주세요.");
+                return false;
+            }
+
+            return true;
+        }
+        //]]>
+    </script>
+</head>
+<body>
+
+
+<li>
+    <div class="label">
+        <label for="aplyBgngTm"><span class="req">*</span> 예약시간(시작시간)</label>
+    </div>
+    <div class="frm">
+        <div class="frm-in">
+            <input type="hidden" id="facilAplyEndTm" name="facilAplyEndTm" value="" />
+            <select id="facilAplyBgngTm" name="facilAplyBgngTm" onchange="opChange();" class="select" required>
+                <c:if test="${not empty HourList}">
+                    <c:forEach items="${HourList}" var="time">
+                        <option value="${time}">${time}</option>
+                    </c:forEach>
+                </c:if>
+            </select>
+        </div>
+        <div class="frm-in">
+							<span class="rdos">
+								<input type="radio" name="aplyPrgrsTm" id="aplyPrgrsTm2" value="2" onclick="chageTm('S',this.value)" class="checkbox-inline" <c:if test="${dataVo.aplyPrgrsTm eq '2'}">checked="checked"</c:if> required />
+								<label for="aplyPrgrsTm2">~2시간</label>
+							</span>
+            <span class="rdos">
+								<input type="radio" name="aplyPrgrsTm" id="aplyPrgrsTm4" value="4" onclick="chageTm('M',this.value)" class="checkbox-inline" <c:if test="${dataVo.aplyPrgrsTm eq '4'}">checked="checked"</c:if> required />
+								<label for="aplyPrgrsTm4">~4시간</label>
+							</span>
+            <span class="rdos">
+								<input type="radio" name="aplyPrgrsTm" id="aplyPrgrsTm6" value="6" onclick="chageTm('L',this.value)" class="checkbox-inline" <c:if test="${dataVo.aplyPrgrsTm eq '6'}">checked="checked"</c:if> required />
+								<label for="aplyPrgrsTm6">~6시간</label>
+							</span>
+            <span class="rdos">
+								<input type="radio" name="aplyPrgrsTm" id="aplyPrgrsTm8" value="8" onclick="chageTm('XL',this.value)" class="checkbox-inline" <c:if test="${dataVo.aplyPrgrsTm eq '8'}">checked="checked"</c:if> required />
+								<label for="aplyPrgrsTm8">~8시간</label>
+							</span>
+        </div>
+        <p id="timeInfo" class="info"> </p>
+    </div>
+</li>
+<c:if test="${!empty selectFclt.fcltUseOpt1 || !empty selectFclt.fcltUseOpt2}">
+    <li>
+        <div class="label">
+            <label for="useOptCd">사용옵션</label>
+        </div>
+        <div class="frm">
+            <div class="frm-in">
+                <c:if test="${!empty selectFclt.fcltUseOpt1}">
+									<span class="chks">
+										<input type="hidden" name="fcltFee1" id="fcltFee1" value="${selectFclt.fcltFee1}" />
+										<input type="hidden" name="fcltAdtnAmt1" id="fcltAdtnAmt1" value="${selectFclt.fcltAdtnAmt1}" />
+										<input type="checkbox" name="fcltUseOptCd1" id="fcltUseOptCd1" value="${selectFclt.fcltUseOptCd1}" class="checkbox-inline" />
+										<label for="fcltUseOptCd1">${selectFclt.fcltUseOpt1}</label>
+									</span>
+                </c:if>
+                <c:if test="${!empty selectFclt.fcltUseOpt2}">
+									<span class="chks">
+										<input type="hidden" name="fcltFee2" id="fcltFee2" value="${selectFclt.fcltFee2}" />
+										<input type="hidden" name="fcltAdtnAmt2" id="fcltAdtnAmt2" value="${selectFclt.fcltAdtnAmt2}" />
+										<input type="checkbox" name="fcltUseOptCd2" id="fcltUseOptCd2" value="${selectFclt.fcltUseOptCd2}" class="checkbox-inline" />
+										<label for="fcltUseOptCd2">${selectFclt.fcltUseOpt2}</label>
+									</span>
+                </c:if>
+            </div>
+        </div>
+    </li>
+</c:if>
+<li id="dscntOptLi" style="display:none;">
+    <div class="label">
+        <label for="useOptCd">감면옵션</label>
+    </div>
+    <div class="frm">
+        <div class="frm-in" id ="dscntOpt">
+
+        </div>
+    </div>
+</li>
+
+
+<li>
+    <div class="label">
+        <label for="fcltChrg"><span class="req">*</span> 시설사용료</label>
+    </div>
+    <div class="frm">
+        <div class="frm-in">
+            <input type="text" name="fcltChrg" id="fcltChrg" value="${dataVo.fcltChrg}" readonly="readonly" class="frm-input numOnly" />
+            <input type="hidden" name="fcltChrgBsc" id="fcltChrgBsc" value=""class="frm-input numOnly" />
+        </div>
+    </div>
+</li>
+
+</body>
+</html>
