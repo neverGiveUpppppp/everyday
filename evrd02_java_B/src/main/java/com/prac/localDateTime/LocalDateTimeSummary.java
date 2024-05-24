@@ -1,4 +1,4 @@
-package com.prac.localDateTime;
+package java.com.prac.localDateTime;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

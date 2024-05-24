@@ -46,6 +46,7 @@ public class FacilController {
                 fcltMngVo.addParam("q_rsvtEndTm",facilLongVo.getRsvtEndTm());
                 fcltMngVo.addParam("q_rsvtDayCdId",facilLongVo.getRsvtDayCdId());
                 String resultOpnTm = opFacilService.selectFcltInfo(fcltMngVo); // 시설관리의 상시개방 시간 끌어오기
+                Map<String,Map<LocalDate, LocalTime[]>> conflictResevatin = new HashMap<>();
 
                 // 개방시간 안에 다른 예약과 겹치는지 중복 체크
                 if(resultOpnTm.equals("Y")) {
@@ -57,7 +58,7 @@ public class FacilController {
                     facilAplyVo.addParam("q_rsvtBgngTm",facilLongVo.getRsvtBgngTm());
                     facilAplyVo.addParam("q_rsvtEndTm",facilLongVo.getRsvtEndTm());
                     facilAplyVo.addParam("q_rsvtDayCdId",facilLongVo.getRsvtDayCdId());
-                    resultOpnTm = opFacilService.selectAplyTmList(facilAplyVo);     // 시설예약신청 내역
+                    conflictResevatin = opFacilService.selectAplyTmList(facilAplyVo);     // 시설예약신청 내역
                 }
 
                 Map<LocalDate, LocalTime[]> newReservation = opFacilService.newLongRsvtSelectedDayTimes(facilLongVo); // 비교를 위한  신규장기예약 데이터
@@ -71,11 +72,17 @@ public class FacilController {
                 facilOpenMngVo.setFacilSn(facilSn);
                 facilOpenMngVo.addParam("q_rsvtBgngDt",facilLongVo.getRsvtBgngDt());
                 facilOpenMngVo.addParam("q_rsvtEndDt",facilLongVo.getRsvtEndDt());
-                String resultSpOpnTm = opFacilService.selectSpecificOpenAplyTmList(facilOpenMngVo, newReservation);
+                String resultSpOpnTm = opFacilService.selectSpecificOpenAplyTmList(facilOpenMngVo, newReservation, conflictResevatin);
 
                 // 상시개방 or 특정일개방 둘 중 하나 Y라면, 중복체크 계속
-                if(resultOpnTm.equals("N") && resultSpOpnTm.equals("N")){
-                    result = "N";
+                if((resultOpnTm.equals("N") || resultOpnTm.equals("N2") || resultOpnTm.equals("N3")) &&
+                        (resultSpOpnTm.equals("N") || resultSpOpnTm.equals("N2")|| resultSpOpnTm.equals("N3"))){
+
+                    if(resultOpnTm.equals("N") || resultOpnTm.equals("N2") || resultOpnTm.equals("N3")) {
+                        result = resultOpnTm;
+                    }else if(resultSpOpnTm.equals("N") || resultSpOpnTm.equals("N2")|| resultSpOpnTm.equals("N3")) {
+                        result = resultSpOpnTm;
+                    }
                     return responseJson(model, result);
                 }else if(resultOpnTm.equals("Y") || resultSpOpnTm.equals("Y")){
                     result = "Y";

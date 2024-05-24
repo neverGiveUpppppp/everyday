@@ -190,23 +190,38 @@ public class FacilServiceImpl {
      * @param rsvtTm2
      * @param bgngTm
      * @param endTm
-     * @param result
+     * @param idx
      * @return
      */
-    public String resrvtionChekDayTime(LocalDateTime newStart, LocalDateTime newEnd, LocalDateTime oldStart, LocalDateTime oldEnd, String result) {
+    public Map<String,Map<LocalDate, LocalTime[]>> resrvtionChekDayTime(LocalDateTime newStart, LocalDateTime newEnd, LocalDate oldDay, LocalTime oldStartTime, LocalTime oldEndTime, Map<String, Map<LocalDate, LocalTime[]>> result, int idx) {
+//	public Map<String,Map<LocalDate, LocalTime[]>> resrvtionChekDayTime(LocalDateTime newStart, LocalDateTime newEnd, LocalDate oldDay, LocalTime oldStartTime, LocalTime oldEndTime, int idx, Map<String,Map<LocalDate, LocalTime[]>> result) {
+//	public Map<String,Map<LocalDate, LocalTime[]>> resrvtionChekDayTime(LocalDateTime newStart, LocalDateTime newEnd, LocalDateTime oldStart, LocalDateTime oldEnd, String result) {
+        String idxStr = idx + "_N2";
+        Map<LocalDate, LocalTime[]> conflictDay = new HashMap<>();
+        LocalTime[] conflictTm = {oldStartTime, oldEndTime};
+        conflictDay.put(oldDay, conflictTm);
+
+        LocalDateTime oldStart = oldDay.atTime(oldStartTime);
+        LocalDateTime oldEnd = oldDay.atTime(oldEndTime);
         try {
             // 새 예약이 기존 예약을 전체적으로 포함하는 경우
             if (newStart.isBefore(oldStart) && newEnd.isAfter(oldEnd)) {
-                return "N2";
+                result.put(idxStr,conflictDay);
+                return result;
+//            	return "N2";
             }
             if (newStart.isAfter(oldStart) && newStart.isBefore(oldEnd) || newStart.equals(oldStart)||
                     newEnd.isAfter(oldStart) && newEnd.isBefore(oldEnd) || newEnd.equals(oldEnd)) {
-                return result = "N2";
+                result.put(idxStr,conflictDay);
+                return result;
+//            	return result = "N2";
             }
         }catch(Exception e){
             logger.error("resrvtionChekDayTime() Exception");
             e.printStackTrace();
-            return "N2";
+            result.put(idxStr,conflictDay);
+            return result;
+//    		return "N2";
         }
         return result;
     }
@@ -236,7 +251,7 @@ public class FacilServiceImpl {
                     LocalDateTime oldStart = oldDate.atTime(dateEntry.getValue()[0]);
                     LocalDateTime oldEnd = oldDate.atTime(dateEntry.getValue()[1]);
 
-                    result = resrvtionChekDayTime(newStart, newEnd, oldStart, oldEnd, result);
+//	                result = resrvtionChekDayTime(newStart, newEnd, oldStart, oldEnd, result);
                     if(result.equals("N2")){
                         return result;
                     }
@@ -251,7 +266,7 @@ public class FacilServiceImpl {
      * @param newReservation
      * @return
      */
-    public String checkNewOldLongRsvt(Map<Integer, Map<LocalDate, LocalTime[]>> oldReservations, Map<LocalDate, LocalTime[]> newReservation) {
+    public String checkNewOldLongRsvt(Map<Integer, Map<LocalDate, LocalTime[]>> oldReservations, Map<LocalDate, LocalTime[]> newReservation, Map<String,Map<LocalDate, LocalTime[]>> conflictResevatin) {
         String result = "Y";
         ArrayList<String> resultList = new ArrayList<>();
 
@@ -271,7 +286,7 @@ public class FacilServiceImpl {
                     LocalDateTime oldStart = oldDate.atTime(dateEntry.getValue()[0]);
                     LocalDateTime oldEnd = oldDate.atTime(dateEntry.getValue()[1]);
 
-                    // 날짜가 다르면 패스, 날짜가 같으면 비교
+                    // 날짜가 같으면 비교
                     if(newDate.equals(oldDate)) {
                         // 특정일 개방시간 안에서의 예약시간 체크
                         if ((newStart.isAfter(oldStart) || newStart.equals(oldStart)) &&  // 예약시간이 시작시간보다 뒤이거나,같을 경우 : true면 예약가능. 중복X
@@ -280,10 +295,6 @@ public class FacilServiceImpl {
                         }else {
                             resultList.add("N");
                         }
-                        // 신규예약 기간이 특정일 예약 기간에서 벗어난 시간이 Y라면 N으로 바꾸기
-//					}else if() {
-//						resultList.add("N");
-//						resultList.set(?,"N");
                     }
                 }
             }
@@ -375,29 +386,36 @@ public class FacilServiceImpl {
      * 시설예약신청 내역
      */
     @Override
-    public String selectAplyTmList(FacilAplyVO facilAplyVo) {
-        String result = "Y";
+    public Map<String,Map<LocalDate, LocalTime[]>> selectAplyTmList(FacilAplyVO facilAplyVo) {
+//	public String selectAplyTmList(FacilAplyVO facilAplyVo) {
+        Map<String,Map<LocalDate, LocalTime[]>> result = new HashMap<>();
+//		String result = "Y";
         List<FacilAplyVO> dataList = opFacilDao.selectAplyTmList(facilAplyVo);
 
-        LocalDate newStartDay = LocalDate.parse(StringUtil.getString(facilAplyVo.getParam("q_rsvtBgngDt")));
-        LocalDate newEndDay = LocalDate.parse(StringUtil.getString(facilAplyVo.getParam("q_rsvtEndDt")));
+        LocalDate newStartDay = LocalDate.parse(StringUtil.getString(facilAplyVo.getParam("q_rsvtBgngDt")).substring(0,10));
+        LocalDate newEndDay = LocalDate.parse(StringUtil.getString(facilAplyVo.getParam("q_rsvtEndDt")).substring(0,10));
         LocalTime newStartTime = LocalTime.parse(StringUtil.getString(facilAplyVo.getParam("q_rsvtBgngTm")));
         LocalTime newEndTime = LocalTime.parse(StringUtil.getString(facilAplyVo.getParam("q_rsvtEndTm")));
         LocalDateTime newRsvtStart = newStartDay.atTime(newStartTime);
         LocalDateTime newRsvtEnd = newEndDay.atTime(newEndTime);
 
         if (Validate.isNotEmpty(dataList)) {
+            int idx = 0;
             for (FacilAplyVO dataVo : dataList) {
-                LocalDate oldDay = LocalDate.parse(dataVo.getFacilAplyDt());
+                LocalDate oldDay = LocalDate.parse(dataVo.getFacilAplyDt().substring(0,10));
                 LocalTime oldStartTime = LocalTime.parse(dataVo.getFacilAplyBgngTm());
                 LocalTime oldEndTime = LocalTime.parse(dataVo.getFacilAplyEndTm());
-                LocalDateTime oldRsvtStart = oldDay.atTime(oldStartTime);
-                LocalDateTime oldRsvtEnd = oldDay.atTime(oldEndTime);
+//				LocalDateTime oldRsvtStart = oldDay.atTime(oldStartTime);
+//				LocalDateTime oldRsvtEnd = oldDay.atTime(oldEndTime);
 
-                result = resrvtionChekDayTime(newRsvtStart, newRsvtEnd, oldRsvtStart, oldRsvtEnd, result);
+                result = resrvtionChekDayTime(newRsvtStart, newRsvtEnd, oldDay, oldStartTime, oldEndTime, result, idx);
+//				result = resrvtionChekDayTime(newRsvtStart, newRsvtEnd, oldRsvtStart, oldRsvtEnd, result, idx);
+                idx++;
             }
         } else {
-            result = "Y";
+            result.put("N", new HashMap<>());
+            return result;
+//			result = "Y";
         }
         return result;
     }
@@ -406,17 +424,23 @@ public class FacilServiceImpl {
     /**
      * 특정일 개방 일시 체크
      */
-    public String selectSpecificOpenAplyTmList(FacilOpenMngVO facilOpenMngVo, Map<LocalDate, LocalTime[]> newReservation) {
+    public String selectSpecificOpenAplyTmList(FacilOpenMngVO facilOpenMngVo, Map<LocalDate, LocalTime[]> newReservation, Map<String,Map<LocalDate, LocalTime[]>> conflictResevatin) {
         String result = "Y";
 
         List<FacilOpenMngVO> openAplyList = opFacilDao.selectSpecificOpenAplyTmList(facilOpenMngVo); // 특정일 개방 데이터 select
 
+        LocalDate rsvtStartDay = LocalDate.parse(facilOpenMngVo.getParam("q_rsvtBgngDt").toString().substring(0, 10));
+        LocalDate rsvtEndDay = LocalDate.parse(facilOpenMngVo.getParam("q_rsvtEndDt").toString().substring(0, 10));
+
         if (Validate.isNotEmpty(openAplyList)) {
-            // 1.기존 특정일개방 전체 리스트 값을 요일별로 환산
+            // 1.특정일개방 전체 리스트 값을 요일별로 환산
             Map<Integer,Map<LocalDate,LocalTime[]>> oldAllReservations = new HashMap<>();
 
             int index = 0;
             for (FacilOpenMngVO dataVo : openAplyList) {
+
+                Map<LocalDate, LocalTime[]> reservations = new HashMap<>();
+
                 // 요일로 치환
                 ArrayList<String> dayArrlist = new ArrayList<>();
                 if(!dataVo.getFcltWkdysBgngTm1().isEmpty() || !dataVo.getFcltWkdysEndTm1().isEmpty() || !dataVo.getFcltWkdysBgngTm2().isEmpty() || !dataVo.getFcltWkdysEndTm2().isEmpty()) {
@@ -432,12 +456,11 @@ public class FacilServiceImpl {
                     dayArrlist.add("1");
                 }
 
-                Map<LocalDate, LocalTime[]> reservations = new HashMap<>();
-                String[] dayCdId = dayArrlist.toArray(new String[dayArrlist.size()]); // 요일 코드
-
                 // 요일 데이터 처리
+                String[] dayCdId = dayArrlist.toArray(new String[dayArrlist.size()]); // 요일 코드
                 Set<DayOfWeek> dayOfWeekSets = dayOfWeekSet(dayCdId);
 
+                // 특정개방 시작종료일시 생성
                 LocalDate startDate = LocalDate.parse(dataVo.getFcltBgngDt().substring(0, 10));
                 LocalDate endDate = LocalDate.parse(dataVo.getFcltEndDt().substring(0, 10));
                 LocalDate currentDay = null;
@@ -445,47 +468,92 @@ public class FacilServiceImpl {
                 String moning2 = null;
                 String afternon1 = null;
                 String afternon2 = null;
-                for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-                    currentDay = date;
-                    if (dayOfWeekSets.contains(date.getDayOfWeek()) && date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
-                        moning1 = dataVo.getFcltStdayBgngTm1();
-                        moning2 = dataVo.getFcltStdayEndTm1();
-                        afternon1 = dataVo.getFcltStdayBgngTm2();
-                        afternon2 = dataVo.getFcltStdayEndTm2();
 
-                        if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
-                            LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
-                            reservations.put(currentDay, times);
-                        }
-                    }
-                    else if (dayOfWeekSets.contains(date.getDayOfWeek()) && date.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
-                        moning1 = dataVo.getFcltSndayBgngTm1();
-                        moning2 = dataVo.getFcltSndayEndTm1();
-                        afternon1 = dataVo.getFcltSndayBgngTm2();
-                        afternon2 = dataVo.getFcltSndayEndTm2();
+                // 특정개방일 기간 안에 신규예약기간이 포함되는 지 체크
+                if((rsvtStartDay.isAfter(startDate) || rsvtStartDay.equals(startDate)) && (rsvtEndDay.isBefore(endDate) || rsvtEndDay.equals(endDate))){
+                    for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+                        currentDay = date;
+                        if (!date.isBefore(rsvtStartDay) && !date.isAfter(rsvtEndDay)) {
+                            if (dayOfWeekSets.contains(date.getDayOfWeek()) && date.getDayOfWeek().equals(DayOfWeek.SATURDAY)) {
+                                moning1 = dataVo.getFcltStdayBgngTm1();
+                                moning2 = dataVo.getFcltStdayEndTm1();
+                                afternon1 = dataVo.getFcltStdayBgngTm2();
+                                afternon2 = dataVo.getFcltStdayEndTm2();
 
-                        if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
-                            LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
-                            reservations.put(currentDay, times);
-                        }
-                    }else {
-                        moning1 = dataVo.getFcltWkdysBgngTm1();
-                        moning2 = dataVo.getFcltWkdysEndTm1();
-                        afternon1 = dataVo.getFcltWkdysBgngTm2();
-                        afternon2 = dataVo.getFcltWkdysEndTm2();
+                                if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
+                                    LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
+                                    reservations.put(currentDay, times);
+                                }
+                            }else if (dayOfWeekSets.contains(date.getDayOfWeek()) && date.getDayOfWeek().equals(DayOfWeek.SUNDAY)) {
+                                moning1 = dataVo.getFcltSndayBgngTm1();
+                                moning2 = dataVo.getFcltSndayEndTm1();
+                                afternon1 = dataVo.getFcltSndayBgngTm2();
+                                afternon2 = dataVo.getFcltSndayEndTm2();
 
-                        if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
-                            LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
-                            reservations.put(currentDay, times);
+                                if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
+                                    LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
+                                    reservations.put(currentDay, times);
+                                }
+                            }else {
+                                moning1 = dataVo.getFcltWkdysBgngTm1();
+                                moning2 = dataVo.getFcltWkdysEndTm1();
+                                afternon1 = dataVo.getFcltWkdysBgngTm2();
+                                afternon2 = dataVo.getFcltWkdysEndTm2();
+
+                                if(!moning1.isEmpty() && !moning2.isEmpty() && !afternon1.isEmpty() && !afternon2.isEmpty()) {
+                                    LocalTime[] times = minMaxTime(moning1,moning2,afternon1,afternon2);
+                                    reservations.put(currentDay, times);
+                                }
+                            }
                         }
                     }
                 }
-                oldAllReservations.put(index, reservations);
+                if(!reservations.isEmpty())
+                    oldAllReservations.put(index, reservations);
                 index++;
             }
+            if(oldAllReservations.isEmpty())
+                return result = "N3";
 
-            // 2.특정일 개방 일시 체크
-            result = checkNewOldLongRsvt(oldAllReservations, newReservation);
+
+            // 2.상시개방 기존 예약과 중복 체크
+
+            // 상시개방 기존 예약의 모든 일시  순회
+            for (Map.Entry<String, Map<LocalDate, LocalTime[]>> conflictRsvt : conflictResevatin.entrySet()) {
+                Map<LocalDate, LocalTime[]> dateRsvt = conflictRsvt.getValue();
+
+                // 상시개방 예약에 대한 일시 생성
+                for (Map.Entry<LocalDate, LocalTime[]> dateEntry : dateRsvt.entrySet()) {
+                    LocalDate cnflctDate = dateEntry.getKey();
+                    LocalDateTime cnflctStart = cnflctDate.atTime(dateEntry.getValue()[0]);
+                    LocalDateTime cnflctEnd = cnflctDate.atTime(dateEntry.getValue()[1]);
+
+                    // 신규 예약의 모든 일시 순회
+                    for (Map.Entry<LocalDate, LocalTime[]> newEntry : newReservation.entrySet()) {
+                        LocalDate newDate = newEntry.getKey();
+                        LocalDateTime newStart = newDate.atTime(newEntry.getValue()[0]);
+                        LocalDateTime newEnd = newDate.atTime(newEntry.getValue()[1]);
+
+                        // 날짜가 같으면 비교
+                        if(newDate.equals(cnflctDate)) {
+                            // 일시 중복체크 : 상시개방예약 일시 범위 안에 신규예약이 있을 경우 N2반환
+                            if ((newStart.isAfter(cnflctStart) || newStart.equals(cnflctStart)) &&  // 예약시간이 시작시간보다 뒤이거나,같을 경우 : true면 예약가능. 중복X
+                                    (newEnd.isBefore(cnflctEnd) || newEnd.equals(cnflctEnd)))		  // 예약시간이 종료시간보다 전이거나,같을 경우 : true면 예약가능. 중복X
+                                return result = "N2"; // return 필요??
+                        }
+
+                    }
+
+
+                }
+            }
+
+//			Map<Integer,Map<LocalDate,LocalTime[]>> oldAllReservations
+//			Map<String,Map<LocalDate, LocalTime[]>> conflictResevatin
+//			Map<LocalDate, LocalTime[]> newReservation
+
+            // 3.특정일 개방 일시 체크
+            result = checkNewOldLongRsvt(oldAllReservations, newReservation, conflictResevatin);
 
         } else {
             result = "N";
@@ -513,7 +581,6 @@ public class FacilServiceImpl {
         }
         return result;
     }
-
 
 
 }
