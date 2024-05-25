@@ -9,11 +9,10 @@ import lombok.Setter;
 @Getter @Setter
 public class Users {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id = null;
 
+    @Column(nullable = false, length = 20)
     private String name;
 
 }

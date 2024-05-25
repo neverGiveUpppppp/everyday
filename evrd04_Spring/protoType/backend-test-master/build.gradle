@@ -27,6 +27,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    implementation 'org.springframework.boot:spring-boot-devtools' // 소스 수정 시, 자동 재시작, 브라우저 페이지 자동 새로고침, 개발 중인 리소스 캐시 비활성화로 변경사항 즉시 반영 등
+
     runtimeOnly 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta' // java17이상 jakarta에서 쓰는 jpa lib

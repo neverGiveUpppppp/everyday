@@ -6,7 +6,7 @@ public interface UserService {
 
     Users findOne(Long id);
 
-    void updateUser(Long id, String name);
+    Users updateUser(Users user);
 
 
 }

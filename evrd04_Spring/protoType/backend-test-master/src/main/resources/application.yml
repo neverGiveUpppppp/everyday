@@ -10,10 +10,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create # 앱 실행 시, 테이블 drop 후 create
+      ddl-auto: update # 기존 테이블에서 새 컬럼만 추가
     properties:
       hibernate:
-        show_sql: true       # System.out에 하이버네이트 실행 SQL을 남긴다.
+        show_sql: true       # 콘솔에 하이버네이트 실행 SQL 표시
         format_sql: true
 
 
