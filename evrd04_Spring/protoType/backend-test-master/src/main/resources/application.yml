@@ -1,0 +1,31 @@
+
+
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/polycubeTest
+    driver-class-name: org.h2.Driver
+    username: pc
+    password: 2024
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create # 앱 실행 시, 테이블 drop 후 create
+    properties:
+      hibernate:
+        show_sql: true       # System.out에 하이버네이트 실행 SQL을 남긴다.
+        format_sql: true
+
+
+  h2:
+    console:
+      enabled: true
+
+
+logging:
+  level:
+    sql: debug
+
+server:
+  port: 9012
+
