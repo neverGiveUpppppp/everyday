@@ -1,6 +1,9 @@
 
-
+# dev 프로파일 설정
 spring:
+  config:
+    activate:
+      on-profile: dev
   datasource:
     url: jdbc:h2:tcp://localhost/~/polycubeTest
     driver-class-name: org.h2.Driver
@@ -16,7 +19,6 @@ spring:
         show_sql: true       # 콘솔에 하이버네이트 실행 SQL 표시
         format_sql: true
 
-
   h2:
     console:
       enabled: true
@@ -24,8 +26,41 @@ spring:
 
 logging:
   level:
-    sql: debug
+    org.hibernate:
+      type:
+          descriptor:
+            sql:
+              BasicBinder: trace
+      sql: debug
 
 server:
   port: 9012
+
+---
+
+# testcode용 프로파일
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/testCode
+    driver-class-name: org.h2.Driver
+    username: pc
+    password: 1234
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true       # 콘솔에 하이버네이트 실행 SQL 표시
+        format_sql: true
+
+  h2:
+    console:
+      enabled: true
+
+
 
