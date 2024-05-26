@@ -21,7 +21,6 @@ public class UserController {
     public CreateUserResponse join(@RequestBody CreateUserRequest request) {
         // dto를 엔티티로 변환
         Users user = new Users();
-        user.setId(request.getId());
         user.setName(request.getName());
 
         Long id = userService.createUser(user);

@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validateDuplicationUser(Users user) {
-        Optional<Users> findMembers = userRepository.findById(user.getId());
+        Optional<Users> findMembers = userRepository.findByName(user.getName());
         if(findMembers.isPresent())
             throw new IllegalStateException("이미 존재하는 회원입니다.");
     }
