@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public Users updateUser(Users user) {
-        validateDuplicationUser(user);
         Users existingUser = findOne(user.getId());  // findOne() 재사용
         existingUser.setName(user.getName());
         return existingUser;  // 영속성 컨텍스트 변경감지(dirty check) : save() 생략
