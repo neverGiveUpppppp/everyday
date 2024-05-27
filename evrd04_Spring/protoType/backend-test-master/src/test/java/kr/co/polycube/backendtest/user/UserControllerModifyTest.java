@@ -38,10 +38,6 @@ class UserControllerModifyTest {
     }
 
 
-
-
-    /********************************** 수정 **********************************/
-
     @Test
     @Transactional
     @DisplayName("사용자 수정 - 정상 케이스")
@@ -87,8 +83,8 @@ class UserControllerModifyTest {
         ResponseEntity<ErrorResponse> response = restTemplate.exchange(baseUrl + "/99999", HttpMethod.PUT, updateEntity, ErrorResponse.class);
 
         // then: 결과 검증
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(response.getBody().getMessage()).isEqualTo("존재하지않는 사용자입니다.");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+        assertThat(response.getBody().getReason()).isEqualTo("존재하지않는 사용자입니다.");
     }
 
     @Test
@@ -115,8 +111,8 @@ class UserControllerModifyTest {
         ResponseEntity<ErrorResponse> response = restTemplate.exchange(baseUrl + "/" + userId, HttpMethod.PUT, updateEntity, ErrorResponse.class);
 
         // then: 결과 검증
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(response.getBody().getMessage()).isEqualTo("이름은 필수값입니다.");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody().getReason()).contains("Validation failed for argument");
     }
 
     @Test
@@ -143,8 +139,8 @@ class UserControllerModifyTest {
         ResponseEntity<ErrorResponse> response = restTemplate.exchange(baseUrl + "/" + userId, HttpMethod.PUT, updateEntity, ErrorResponse.class);
 
         // then: 결과 검증
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-        assertThat(response.getBody().getMessage()).isEqualTo("이름은 최대 20글자까지 가능합니다.");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody().getReason()).contains("Validation failed for argument");
     }
 
 }

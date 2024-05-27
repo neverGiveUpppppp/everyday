@@ -41,8 +41,6 @@ class UserControllerGetUserTest {
     }
 
 
-    /********************************** 조회 **********************************/
-
     @Test
     @Transactional
     @DisplayName("사용자 조회 - 정상 케이스")
@@ -73,8 +71,8 @@ class UserControllerGetUserTest {
         ResponseEntity<ErrorResponse> response = restTemplate.getForEntity(baseUrl + "/99999", ErrorResponse.class);
 
         // then: 결과 검증
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(response.getBody().getMessage()).isEqualTo("존재하지않는 사용자입니다.");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
+        assertThat(response.getBody().getReason()).isEqualTo("존재하지않는 사용자입니다.");
     }
 
 

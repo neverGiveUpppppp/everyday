@@ -77,8 +77,8 @@ class UserControllerCreateTest {
         ResponseEntity<ErrorResponse> response = restTemplate.postForEntity(baseUrl, entity, ErrorResponse.class);
 
         // then: 결과 검증
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
-        assertThat(response.getBody().getMessage()).isEqualTo("이름은 필수값입니다.");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody().getReason()).contains("Validation failed for argument");
     }
 
     @Test
@@ -104,7 +104,7 @@ class UserControllerCreateTest {
 
         // then: 결과 검증
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-        assertThat(response.getBody().getMessage()).isEqualTo("이미 존재하는 회원입니다.");
+        assertThat(response.getBody().getReason()).isEqualTo("이미 존재하는 회원입니다.");
     }
 
     @Test
@@ -122,8 +122,8 @@ class UserControllerCreateTest {
         ResponseEntity<ErrorResponse> response = restTemplate.postForEntity(baseUrl, entity, ErrorResponse.class);
 
         // then: 결과 검증
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
-        assertThat(response.getBody().getMessage()).isEqualTo("이름은 최대 20글자까지 가능합니다.");
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody().getReason()).contains("Validation failed for argument");
     }
 
 
