@@ -1,4 +1,4 @@
-package kr.co.polycube.backendtest.user.common;
+package kr.co.polycube.backendtest.common;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.polycube.backendtest.user.Users;
