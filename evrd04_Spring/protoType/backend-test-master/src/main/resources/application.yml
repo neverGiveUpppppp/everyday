@@ -4,11 +4,16 @@ spring:
   config:
     activate:
       on-profile: dev
+
   datasource:
     url: jdbc:h2:tcp://localhost/~/polycubeTest
     driver-class-name: org.h2.Driver
     username: pc
     password: 2024
+
+  h2:
+    console:
+      enabled: true
 
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
@@ -19,12 +24,14 @@ spring:
         show_sql: true       # 콘솔에 하이버네이트 실행 SQL 표시
         format_sql: true
 
-  h2:
-    console:
-      enabled: true
+  web:
+    resources:
+      add-mappings: false
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
-logging:
   level:
     org.hibernate:
       type:
@@ -49,6 +56,10 @@ spring:
     username: pc
     password: 1234
 
+  h2:
+    console:
+      enabled: true
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
@@ -58,9 +69,12 @@ spring:
         show_sql: true       # 콘솔에 하이버네이트 실행 SQL 표시
         format_sql: true
 
-  h2:
-    console:
-      enabled: true
+  web:
+    resources:
+      add-mappings: false
 
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 
