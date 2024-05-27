@@ -41,8 +41,6 @@ class UserControllerCreateTest {
     }
 
 
-    /********************************** 등록 **********************************/
-
     @Test
     @Transactional
     @DisplayName("사용자 등록 - 정상 케이스")
