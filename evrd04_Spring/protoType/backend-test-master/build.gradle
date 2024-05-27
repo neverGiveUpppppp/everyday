@@ -31,6 +31,7 @@ dependencies {
 
     runtimeOnly 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'  // 유효성 관련 추가
 //    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta' // java17이상 jakarta에서 쓰는 jpa lib
 
 
