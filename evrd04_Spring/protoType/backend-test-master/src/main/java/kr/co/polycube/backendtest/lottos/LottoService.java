@@ -28,4 +28,9 @@ public class LottoService {
                 .collect(Collectors.toList());
     }
 
+    // 당첨 번호 생성 메서드 : batch로 번호 전달용
+    public Set<Integer> generateWinningNumbers() {
+        return new HashSet<>(generateLottoNumbers());
+    }
+    
 }
