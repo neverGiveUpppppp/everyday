@@ -1,4 +1,4 @@
-package kr.co.polycube.backendtest.lotto_batch.config;
+package kr.co.polycube.backendtest.lottos.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;

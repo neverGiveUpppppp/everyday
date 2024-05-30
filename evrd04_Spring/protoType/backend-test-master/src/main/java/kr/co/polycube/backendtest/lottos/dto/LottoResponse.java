@@ -1,4 +1,4 @@
-package kr.co.polycube.backendtest.lottos;
+package kr.co.polycube.backendtest.lottos.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

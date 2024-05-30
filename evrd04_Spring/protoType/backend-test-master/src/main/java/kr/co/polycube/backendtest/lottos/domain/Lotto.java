@@ -1,4 +1,4 @@
-package kr.co.polycube.backendtest.lotto_batch.domain;
+package kr.co.polycube.backendtest.lottos.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package kr.co.polycube.backendtest.lotto_batch;
+package kr.co.polycube.backendtest.lottos;
 
-import kr.co.polycube.backendtest.lotto_batch.domain.Winner;
+import kr.co.polycube.backendtest.lottos.domain.Winner;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface WinnerRepository extends JpaRepository<Winner, Long> {

@@ -1,9 +1,9 @@
-package kr.co.polycube.backendtest.lotto_batch.config;
+package kr.co.polycube.backendtest.lottos.config;
 
-import kr.co.polycube.backendtest.lotto_batch.LottoRepository;
-import kr.co.polycube.backendtest.lotto_batch.WinnerRepository;
-import kr.co.polycube.backendtest.lotto_batch.domain.Lotto;
-import kr.co.polycube.backendtest.lotto_batch.domain.Winner;
+import kr.co.polycube.backendtest.lottos.LottoRepository;
+import kr.co.polycube.backendtest.lottos.WinnerRepository;
+import kr.co.polycube.backendtest.lottos.domain.Lotto;
+import kr.co.polycube.backendtest.lottos.domain.Winner;
 import kr.co.polycube.backendtest.lottos.LottoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.batch.core.Job;

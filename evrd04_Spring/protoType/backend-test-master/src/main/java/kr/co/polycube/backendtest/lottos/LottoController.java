@@ -1,5 +1,6 @@
 package kr.co.polycube.backendtest.lottos;
 
+import kr.co.polycube.backendtest.lottos.dto.LottoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

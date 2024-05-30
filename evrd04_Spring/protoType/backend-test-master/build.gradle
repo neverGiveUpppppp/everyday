@@ -1,42 +1,44 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.2.1'
-    id 'io.spring.dependency-management' version '1.1.4'
-}
-
-group = 'kr.co.polycube'
-version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '17'
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    plugins {
+        id 'java'
+        id 'org.springframework.boot' version '3.2.1'
+        id 'io.spring.dependency-management' version '1.1.4'
     }
-}
 
-repositories {
-    mavenCentral()
-}
+    group = 'kr.co.polycube'
+    version = '0.0.1-SNAPSHOT'
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    java {
+        sourceCompatibility = '17'
+    }
 
-    implementation 'org.springframework.boot:spring-boot-devtools' // 소스 수정 시, 자동 재시작, 브라우저 페이지 자동 새로고침, 개발 중인 리소스 캐시 비활성화로 변경사항 즉시 반영 등
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
 
-    runtimeOnly 'com.h2database:h2'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'  // 유효성 관련 추가
-//    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta' // java17이상 jakarta에서 쓰는 jpa lib
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-batch'
+        testImplementation 'org.springframework.batch:spring-batch-test'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        implementation 'org.springframework.boot:spring-boot-devtools' // 소스 수정 시, 자동 재시작, 브라우저 페이지 자동 새로고침, 개발 중인 리소스 캐시 비활성화로 변경사항 즉시 반영 등
+
+        runtimeOnly 'com.h2database:h2'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'  // 유효성 관련 추가
+    //    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-hibernate5-jakarta' // java17이상 jakarta에서 쓰는 jpa lib
 
 
-}
+    }
 
-tasks.named('test') {
-    useJUnitPlatform()
-}
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
