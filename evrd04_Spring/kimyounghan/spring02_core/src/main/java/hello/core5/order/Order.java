@@ -9,6 +9,10 @@ public class Order {
     private int itemPrice;
     private int discountPrice;
 
+    public Order(Long memberId, String itemName, int itemPrice, int discountPrice) {
+
+    }
+
     public int calculatePrice(){
         return itemPrice - discountPrice; // 원가 - 할인액 = 최종금액
     }

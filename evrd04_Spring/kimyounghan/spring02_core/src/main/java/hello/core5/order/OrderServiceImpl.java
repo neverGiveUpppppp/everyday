@@ -1,6 +1,9 @@
 package hello.core5.order;
 
 
+import hello.core5.discount.DiscountPolicy;
+import hello.core5.member.Member;
+import hello.core5.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

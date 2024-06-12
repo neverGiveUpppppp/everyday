@@ -1,5 +1,7 @@
 package hello.core5;
 
+import hello.core5.discount.DiscountPolicy;
+import hello.core5.discount.RateDiscountPolicy;
 import hello.core5.member.MemberRepository;
 import hello.core5.member.MemberService;
 import hello.core5.member.MemberServiceImpl;
