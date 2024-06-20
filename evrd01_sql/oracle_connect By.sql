@@ -1,4 +1,28 @@
+NUMBER
 
+
+
+CREATE TABLE EMP (
+    EMP_ID NUMBER PRIMARY KEY,
+    EMP_NM VARCHAR2(100),
+    MNG_ID NUMBER
+);
+
+INSERT INTO EMP (EMP_ID, EMP_NM, MNG_ID) VALUES (1, 'John', NULL); -- CEO
+INSERT INTO EMP (EMP_ID, EMP_NM, MNG_ID) VALUES (2, 'Sarah', 1);   -- John의 직속 부하
+INSERT INTO EMP (EMP_ID, EMP_NM, MNG_ID) VALUES (3, 'Mike', 1);    -- John의 직속 부하
+INSERT INTO EMP (EMP_ID, EMP_NM, MNG_ID) VALUES (4, 'Jim', 2);     -- Sarah의 직속 부하
+INSERT INTO EMP (EMP_ID, EMP_NM, MNG_ID) VALUES (5, 'Ann', 2);     -- Sarah의 직속 부하
+
+SELECT EMP_ID, EMP_NM, MNG_ID
+FROM EMP
+START WITH MNG_ID IS NULL -- 최상위 직원 (CEO)부터 시작
+CONNECT BY PRIOR EMP_ID = MNG_ID; -- 상위 직원의 EMP_ID가 현재 직원의 MNG_ID와 일치하는 구조
+
+
+
+
+--------------------------------------------------------
 
 
 SELECT *
