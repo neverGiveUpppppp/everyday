@@ -40,6 +40,25 @@ MODIFY 컬럼명 제약조건종류;
 */
 
 
+
+-- scott 사용자 생성 (비밀번호: tiger)
+CREATE USER scott IDENTIFIED BY tiger;
+
+-- scott 사용자의 기본 테이블스페이스를 USERS로 설정
+ALTER USER scott DEFAULT TABLESPACE USERS;
+
+-- scott 사용자에게 USERS 테이블스페이스에 무제한 용량 할당
+ALTER USER scott QUOTA UNLIMITED ON USERS;
+
+-- scott 사용자에게 RESOURCE 및 CONNECT 권한 부여
+GRANT RESOURCE, CONNECT TO scott;
+
+
+
+
+
+
+
 ALTER TABLE CHANGE_TABLE ADD PLUS_COLUMN VARCHAR2(10);
 ALTER TABLE 테이블명 MODIFY 수정컬럼 NUMBER;
 ALTER TABLE 드랍하기 DROP COLUMN PLUS_COLMN;
