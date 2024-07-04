@@ -1,5 +1,6 @@
 package com.jpa.jpa3.domain;
 
+import com.jpa.jpa3.domain.item.Item;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

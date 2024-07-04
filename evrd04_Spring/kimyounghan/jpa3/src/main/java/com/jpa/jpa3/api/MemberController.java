@@ -3,13 +3,12 @@ package com.jpa.jpa3.api;
 
 import com.jpa.jpa3.domain.Member;
 import com.jpa.jpa3.dto.request.CreateMemberRequest;
+import com.jpa.jpa3.dto.request.UpdateMemberRequest;
 import com.jpa.jpa3.dto.response.CreateMemberResponse;
+import com.jpa.jpa3.dto.response.UpdateMemberResponse;
 import com.jpa.jpa3.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @RestController
@@ -36,6 +35,16 @@ public class MemberController {
         member.setName(request.getName());
         Long id = memberService.join(member);
         return new CreateMemberResponse(id);
+    }
+
+    /**
+     * 수정API
+     */
+    @PutMapping("/api/v2/members/{id}")
+    public UpdateMemberResponse updateMewmberV2(@PathVariable("id") Long id, @RequestBody @Valid UpdateMemberRequest request){
+        memberService.update(id, request.getName());
+        Member findMember = memberService.findOne(id);
+        return new UpdateMemberResponse(findMember.getId(), findMember.getName());
     }
 
 }
