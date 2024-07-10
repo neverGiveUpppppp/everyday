@@ -5,7 +5,7 @@ import com.jpa.jpa3.domain.Member;
 import com.jpa.jpa3.dto.request.CreateMemberRequest;
 import com.jpa.jpa3.dto.request.UpdateMemberRequest;
 import com.jpa.jpa3.dto.response.CreateMemberResponse;
-import com.jpa.jpa3.dto.response.MemberDTO;
+import com.jpa.jpa3.dto.MemberDTO;
 import com.jpa.jpa3.dto.response.ReadAllMemberResponse;
 import com.jpa.jpa3.dto.response.UpdateMemberResponse;
 import com.jpa.jpa3.service.MemberService;

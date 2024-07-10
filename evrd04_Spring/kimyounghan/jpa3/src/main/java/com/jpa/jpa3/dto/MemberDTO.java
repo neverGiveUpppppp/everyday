@@ -1,4 +1,4 @@
-package com.jpa.jpa3.dto.response;
+package com.jpa.jpa3.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
