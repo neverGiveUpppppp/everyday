@@ -2,6 +2,7 @@ package com.jpa.jpa3.repository;
 
 import com.jpa.jpa3.domain.Member;
 import com.jpa.jpa3.domain.Order;
+import com.jpa.jpa3.domain.OrderSearch;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
