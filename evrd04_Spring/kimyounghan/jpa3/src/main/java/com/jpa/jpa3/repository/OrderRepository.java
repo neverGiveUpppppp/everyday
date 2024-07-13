@@ -50,4 +50,19 @@ public class OrderRepository {
 
         return query.getResultList();
     }
+
+
+    /**
+     * 주문 조회 V3.1: 엔티티를 DTO로 변환 - 페치 조인 최적화 (fetch join 사용 O)
+     */
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                        "select distinct o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d" +
+                                " join fetch o.orderItems oi" +
+                                " join fetch oi.item i", Order.class)
+                .getResultList();
+    }
+
 }

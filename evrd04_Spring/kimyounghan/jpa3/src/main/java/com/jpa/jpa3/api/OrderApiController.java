@@ -52,6 +52,16 @@ public class OrderApiController {
         return result;
     }
 
-
+    /**
+     * 주문 조회 V3.1: 엔티티를 DTO로 변환 - 페치 조인 최적화 (fetch join 사용 O)
+     * - 페이징 시에는 N부분을 포기해야함(대신에 batch fetch size? 옵션 주면 N -> 1 쿼리로 변경 가능)
+     */
+    public List<OrderDTO> ordersV3(){
+        List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDTO> result = orders.stream()
+                .map(o -> new OrderDTO(o))
+                .collect(toList());
+        return result;
+    }
 
 }
