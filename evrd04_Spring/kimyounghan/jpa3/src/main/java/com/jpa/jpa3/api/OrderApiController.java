@@ -9,6 +9,7 @@ import com.jpa.jpa3.repository.OrderRepository;
 import com.jpa.jpa3.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -63,5 +64,23 @@ public class OrderApiController {
                 .collect(toList());
         return result;
     }
+
+
+    /**
+     * 주문 조회 V3.2: 엔티티를 DTO로 변환 - 페치 조인 최적화 - 페이징과 한계 돌파
+     * 페이징 불가 한계 돌파
+     */
+    @GetMapping("/api/v3.1/orders")
+    public List<OrderDTO> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
+                                        @RequestParam(value = "limit", defaultValue = "100") int limit){
+        List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
+        List<OrderDTO> result = orders.stream()
+                .map(o -> new OrderDTO(o))
+                .collect(toList());
+        return result;
+        // yml에 옵션 추가 - default_batch_fetch_size: 1000
+    }
+
+
 
 }
