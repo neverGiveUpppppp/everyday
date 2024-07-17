@@ -5,6 +5,8 @@ import com.jpa.jpa3.domain.Order;
 import com.jpa.jpa3.domain.OrderItem;
 import com.jpa.jpa3.domain.OrderSearch;
 import com.jpa.jpa3.dto.OrderDTO;
+import com.jpa.jpa3.dto.OrderQueryDTO;
+import com.jpa.jpa3.repository.OrderQueryRepository;
 import com.jpa.jpa3.repository.OrderRepository;
 import com.jpa.jpa3.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +47,7 @@ public class OrderApiController {
      * - 트랜잭션 안에서 지연 로딩 필요
      */
     @GetMapping("/api/v2/orders")
-    public List<OrderDTO> ordersV2(){
+    public List<OrderDTO> ordersV2() {
         List<Order> orders = orderRepository.findAllByCriteria(new OrderSearch());
         List<OrderDTO> result = orders.stream()
                 .map(o -> new OrderDTO(o))
@@ -57,7 +59,7 @@ public class OrderApiController {
      * 주문 조회 V3.1: 엔티티를 DTO로 변환 - 페치 조인 최적화 (fetch join 사용 O)
      * - 페이징 시에는 N부분을 포기해야함(대신에 batch fetch size? 옵션 주면 N -> 1 쿼리로 변경 가능)
      */
-    public List<OrderDTO> ordersV3(){
+    public List<OrderDTO> ordersV3() {
         List<Order> orders = orderRepository.findAllWithItem();
         List<OrderDTO> result = orders.stream()
                 .map(o -> new OrderDTO(o))
@@ -72,7 +74,7 @@ public class OrderApiController {
      */
     @GetMapping("/api/v3.1/orders")
     public List<OrderDTO> ordersV3_page(@RequestParam(value = "offset", defaultValue = "0") int offset,
-                                        @RequestParam(value = "limit", defaultValue = "100") int limit){
+                                        @RequestParam(value = "limit", defaultValue = "100") int limit) {
         List<Order> orders = orderRepository.findAllWithMemberDelivery(offset, limit);
         List<OrderDTO> result = orders.stream()
                 .map(o -> new OrderDTO(o))
@@ -80,6 +82,20 @@ public class OrderApiController {
         return result;
         // yml에 옵션 추가 - default_batch_fetch_size: 1000
     }
+
+
+    /**
+     * 주문 조회 V4: JPA에서 DTO 직접 조회
+     * - 컬렉션 N 조회 (1 + N Query)
+     * - 페이징 가능
+     */
+    private final OrderQueryRepository orderQueryRepository;
+
+    @GetMapping("/api/v4/orders")
+    public List<OrderQueryDTO> ordersV4(){
+        return orderQueryRepository.findOrderQueryDtos();
+    }
+
 
 
 
