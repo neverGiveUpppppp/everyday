@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -47,5 +49,34 @@ public class OrderQueryRepository {
                 .setParameter("orderId", orderId)
                 .getResultList();
     }
+
+    /**
+     * 주문 조회 V5: JPA에서 DTO 직접 조회 - 컬렉션 조회 최적화
+     */
+    public List<OrderQueryDTO> findAllByDTO_optimization() {
+        List<OrderQueryDTO> result = findOrders();
+
+        Map<Long, List<OrderItemQueryDTO>> orderItemMap = findOrderItemMap(toOrderIds(result));
+
+        result.forEach(o -> o.setOrderItems(orderItemMap.get(o.getOrderId())));
+        return result;
+    }
+    private List<Long> toOrderIds(List<OrderQueryDTO> result) {
+        return result.stream()
+                .map(o -> o.getOrderId())
+                .collect(Collectors.toList());
+    }
+    private Map<Long, List<OrderItemQueryDTO>> findOrderItemMap(List<Long> orderIds) {
+        List<OrderItemQueryDTO> orderItems = em.createQuery(
+                        "select new com.jpa.jpa3.dto.OrderItemQueryDTO(oi.order.id, i.name,oi.orderPrice, oi.count)" +
+                                " from OrderItem oi" +
+                                " join oi.item i" +
+                                " where oi.order.id in :orderIds", OrderItemQueryDTO.class)
+                .setParameter("orderIds", orderIds)
+                .getResultList();
+        return orderItems.stream()
+                .collect(Collectors.groupingBy(OrderItemQueryDTO::getOrderId));
+    }
+
 
 }
