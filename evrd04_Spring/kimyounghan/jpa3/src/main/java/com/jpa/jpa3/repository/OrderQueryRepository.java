@@ -1,5 +1,6 @@
 package com.jpa.jpa3.repository;
 
+import com.jpa.jpa3.dto.OrderFlatDTO;
 import com.jpa.jpa3.dto.OrderItemQueryDTO;
 import com.jpa.jpa3.dto.OrderQueryDTO;
 import jakarta.persistence.EntityManager;
@@ -79,4 +80,14 @@ public class OrderQueryRepository {
     }
 
 
+    public List<OrderFlatDTO> findAllByDto_flat() {
+        return em.createQuery(
+                    "select new com.jpa.jpa3.dto.OrderFlatDTO(o.id, m.name, o.orderDate,o.orderStatus, d.address, i.name, oi.orderPrice, oi.count)" +
+                            " from Order o" +
+                            " join o.member m" +
+                            " join o.delivery d" +
+                            " join o.orderItems oi" +
+                            " join oi.item i", OrderFlatDTO.class)
+            .getResultList();
+    }
 }

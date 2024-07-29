@@ -5,6 +5,8 @@ import com.jpa.jpa3.domain.Order;
 import com.jpa.jpa3.domain.OrderItem;
 import com.jpa.jpa3.domain.OrderSearch;
 import com.jpa.jpa3.dto.OrderDTO;
+import com.jpa.jpa3.dto.OrderFlatDTO;
+import com.jpa.jpa3.dto.OrderItemQueryDTO;
 import com.jpa.jpa3.dto.OrderQueryDTO;
 import com.jpa.jpa3.repository.OrderQueryRepository;
 import com.jpa.jpa3.repository.OrderRepository;
@@ -14,10 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -104,6 +105,28 @@ public class OrderApiController {
     @GetMapping("/api/v5/orders")
     public List<OrderQueryDTO> ordersV5(){
         return orderQueryRepository.findAllByDTO_optimization();
+    }
+
+
+    /**
+     * 주문 조회 V6: JPA에서 DTO로 직접 조회, 플랫 데이터 최적화
+     *  - 플랫 데이터(1Query) (1 Query)
+     *  - 페이징 불가능
+     */
+    @GetMapping("/api/v6/orders")
+    public List<OrderQueryDTO> ordersV6() {
+        List<OrderFlatDTO> flats = orderQueryRepository.findAllByDto_flat();
+
+        return flats.stream()
+                .collect(groupingBy(o -> new OrderQueryDTO(o.getOrderId(),o.getName(),
+                                o.getOrderDate(), o.getOrderStatus(), o.getAddress()),
+                        mapping(o -> new OrderItemQueryDTO(o.getOrderId(),
+                                o.getItemName(), o.getOrderPrice(), o.getCount()), toList())
+                )).entrySet().stream()
+                .map(e -> new OrderQueryDTO(e.getKey().getOrderId(),
+                        e.getKey().getName(), e.getKey().getOrderDate(), e.getKey().getOrderStatus(),
+                        e.getKey().getAddress()))
+                .collect(toList());
     }
 
 
