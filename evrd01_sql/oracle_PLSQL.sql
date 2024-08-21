@@ -102,11 +102,55 @@ END;
 
 
 /*********************************************************************/
+---- 저장함수 생성과 실행(select문, 익명PL/SQL)
+-- 저장함수
+CREATE OR REPLACE FNCTION get_dept_emp_cnt(
+    n_dept_no NUMBER  -- 사원 수를 계산할 부서 번호
+) RETURN NUMBER -- 부서의 사원 수 반환
+
+IS
+    -- 변수
+    n_cnt NUMBER;
+
+BEGIN   
+    -- 테이블 EMP에 들어있는, 부서번호 n_dept_no를 가진 사원 수를 계산
+    SELECT COUNT(*)
+        INTO n_cnt
+        FROM emp
+        WHERE deptno = n_dept_no
+
+    RETURN n_cnt; -- 건수 반환
+
+EXCEPTION WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('응용프로그램 오류 발생' || CHR(10)||SQLERRM);
+    RETURN -1;
+END; -- 함수가 생성되었습니다.
+
+-- SELECT문으로 저장함수 실행
+SELECT deptno 부서번호 
+    , dname 부서명
+    , loc 위치
+    , get_dept_emp_cnt(deptno) 사원수
+    FROM dept;
+-- 익명 PL/SQL문으로 저장함수 실행
+DECLARE
+    n_cnt PLS_INTEGER;
+BEGIN  
+    n_cnt := get_dept_emp_cnt(10);
+    DBMS_OUTPUT.PUT_LINE('사원 수 : '|| n_cnt);
+END;
+/
 
 
 
 
 
+
+
+
+
+
+/*********************************************************************/
 
 
 
